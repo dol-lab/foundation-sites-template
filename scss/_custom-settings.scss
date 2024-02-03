@@ -4378,7 +4378,8 @@ $spinner-sizes: (
 	justify-content: left;
 
 	.page-numbers {
-		min-width: 36px;
+		min-width: 2.25rem;
+		min-height: 2.25rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
