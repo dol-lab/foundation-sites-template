@@ -25,9 +25,8 @@ details {
 		cursor: pointer;
 		&::before {
 			content: "▶";
-			left: .25em;
 			position: absolute;
-			margin-right: .5em;
+			margin-left: -1.3em;
 			display: inline-block;
 			transition: all 0.15s ease;
 		}
@@ -41,7 +40,7 @@ details {
 		border-radius: 3px;
 	}
 
-	body &>* {
+	body & {
 		padding-left: 1.5em;
 	}
 }
