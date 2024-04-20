@@ -527,7 +527,7 @@ label[for] {
 		margin-bottom: 0;
 	}
 
-	&.flex-dir-row {
+	&:is(.flex-dir-row) {
 		flex-direction: row;
 		justify-content: flex-start;
 		align-items: center;
