@@ -516,7 +516,6 @@ label[for] {
 	min-width: 0; // necessary to override flex-box default (e.g. members hover in default space).
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: flex-start;
 	flex: 1;
 	padding: $button-padding;
@@ -527,9 +526,12 @@ label[for] {
 		margin-bottom: 0;
 	}
 
+	&:not(.align-justify){
+		justify-content: flex-start;
+	}
+
 	&:is(.flex-dir-row) {
 		flex-direction: row;
-		justify-content: flex-start;
 		align-items: center;
 	}
 
@@ -2276,7 +2278,7 @@ input,
 		position: relative;
 		display: flex;
 		justify-content: center;
-		align-items: center;
+		align-items: flex-start;
 		width: $button-height;
 		line-height: 0;
 		font-weight: $global-weight-bold;
@@ -2286,7 +2288,7 @@ input,
 	}
 	&.button {
 		&::after {
-			margin-top: -0.25em;
+			height: 0.5rem;
 		}
 	}
 	.button & {
