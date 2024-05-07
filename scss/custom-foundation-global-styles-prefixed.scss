@@ -9,6 +9,7 @@ body {
 	font-weight: $global-weight-normal;
 	line-height: $global-lineheight;
 	color: $body-font-color;
+	text-rendering: optimizeLegibility;
 
 	@if ($body-antialiased) {
 		-webkit-font-smoothing: antialiased; // sass-lint:disable-line no-vendor-prefixes
