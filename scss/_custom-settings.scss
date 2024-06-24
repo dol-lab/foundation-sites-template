@@ -3081,7 +3081,7 @@ $icon-line-weight: 2;
 	position: fixed;
 	display: flex;
 	justify-content: center;
-	top: 10vh;
+	top: 4vh;
 	left: 0;
 	z-index: 100;
 	width: 100vw;
@@ -3169,14 +3169,7 @@ $icon-line-weight: 2;
 	.tt-menu {
 		position: relative !important;
 		top: 0 !important;
-		max-height: calc(70vh);
-		overflow-y: auto;
-	}
-
-	.tt-menu {
-		position: relative !important;
-		top: 0 !important;
-		max-height: calc(70vh);
+		max-height: 92vh;
 		overflow-y: auto;
 	}
 }
