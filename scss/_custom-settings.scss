@@ -1238,10 +1238,7 @@ label[for] {
 	@include dynamic-box();
 }
 
-.post-card .post-content,
-.report-card .report-content,
-.page-section .page-content {
-	@include dynamic-box();
+.user-generated {
 
 	align-items: flex-start;
 	overflow-wrap: break-word; /* break long links in post-content. */
@@ -1251,7 +1248,6 @@ label[for] {
 
 	.alignfull, .alignwide {
 		@include dynamic-box($edge: margin, $negative: true, $axis: horizontal);
-
 		@each $breakpoint, $width in $breakpoints {
 			@include breakpoint($breakpoint) {
 				margin-block: 1rem;
@@ -1263,11 +1259,15 @@ label[for] {
 		margin-inline: -#{nth(map-get($padding-sizes, medium), 2)}; // negate .card-section
 	}  */
 
-	a {
-		&:hover {
-			text-decoration: underline;
-		}
+	a:hover {
+		text-decoration: underline;
 	}
+}
+
+.post-card .post-content,
+.report-card .report-content,
+.page-section .page-content {
+	@include dynamic-box();
 }
 
 
