@@ -1248,9 +1248,11 @@ label[for] {
 
 	.alignfull, .alignwide {
 		@include dynamic-box($edge: margin, $negative: true, $axis: horizontal);
-		@each $breakpoint, $width in $breakpoints {
-			@include breakpoint($breakpoint) {
-				margin-block: 1rem;
+		&:not(.no-margin){
+			@each $breakpoint, $width in $breakpoints {
+				@include breakpoint($breakpoint) {
+					margin-block: 1rem;
+				}
 			}
 		}
 	}
