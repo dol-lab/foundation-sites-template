@@ -1458,6 +1458,16 @@ label[for] {
 	font-size: $small-font-size;
 	min-width: 200px;
 
+	&[id^="user-"][id$="-dropdown"].is-open {
+		display: flex;
+		.remove-user{
+			order: 5;
+		}
+		.change-role > a{
+			@extend .padding-button;
+		}
+	}
+
 	&.is-open {
 		z-index: 2000;
 	}
