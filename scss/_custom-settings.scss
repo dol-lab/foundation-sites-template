@@ -2348,29 +2348,6 @@ input,
 	}
 }
 
-.edit-button {
-	a {
-		padding: 0.5rem;
-		font-size: 0.75rem;
-		color: $very-dark-gray;
-
-		&:hover {
-			color: $black;
-		}
-	}
-	// a {
-	// 	&::after {
-	// 		content: "edit";
-	// 		padding: 0.5rem;
-	// 		font-size: 0.75rem;
-	// 		color: $dark-gray;
-	// 	}
-	// 	&:hover::after {
-	// 		color: $black;
-	// 	}
-	// }
-}
-
 .edit-bar {
 	display: flex;
 	align-items: center;
