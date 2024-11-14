@@ -4528,13 +4528,11 @@ $breadcrumbs-item-separator-color: $breadcrumbs-item-color;
 
 // 28. Swiper
 // ---------
-.swiper-pagination.timespans {
+/* prbly no longer needed, inside spacesMarkup > blocks > spaces-overview-block now
+ .swiper-pagination.timespans {
 	border-bottom: $hr-border;
 }
 
-.swiper-pagination-bullets-dynamic .swiper-pagination-bullet {
-	transform: scale(1) !important;
-}
 
 .swiper-pagination-bullet-custom {
 	border-radius: 0 !important;
@@ -4562,7 +4560,7 @@ $breadcrumbs-item-separator-color: $breadcrumbs-item-color;
 			transform: scale(1) !important;
 		}
 	}
-}
+} */
 
 .tooltip {
 	overflow-wrap: break-word; // add to foundation?!
