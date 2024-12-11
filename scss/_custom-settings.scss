@@ -406,6 +406,9 @@ small {
 	display: inline-block;
 	line-height: $header-lineheight;
 
+	&.a {
+		font-size: $small-font-size;
+	}
 	& > a {
 		&:hover {
 			color: $black;
@@ -1122,12 +1125,23 @@ label[for] {
 		 * so we send them in reverted directory, hide overflow and then revers. smart!
 		 */
 		flex-direction: row-reverse;
-		justify-content: flex-end;
+		/* alignment needs to be flex-start. test with many avatars... */
+		justify-content: flex-start;
 		height: map-get($user-card-sizes, small);
 		min-width: map-get($user-card-sizes, small);
 		max-width: 40%;
 		overflow: hidden;
 		border-radius: 0 0 0 $card-border-radius;
+
+		.avatar-container {
+			border-radius: 50%;
+			overflow: hidden;
+			border: 3px solid var(--s--white);
+			&:not(:last-child) {
+				/* last-child, da überliegender container flex row-reverse hat */
+				margin-left: -.6rem;
+			}
+		}
 	}
 
 	.user:not(:first-child) {
@@ -2951,7 +2965,6 @@ li {
 	}
 }
 
-img,
 i,
 svg {
 	.icons & {
@@ -3860,7 +3873,7 @@ $icon-line-weight: 2;
 	.margin-#{$size-name} {
 		margin: $size;
 	}
-	.padding-#{$size-name} {
+	.p-#{$size-name}, .padding-#{$size-name} {
 		padding: $size;
 
 		& > a,
@@ -3900,6 +3913,24 @@ $icon-line-weight: 2;
 				margin-top: nth($size, 1);
 			}
 		}
+	}
+	.px-#{$size-name} {
+		padding-inline: $size;
+	}
+	.py-#{$size-name} {
+		padding-block: $size;
+	}
+	.pr-#{$size-name} {
+		padding-inline-end: $size;
+	}
+	.pl-#{$size-name} {
+		padding-inline-start: $size;
+	}
+	.pt-#{$size-name} {
+		padding-block-start: $size;
+	}
+	.pb-#{$size-name} {
+		padding-block-end: $size;
 	}
 }
 

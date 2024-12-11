@@ -173,16 +173,16 @@ $header-styles: (
 		"h4": ("font-size": 19 * 0.80 , "color": $dark-gray, "font-weight": 700 ),
 		"h5": ("font-size": 17 * 0.80 , "color": $very-dark-gray, "font-weight": 700 ),
 		"h6": ("font-size": 17 * 0.80 , "color": $very-dark-gray, "font-style": italic, "font-weight": 700 ),
-	), 
-	medium: ( 
+	),
+	medium: (
 		"h1": ("font-size": 23 * 0.9 , "font-weight": 400),
 		"h2": ("font-size": 21 * 0.9 , "font-weight": 500),
 		"h3": ("font-size": 19 * 0.9 , "font-weight": 500),
 		"h4": ("font-size": 19 * 0.9 , "color": $dark-gray, "font-weight": 700 ),
 		"h5": ("font-size": 17 * 0.9 , "color": $very-dark-gray, "font-weight": 700 ),
 		"h6": ("font-size": 17 * 0.9 , "color": $very-dark-gray, "font-style": italic, "font-weight": 700 ),
-	), 
-	large: ( 
+	),
+	large: (
 		"h1": ("font-size": 23, "font-weight": 400),
 		"h2": ("font-size": 21, "font-weight": 500),
 		"h3": ("font-size": 19, "font-weight": 500),
@@ -192,7 +192,7 @@ $header-styles: (
 	),
 );
 $header-text-rendering: optimizeLegibility;
-$small-font-size: 0.85rem;
+$small-font-size: 0.8rem;
 $header-small-font-color: $very-dark-gray;
 $paragraph-lineheight: 1.6;
 $paragraph-margin-bottom: 1rem;
