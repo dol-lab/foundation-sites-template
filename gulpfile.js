@@ -3,6 +3,8 @@ var browserSync  = require('browser-sync').create();
 var $            = require('gulp-load-plugins')();
 var autoprefixer = require('autoprefixer');
 var gsass        = require('gulp-sass')(require('node-sass'));
+// source maps
+var sourcemaps   = require('gulp-sourcemaps');
 
 var sassPaths = [
   'node_modules/foundation-sites/scss',
@@ -11,7 +13,7 @@ var sassPaths = [
 
 function sass( path ) {
   return gulp.src( path )
-    //.pipe(sourcemaps.init())
+    .pipe(sourcemaps.init()) // Initialize sourcemaps
     .pipe(gsass({
       includePaths: sassPaths,
       outputStyle: 'compressed' // if css compressed **file size**
@@ -20,6 +22,7 @@ function sass( path ) {
     .pipe($.postcss([
       autoprefixer()
     ]))
+    .pipe(sourcemaps.write('.')) // Write sourcemaps
     .pipe(gulp.dest('css'))
     .pipe(browserSync.stream());
 };
