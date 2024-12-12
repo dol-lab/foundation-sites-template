@@ -389,7 +389,7 @@ a {
     hyphens: auto;
     overflow: hidden;
 	display: -webkit-box;
-    display: box;
+    display: flex;
 }
 
 .hover-underline:hover {
@@ -403,12 +403,10 @@ ul {
 
 small {
 	color: $header-small-font-color;
+	color: var(--s--dark-gray);
 	display: inline-block;
 	line-height: $header-lineheight;
 
-	&.a {
-		font-size: $small-font-size;
-	}
 	& > a {
 		&:hover {
 			color: $black;
@@ -2015,7 +2013,6 @@ label > [disabled] ~ * {
 
 // 11. Button & Input
 // ---------
-
 $input-height: $button-height;
 
 [type="text"],

@@ -84,21 +84,21 @@ $paragraph-font-size: 0.9rem;
 // 1. Global
 // ---------
 
-$global-font-size: 1rem;
-$global-width: rem-calc(1120);
-$global-lineheight: 1.4;
-$foundation-palette: (
-	primary: #689,
-	secondary: #455a64,
-	success: #28aa6d,
-	warning: #ffae00,
-	alert: #f1484d,
-);
 $light-gray: #eee;
 $medium-gray: #bbb;
 $dark-gray: #767676; // https://coolors.co/contrast-checker/767676-ffffff
 $black: #333;
 $white: #fff;
+$global-font-size: 1rem;
+$global-width: rem-calc(1120);
+$global-lineheight: 1.4;
+$foundation-palette: (
+	primary: $dark-gray,// #689,
+	secondary: #455a64,
+	success: #28aa6d,
+	warning: #ffae00,
+	alert: #f1484d,
+);
 $body-background: $light-gray;
 $body-font-color: $black;
 $body-font-family: "Roboto", helvetica, arial, sans-serif;
@@ -109,7 +109,7 @@ $global-position: 1rem;
 $global-weight-normal: 400;
 $global-weight-bold: 500;
 $global-radius: 0.1875rem;
-$global-menu-padding: 0.75rem 0.875rem;
+$global-menu-padding: 0.75rem 0.9rem;
 $global-menu-nested-margin: 1rem;
 $global-text-direction: ltr;
 $global-flexbox: true;
@@ -307,7 +307,7 @@ $badge-font-size: 0.6rem;
 
 $breadcrumbs-margin: 0;
 
-$breadcrumbs-item-font-size: 0.875rem;
+$breadcrumbs-item-font-size: 0.9rem;
 $breadcrumbs-item-color: $dark-gray;
 $breadcrumbs-item-color-current: $very-dark-gray;
 $breadcrumbs-item-color-disabled: $medium-gray;
@@ -322,8 +322,8 @@ $breadcrumbs-item-separator-color: $breadcrumbs-item-color;
 // ----------
 $button-sizes: (
 	tiny: 0.625rem,
-	small: 0.75rem,
-	default: 0.875rem,
+	small: 0.8rem,
+	default: 0.9rem,
 	large: 1rem
 );
 $button-font-family: inherit;
@@ -399,7 +399,7 @@ $closebutton-offset-vertical: (
 	medium: 0.5rem,
 );
 $closebutton-size: (
-	small: 0.875rem,
+	small: 0.9rem,
 	medium: 2em,
 );
 $closebutton-lineheight: 1;
@@ -444,9 +444,9 @@ $dropdownmenu-arrow-padding: 1.5rem;
 $dropdownmenu-min-width: 200px;
 $dropdownmenu-background: $white;
 $dropdownmenu-submenu-background: $dropdownmenu-background;
-$dropdownmenu-padding: $global-menu-padding; //0.875rem;
+$dropdownmenu-padding: $global-menu-padding; //0.9rem;
 $dropdownmenu-nested-margin: 0;
-$dropdownmenu-submenu-padding: 0.75rem 0.875rem;
+$dropdownmenu-submenu-padding: 0.75rem 0.9rem;
 $dropdownmenu-border: none;
 $dropdown-menu-item-color-active: none;
 $dropdown-menu-item-background-active: $very-light-gray;
