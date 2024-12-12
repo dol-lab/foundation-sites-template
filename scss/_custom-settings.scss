@@ -1118,26 +1118,28 @@ label[for] {
 	}
 
 	.card-divider:last-child .comment-avatar-list {
+		--avatar-overlap: 0.6rem;
 		flex-wrap: wrap;
 		/* row-reverse is intended. we want to show most recent activity with higher prio.
 		 * so we send them in reverted directory, hide overflow and then revers. smart!
 		 */
 		flex-direction: row-reverse;
 		/* alignment needs to be flex-start. test with many avatars... */
-		justify-content: flex-start;
+		justify-content: flex-end;
 		height: map-get($user-card-sizes, small);
 		min-width: map-get($user-card-sizes, small);
 		max-width: 40%;
 		overflow: hidden;
 		border-radius: 0 0 0 $card-border-radius;
+		padding-left: calc( var(--avatar-overlap) + #{nth(map-get($padding-sizes, small), 1)} );
 
 		.avatar-container {
 			border-radius: 50%;
 			overflow: hidden;
 			border: 3px solid var(--s--white);
+			margin-left: calc( -1 * var(--avatar-overlap) );
 			&:not(:last-child) {
 				/* last-child, da überliegender container flex row-reverse hat */
-				margin-left: -.6rem;
 			}
 		}
 	}
