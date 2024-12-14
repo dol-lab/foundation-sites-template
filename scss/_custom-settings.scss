@@ -1132,6 +1132,7 @@ label[for] {
 		overflow: hidden;
 		border-radius: 0 0 0 $card-border-radius;
 		padding-left: calc( var(--avatar-overlap) + #{nth(map-get($padding-sizes, small), 1)} );
+		margin-right: calc( -0.7 * var(--avatar-overlap) );
 
 		.avatar-container {
 			border-radius: 50%;
@@ -2333,7 +2334,7 @@ input,
 	&::after {
 		content: "...";
 		letter-spacing: 0.03125rem;
-		height: 0;
+		margin-top: -0.65rem;
 	}
 }
 
