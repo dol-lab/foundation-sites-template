@@ -1137,10 +1137,8 @@ label[for] {
 			border-radius: 50%;
 			overflow: hidden;
 			border: 3px solid var(--s--white);
+			box-sizing: border-box;
 			margin-left: calc( -1 * var(--avatar-overlap) );
-			&:not(:last-child) {
-				/* last-child, da überliegender container flex row-reverse hat */
-			}
 		}
 	}
 
@@ -2303,7 +2301,7 @@ input,
 		position: relative;
 		display: flex;
 		justify-content: center;
-		align-items: flex-start;
+		align-items: center;
 		width: $button-height;
 		line-height: 0;
 		font-weight: $global-weight-bold;
