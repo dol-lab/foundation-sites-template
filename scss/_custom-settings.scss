@@ -541,12 +541,6 @@ label[for] {
 		padding: 0;
 		padding-left: nth($button-padding, 2);
 	}
-	// @each $size-label, $size in $user-card-sizes {
-	// 	.#{$size-label} & {
-	// 		width: calc(100% - #{$size});
-	// 		padding-left: nth($button-padding, 2);
-	// 	}
-	// }
 }
 
 .post-card-anchor {
@@ -1174,7 +1168,7 @@ label[for] {
 
 .main-menu {
 	.activity-card {
-		min-width: 350px;
+		min-width: calc( min( 350px, 90vw ) );
 
 		a.card-section {
 			z-index: 100;
