@@ -2578,6 +2578,10 @@ $border: 1px solid $very-light-gray;
 	&.accordion-menu {
 		justify-content: space-around;
 
+		a {
+			padding-inline: 0.75rem;
+		}
+
 		& > li {
 			&.navbar-icon {
 				justify-content: center;
