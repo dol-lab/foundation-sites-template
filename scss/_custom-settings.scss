@@ -1101,13 +1101,16 @@ label[for] {
 
 .post-card,
 .activity-card {
+
 	a:first-child .post-feature-image,
 	.post-feature-image:first-child,
 	.space-header:first-child {
 		overflow: hidden;
 		border-radius: $card-border-radius $card-border-radius 0 0;
 	}
-
+	&.activity-card-new {
+		border-left: 3px solid var(--s-c1, $primary-color);
+	}
 	& > .card-section:first-child {
 		& > .avatar-container:first-child {
 			overflow: hidden;
