@@ -9,4 +9,5 @@ node_modules/**
 # include all directories, not files (empty dirs are not tracked via git)
 !node_modules/**/
 !node_modules/foundation-sites/dist/js/foundation.min.js
+!node_modules/foundation-sites/dist/js/foundation.js
 !node_modules/what-input/dist/what-input.min.js
