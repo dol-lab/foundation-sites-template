@@ -33,6 +33,8 @@
 //   27. Breadcrumbs
 //   28. Swiper
 //   29. Keyboard focus
+//   30. Shadows
+//   31. Containers
 
 // 0. CSS Vars
 // ---------
@@ -85,6 +87,7 @@ $padding-sizes: (
 );
 
 $user-card-sizes: (
+	xsmall: 24px,
 	small: 36px,
 	medium: 54px,
 	large: 96px,
@@ -2459,7 +2462,7 @@ $border: 1px solid $very-light-gray;
 		&.dropdown {
 			flex-wrap: nowrap;
 			& > li {
-				& > :is(a, span) {
+				& > :is(a, span, button) {
 					height: var(--header-height);
 					min-width: var(--header-height);
 					padding-top: 0;
@@ -3924,16 +3927,16 @@ $icon-line-weight: 2;
 		padding-block: $size;
 	}
 	.pr-#{$size-name} {
-		padding-inline-end: $size;
+		padding-inline-end: if(length($size) > 1, nth($size, 2), $size);
 	}
 	.pl-#{$size-name} {
-		padding-inline-start: $size;
+		padding-inline-start: if(length($size) > 1, nth($size, 2), $size);
 	}
 	.pt-#{$size-name} {
-		padding-block-start: $size;
+		padding-block-start: if(length($size) > 1, nth($size, 1), $size);
 	}
 	.pb-#{$size-name} {
-		padding-block-end: $size;
+		padding-block-end: if(length($size) > 1, nth($size, 1), $size);
 	}
 }
 
@@ -4747,3 +4750,15 @@ a.sms-single-option:focus {
   box-shadow: inset $global-focus;
 }
 
+// 30. Shadows
+
+.no-box-shadow{
+	box-shadow: none !important;
+}
+
+//   31. Containers
+
+.activity-container {
+	background-color: white;
+	border-radius: $card-border-radius;
+}
