@@ -4762,3 +4762,10 @@ a.sms-single-option:focus {
 	background-color: white;
 	border-radius: $card-border-radius;
 }
+
+//maybe rather give first-child more margin-top in this case to prevent jumping on load
+.textwidget {
+	.activity-container {
+		margin-top: 1rem;
+	}
+}
