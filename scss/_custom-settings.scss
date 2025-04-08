@@ -4191,10 +4191,12 @@ $spinner-sizes: (
 
 	span,
 	small {
-		font-size: $small-font-size;
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
+	}
+	small {
+		font-size: $small-font-size;
 	}
 
 	&.tt-cursor {
