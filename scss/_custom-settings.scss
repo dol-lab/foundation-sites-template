@@ -962,7 +962,7 @@ label[for] {
 		}
 	}
 
-	img[data-toggle] {
+	img[data-toggle], img[role=button] {
 		cursor: pointer;
 		transition: $global-transition-short;
 	}
@@ -974,6 +974,8 @@ label[for] {
 
 	&:hover img[data-toggle],
 	&:hover img[data-move],
+	&:hover img[role=button],
+	img[role=button].open,
 	[aria-expanded="true"] {
 		border-radius: $global-radius;
 		transform: scale(0.8);
@@ -1119,7 +1121,8 @@ label[for] {
 		}
 	}
 
-	.card-divider:last-child .comment-avatar-list {
+	.card-divider:last-child .comment-avatar-list,
+	.card-divider:last-child * .comment-avatar-list {
 		--avatar-overlap: 0.6rem;
 		flex-wrap: wrap;
 		/* row-reverse is intended. we want to show most recent activity with higher prio.
@@ -1470,7 +1473,7 @@ label[for] {
 // 9. Dropdown
 // -----------
 
-.dropdown-pane {
+.dropdown-pane, .popover {
 	max-width: 100%;
 	box-shadow: $global-drop-shadow;
 	background-color: $white;
@@ -2552,7 +2555,9 @@ $border: 1px solid $very-light-gray;
 	}
 }
 
-
+#main-menu-toggle-state{
+	display: none;
+}
 .main-menu .menu {
 	&.dropdown {
 		& > .navbar-icon {
@@ -2573,6 +2578,7 @@ $border: 1px solid $very-light-gray;
 
 	&.accordion-menu {
 		justify-content: space-around;
+		align-items: center;
 
 		a {
 			padding-inline: 0.75rem;
@@ -2583,7 +2589,9 @@ $border: 1px solid $very-light-gray;
 				justify-content: center;
 				flex-grow: 1;
 				flex-basis: 0;
-
+				&.search{
+					display: flex;
+				}
 				& > a {
 					& > span {
 						display: none;
@@ -2596,7 +2604,7 @@ $border: 1px solid $very-light-gray;
 			}
 
 			& > .menu-anchor {
-				height: 48px;
+				//height: 48px;
 				box-sizing: border-box;
 				align-items: center;
 				display: flex;
@@ -2607,9 +2615,12 @@ $border: 1px solid $very-light-gray;
 			&:not(.navbar-icon) {
 				display: none;
 
-				#menu-state:checked ~ & {
+				/* #menu-state:checked ~ & {
 					display: block;
 
+				} */
+				#main-menu-toggle-state:popover-open ~ & {
+					display: block;
 				}
 			}
 			&.superadmin-only{
@@ -2700,6 +2711,11 @@ $border: 1px solid $very-light-gray;
 			}
 
 			.card-anchor {
+				padding: 0;
+			}
+		}
+		.main-menu-burger{
+			& > a {
 				padding: 0;
 			}
 		}
