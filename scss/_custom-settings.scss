@@ -3203,13 +3203,10 @@ $icon-line-weight: 2;
 }
 
 .user.tt-suggestion.cursor,
-.user.tt-suggestion:hover {
+.user.tt-suggestion:hover,
+.user.global-search-suggestion:hover {
 	background-color: $very-light-gray;
-}
-
-.user.tt-suggestion.cursor,
-.user.tt-suggestion:hover {
-	background-color: $very-light-gray;
+	cursor: pointer;
 }
 
 .twitter-typeahead.tt-hint {
@@ -4190,6 +4187,7 @@ $spinner-sizes: (
 }
 
 .twitter-typeahead,
+.global-search-modal,
 .tt-input,
 .tt-hint {
 	width: 100%;
@@ -4201,7 +4199,7 @@ $spinner-sizes: (
 	}
 }
 
-.tt-suggestion {
+.tt-suggestion, .global-search-suggestion {
 	display: flex;
 	align-items: baseline;
 
@@ -4231,17 +4229,21 @@ $spinner-sizes: (
 	}
 }
 
-.menu .twitter-typeahead {
+.menu .twitter-typeahead, .global-search-modal {
 	.tt-dataset-blogs:not(:empty) {
 		padding: nth(map-get($padding-sizes, medium), 1);
 
-		.tt-suggestion {
+		.tt-suggestion, .global-search-suggestion {
 			padding: nth(map-get($padding-sizes, medium), 1);
 		}
 	}
 
-	.tt-suggestion {
+	.tt-suggestion, .global-search-suggestion {
 		padding: 0;
+
+		.card{
+			@extend .margin-medium;
+		}
 
 		&.user {
 			position: relative;
