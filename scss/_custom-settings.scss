@@ -3235,7 +3235,7 @@ $icon-line-weight: 2;
 	&::before {
 		@include cross-browser(transform, translate(0, -5px) rotate(0deg));
 
-		#menu-state:checked ~ nav & {
+		#main-menu-toggle-state:popover-open ~ nav &, #menu-state:checked ~ nav & {
 			@include cross-browser(transform, translate(0, 0) rotate(-45deg));
 		}
 	}
@@ -3243,7 +3243,7 @@ $icon-line-weight: 2;
 	&::after {
 		@include cross-browser(transform, translate(0, 5px) rotate(0deg));
 
-		#menu-state:checked ~ nav & {
+		#main-menu-toggle-state:popover-open ~ nav &, #menu-state:checked ~ nav & {
 			@include cross-browser(transform, translate(0, 0) rotate(45deg));
 		}
 	}
