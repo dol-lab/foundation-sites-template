@@ -81,8 +81,8 @@ $padding-sizes: (
 	small: 0.3125rem,
 	medium: 0.70rem 0.875rem,
 	large: 1rem 1.25rem,
-	xlarge: 1rem 2rem 1.5rem,
-	xxlarge: 1rem 2rem 1.5rem,
+	xlarge: 1.25rem 2rem 1.5rem,
+	xxlarge: 1.5rem 2.5rem 1.75rem,
 	button: $button-padding
 );
 
@@ -1108,7 +1108,7 @@ label[for] {
 		border-radius: $card-border-radius $card-border-radius 0 0;
 	}
 	&.activity-card-new {
-		border-left: 3px solid var(--s-c1, $primary-color);
+		box-shadow: inset 3px 0 0 var(--s-c1, $primary-color);
 	}
 	& > .card-section:first-child {
 		& > .avatar-container:first-child {
