@@ -388,6 +388,7 @@ a {
 
 .line-clamp {
 	-webkit-line-clamp: 2;
+line-clamp: 2;
     -webkit-box-orient: vertical;
     hyphens: auto;
     overflow: hidden;
@@ -713,7 +714,6 @@ label[for] {
     color: #333;
     background: rgba(255,255,255,0.6);
     -webkit-box-orient: vertical;
-    -webkit-backdrop-filter: 20px saturate(200%);
     backdrop-filter: 20px saturate(200%);
     -webkit-backdrop-filter: blur(20px) saturate(200%);
     backdrop-filter: blur(20px) saturate(200%);
@@ -2386,6 +2386,7 @@ input,
 
 		/* Fallback for non-webkit */
 		-webkit-line-clamp: initial;
+line-clamp: initial;
 		-webkit-box-orient: vertical;
 		overflow: initial;
 		text-overflow: initial;
@@ -2396,6 +2397,7 @@ input,
 
 		/* Fallback for non-webkit */
 		-webkit-line-clamp: $lines-to-show;
+line-clamp: $lines-to-show;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -3765,7 +3767,7 @@ $icon-line-weight: 2;
 	max-width: $global-width;
 
 	&.small {
-		max-width: calc($global-width / 3 * 2);
+		max-width: calc(#{$global-width} / 3 * 2);
 	}
 
 	@include breakpoint(medium) {
@@ -3782,7 +3784,6 @@ $icon-line-weight: 2;
 	height: 48px;
 	width: 48px;
 	flex: 0 0 auto;
-	border-radius: 3px;
 	overflow: hidden;
 	border-radius: $global-radius;
 	text-align: center;
