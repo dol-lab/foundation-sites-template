@@ -420,7 +420,10 @@ small {
 
 code {
 	border-radius: $global-radius-small;
-	font-size: 0.875em;
+	font-size: 0.85em;
+	position: relative;
+	top: -0.08em;
+	padding: 0.15em 0.4em;
 }
 
 pre {

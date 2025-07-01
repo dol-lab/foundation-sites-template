@@ -30,6 +30,9 @@ details {
 			display: inline-block;
 			transition: all 0.15s ease;
 		}
+		&.small {
+			font-size: $small-font-size;
+		}
 	}
 	&[open]>summary::before {
 		transform: rotate(90deg);
