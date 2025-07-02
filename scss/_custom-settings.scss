@@ -2294,6 +2294,30 @@ input,
 	}
 }
 
+// autosize textarea
+// put textarea inside a div with class "grow-wrap
+// and add oninput="this.parentNode.dataset.replicatedValue = this.value" to textarea
+
+.grow-wrap {
+	display: grid;
+
+	&::after {
+		content: attr(data-replicated-value) " ";
+		white-space: pre-wrap;
+		visibility: hidden;
+	}
+
+	>textarea,
+	&::after {
+		padding: .75rem;
+		font: inherit;
+		/* font-size: 1rem; */
+		line-break: anywhere;
+		padding-right: 2rem;
+		grid-area: 1 / 1 / 2 / 2;
+	}
+}
+
 // 12. Dot Menu
 // ---------
 
