@@ -23,11 +23,11 @@
   "devDependencies": {
     "autoprefixer": "^10.3.4",
     "browser-sync": "^2.18.13",
-    "gulp": "^4",
+    "gulp": "^5.0.1",
     "gulp-load-plugins": "^2.0.7",
     "gulp-postcss": "^9.0.1",
     "gulp-sass": "^5.0.0",
-    "gulp-sourcemaps": "^3.0.0",
+    "gulp-sourcemaps": "^3",
     "stylelint": "^14.1.0",
     "stylelint-config-standard": "^24.0.0",
     "stylelint-config-standard-scss": "^3.0.0"
@@ -35,6 +35,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/foundation/foundation-sites-template.git"
+  },
+  "volta": {
+    "node": "20.19.4",
+    "npm": "11.5.2"
   },
   "private": true
 }
