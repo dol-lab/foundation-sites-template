@@ -79,7 +79,7 @@ $button-height: 2.4rem;
 
 $padding-sizes: (
 	small: 0.3125rem,
-	medium: 0.75rem 0.9rem, // same as accordionmenu-submenu-padding
+	medium: 2rem 0.9rem, // same as accordionmenu-submenu-padding
 	large: 1rem 1.25rem,
 	xlarge: 1.25rem 2rem 1.5rem,
 	xxlarge: 1.5rem 2.5rem 1.75rem,
@@ -231,7 +231,7 @@ $dynamic-relation: (
 	@return linear-gradient(
 		$tilt,
 		$color 0%,
-		scale-color($color, $lightness) 100%
+		scale-color($color, $lightness: $lightness) 100%
 	);
 }
 
