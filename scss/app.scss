@@ -1,10 +1,48 @@
 @charset 'utf-8';
 
-@import "settings";
-@import "foundation";
-@import "motion-ui";
-@import "custom-foundation-global-styles-not-prefixed"; // a partial copy (first part) of the foundation-global-styles mixin.
-@import "custom-foundation-global-styles-prefixed"; // a partial copy (second part) of the foundation-global-styles mixin.
-@import "custom-foundation-includes";
-@import "custom-settings";
+///
+///  Functions that are used throughout scripts.
+///  Must come first.
+@import "custom-functions";
+
+///
+///  A separate file for color settings. 
+///  Must come second, as variables are used throughout foundation components.
+@import "colors";
+
+///
+///  Font import, only up here by convention.
 @import "fonts";
+
+///
+///  Foundation settings, overwriting !default values for component variables
+@import "settings";
+
+///
+///  All variables and maps we introduced
+@import "custom-settings";
+
+///
+///  @import statements for foundation partials
+///  Some are "custom forks" to allow for CSS variable usage.
+@import "custom-foundation-imports";
+
+///
+///  Basically foundation's 'normalize' with a few extra knobs.
+///  Previously called custom-foundation-global-styles-not-prefixed
+@import "custom-normalize";
+
+///
+///  @include statements for foundation mixins
+///  Some are "custom forks" to allow for CSS variable usage.
+@import "custom-foundation-includes";
+
+///
+///  Our styling, comes late to overwrite foundation styles.
+@import "custom-styles";
+
+///
+///  Motion UI stuff
+@import "motion-ui";
+@include motion-ui-transitions;
+@include motion-ui-animations;

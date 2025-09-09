@@ -1,0 +1,223 @@
+///
+/// Color roles used to simplify handling
+///
+
+@use "sass:color";
+@use "sass:map";
+
+///
+/// Background
+/// stacking - $color-bg-0 (page background), $color-bg-1 (card and wiget background), $color-bg-2 (highlighted element background)
+
+$color-bg-0: var(--f-color-bg-0);
+$color-bg-1: var(--f-color-bg-1);
+$color-bg-2: var(--f-color-bg-2);
+
+///
+/// Borders
+/// $color-border-0 (minimal, just about visible), $color-border-1 (increased in visibility)
+
+$color-border-0: var(--f-color-border-0);
+$color-border-1: var(--f-color-border-1);
+$color-border-2: var(--f-color-border-2);
+
+///
+/// Text
+/// decreasing in dominance: $color-text-0 (headlines, links), $color-text-1 (p, card content), $color-text-2 (small)
+
+$color-text-0: var(--f-color-text-0);
+$color-text-1: var(--f-color-text-1);
+$color-text-2: var(--f-color-text-2);
+
+///
+/// Palette colors
+/// Each palette color is assigned a base value (-0), alongside a darker version (e.g. used for hover states, -1), as well as a text color provides contrast to them (-contrast)
+
+$foundation-palette: (
+  brand: hsl(16 99% 43%),
+  primary: hsl(200 20% 50%),
+  secondary: hsl(199 18% 33%),
+  success: hsl(152 62% 41%),
+  warning: hsl(41 100% 50%),
+  alert: hsl(358 86% 61%)
+);
+$foundation-palette-contrast: (
+  brand: hsl(0 0% 100%),
+  primary: hsl(0 0% 100%),
+  secondary: hsl(0 0% 100%),
+  success: hsl(0 0% 100%),
+  warning: hsl(0 0% 0%),
+  alert: hsl(0 0% 100%)
+);
+$foundation-palette-darktheme: (
+  brand: hsl(16 81% 55%),
+  primary: map.get($foundation-palette, "primary"),
+  secondary: map.get($foundation-palette, "secondary"),
+  success: map.get($foundation-palette, "success"),
+  warning: map.get($foundation-palette, "warning"),
+  alert: map.get($foundation-palette, "alert")
+);
+$foundation-palette-darktheme-contrast: (
+  brand: hsl(0 0% 0%),
+  primary: map.get($foundation-palette-contrast, "primary"),
+  secondary: map.get($foundation-palette-contrast, "secondary"),
+  success: map.get($foundation-palette-contrast, "success"),
+  warning: map.get($foundation-palette-contrast, "warning"),
+  alert: map.get($foundation-palette-contrast, "alert")
+);
+
+///
+/// Palette for neutral tones.
+/// (lighttheme, darktheme)
+
+$neutral-palette: (
+  100: (
+    hsl(0 0% 100%),
+    hsl(0, 0%, 4%)
+  ),
+  200: (
+    hsl(0 0% 97%),
+    hsl(0, 0%, 9%)
+  ),
+  300: (
+    hsl(0 0% 95%),
+    hsl(0 0% 14%)
+  ),
+  400: (
+    hsl(0 0% 73%),
+    hsl(0 0% 42%)
+  ),
+  500: (
+    hsl(0 0% 52%),
+    hsl(0 0% 55%)
+  ),
+  600: (
+    hsl(0 0% 37%),
+    hsl(0, 0%, 68%)
+  ),
+  700: (
+    hsl(0 0% 14%),
+    hsl(0 0% 96%)
+  )
+);
+
+:root {
+
+  @each $step, $pair in $neutral-palette {
+    --f-color-neutral-#{$step}: #{nth($pair, 1)};
+  }
+
+  @each $color-name, $color in $foundation-palette {
+    --f-color-#{$color-name}: #{$color};
+    --f-color-#{$color-name}-darker: var(--f-color-#{$color-name}); // Fallback for color-mix compatibility.
+    --f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
+  }
+  @each $color-name, $color in $foundation-palette-contrast {
+    --f-color-#{$color-name}-contrast: #{$color};
+  }
+
+  --f-color-bg-0: var(--f-color-neutral-300);
+  --f-color-bg-1: var(--f-color-neutral-100);
+  --f-color-bg-2: var(--f-color-neutral-200);
+
+  @include color-mix(--f-color-border-0, #{$color-text-0}, 6%, transparent, 94%);
+  @include color-mix(--f-color-border-1, #{$color-text-0}, 12%, transparent, 88%);
+  @include color-mix(--f-color-border-2, #{$color-text-0}, 16%, transparent, 84%);
+
+  --f-color-text-0: var(--f-color-neutral-700);
+  --f-color-text-1: var(--f-color-neutral-600);
+  --f-color-text-2: var(--f-color-neutral-500);
+
+  // brand colors, utilizing PHP-set variables, but offering fallbacks.
+  --f-color-brand: var(--f-color-brand-lighttheme, #{map.get($foundation-palette, "brand")});
+
+  /// Dark Mode
+  ///
+
+    @media (prefers-color-scheme: dark) {
+      @each $step, $pair in $neutral-palette {
+        --f-color-neutral-#{$step}: #{nth($pair, 2)};
+      }
+
+      @each $color-name, $color in $foundation-palette-darktheme {
+        --f-color-#{$color-name}: #{$color};
+        
+        --f-color-#{$color-name}-darker: var(--f-color-#{$color-name}); // Fallback for color-mix compatibility.
+        --f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
+        --f-color-#{$color-name}-contrast: #{map.get($foundation-palette-darktheme-contrast, $color-name)};
+      }
+
+      --f-color-bg-0: var(--f-color-neutral-100);
+      --f-color-bg-1: var(--f-color-neutral-200);
+      --f-color-bg-2: var(--f-color-neutral-300);
+
+      @include color-mix(--f-color-border-0, #{$color-text-0}, 8%, transparent, 92%);
+      @include color-mix(--f-color-border-1, #{$color-text-0}, 12%, transparent, 88%);
+
+      --f-color-text-0: var(--f-color-neutral-700);
+      --f-color-text-1: var(--f-color-neutral-600);
+      --f-color-text-2: var(--f-color-neutral-500);
+
+      --f-color-brand: var(--f-color-brand-darktheme, #{map.get($foundation-palette-darktheme, "brand")});
+    }
+}
+
+html[data-theme="light"] {
+  @each $step, $pair in $neutral-palette {
+    --f-color-neutral-#{$step}: #{nth($pair, 1)};
+  }
+
+  @each $color-name, $color in $foundation-palette {
+    --f-color-#{$color-name}: #{$color};
+    --f-color-#{$color-name}-darker: var(--f-color-#{$color-name}); // Fallback for color-mix compatibility.
+    --f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
+  }
+  @each $color-name, $color in $foundation-palette-contrast {
+    --f-color-#{$color-name}-contrast: #{$color};
+  }
+
+  --f-color-bg-0: var(--f-color-neutral-300);
+  --f-color-bg-1: var(--f-color-neutral-100);
+  --f-color-bg-2: var(--f-color-neutral-200);
+
+  @include color-mix(--f-color-border-0, #{$color-text-0}, 6%, transparent, 94%);
+  @include color-mix(--f-color-border-1, #{$color-text-0}, 12%, transparent, 88%);
+  @include color-mix(--f-color-border-2, #{$color-text-0}, 16%, transparent, 84%);
+
+  --f-color-text-0: var(--f-color-neutral-700);
+  --f-color-text-1: var(--f-color-neutral-600);
+  --f-color-text-2: var(--f-color-neutral-500);
+
+  // brand colors, utilizing PHP-set variables, but offering fallbacks.
+  --f-color-brand: var(--f-color-brand-lighttheme, #{map.get($foundation-palette, "brand")});
+}
+html[data-theme="dark"] {
+  @each $step, $pair in $neutral-palette {
+        --f-color-neutral-#{$step}: #{nth($pair, 2)};
+      }
+
+      @each $color-name, $color in $foundation-palette-darktheme {
+        --f-color-#{$color-name}: #{$color};
+        
+        --f-color-#{$color-name}-darker: var(--f-color-#{$color-name}); // Fallback for color-mix compatibility.
+        --f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
+        --f-color-#{$color-name}-contrast: #{map.get($foundation-palette-darktheme-contrast, $color-name)};
+      }
+
+      --f-color-bg-0: var(--f-color-neutral-100);
+      --f-color-bg-1: var(--f-color-neutral-200);
+      --f-color-bg-2: var(--f-color-neutral-300);
+
+      @include color-mix(--f-color-border-0, #{$color-text-0}, 8%, transparent, 92%);
+      @include color-mix(--f-color-border-1, #{$color-text-0}, 12%, transparent, 88%);
+
+      --f-color-text-0: var(--f-color-neutral-700);
+      --f-color-text-1: var(--f-color-neutral-600);
+      --f-color-text-2: var(--f-color-neutral-500);
+
+      --f-color-brand: var(--f-color-brand-darktheme, #{map.get($foundation-palette-darktheme, "brand")});
+}
+
+///
+/// @todo
+/// - Rename map, explaining that variable x becomes variable y

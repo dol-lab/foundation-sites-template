@@ -1,0 +1,191 @@
+// Foundation for Sites
+// https://get.foundation
+// Licensed under MIT Open Source
+
+////
+/// @group tabs
+////
+
+/// Default margin of the tab bar.
+/// @type Number
+$tab-margin: 0 !default;
+
+/// Default background color of a tab bar.
+/// @type Color
+$tab-background: $color-bg-1 !default;
+
+/// Font color of tab item.
+/// @type Color
+$tab-color: $color-text-1 !default;
+
+/// Active background color of a tab bar.
+/// @type Color
+$tab-background-active: $color-bg-2 !default;
+
+/// Active font color of tab item.
+/// @type Color
+$tab-active-color: $color-text-0 !default;
+
+/// Font size of tab items.
+/// @type Number
+$tab-item-font-size: rem-calc(12) !default;
+
+/// Default background color on hover for items in a Menu.
+$tab-item-background-hover: $color-bg-2 !default;
+
+/// Default padding of a tab item.
+/// @type Number
+$tab-item-padding: 1.25rem 1.5rem !default;
+
+/// Default background color of tab content.
+/// @type Color
+$tab-content-background: $color-bg-1 !default;
+
+/// Default border color of tab content.
+/// @type Color
+$tab-content-border: $color-bg-2 !default;
+
+/// Default text color of tab content.
+/// @type Color
+$tab-content-color: $color-text-1 !default;
+
+/// Default padding for tab content.
+/// @type Number | List
+$tab-content-padding: 1rem !default;
+
+/// Adds styles for a tab container. Apply this to a `<ul>`.
+@mixin tabs-container($margin: $tab-margin, $background: $tab-background, $border-color: $tab-content-border) {
+  @include clearfix;
+  margin: $margin;
+  border: 1px solid $border-color;
+  background: $background;
+  list-style-type: none;
+  // padding: .25em;
+  // gap: .25em;
+}
+
+/// Augments a tab container to have vertical tabs. Use this in conjunction with `tabs-container()`.
+@mixin tabs-container-vertical {
+  > li {
+    display: block;
+    float: none;
+    width: auto;
+  }
+}
+
+/// Adds styles for the links within a tab container. Apply this to the `<li>` elements inside a tab container.
+@mixin tabs-title(
+  $padding: $tab-item-padding,
+  $font-size: $tab-item-font-size,
+  $color: $tab-color,
+  $color-active: $tab-active-color,
+  $background-hover: $tab-item-background-hover,
+  $background-active: $tab-background-active
+) {
+  float: #{$global-left};
+
+  > a {
+    @include disable-mouse-outline;
+    display: flex;
+    gap: 0.25em;
+    align-items: center;
+    justify-content: center;
+    padding: $padding;
+    font-size: $font-size;
+    line-height: 1;
+    color: $color;
+    text-decoration: none !important;
+    transition: all var(--f-transition--medium) var(--f-transition--timing-cubic-bezier);
+
+    &:hover {
+      background: $background-hover;
+      color: var(--f-color-primary-contrast);
+    }
+
+    &:focus,
+    &[aria-selected="true"] {
+      background: $background-active;
+      color: $color-active;
+    }
+  }
+}
+
+/// Adds styles for the wrapper that surrounds a tab group's content panes.
+@mixin tabs-content(
+  $background: $tab-content-background,
+  $color: $tab-content-color,
+  $border-color: $tab-content-border
+) {
+  // border: 1px solid $border-color;
+  border-top: 0;
+  background: $background;
+  color: $color;
+  transition: all 0.5s ease;
+}
+
+/// Augments a tab content container to have a vertical style, by shifting the border around. Use this in conjunction with `tabs-content()`.
+@mixin tabs-content-vertical($border-color: $tab-content-border) {
+  border: 1px solid $border-color;
+  border-#{$global-left}: 0;
+}
+
+/// Adds styles for an individual tab content panel within the tab content container.
+@mixin tabs-panel($padding: $tab-content-padding) {
+  display: none;
+  padding: $padding;
+
+  &.is-active {
+    display: block;
+  }
+}
+
+@mixin spaces-tabs {
+  .tabs {
+    @include tabs-container;
+  }
+
+  // Vertical
+  .tabs.vertical {
+    @include tabs-container-vertical;
+  }
+
+  // Simple
+  .tabs.simple {
+    > li > a {
+      padding: 0;
+
+      &:hover {
+        background: transparent;
+      }
+    }
+  }
+
+  // Primary color
+  .tabs.primary {
+    background: var(--f-color-primary);
+
+    > li > a {
+      color: var(--f-color-primary-contrast);
+
+      &:hover,
+      &:focus {
+        background: var(--f-color-primary-darker);
+      }
+    }
+  }
+
+  .tabs-title {
+    @include tabs-title;
+  }
+
+  .tabs-content {
+    @include tabs-content;
+  }
+
+  .tabs-content.vertical {
+    @include tabs-content-vertical;
+  }
+  .tabs-panel {
+    @include tabs-panel;
+  }
+}

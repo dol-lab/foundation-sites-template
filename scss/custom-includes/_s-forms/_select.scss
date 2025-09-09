@@ -1,0 +1,98 @@
+// Foundation for Sites
+// https://get.foundation
+// Licensed under MIT Open Source
+
+////
+/// @group forms
+////
+
+/// Background color for select menus.
+/// @type Color
+$select-background: $color-bg-1 !default;
+
+/// Color of the dropdown triangle inside select menus. Set to `transparent` to remove it entirely.
+/// @type Color
+$select-triangle-color: $color-text-1 !default;
+
+/// Default radius for select menus.
+/// @type Color
+$select-radius: $global-radius !default;
+
+@mixin form-select {
+  $height: ($input-font-size * unitless-calc($input-line-height)) +
+    (get-side($input-padding, "top") + get-side($input-padding, "bottom")) - rem-calc(1);
+
+  height: $height;
+  margin: 0 0 $form-spacing;
+  padding: $input-padding;
+
+  appearance: none;
+  border: $input-border;
+  border-radius: $select-radius;
+  background-color: $select-background;
+
+  font-family: $input-font-family;
+  font-size: $input-font-size;
+  font-weight: $input-font-weight;
+  line-height: $input-line-height;
+  color: $input-color;
+
+  // @if $select-triangle-color != transparent {
+  //   // @include background-triangle($select-triangle-color);
+  //   // @include background-triangle-image();
+
+  // }
+  
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNrEkckNgDAMBBfRkEt0ObRBBdsGXUDgmQfK4XhH2m8czQAAy27R3tsw4Qfe2x8uOO6oYLb6GlOor3GF+swURAOmUJ+RwtEJs9WvTGEYxBXqI1MQAZhCfUQKRzDMVj+TwrAIV6jvSUEkYAr1LSkcyTBb/V+KYfX7xAeusq3sLDtGH3kEGACPWIflNZfhRQAAAABJRU5ErkJggg==');
+  @media (prefers-color-scheme: dark) {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMBJREFUeNrEllsOhCAMRVszC9IlzU7KCmVHTJsoMWYMUtpyv9BgbuXQB5ZSdgBYYY4ycgBivk8KYFsQMfMiTTBP4o3nUzCKzOabLJbLy2/g31evGkAginR4/ZegKH5qX3bJCscA3t0x3kgO5tQFyhhFf50xRqFLbyMUNJQzgyjGS/wgCpvKqkRBpuWrE4V9d+1E4dPUXqIg107SQOE/2DRQxMwTDygIInVDET9T3lCoj/6j/VCmGjZOl2lKpZ8AAwDQP7zIimDGFQAAAABJRU5ErkJggg==');
+  }
+  background-origin: content-box;
+  background-position: $global-right (-$form-spacing) center;
+  background-repeat: no-repeat;
+  background-size: 9px 6px;
+
+  padding-#{$global-right}: ($form-spacing * 1.5);
+
+  @if has-value($input-transition) {
+    transition: $input-transition;
+  }
+
+  // Focus state
+  &:focus {
+    outline: none;
+    border: $input-border-focus;
+    background-color: $input-background-focus;
+    box-shadow: $input-shadow-focus;
+
+    @if has-value($input-transition) {
+      transition: $input-transition;
+    }
+  }
+
+  // Disabled state
+  &:disabled {
+    background-color: $input-background-disabled;
+    cursor: $input-cursor-disabled;
+  }
+
+  // Hide the dropdown arrow shown in newer IE versions
+  &::-ms-expand {
+    display: none;
+  }
+
+  &[multiple] {
+    height: auto;
+    background-image: none;
+  }
+  &:not([multiple]) {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@mixin foundation-form-select {
+  select {
+    @include form-select;
+  }
+}

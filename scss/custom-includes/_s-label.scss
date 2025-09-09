@@ -1,0 +1,71 @@
+// COPY & ADAPTATION OF _labels.scss by Foundation
+//
+// Foundation for Sites
+// https://get.foundation
+// Licensed under MIT Open Source
+
+////
+/// @group label
+////
+
+/// Default font size for labels.
+/// @type Number
+$label-font-size: 0.8rem !default;
+
+/// Default padding inside labels.
+/// @type Number
+$label-padding: 0.33333rem 0.5rem !default;
+
+/// Default radius of labels.
+/// @type Number
+$label-radius: $global-radius !default;
+
+/// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, etc.
+/// @type Map
+$label-palette: $foundation-palette !default;
+
+/// Base value for label background
+$label-background-default: $color-text-1 !default;
+
+/// Base value for label color
+$label-color-default: $color-bg-1 !default;
+
+///
+/// Label style token
+/// Uses CSS custom properties for background + contrast text color
+///
+@mixin label-style-token($name) {
+  background-color: var(--f-color-#{$name});
+  color: color-mix(in oklab, var(--f-color-#{$name}-contrast) 85%, var(--f-color-#{$name}) 15%);
+}
+
+///
+/// Generates base styles for a label.
+///
+@mixin label-base {
+  display: inline-block;
+  padding: $label-padding;
+  border-radius: $label-radius;
+  font-size: $label-font-size;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: default;
+  background-color: $label-background-default;
+  color: $label-color-default;
+}
+
+///
+/// Generates all styles for labels (similar to `spaces-button`)
+///
+@mixin spaces-label {
+  .label {
+    @include label-base;
+
+    // Palette classes
+    @each $name, $color in $label-palette {
+      &.#{$name} {
+        @include label-style-token($name);
+      }
+    }
+  }
+}

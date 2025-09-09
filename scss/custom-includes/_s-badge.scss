@@ -1,0 +1,109 @@
+// Foundation for Sites
+// https://get.foundation
+// Licensed under MIT Open Source
+
+@use "sass:math";
+
+////
+/// @group badge
+////
+
+/// Default background color for badges.
+/// @type Color
+$badge-background: var(--f-color-text) !default;
+
+/// Default text color for badges.
+/// @type Color
+$badge-color: var(--f-color-bg-contrast) !default;
+
+// Alternate text color for badges.
+// @type Color
+// $badge-color-alt: $color-text-0 !default;
+
+/// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, and so on.
+/// @type Map
+$badge-palette: $foundation-palette !default;
+
+/// Default padding inside badges.
+/// @type Number
+$badge-padding: 0.3em !default;
+
+/// Roundness of badges. Values ≤ 2 mean rounded. 
+/// @type Number
+$badge-rounding: 2 !default;
+
+/// Maximum height of a badge.
+/// @type Number
+$badge-height: 1.25em !default;
+
+/// Default font size for badges.
+/// @type Number
+$badge-font-size: 1rem !default;
+
+/// Generates the base styles for a badge.
+@mixin badge-base {
+  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: $badge-height / $badge-rounding;
+  font-size: $badge-font-size;
+  
+  padding: $badge-padding;
+  height: $badge-height;
+  min-width: $badge-height;
+}
+
+@mixin badge-small {
+  &.small {
+    font-size: $badge-font-size;
+    
+    height: $badge-height * 0.85;
+    min-width: $badge-height * 0.85;
+    $height-sm: $badge-height * 0.85 / $badge-rounding * 100;
+    border-radius: math.round($height-sm) / 100;
+  }
+
+}
+
+@mixin spaces-badge {
+  .badge {
+    @include badge-base;
+
+    &:not(.hollow):not(.clear) {
+      background: $badge-background;
+      color: $badge-color;
+  
+      @each $name, $color in $badge-palette {
+        &.#{$name} {
+          background: var(--f-color-#{$name});
+          color: var(--f-color-#{$name}-contrast);
+        }
+      }
+    }
+    &.hollow {
+      border: 1px solid $badge-background;
+      color: $badge-background;
+  
+      @each $name, $color in $badge-palette {
+        &.#{$name} {
+          --_f-color-readability: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text) 20%);
+          border: 1px solid var(--_f-color-readability, var(--f-color-#{$name}));
+          color: var(--_f-color-readability, var(--f-color-#{$name}));
+        }
+      }
+    }
+    &.clear {
+      color: $badge-background;
+  
+      @each $name, $color in $badge-palette {
+        &.#{$name} {
+          --_f-color-readability: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text) 20%);
+          color: var(--_f-color-readability, var(--f-color-#{$name}));
+        }
+      }
+    }
+    @include badge-small();
+  }
+}

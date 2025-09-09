@@ -1,0 +1,481 @@
+/*==============================================================================
+  Custom Utilities — SCSS Helpers and Mixins
+  ------------------------------------------------------------------------------
+
+  00. Module Imports
+  01. Function: color-mix-opacity
+  02. Function: color-mix-blend
+  03. Mixin:    color-mix
+  04. Mixin:    cross-browser
+  05. Mixin:    foundation-palette
+  06. Mixin:    button-sizes
+  07. Mixin:    dynamic-box
+  08. Mixin:    header-style
+  09. Mixin:    header-list
+  10. Function: strip-unit
+  11. Function: multiply-list
+  12. Function: extract-from-compact
+  13. Mixin:    excerpt
+  29. Mixins:   a11y-focus / a11y-focus-inset
+
+==============================================================================*/
+
+@use "sass:map";
+@use "sass:math";
+@use "sass:color";
+
+/*==============================================================================
+  01 - Function to replace SCSS rgba() with CSS Variable support
+==============================================================================*/
+
+////
+/// Returns a mixed color with transparency, using CSS `color-mix()` in `oklab`.
+///
+/// Useful as a modern replacement for `rgba()` when working with custom props.
+///
+/// @param {Color|String} $color                     - Base color (can be `var(...)`)
+/// @param {Number}       $color-percentage          - Percentage for `$color` (e.g., 30%)
+/// @param {Number}       $transparency-percentage   - Percentage for transparency (e.g., 70%)
+///
+/// @return {Color} Mixed color result
+////
+
+@function color-mix-opacity($color, $color-percentage, $transparency-percentage) {
+  @return color-mix(in oklab, $color $color-percentage, transparent $transparency-percentage);
+}
+
+////
+/// Returns a blend of two colors using CSS `color-mix()` in `oklab`.
+///
+/// @param {Color|String} $color-a            - First color (can be `var(...)`)
+/// @param {Number}       $color-a--percentage - Percentage for `$color-a`
+/// @param {Color|String} $color-b            - Second color (can be `var(...)`)
+/// @param {Number}       $color-b--percentage - Percentage for `$color-b`
+///
+/// @return {Color} Mixed color result
+////
+
+@function color-mix-blend($color-a, $color-a--percentage, $color-b, $color-b--percentage) {
+  @return color-mix(in oklab, $color-a $color-a--percentage, $color-b $color-b--percentage);
+}
+
+/*==============================================================================
+  03 - color-mix Mixin
+==============================================================================*/
+
+////
+/// Shorthand mixin to apply a `color-mix()` result to a chosen property,
+/// with a sensible fallback to the stronger side.
+///
+/// @param {String}       $property               - Target property (e.g., `color`, `background`, `border-color`, `fill`)
+/// @param {Color|String} $color-a                - Color A (can be CSS variable)
+/// @param {Number}       $color-a--percentage    - Percentage for Color A (e.g., 30%)
+/// @param {Color|String} $color-b                - Color B (can be CSS variable)
+/// @param {Number}       $color-b--percentage    - Percentage for Color B (e.g., 70%)
+/// @param {String}       $space [oklab]          - Color space (e.g., `oklab`)
+///
+
+@mixin color-mix(
+  $property,                       // 'color' | 'background' | 'bg' | 'background-color' | 'border' | 'border-color'
+  $color-a, $color-a--percentage,  // e.g. --f-color-success, 30%
+  $color-b, $color-b--percentage,  // e.g. --f-color-text-0, 70%
+  $space: oklab
+) {
+  $prop-name: null;
+
+  // Normalize property aliases
+  @if $property == color or $property == text {
+    $prop-name: color;
+  } @else if $property == background or $property == bg or $property == background-color {
+    $prop-name: background-color;
+  } @else if $property == border or $property == border-color {
+    $prop-name: border-color;
+  } @else if $property == fill {
+    $prop-name: fill;
+  } @else {
+    $prop-name: $property;
+  }
+
+  // Fallback: pick the non-transparent color, otherwise the stronger side
+  $fallback: null;
+  @if $color-a == transparent {
+    $fallback: $color-b;
+  } @else if $color-b == transparent {
+    $fallback: $color-a;
+  } @else {
+    $fallback: if($color-a--percentage > $color-b--percentage, $color-a, $color-b);
+  }
+
+  // Output fallback
+  #{$prop-name}: $fallback;
+
+  // Output actual mixed color
+  #{$prop-name}: color-mix(in #{$space}, #{$color-a} #{$color-a--percentage}, #{$color-b} #{$color-b--percentage});
+}
+
+
+/*==============================================================================
+  04 - cross-browser Mixin
+==============================================================================*/
+
+////
+/// Outputs a property with common vendor prefixes.
+///
+/// @param {String} $property - Property name without prefix
+/// @param {Any}    $val      - Value to assign
+///
+
+@mixin cross-browser($property, $val) {
+	-webkit-#{$property}: $val;
+	-moz-#{$property}: $val;
+	-ms-#{$property}: $val;
+	#{$property}: $val;
+}
+
+/*==============================================================================
+  05 - foundation-palette Mixin
+==============================================================================*/
+
+////
+/// Applies Foundation palette classes to a selector, wiring CSS custom properties.
+/// Automatically sets hover variants if enabled.
+///
+/// @param {String}  $selector ["&"]    - Root selector
+/// @param {String}  $child    [""]     - Optional child selector
+/// @param {String}  $property ["color"]- Property to set ("color" | "background")
+/// @param {String}  $hover    ["true"] - Whether to output `:hover` state
+///
+/// @requires $foundation-palette
+///
+
+@mixin foundation-palette($selector: "&", $child: "", $property: "color", $hover: "true") {
+	@each $color-name, $color in $foundation-palette {
+		#{$selector}.#{$color-name} #{$child} {
+			#{$property}: var(--f-color-#{$color-name});
+
+			@if $property == "background" {
+				color: var(--f-color-#{$color-name}-contrast);
+			}
+
+			@if $hover == "true" {
+				&:hover {
+					#{$property}: var(--f-color-#{$color-name}-darker);
+				}
+			}
+		}
+	}
+}
+
+/*==============================================================================
+  06 - button-sizes Mixin
+==============================================================================*/
+
+////
+/// Emits size variants for buttons based on `$button-sizes`.
+///
+/// @requires $button-sizes
+///
+
+@mixin button-sizes() {
+	@each $size-name, $size in $button-sizes {
+		&.#{$size-name} {
+			font-size: $size;
+		}
+	}
+}
+
+/*==============================================================================
+  07 - dynamic-box Mixin
+==============================================================================*/
+
+////
+/// Computes a responsive padding/margin box based on `$dynamic-relation` and `$padding-sizes`.
+///
+/// @param {String}  $edge      [padding] - "padding" or "margin"
+/// @param {Boolean} $negative  [false]   - If true, outputs negative values (for gutters/bleeds)
+/// @param {String}  $axis      [both]    - "both" | "vertical" | "horizontal"
+///
+/// @requires $dynamic-relation
+/// @requires $padding-sizes
+/// @requires breakpoint()
+///
+
+@mixin dynamic-box($edge: padding, $negative: false, $axis: both) {
+	$multiplier: if($negative, -1, 1);
+
+	@each $breakpoint, $edge-size in $dynamic-relation {
+		@include breakpoint($breakpoint) {
+			@if $axis == both {
+				#{$edge}: multiply-list(map-get($padding-sizes, $edge-size), $multiplier);
+			} @else if $axis == vertical {
+				#{$edge}: multiply-list(extract-from-compact(map-get($padding-sizes, $edge-size), top), $multiplier) 0;
+			} @else if $axis == horizontal {
+				#{$edge}: 0 multiply-list(extract-from-compact(map-get($padding-sizes, $edge-size), left), $multiplier);
+
+				@if $negative {
+					max-width: calc(100% + (#{extract-from-compact(map-get($padding-sizes, $edge-size), left)} * 2));
+					width: calc(100% + (#{extract-from-compact(map-get($padding-sizes, $edge-size), left)} * 2));
+				}
+			}
+		}
+	}
+}
+
+/*==============================================================================
+  08 - header-style Mixin
+==============================================================================*/
+
+////
+/// Applies header sizing styles for a specific header scale (e.g., `h1`, `h2`)
+/// across breakpoints defined in `$header-styles`.
+///
+/// @param {String}                 $header-size - Header key to style (e.g., `h1`)
+/// @param {List|Map<String,String>} $property    - One or more CSS properties to set to the header size
+///
+/// @requires $header-styles
+/// @requires breakpoint()
+/// @requires rem-calc()
+///
+
+@mixin header-style($header-size, $property: ("font-size", "margin-bottom")) {
+	@each $breakpoint, $header-style in $header-styles {
+		@include breakpoint($breakpoint) {
+			$size: rem-calc(map-deep-get($header-styles, $breakpoint, $header-size, font-size));
+
+			@each $property, $value in $property {
+				#{$property}: $size;
+			}
+		}
+	}
+}
+
+/*==============================================================================
+  09 - header-list Mixin
+==============================================================================*/
+
+////
+/// Outputs a complete set of header styles across breakpoints using a mapping.
+/// Optionally restricts to a subset of properties.
+///
+/// @param {Map}  $scale - Map of output selectors (h1..h6) to input scale keys
+/// @param {List} $property-list [null] - Optional list of properties to output
+///
+/// @requires $header-styles
+/// @requires breakpoint()
+///
+
+@mixin header-list(
+	$scale: (
+		h1: h1,
+		h2: h2,
+		h3: h3,
+		h4: h4,
+		h5: h5,
+		h6: h6
+	),
+	$property-list: null
+) {
+	@each $breakpoint in ("small", "medium", "large") {
+		@include breakpoint($breakpoint) {
+			@each $header-size, $properties in map-get($header-styles, $breakpoint) {
+				$h: map-get($scale, $header-size); // h1 -> h3
+				$size: map-get(map-get($header-styles, $breakpoint), $h); // small -> ()
+				#{$header-size} {
+					@each $label, $value in $size {
+						@if $property-list == null or index($property-list, $label) {
+							@if $label == "font-size" {
+								$value: rem-calc($value);
+							}
+
+							#{$label}: $value;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+/*==============================================================================
+  10 - strip-unit Function
+==============================================================================*/
+
+////
+/// Removes the unit from a number and returns a unitless value.
+///
+/// @param {Number} $number - A number that may carry a unit
+/// @return {Number} Unitless number
+///
+
+@function strip-unit($number) {
+	@if type-of($number) == "number" and not unitless($number) {
+		@return $number / ($number * 0 + 1);
+	}
+
+	@return $number;
+}
+
+/*==============================================================================
+  11 - multiply-list Function
+==============================================================================*/
+
+////
+/// Multiplies each item in a list by a multiplier, preserving order.
+///
+/// @param {List}   $list       - Input list
+/// @param {Number} $multiplier - Factor to multiply each item by
+/// @return {List} New list with multiplied values
+////
+
+@function multiply-list($list, $multiplier) {
+	$new-list: ();
+
+	@each $item in $list {
+		$new-list: join($new-list, ($item * $multiplier));
+	}
+
+	@return $new-list;
+}
+
+/*==============================================================================
+  12 - extract-from-compact Function
+==============================================================================*/
+
+////
+/// Extracts a side-specific value from a CSS shorthand list, handling 1–4 values.
+/// Works for padding/margin-style compacts: 1, 2, 3, or 4-value syntax.
+///
+/// @param {List}  $value - Compact value list (e.g., `10px 20px`, `5px 10px 15px`, …)
+/// @param {Ident} $side  - `top` | `right` | `bottom` | `left`
+/// @return {Any} Matched side value
+///
+
+@function extract-from-compact($value, $side) {
+	$index: 1;
+
+	// Top values are always at index 1. The same for when the list has only one item
+	@if ($side == top or length($value) == 1) {
+		$index: 1;
+	}
+	// Covers "vertical horizontal" style
+	@else if (length($value) == 2) {
+		@if ($side == left or $side == right) {
+			$index: 2;
+		}
+
+		@if ($side == bottom) {
+			$index: 1;
+		}
+	}
+	// Covers "top horizontal bottom" style
+	@else if (length($value) == 3) {
+		@if ($side == left or $side == right) {
+			$index: 2;
+		}
+
+		@if ($side == bottom) {
+			$index: 3;
+		}
+	}
+	// Covers "top right bottom left" style
+	@else if (length($value) == 4) {
+		@if ($side == right) {
+			$index: 2;
+		}
+
+		@if ($side == bottom) {
+			$index: 3;
+		}
+
+		@if ($side == left) {
+			$index: 4;
+		}
+	}
+
+	@return nth($value, $index);
+}
+
+/*==============================================================================
+  13 - Excerpt
+  ------------------------------------------------------------------------------
+  Multi-line truncation with optional expansion control.
+==============================================================================*/
+
+////
+/// Creates a multi-line text excerpt with ellipsis, with an option to expand.
+///
+/// @param {Number}  $font-size      [1em]   - Base font-size
+/// @param {Number}  $line-height    [1.4]   - Line height
+/// @param {Number}  $lines-to-show  [3]     - Number of lines to clamp
+/// @param {Boolean} $expand         [false] - If true, disables truncation
+///
+
+@mixin excerpt($font-size: 1em, $line-height: 1.4, $lines-to-show: 3, $expand: false) {
+	@if $expand==true {
+		max-height: initial;
+
+		/* Fallback for non-webkit */
+		-webkit-line-clamp: initial;
+		line-clamp: initial;
+		-webkit-box-orient: vertical;
+		overflow: initial;
+		text-overflow: initial;
+	} @else {
+		max-height: $font-size * $line-height * $lines-to-show;
+
+		/* Fallback for non-webkit */
+		-webkit-line-clamp: $lines-to-show;
+		line-clamp: $lines-to-show;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	line-height: $line-height;
+	display: block;
+
+	/* Fallback for non-webkit */
+	font-size: $font-size;
+}
+
+/*==============================================================================
+  29 - Keyboard focus (Accessibility)
+==============================================================================*/
+
+////
+/// Applies accessible focus styles with compatibility fallbacks,
+/// respecting input modality (mouse/touch suppresses focus ring).
+///
+/// @requires $global-focus
+///
+
+@mixin a11y-focus {
+	&:active,
+	&:focus {
+		box-shadow: $global-focus;
+		// Set color to transparent to ensure compatibility with high contrast mode
+		outline-color: transparent !important;
+	}
+
+	&:focus-visible {
+		outline: unset;
+	}
+
+	// Unset box shadow if mouse or touch
+	[data-whatintent="mouse"] &:active,
+	[data-whatintent="mouse"] &:focus,
+	[data-whatintent="touch"] &:active,
+	[data-whatintent="touch"] &:focus {
+		box-shadow: none !important;
+	}
+}
+
+////
+/// Inset variant of `a11y-focus`, drawing the focus ring inside the element.
+///
+/// @requires $global-focus
+///
+
+@mixin a11y-focus-inset {
+	box-shadow: inset $global-focus;
+}
