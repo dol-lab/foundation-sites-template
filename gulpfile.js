@@ -92,7 +92,7 @@ function html() {
 // Development server with live reload and file watching
 function serve() {
   browserSync.init({ server: "./" });
-  gulp.watch("scss/**/*.scss", gulp.series('sassFrontend'));
+  gulp.watch("scss/**/*.scss", gulp.series('sassFrontend', 'sassBackend'));
   gulp.watch(["*.src.html", "html-partials/**/*.html"], gulp.series('html'));
   gulp.watch(["*.html", "!*.src.html"]).on('change', browserSync.reload);
 }
