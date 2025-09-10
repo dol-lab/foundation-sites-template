@@ -10,7 +10,7 @@
 
 /// Default background color for badges.
 /// @type Color
-$badge-background: var(--f-color-text) !default;
+$badge-background: var(--f-color-text-0) !default;
 
 /// Default text color for badges.
 /// @type Color
@@ -88,7 +88,7 @@ $badge-font-size: 1rem !default;
   
       @each $name, $color in $badge-palette {
         &.#{$name} {
-          --_f-color-readability: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text) 20%);
+          --_f-color-readability: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
           border: 1px solid var(--_f-color-readability, var(--f-color-#{$name}));
           color: var(--_f-color-readability, var(--f-color-#{$name}));
         }
@@ -99,7 +99,7 @@ $badge-font-size: 1rem !default;
   
       @each $name, $color in $badge-palette {
         &.#{$name} {
-          --_f-color-readability: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text) 20%);
+          --_f-color-readability: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
           color: var(--_f-color-readability, var(--f-color-#{$name}));
         }
       }
