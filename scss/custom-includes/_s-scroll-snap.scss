@@ -1,0 +1,302 @@
+/**
+ * @name Scroll Snapping Component
+ * @description
+ * This SCSS file provides a flexible and responsive horizontal scroll-snapping component,
+ * ideal for creating carousels, sliders, and galleries with native CSS performance.
+ * It integrates seamlessly with the existing XY grid system, allowing standard grid
+ * classes to be used as slider elements.
+ *
+ * @features
+ * - Native CSS horizontal scroll snapping for performance.
+ * - Optional hover-activated arrow navigation.
+ * - Responsive width controls to show a variable number of items.
+ * - Alignment options (start, center, end).
+ * - Automatic width calculation for grid cells (e.g., .medium-6) used inside.
+ * - Responsive helper classes to enable or disable snapping at specific breakpoints.
+ * - Styles for "full-bleed" layouts that break out of the main grid container.
+ *
+ * @usage
+ *
+ * * <div class="scroll-snap-container-x">
+ * <div class="scroll-snap-element">...</div>
+ * <div class="scroll-snap-element">...</div>
+ * </div>
+ *
+ * * <div class="left-right-navigation">
+ * <div class="scroll-snap-container-x">...</div>
+ * </div>
+ *
+ * * <div class="scroll-snap-container-x medium-scroll-snap">
+ * <div class="scroll-snap-element small-12 medium-6 large-4">...</div>
+ * <div class="scroll-snap-element small-12 medium-6 large-4">...</div>
+ * <div class="scroll-snap-element small-12 medium-6 large-4">...</div>
+ * </div>
+ *
+ * @modifiers
+ * Add these classes to the `.scroll-snap-container-x` element.
+ *
+ * // --- Alignment ---
+ * .snap-align-start  // Snaps elements to the left edge.
+ * .snap-align-center // Snaps elements to the center.
+ * .snap-align-end    // Snaps elements to the right edge.
+ *
+ * // --- Relative Widths (shows multiple items) ---
+ * .width-small      // Each item is 20% width.
+ * .width-medium     // Each item is 40% width.
+ * .width-large      // Each item is 60% width.
+ * .width-xlarge     // Each item is 80% width.
+ *
+ * // --- Fixed Widths ---
+ * .width-fixed-small  // Each item is 240px width.
+ * .width-fixed-medium // Each item is 320px width.
+ * .width-fixed-large  // Each item is 480px width.
+ *
+ * // --- Responsive Toggling ---
+ * .<breakpoint>-scroll-snap // Stacks vertically until the breakpoint, then enables scroll snap.
+ * .<breakpoint>-no-scroll-snap // Disables scroll snap at and above the breakpoint.
+ * (e.g., .large-scroll-snap)
+ */
+
+.left-right-navigation {
+  position: relative;
+
+  &:hover {
+    &::before,
+    &::after {
+      opacity: 1;
+      transition: opacity $global-transition-medium;
+    }
+  }
+
+  &::before,
+  &::after {
+    opacity: 0;
+    transition: opacity $global-transition-medium;
+    display: flex;
+    position: absolute;
+    top: 50%;
+
+    @include cross-browser(transform, translateY(-50%));
+
+    padding: $global-padding;
+    background: $color-text-0;
+    border-radius: $global-radius-small;
+    box-shadow: $global-drop-shadow;
+    font-family: "Font Awesome 6 Free";
+    font-size: 1rem;
+    font-weight: $global-weight-bold;
+    z-index: 10;
+  }
+
+  &::before {
+    content: "\f104";
+    left: $global-gutter-small;
+  }
+
+  &::after {
+    content: "\f105";
+    right: $global-gutter-small;
+  }
+}
+
+.scroll-snap-container-x {
+  @include xy-grid($direction: horizontal, $wrap: false);
+
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  @include cross-browser(scroll-snap-type, x mandatory);
+
+  .scroll-snap-element {
+    width: initial;
+    max-width: 100%;
+    width: 100%;
+    min-width: 100%;
+    width: initial;
+    box-sizing: border-box;
+    margin: 0;
+    flex: 1 1 100%;
+
+    & > span {
+      position: relative;
+      left: 0.5rem;
+
+      & + * {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+
+  &.snap-align-start .scroll-snap-element {
+    @include cross-browser(scroll-snap-align, start);
+  }
+
+  &.snap-align-center .scroll-snap-element {
+    @include cross-browser(scroll-snap-align, center);
+  }
+
+  &.snap-align-end .scroll-snap-element {
+    @include cross-browser(scroll-snap-align, end);
+  }
+
+  &.width-small .scroll-snap-element {
+    min-width: 20%;
+  }
+
+  &.width-medium .scroll-snap-element {
+    min-width: 40%;
+  }
+
+  &.width-large .scroll-snap-element {
+    min-width: 60%;
+  }
+
+  &.width-xlarge .scroll-snap-element {
+    min-width: 80%;
+  }
+
+  &.width-fixed-small .scroll-snap-element {
+    min-width: 240px;
+  }
+
+  &.width-fixed-medium .scroll-snap-element {
+    min-width: 320px;
+  }
+
+  &.width-fixed-large .scroll-snap-element {
+    min-width: 480px;
+  }
+}
+
+@each $breakpoint, $width in $breakpoints {
+  .#{$breakpoint}-scroll-snap.scroll-snap-container-x {
+    display: block;
+  }
+
+  @include breakpoint(#{$breakpoint} up) {
+    .scroll-snap-container-x {
+      &.#{$breakpoint}-scroll-snap {
+        display: flex;
+      }
+      &.#{$breakpoint}-no-scroll-snap {
+        display: block;
+
+        .scroll-snap-element {
+          min-width: 100%;
+        }
+      }
+    }
+  }
+
+  @include breakpoint(#{$breakpoint}) {
+    .scroll-snap-element {
+      @include xy-cell-gutters(
+        $gutter-type: padding,
+        $gutter-position: top right bottom left,
+        $breakpoint: #{$breakpoint}
+      );
+    }
+  }
+}
+
+/**
+* Todo Create a Fallback if global width is bigger than the biggest breakpoint defined in a cell.
+* $breakpoint-fallback is a start, not finished yet, though.
+* At the moment $global width should no exceed width of 'large' breakpoint.
+*/
+.scroll-snap-container-x {
+  $widescreen-breakpoint: "";
+
+  .grid-x {
+    $breakpoint-fallback: ();
+
+    // loop through each breakpoint-list-item.
+    @each $breakpoint, $width in $breakpoints {
+      $index: index(($breakpoints), ($breakpoint $width)) !global;
+
+      @if $index==1 {
+        $breakpoint-fallback: append($breakpoint-fallback, $breakpoint);
+      }
+
+      // set up media-query.
+      @include breakpoint($breakpoint) {
+        // loop through all possible column counts.
+        @for $i from 1 through $grid-column-count {
+          // set gutter width
+          $grid-margin-gutter: map-get($grid-margin-gutters, #{$breakpoint});
+          $grid-container-gutter: map-get(
+            $grid-container-padding,
+            #{$breakpoint}
+          );
+
+          // this is the cell, e.g. medium-8.
+          & > .#{$breakpoint}-#{$i} {
+            $container-width: 100vw;
+
+            /**
+						* If breakpoint width is greater or equal to grid-container we set the
+						* reference width from 100vw to the grid-container.
+						*/
+            @if (
+              strip-unit(rem-calc(strip-unit($width)))
+                >=strip-unit($grid-container)
+            ) {
+              @if ($widescreen-breakpoint== "") {
+                $widescreen-breakpoint: $breakpoint;
+              }
+
+              $container-width: $grid-container;
+            }
+
+            // This is where the magic happens.
+            width: calc(
+              (#{$container-width} - #{$grid-container-gutter}) /
+                (#{$grid-column-count} / #{$i}) -
+                #{$grid-margin-gutter}
+            );
+          }
+        }
+      }
+
+      $breakpoint-fallback: append($breakpoint-fallback, $breakpoint);
+    }
+  }
+
+  .grid-container & {
+    @each $breakpoint, $width in $breakpoints {
+      @include breakpoint($breakpoint) {
+        $gutter: map-get($grid-container-padding, #{$breakpoint});
+        $gutter-padding: calc(#{$gutter} / 4);
+        $grid-padding: calc(
+          50vw - (#{$grid-container} / 2) + #{$gutter-padding}
+        );
+
+        width: calc(100% + #{$gutter});
+        margin: calc(-#{$gutter} / 2);
+        padding: $gutter-padding; // took me an hour to find. commenting this out destroys the home-layout (sidebar)
+
+        &.scroll-snap-grid-container {
+          width: 100vw;
+          margin: 0;
+          padding-left: $grid-padding;
+
+          &::after {
+            content: "";
+            min-width: $grid-padding;
+            height: 10px;
+          }
+
+          @media screen and (max-width: #{$grid-container}) {
+            padding-left: $gutter-padding;
+
+            &::after {
+              min-width: $gutter-padding;
+            }
+          }
+        }
+      }
+    }
+  }
+}

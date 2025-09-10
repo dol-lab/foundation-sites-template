@@ -1,6 +1,6 @@
 ///
 /// These imports are necessary to make foundation (or our derivative) components available.
-/// 
+///
 
 // @import "custom-includes/foundation-spaces/helpers/missing-dependencies";
 @import "custom-includes/foundation-spaces/helpers/true";
@@ -28,6 +28,7 @@
 @import 'custom-includes/foundation-spaces/components/close-button';
 @import "custom-includes/_s-label";
 @import "custom-includes/_s-progress-bar";
+@import "custom-includes/_s-scroll-snap"; // <- custom component, not foundation-native.
 @import "custom-includes/_s-slider";
 @import "custom-includes/_s-switch";
 @import "custom-includes/_s-badge";

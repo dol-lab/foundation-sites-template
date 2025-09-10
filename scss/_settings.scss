@@ -157,9 +157,9 @@ $header-color: inherit;
 $header-lineheight: 1.1;
 $header-margin-bottom: 0.5rem;
 
-/// 
+///
 /// @todo
-/// This is a terrible way of doing this, especially the font size calculations. For fluid typography, use clamp(). --> https://clamp.font-size.app/ 
+/// This is a terrible way of doing this, especially the font size calculations. For fluid typography, use clamp(). --> https://clamp.font-size.app/
 $header-styles: (
 	small: (
 		"h1": ("font-size": 23 * 0.80 , "font-weight": 400),
@@ -185,7 +185,7 @@ $header-styles: (
 		"h5": ("font-size": 17, "color": $color-text-0, "font-weight": 400 ),
 		"h6": ("font-size": 17, "color": $color-text-0, "font-style": italic, "font-weight": 400 ),
 	),
-); 
+);
 
 $header-text-rendering: optimizeLegibility;
 $small-font-size: 0.8rem;
@@ -252,9 +252,9 @@ $code-block-margin-bottom: 1.5rem;
 
 $abide-inputs: true;
 $abide-labels: true;
-$input-background-invalid: var(--f-color-alert); 
-$form-label-color-invalid: var(--f-color-alert); 
-$input-error-color: var(--f-color-alert); 
+$input-background-invalid: var(--f-color-alert);
+$form-label-color-invalid: var(--f-color-alert);
+$input-error-color: var(--f-color-alert);
 $input-error-font-size: $small-font-size;
 $input-error-font-weight: $global-weight-normal;
 
@@ -440,7 +440,7 @@ $dropdownmenu-arrow-color: $anchor-color;
 $dropdownmenu-arrow-size: 6px;
 $dropdownmenu-arrow-padding: 1.5rem;
 $dropdownmenu-min-width: 200px;
-$dropdownmenu-background: $color-text-0; 
+$dropdownmenu-background: $color-text-0;
 $dropdownmenu-submenu-background: $dropdownmenu-background;
 $dropdownmenu-padding: $global-menu-padding; //0.9rem;
 $dropdownmenu-nested-margin: 0;
@@ -526,7 +526,7 @@ $menu-simple-margin: 1rem;
 $menu-item-color-active: $color-text-0;
 $menu-item-background-active: $color-bg-2; // none;
 $menu-icon-spacing: 0.5rem;
-$menu-item-background-hover: $color-bg-2; 
+$menu-item-background-hover: $color-bg-2;
 $menu-state-back-compat: true;
 $menu-centered-back-compat: true;
 $menu-icons-back-compat: true;
@@ -539,7 +539,7 @@ $meter-radius: $global-radius;
 $meter-background: $color-bg-1;
 $meter-fill-good: var(--f-color-success);
 $meter-fill-medium: var(--f-color-warning);
-$meter-fill-bad: var(--f-color-alert); 
+$meter-fill-bad: var(--f-color-alert);
 
 // 25. Off-canvas
 // --------------
@@ -771,7 +771,7 @@ $slider-radius: $global-radius;
 // 49. Switch
 // ----------
 
-$switch-background: inherit; 
+$switch-background: inherit;
 $switch-background-active: $color-text-1;
 $switch-height: 1rem;
 $switch-height-tiny: 0.625rem;
@@ -793,7 +793,7 @@ $switch-cursor-disabled: not-allowed;
 
 
 
-// 51. Tabs 
+// 51. Tabs
 // --------
 
 $tab-margin: 0;
