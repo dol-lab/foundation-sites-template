@@ -109,7 +109,7 @@ $breadcrumbs-item-separator-opacity: 60% !default;
   // Page links
   a {
     color: $breadcrumbs-item-color;
-    transition: all var(--f-transition--short) ease-out;
+    transition: all var(--f-transition-short) ease-out;
 
     &:hover {
       text-decoration: underline;

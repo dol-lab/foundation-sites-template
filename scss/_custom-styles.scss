@@ -48,16 +48,16 @@
     interpolate-size: allow-keywords;
 
     --f-radius: #{$global-radius};
-    --f-radius--small: #{$global-radius-small};
-    --f-gutter--small: #{$global-gutter-small};
-    --f-gutter--large: #{$global-gutter-large};
-    --f-transition--short: #{$global-transition-short};
-    --f-transition--medium: #{$global-transition-medium};
-    --f-transition--long: #{$global-transition-long};
-    --f-transition--timing: #{$global-transition-timing};
-    --f-transition--timing-cubic-bezier: #{$global-transition-timing-cubic-bezier};
+    --f-radius-small: #{$global-radius-small};
+    --f-gutter-small: #{$global-gutter-small};
+    --f-gutter-large: #{$global-gutter-large};
+    --f-transition-short: #{$global-transition-short};
+    --f-transition-medium: #{$global-transition-medium};
+    --f-transition-long: #{$global-transition-long};
+    --f-transition-timing: #{$global-transition-timing};
+    --f-transition-timing-cubic-bezier: #{$global-transition-timing-cubic-bezier};
     --f-drop-shadow: #{$global-drop-shadow};
-    --f-drop-shadow--large: #{$global-drop-shadow-large};
+    --f-drop-shadow-large: #{$global-drop-shadow-large};
 
     --f-margin: #{$global-margin};
     --f-padding: #{$global-padding};
@@ -2418,7 +2418,7 @@ input,
     }
     .is-dropdown-submenu-parent.avatar {
         width: initial;
-        margin-left: var(--f-gutter--small);
+        margin-left: var(--f-gutter-small);
         & > a {
             padding: 0 !important;
             &:hover,
@@ -4567,7 +4567,7 @@ details {
             margin-left: auto;
             font-size: 0.85em;
             display: inline-block;
-            transition: all var(--f-transition--medium) ease-out;
+            transition: all var(--f-transition-medium) ease-out;
         }
         &.small {
             font-size: $small-font-size;
@@ -4599,7 +4599,7 @@ details {
     block-size: 0;
     overflow: hidden;
     transition-property: block-size, content-visibility;
-    transition-duration: var(--f-transition--medium);
+    transition-duration: var(--f-transition-medium);
     transition-behavior: allow-discrete;
     transition-timing-function: ease-out;
 }
@@ -4650,11 +4650,11 @@ details {
       --f-color-brand-contrast: #fff;
       --f-color-brand-darker:   color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
     } @else if $mode == dark {
-      --f-color-bg-0:           color-mix(in oklab, var(--f-color-theme) 15%, var(--f-color-neutral-100) 85%);
-      --f-color-bg-1:           color-mix(in oklab, var(--f-color-theme) 10%, var(--f-color-neutral-200) 90%);
+      --f-color-bg-0:           color-mix(in oklab, var(--f-color-theme) 11%, var(--f-color-neutral-100) 89%);
+      --f-color-bg-1:           color-mix(in oklab, var(--f-color-theme) 8%, var(--f-color-neutral-200) 92%);
       --f-color-bg-2:           color-mix(in oklab, var(--f-color-theme) 10%, var(--f-color-neutral-300) 90%);
 
-      --f-color-text-0:         color-mix(in oklab, var(--f-color-theme) 19%, var(--f-color-neutral-700) 81%);
+      --f-color-text-0:         color-mix(in oklab, var(--f-color-theme) 12%, var(--f-color-neutral-700) 88%);
       --f-color-text-1:         color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-700) 75%);
       --f-color-text-2:         color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-500) 75%);
 

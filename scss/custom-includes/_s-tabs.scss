@@ -95,7 +95,7 @@ $tab-content-padding: 1rem !default;
     line-height: 1;
     color: $color;
     text-decoration: none !important;
-    transition: all var(--f-transition--medium) var(--f-transition--timing-cubic-bezier);
+    transition: all var(--f-transition-medium) var(--f-transition-timing-cubic-bezier);
 
     &:hover {
       background: $background-hover;
