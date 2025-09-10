@@ -11,7 +11,7 @@
             <span class="show-for-sr">Current: </span> OKLAB Theming
         </li>
     </ul>
-    
+
     <ul class="tabs flex flex-align-center" data-tabs id="theming-tabs">
         <li class="pr-medium" style="color: var(--f-color-text-1)">Header Image:</li>
         <li class="tabs-title is-active"><a href="#image-one" aria-selected="true" data-color="#975938">1</a></li>
@@ -29,11 +29,12 @@
             gap: .125rem;
             top: .5rem;
             right: .5rem;
-            z-index: 9999;
+
             a {
                 border-radius: var(--f-radius);
             }
         }
+
         .tabs-content[data-tabs-content="theming-tabs"] {
             .tabs-panel {
                 &:not(.is-active) {
@@ -81,17 +82,17 @@
 </div>
 
 <script>
-  const themingTabs = document.querySelector('#theming-tabs');
-  if (themingTabs) {
-    themingTabs.querySelectorAll('.tabs-title a').forEach(tab => {
-      tab.addEventListener('click', () => {
-        const color = tab.getAttribute('data-color');
-        if (color) {
-          document.documentElement.style.setProperty('--xmeans-color', color);
-        }
-      });
-    });
-  }
+    const themingTabs = document.querySelector('#theming-tabs');
+    if (themingTabs) {
+        themingTabs.querySelectorAll('.tabs-title a').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const color = tab.getAttribute('data-color');
+                if (color) {
+                    document.documentElement.style.setProperty('--xmeans-color', color);
+                }
+            });
+        });
+    }
 </script>
 
 <!-- <div class="cell">

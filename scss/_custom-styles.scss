@@ -597,7 +597,7 @@ label[for] {
     padding: 0.35rem 0.5rem;
     z-index: 1;
     color: $color-text-0;
-    background: color-mix-opacity(#{$color-bg-0}, 42%, 58%);
+    background: color-mix-opacity(#{$color-bg-0}, 55%, 45%);
     -webkit-box-orient: vertical;
     backdrop-filter: 20px saturate(200%);
     -webkit-backdrop-filter: blur(20px) saturate(200%);
@@ -4616,80 +4616,161 @@ details {
 /// @todo
 /// Refactor to match newly introduced data-theme attributes for forced light / dark modes.
 /// 
-html {
-	&[themed][style*="--xmeans-color"] {
+/// Purpose:
+/// - Provide a single, purpose-oriented mixin that assigns theme variables
+///   for a given scope (page-wide vs. post) and mode (light vs. dark).
+/// - Keep automatic detection via `prefers-color-scheme`.
+/// - Allow manual overrides via `html[data-theme="light" | "dark"]`.
+///
 
-		///
-		/// This section covers page-wide theming, e.g. inside a space.
-		///
+/* ==========================================================================
+   Purpose-oriented mixin
+   ========================================================================== */
 
-		--f-color-theme: var(--xmeans-color);
+/**
+ * Assigns themed CSS custom properties.
+ * @param {string} $scope: "page" (page-wide/space) or "post" (post-level).
+ * @param {string} $mode:  "light" or "dark".
+ */
+@mixin themed-variables($scope, $mode) {
+  @if $scope == page {
+    ///
+    /// This section covers page-wide theming, e.g. inside a space.
+    ///
+    @if $mode == light {
+      --f-color-bg-0:           color-mix(in oklab, var(--f-color-theme) 20%, var(--f-color-neutral-100) 80%);
+      --f-color-bg-1:           color-mix(in oklab, var(--f-color-theme) 9%,  var(--f-color-neutral-100) 91%);
+      --f-color-bg-2:           color-mix(in oklab, var(--f-color-theme) 14%, var(--f-color-neutral-200) 86%);
 
-		--f-color-bg-0: color-mix(in oklab, var(--f-color-theme) 20%, var(--f-color-neutral-100) 80%);
-		--f-color-bg-1: color-mix(in oklab, var(--f-color-theme) 9%, var(--f-color-neutral-100) 91%);
-		--f-color-bg-2: color-mix(in oklab, var(--f-color-theme) 14%, var(--f-color-neutral-200) 86%);
-		@media (prefers-color-scheme: dark) {
-			--f-color-bg-0: color-mix(in oklab, var(--f-color-theme) 15%, var(--f-color-neutral-100) 85%);
-			--f-color-bg-1: color-mix(in oklab, var(--f-color-theme) 10%, var(--f-color-neutral-200) 90%);
-			--f-color-bg-2: color-mix(in oklab, var(--f-color-theme) 10%, var(--f-color-neutral-300) 90%);
-		}
-		--f-color-text-0: color-mix(in oklab, var(--f-color-theme) 19%, var(--f-color-neutral-700) 81%);
-		--f-color-text-1: color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-700) 75%);
-		--f-color-text-2: color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-500) 75%);
+      --f-color-text-0:         color-mix(in oklab, var(--f-color-theme) 19%, var(--f-color-neutral-700) 81%);
+      --f-color-text-1:         color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-700) 75%);
+      --f-color-text-2:         color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-500) 75%);
 
-		--f-color-brand: color-mix(in oklab, var(--f-color-theme) 75%, var(--f-color-neutral-700) 25%);
-		--f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
-		@media (prefers-color-scheme: dark) {
-			--f-color-brand: color-mix(in oklab, var(--f-color-theme) 55%, var(--f-color-neutral-700) 45%);
-			--f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
-		}
-		.post-content.user-generated a {
-			text-decoration: underline;
-		}
-		body {
-			background-image: radial-gradient(color-mix-blend(var(--xmeans-color), 50%, var(--f-color-bg-0), 90%), transparent 50vw);
-			background-size: 100vw 100vw;
-			background-position: center -70vw;
-			background-repeat: no-repeat;
-		}
-	}
-	&:not([themed]) {
-		[themed][style*="--xmeans-color"] {
-			///
-			/// This section covers post theming, which can't be active in a themed space.
-			///
+      --f-color-brand:          color-mix(in oklab, var(--f-color-theme) 75%, var(--f-color-neutral-700) 25%);
+      --f-color-brand-contrast: #fff;
+      --f-color-brand-darker:   color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
+    } @else if $mode == dark {
+      --f-color-bg-0:           color-mix(in oklab, var(--f-color-theme) 15%, var(--f-color-neutral-100) 85%);
+      --f-color-bg-1:           color-mix(in oklab, var(--f-color-theme) 10%, var(--f-color-neutral-200) 90%);
+      --f-color-bg-2:           color-mix(in oklab, var(--f-color-theme) 10%, var(--f-color-neutral-300) 90%);
 
-			--f-color-theme: var(--xmeans-color);
+      --f-color-text-0:         color-mix(in oklab, var(--f-color-theme) 19%, var(--f-color-neutral-700) 81%);
+      --f-color-text-1:         color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-700) 75%);
+      --f-color-text-2:         color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-500) 75%);
 
-			--f-color-bg-0: color-mix(in oklab, var(--f-color-theme) 40%, var(--f-color-neutral-100) 60%);
-			--f-color-bg-1: color-mix(in oklab, var(--f-color-theme) 15%, var(--f-color-neutral-200) 85%);
-			--f-color-bg-2: color-mix(in oklab, var(--f-color-theme) 20%, var(--f-color-neutral-300) 80%);
+      --f-color-brand:          color-mix(in oklab, var(--f-color-theme) 55%, var(--f-color-neutral-700) 45%);
+      --f-color-brand-contrast: #000;
+      --f-color-brand-darker:   color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
+    }
+  } @else if $scope == post {
+    ///
+    /// This section covers post theming, which can't be active in a themed space.
+    ///
+    @if $mode == light {
+      --f-color-bg-0:           color-mix(in oklab, var(--f-color-theme) 40%, var(--f-color-neutral-100) 60%);
+      --f-color-bg-1:           color-mix(in oklab, var(--f-color-theme) 15%, var(--f-color-neutral-200) 85%);
+      --f-color-bg-2:           color-mix(in oklab, var(--f-color-theme) 20%, var(--f-color-neutral-300) 80%);
 
-			@media (prefers-color-scheme: dark) {
-				--f-color-bg-0: color-mix(in oklab, var(--f-color-theme) 15%, var(--f-color-neutral-100) 85%);
-				--f-color-bg-1: color-mix(in oklab, var(--f-color-theme) 10%, var(--f-color-neutral-200) 90%);
-				--f-color-bg-2: color-mix(in oklab, var(--f-color-theme) 15%, var(--f-color-neutral-300) 85%);
-			}
+      --f-color-text-0:         color-mix(in oklab, var(--f-color-theme) 19%, var(--f-color-neutral-700) 81%);
+      --f-color-text-1:         color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-700) 75%);
+      --f-color-text-2:         color-mix(in oklab, var(--f-color-theme) 35%, var(--f-color-neutral-600) 65%);
 
-			--f-color-text-0: color-mix(in oklab, var(--f-color-theme) 19%, var(--f-color-neutral-700) 81%);
-			--f-color-text-1: color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-700) 75%);
-			--f-color-text-2: color-mix(in oklab, var(--f-color-theme) 35%, var(--f-color-neutral-600) 65%);
+      --f-color-brand:          color-mix(in oklab, var(--f-color-theme) 55%, var(--f-color-neutral-700) 45%);
+      --f-color-brand-contrast: #fff;
+      --f-color-brand-darker:   color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
+    } @else if $mode == dark {
+      --f-color-bg-0:           color-mix(in oklab, var(--f-color-theme) 15%, var(--f-color-neutral-100) 85%);
+      --f-color-bg-1:           color-mix(in oklab, var(--f-color-theme) 10%, var(--f-color-neutral-200) 90%);
+      --f-color-bg-2:           color-mix(in oklab, var(--f-color-theme) 15%, var(--f-color-neutral-300) 85%);
 
-			--f-color-brand: color-mix(in oklab, var(--f-color-theme) 55%, var(--f-color-neutral-700) 45%);
-			--f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
-			.post-content.user-generated a {
-				text-decoration: underline;
-			}
+      --f-color-text-0:         color-mix(in oklab, var(--f-color-theme) 19%, var(--f-color-neutral-700) 81%);
+      --f-color-text-1:         color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-700) 75%);
+      --f-color-text-2:         color-mix(in oklab, var(--f-color-theme) 35%, var(--f-color-neutral-600) 65%);
 
-			i.fa-droplet,
-			i.fa-droplet:before,
-			i.fa-circle-half-stroke,
-			i.fa-circle-half-stroke:before {
-				color: var(--f-color-theme);
-			}
-		}
-	}
+      --f-color-brand:          color-mix(in oklab, var(--f-color-theme) 55%, var(--f-color-neutral-700) 45%);
+      --f-color-brand-contrast: #000;
+      --f-color-brand-darker:   color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
+    }
+  }
 }
+
+/* ==========================================================================
+   Page-wide theming scope
+   ========================================================================== */
+
+html {
+  &[themed][style*="--xmeans-color"] {
+
+    ///
+    /// This section covers page-wide theming, e.g. inside a space.
+    ///
+    --f-color-theme: var(--xmeans-color);
+
+    // Default automatic behavior with prefers-color-scheme.
+    @include themed-variables(page, light);
+    @media (prefers-color-scheme: dark) {
+      @include themed-variables(page, dark);
+    }
+
+    .post-content.user-generated a {
+      text-decoration: underline;
+    }
+
+    body {
+      background-image: radial-gradient(color-mix-blend(var(--xmeans-color), 50%, var(--f-color-bg-0), 90%), transparent 50vw);
+      background-size: 100vw 100vw;
+      background-position: center -70vw;
+      background-repeat: no-repeat;
+    }
+  }
+
+  &:not([themed]) {
+    [themed][style*="--xmeans-color"] {
+      ///
+      /// This section covers post theming, which can't be active in a themed space.
+      ///
+      --f-color-theme: var(--xmeans-color);
+
+      // Default automatic behavior with prefers-color-scheme.
+      @include themed-variables(post, light);
+      @media (prefers-color-scheme: dark) {
+        @include themed-variables(post, dark);
+      }
+
+      .post-content.user-generated a {
+        text-decoration: underline;
+      }
+
+      i.fa-droplet,
+      i.fa-droplet:before,
+      i.fa-circle-half-stroke,
+      i.fa-circle-half-stroke:before {
+        color: var(--f-color-theme);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   Manual mode overrides – data-theme forces light/dark
+   ========================================================================== */
+
+/* Page-wide theming forced modes */
+html[data-theme="light"][themed][style*="--xmeans-color"] {
+  @include themed-variables(page, light);
+}
+html[data-theme="dark"][themed][style*="--xmeans-color"] {
+  @include themed-variables(page, dark);
+}
+
+/* Post theming forced modes (when the page itself is not themed) */
+html[data-theme="light"]:not([themed]) [themed][style*="--xmeans-color"] {
+  @include themed-variables(post, light);
+}
+html[data-theme="dark"]:not([themed]) [themed][style*="--xmeans-color"] {
+  @include themed-variables(post, dark);
+}
+
 :root {
 	scrollbar-color: $color-text-2 $color-bg-0;
 }
