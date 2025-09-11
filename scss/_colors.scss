@@ -72,31 +72,31 @@ $foundation-palette-darktheme-contrast: (
 /// (lighttheme, darktheme)
 
 $neutral-palette: (
-  100: (
+  100: ( // --f-color-neutral-100
     hsl(0 0% 100%),
     hsl(0, 0%, 4%)
   ),
-  200: (
+  200: ( // --f-color-neutral-200
     hsl(0 0% 97%),
     hsl(0, 0%, 9%)
   ),
-  300: (
-    hsl(0 0% 95%),
+  300: ( // --f-color-neutral-300
+    hsl(0 0% 94%),
     hsl(0 0% 14%)
   ),
-  400: (
+  400: ( // --f-color-neutral-400
     hsl(0 0% 73%),
     hsl(0 0% 42%)
   ),
-  500: (
+  500: ( // --f-color-neutral-500
     hsl(0 0% 52%),
     hsl(0 0% 55%)
   ),
-  600: (
+  600: ( // --f-color-neutral-600
     hsl(0 0% 37%),
     hsl(0, 0%, 68%)
   ),
-  700: (
+  700: ( // --f-color-neutral-700
     hsl(0 0% 14%),
     hsl(0 0% 96%)
   )
@@ -203,7 +203,7 @@ $neutral-palette: (
   ///
   /// --f-color-brand-base is set to automatically generate a lighter version of --f-color-brand in dark mode.
   /// Don't try to do it without it.
-  /// 
+  ///
   --f-color-brand-base: #{map.get($foundation-palette, "brand")};
   --f-color-brand-base-contrast: #{map.get($foundation-palette-contrast, "brand")};
 
