@@ -8,18 +8,19 @@
 
 /// Background color for select menus.
 /// @type Color
-$select-background: $white !default;
+$select-background: $color-bg-1 !default;
 
 /// Color of the dropdown triangle inside select menus. Set to `transparent` to remove it entirely.
 /// @type Color
-$select-triangle-color: $dark-gray !default;
+$select-triangle-color: $color-text-1 !default;
 
 /// Default radius for select menus.
 /// @type Color
 $select-radius: $global-radius !default;
 
 @mixin form-select {
-  $height: ($input-font-size * unitless-calc($input-line-height)) + (get-side($input-padding, 'top') + get-side($input-padding, 'bottom')) - rem-calc(1);
+  $height: ($input-font-size * unitless-calc($input-line-height)) +
+    (get-side($input-padding, "top") + get-side($input-padding, "bottom")) - rem-calc(1);
 
   height: $height;
   margin: 0 0 $form-spacing;
@@ -36,19 +37,25 @@ $select-radius: $global-radius !default;
   line-height: $input-line-height;
   color: $input-color;
 
+  // @if $select-triangle-color != transparent {
+  //   // @include background-triangle($select-triangle-color);
+  //   // @include background-triangle-image();
+
+  // }
+  
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNrEkckNgDAMBBfRkEt0ObRBBdsGXUDgmQfK4XhH2m8czQAAy27R3tsw4Qfe2x8uOO6oYLb6GlOor3GF+swURAOmUJ+RwtEJs9WvTGEYxBXqI1MQAZhCfUQKRzDMVj+TwrAIV6jvSUEkYAr1LSkcyTBb/V+KYfX7xAeusq3sLDtGH3kEGACPWIflNZfhRQAAAABJRU5ErkJggg==');
+  @media (prefers-color-scheme: dark) {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMBJREFUeNrEllsOhCAMRVszC9IlzU7KCmVHTJsoMWYMUtpyv9BgbuXQB5ZSdgBYYY4ycgBivk8KYFsQMfMiTTBP4o3nUzCKzOabLJbLy2/g31evGkAginR4/ZegKH5qX3bJCscA3t0x3kgO5tQFyhhFf50xRqFLbyMUNJQzgyjGS/wgCpvKqkRBpuWrE4V9d+1E4dPUXqIg107SQOE/2DRQxMwTDygIInVDET9T3lCoj/6j/VCmGjZOl2lKpZ8AAwDQP7zIimDGFQAAAABJRU5ErkJggg==');
+  }
+  background-origin: content-box;
+  background-position: $global-right (-$form-spacing) center;
+  background-repeat: no-repeat;
+  background-size: 9px 6px;
+
+  padding-#{$global-right}: ($form-spacing * 1.5);
+
   @if has-value($input-transition) {
     transition: $input-transition;
-  }
-
-  @if $select-triangle-color != transparent {
-    background-origin: content-box;
-    background-position: $global-right (-$form-spacing) center;
-    background-repeat: no-repeat;
-    background-size: 9px 6px;
-
-    padding-#{$global-right}: ($form-spacing * 1.5);
-
-    @include background-triangle($select-triangle-color);
   }
 
   // Focus state

@@ -14,17 +14,11 @@ $abide-inputs: true !default;
 /// @type Boolean
 $abide-labels: true !default;
 
-/// Background color to use for invalid text inputs.
-/// @type Color
-$input-background-invalid: get-color(alert) !default;
-
-/// Color to use for labels of invalid inputs.
-/// @type Color
-$form-label-color-invalid: get-color(alert) !default;
-
-/// Default font color for form error text.
-/// @type Color
-$input-error-color: get-color(alert) !default;
+/// Color vars to use for invalid text inputs.
+/// @type String
+$input-background-invalid: var(--f-color-alert) !default;
+$form-label-color-invalid: var(--f-color-alert) !default;
+$input-error-color: var(--f-color-alert) !default;
 
 /// Default font size for form error text.
 /// @type Number
@@ -38,13 +32,16 @@ $input-error-font-weight: $global-weight-bold !default;
 ///
 /// @param {Color} $background [$alert-color] - Color to use for the background and border.
 /// @param {Number} $background-lighten [10%] - Lightness level of the background color.
-@mixin form-input-error(
-  $background: $input-background-invalid,
-  $background-lighten: 10%
-) {
+@mixin form-input-error($background: $input-background-invalid, $background-lighten: 80%) {
+  $other-pct: 100% - $background-lighten;
+
   &:not(:focus) {
     border-color: $background;
-    background-color: mix($background, $white, $background-lighten);
+    background-color: color-mix(
+      in oklab,
+      #{$background} #{$background-lighten},
+      #{$color-bg-1} #{$other-pct}
+    );
 
     &::placeholder {
       color: $background;
@@ -65,23 +62,19 @@ $input-error-font-weight: $global-weight-bold !default;
 
 @mixin foundation-form-error {
   @if $abide-inputs {
-    // Error class for invalid inputs
     .is-invalid-input {
       @include form-input-error;
     }
   }
 
   @if $abide-labels {
-    // Error class for labels of invalid outputs
     .is-invalid-label {
       color: $form-label-color-invalid;
-    }
+    } // -> var(--f-color-alert)
   }
 
-  // Form error element
   .form-error {
     @include form-error;
-
     &.is-visible {
       display: block;
     }

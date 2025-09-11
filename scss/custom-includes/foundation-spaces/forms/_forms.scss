@@ -22,7 +22,7 @@ $form-spacing: rem-calc(16) !default;
 @import 'meter';
 @import 'error';
 
-@mixin foundation-forms {
+@mixin spaces-forms {
   @include foundation-form-text;
   @include foundation-form-checkbox;
   @include foundation-form-label;

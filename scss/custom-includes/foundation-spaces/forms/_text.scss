@@ -8,11 +8,11 @@
 
 /// Font color of text inputs.
 /// @type Color
-$input-color: $black !default;
+$input-color: $color-text-0 !default;
 
 /// Font color of placeholder text within text inputs.
 /// @type Color
-$input-placeholder-color: $medium-gray !default;
+$input-placeholder-color: $color-text-2 !default;
 
 /// Font family of text inputs.
 /// @type Font
@@ -32,23 +32,31 @@ $input-line-height: $global-lineheight !default;
 
 /// Background color of text inputs.
 /// @type Color
-$input-background: $white !default;
+$input-background: $color-bg-1 !default;
 
 /// Background color of focused of text inputs.
 /// @type Color
-$input-background-focus: $white !default;
+$input-background-focus: $color-bg-1 !default;
 
 /// Background color of disabled text inputs.
 /// @type Color
-$input-background-disabled: $light-gray !default;
+$input-background-disabled: $color-bg-2 !default;
+
+/// Border color of disabled text inputs.
+/// @type Color
+$input-border-disabled: $color-text-2 !default;
+
+/// Color of disabled text inputs.
+/// @type Color
+$input-color-disabled: $color-text-2 !default;
 
 /// Border around text inputs.
 /// @type Border
-$input-border: 1px solid $medium-gray !default;
+$input-border: 1px solid $color-border-0 !default;
 
 /// Border around focused text inputs.
 /// @type Color
-$input-border-focus: 1px solid $dark-gray !default;
+$input-border-focus: 1px solid $color-text-1 !default;
 
 /// Padding of text inputs.
 /// @type Color
@@ -56,11 +64,11 @@ $input-padding: $form-spacing * 0.5 !default;
 
 /// Box shadow inside text inputs when not focused.
 /// @type Shadow
-$input-shadow: inset 0 1px 2px rgba($black, 0.1) !default;
+$input-shadow: inset 0 1px 2px color-mix-opacity($color-text-0, 10%, 90%) !default;
 
 /// Box shadow outside text inputs when focused.
 /// @type Shadow
-$input-shadow-focus: 0 0 5px $medium-gray !default;
+$input-shadow-focus: 0 0 5px $color-border !default;
 
 /// Cursor to use when hovering over a disabled text input.
 /// @type Cursor
@@ -124,8 +132,8 @@ $form-button-radius: $global-radius !default;
   // Text inputs
   #{text-inputs()},
   textarea {
-    appearance: none;
     @include form-element;
+    appearance: none;
   }
 
   // Text areas
@@ -143,6 +151,8 @@ $form-button-radius: $global-radius !default;
     &:disabled,
     &[readonly] {
       background-color: $input-background-disabled;
+      border-color: $input-border-disabled;
+      color: $input-color-disabled;
       cursor: $input-cursor-disabled;
     }
   }

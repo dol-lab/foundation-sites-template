@@ -8,15 +8,15 @@
 
 /// Color of labels prefixed to an input.
 /// @type Color
-$input-prefix-color: $black !default;
+$input-prefix-color: $color-text-0 !default;
 
 /// Background color of labels prefixed to an input.
 /// @type Color
-$input-prefix-background: $light-gray !default;
+$input-prefix-background: $color-bg-2 !default;
 
 /// Border around labels prefixed to an input.
 /// @type Border
-$input-prefix-border: 1px solid $medium-gray !default;
+$input-prefix-border: 1px solid $color-border-0 !default;
 
 /// Left/right padding of an pre/postfixed input label
 $input-prefix-padding: 1rem !default;

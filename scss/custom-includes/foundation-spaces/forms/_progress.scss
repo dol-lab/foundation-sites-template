@@ -12,7 +12,7 @@ $progress-height: 1rem !default;
 
 /// Background color of a progress bar.
 /// @type Color
-$progress-background: $medium-gray !default;
+$progress-background: $color-bg-2 !default;
 
 /// Bottom margin of a progress bar.
 /// @type Number
@@ -68,7 +68,7 @@ $progress-radius: $global-radius !default;
     }
 
     @each $name, $color in $foundation-palette {
-      &.#{"" + $name} {
+      &.#{$name} {
         // Internet Explorer sets the fill with color
         color: $color;
 
