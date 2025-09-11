@@ -273,30 +273,32 @@ $button-responsive-expanded: false !default;
 ) {
   @if $fill == solid {
     background-color: var(--f-color-#{$name});
-    // color: color-mix(in oklab, var(--f-color-#{$name}-contrast) 88%, var(--f-color-#{$name}) 12%);
-    @include color-mix(color, var(--f-color-#{$name}-contrast), 88%, var(--f-color-#{$name}), 12%);
+    // color: color-mix(in oklab, var(--f-color-#{$name}-contrast) 90%, var(--f-color-#{$name}) 10%);
+    @include color-mix(color, var(--f-color-#{$name}-contrast), 90%, var(--f-color-#{$name}), 10%);
 
     &:hover,
     &:focus {
       background-color: var(--f-color-#{$name}-darker);
-      // color: color-mix(in oklab, var(--f-color-#{$name}-contrast) 88%, var(--f-color-#{$name}) 12%);
-      @include color-mix(color, var(--f-color-#{$name}-contrast), 88%, var(--f-color-#{$name}), 12%);
+			color: var(--f-color-#{$name}-contrast);
+      // color: color-mix(in oklab, var(--f-color-#{$name}-contrast) 90%, var(--f-color-#{$name}) 10%);
+      //@include color-mix(color, var(--f-color-#{$name}-contrast), 90%, var(--f-color-#{$name}), 10%);
     }
   }
   @else if $fill == hollow {
     border: $button-hollow-border-width solid var(--f-color-#{$name});
     // color: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
     // background-color: color-mix(in oklab, var(--f-color-#{$name}) 12%, var(--f-color-bg-contrast) 88%);
-    @include color-mix(color, var(--f-color-#{$name}), 92%, var(--f-color-text-0), 8%);
-    @include color-mix(background-color, var(--f-color-#{$name}), 8%, var(--f-color-bg-1), 92%);
+    @include color-mix(color, var(--f-color-#{$name}), 90%, var(--f-color-text-0), 10%);
+    @include color-mix(background-color, var(--f-color-#{$name}), 10%, var(--f-color-bg-1), 90%);
 
     &:hover,
     &:focus {
       border-color: var(--f-color-#{$name}-darker);
       // color: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
       // background-color: color-mix(in oklab, var(--f-color-#{$name}) 20%, var(--f-color-bg-contrast) 80%);
-      @include color-mix(color, var(--f-color-#{$name}), 75%, var(--f-color-text-0), 25%);
-      @include color-mix(background-color, var(--f-color-#{$name}), 25%, var(--f-color-bg-1), 75%);
+			//@include color-mix(color, var(--f-color-#{$name}), 75%, var(--f-color-text-0), 25%);
+      color: var(--f-color-#{$name});
+			@include color-mix(background-color, var(--f-color-#{$name}), 25%, var(--f-color-bg-1), 75%);
     }
   }
   @else if $fill == clear {
