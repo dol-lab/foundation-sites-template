@@ -113,7 +113,6 @@ $orbit-control-zindex: 10 !default;
   @include cross-browser(border-radius, 50px);
 
   z-index: $orbit-control-zindex;
-  padding: $orbit-control-padding;
 
   color: $color-text-0;
   background-color: $orbit-control-background;

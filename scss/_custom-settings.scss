@@ -1,34 +1,33 @@
 @use "sass:color";
 @use "sass:map";
 
-
 $button-height: 2.4rem;
 
 $padding-sizes: (
-	none: 0,
-	small: 0.3125rem,
-	medium: 0.75rem 0.9rem, // same as accordionmenu-submenu-padding
-	large: 1rem 1.25rem,
-	xlarge: 1.25rem 2rem 1.5rem,
-	xxlarge: 1.5rem 2.5rem 1.75rem,
-	button: $button-padding
+  none: 0,
+  small: 0.3125rem,
+  medium: 0.75rem 0.9rem,
+  /* same as accordionmenu-submenu-padding */ large: 1rem 1.25rem,
+  xlarge: 1.25rem 2rem 1.5rem,
+  xxlarge: 1.5rem 2.5rem 1.75rem,
+  button: $button-padding,
 );
 
 $user-card-sizes: (
-	xsmall: 24px,
-	small: 36px,
-	medium: 54px,
-	large: 96px,
-	xlarge: 144px,
-	xxlarge: 240px
+  xsmall: 24px,
+  small: 36px,
+  medium: 54px,
+  large: 96px,
+  xlarge: 144px,
+  xxlarge: 240px,
 );
 
 $user-card-default-size: map-get($user-card-sizes, medium);
 
 $dynamic-relation: (
-	small: medium,
-	medium: large,
-	large: xlarge
+  small: medium,
+  medium: large,
+  large: xlarge,
 );
 
 // 11. Info Chip
@@ -50,10 +49,10 @@ $icon-line-weight: 2;
 // ---------
 
 $spinner-sizes: (
-	tiny: $switch-height-tiny,
-	small: $switch-height-small,
-	medium: $switch-height,
-	large: $switch-height-large
+  tiny: $switch-height-tiny,
+  small: $switch-height-small,
+  medium: $switch-height,
+  large: $switch-height-large,
 );
 // 27. Breadcrumbs
 // ---------

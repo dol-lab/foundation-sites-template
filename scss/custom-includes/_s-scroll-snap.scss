@@ -111,9 +111,7 @@
   @include cross-browser(scroll-snap-type, x mandatory);
 
   .scroll-snap-element {
-    width: initial;
     max-width: 100%;
-    width: 100%;
     min-width: 100%;
     width: initial;
     box-sizing: border-box;
