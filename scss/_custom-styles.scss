@@ -1883,7 +1883,12 @@ label > [disabled] ~ * {
   @include foundation-palette($child: ".radio-label");
 
   .radio {
-    height: 0.875rem;
+    height: auto;
+	&:has(input[type="radio"]:focus-visible) {
+		outline: 2px solid Highlight;
+		outline-offset: 2px;
+		border-radius: 4px;
+	}
   }
 
   .radio-accordion-item {
