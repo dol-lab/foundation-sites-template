@@ -31,7 +31,7 @@ $color-text-2: var(--f-color-text-2);
 
 ///
 /// Palette colors
-/// Each palette color is assigned a base value (-0), alongside a darker version (e.g. used for hover states, -1), as well as a text color provides contrast to them (-contrast)
+/// Each palette color is assigned a base value (no suffix), alongside a darker version (e.g. used for hover states, -darker), as well as a text color provides contrast to them (-contrast)
 
 $foundation-palette: (
   brand: hsl(16 99% 43%),
