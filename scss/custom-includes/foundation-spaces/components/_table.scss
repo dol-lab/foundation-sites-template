@@ -32,11 +32,11 @@ $table-hover-scale: 2% !default;
 
 /// Default color of standard rows on hover.
 /// @type List
-$table-row-hover: color.adjust($table-background, $lightness: -$table-hover-scale) !default;
+$table-row-hover: color.adjust($table-background, $lightness: - $table-hover-scale) !default;
 
 /// Default color of striped rows on hover.
 /// @type List
-$table-row-stripe-hover: color.adjust($table-background, $lightness: -($table-color-scale + $table-hover-scale)) !default;
+$table-row-stripe-hover: color.adjust($table-background, $lightness: - ($table-color-scale + $table-hover-scale)) !default;
 
 /// If `true`, tables are striped by default and an .unstriped class is created. If `false`, a .striped class is created.
 /// @type Boolean
