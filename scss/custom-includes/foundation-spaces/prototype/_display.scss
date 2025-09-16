@@ -33,7 +33,7 @@ $prototype-display: (
     }
   }
 
-  @if ($prototype-display-breakpoints) {
+  @if $prototype-display-breakpoints {
     // Loop through Responsive Breakpoints
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {

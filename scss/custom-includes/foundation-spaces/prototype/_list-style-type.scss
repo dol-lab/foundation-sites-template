@@ -50,7 +50,7 @@ $prototype-style-type-ordered: (
     }
   }
 
-  @if ($prototype-list-breakpoints) {
+  @if $prototype-list-breakpoints {
     // Loop through Responsive Breakpoints
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {
@@ -73,7 +73,7 @@ $prototype-style-type-ordered: (
     }
   }
 
-  @if ($prototype-list-breakpoints) {
+  @if $prototype-list-breakpoints {
     // Loop through Responsive Breakpoints
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {

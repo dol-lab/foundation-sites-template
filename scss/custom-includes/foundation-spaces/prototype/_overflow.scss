@@ -22,6 +22,7 @@ $prototype-overflow: (
 /// @param {String} $overflow [] Overflow classes
 @mixin overflow($overflow) {
   overflow: $overflow !important;
+
   @if $overflow == 'scroll' {
     -webkit-overflow-scrolling: touch;
   }
@@ -31,6 +32,7 @@ $prototype-overflow: (
 /// @param {String} $overflow [] Overflow classes (horizontal axis)
 @mixin overflow-x($overflow) {
   overflow-x: $overflow !important;
+
   @if $overflow == 'scroll' {
     -webkit-overflow-scrolling: touch;
   }
@@ -40,6 +42,7 @@ $prototype-overflow: (
 /// @param {String} $overflow [] Overflow classes (vertical axis)
 @mixin overflow-y($overflow) {
   overflow-y: $overflow !important;
+
   @if $overflow == 'scroll' {
     -webkit-overflow-scrolling: touch;
   }
@@ -58,7 +61,7 @@ $prototype-overflow: (
     }
   }
 
-  @if ($prototype-overflow-breakpoints) {
+  @if $prototype-overflow-breakpoints {
     // Loop through Responsive Breakpoints
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {

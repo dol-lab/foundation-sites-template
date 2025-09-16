@@ -14,7 +14,6 @@
   $breakpoint: null,
   $include-base: true
 ) {
-
   @if $include-base {
     overflow: hidden;
     position: relative;
@@ -23,7 +22,7 @@
   }
 
   @if $breakpoint == null and type-of($gutters) == 'map' {
-    @include -zf-each-breakpoint() {
+    @include -zf-each-breakpoint {
       @include xy-grid-frame($vertical, $nested, $gutters, $-zf-size, false);
     }
   } @else {
@@ -35,24 +34,27 @@
       @if $vertical == true {
         $unit: if($nested == true, 100%, 100vh);
         $gutter: rem-calc($gutter);
+
         // Make sure that 0 is translated in 0rem for calc()
         @if $gutter == 0 {
           // sass-lint:disable zero-unit
           $gutter: 0rem;
         }
+
         height: calc(#{$unit} + #{$gutter});
       } @else {
         $unit: if($nested == true, 100%, 100vw);
         $gutter: rem-calc($gutter);
+
         // Make sure that 0 is translated in 0rem for calc()
         @if $gutter == 0 {
           // sass-lint:disable zero-unit
           $gutter: 0rem;
         }
+
         width: calc(#{$unit} + #{$gutter});
       }
-    }
-    @else {
+    } @else {
       @if $vertical == true {
         height: if($nested == true, 100%, 100vh);
       } @else {

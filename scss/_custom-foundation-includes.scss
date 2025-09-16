@@ -10,7 +10,6 @@
 // @include foundation-global-styles; // don't include. check app.scss
 
 @include spaces-forms;
-
 @include foundation-typography;
 @include foundation-xy-grid-classes;
 
@@ -19,9 +18,7 @@
 
 @include spaces-button;
 @include spaces-button-group;
-
 @include foundation-close-button;
-
 @include spaces-label;
 @include spaces-progress-bar;
 @include spaces-slider;
@@ -36,7 +33,6 @@
 @include spaces-badge;
 @include spaces-breadcrumbs;
 @include spaces-callout;
-
 @include foundation-card;
 @include foundation-dropdown;
 @include foundation-pagination;
@@ -46,26 +42,18 @@
 /// 
 
 @include spaces-accordion;
-
 @include foundation-media-object;
-
 @include spaces-orbit;
-
 @include foundation-responsive-embed;
-
 @include spaces-tabs;
-
 @include foundation-thumbnail;
 
 ///  Menu-based containers
 /// 
 
 @include spaces-menu;
-
 @include foundation-menu-icon;
-
 @include spaces-accordion-menu;
-
 @include foundation-drilldown-menu;
 @include foundation-dropdown-menu;
 
@@ -73,9 +61,7 @@
 /// 
 
 @include foundation-off-canvas;
-
 @include spaces-reveal;
-
 @include foundation-sticky;
 @include foundation-title-bar;
 @include foundation-top-bar;

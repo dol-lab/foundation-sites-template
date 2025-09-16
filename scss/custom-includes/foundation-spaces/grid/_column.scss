@@ -33,6 +33,7 @@
 
   // Gutters
   @include grid-column-gutter($gutters: $gutters);
+
   // Position
   @include grid-col-pos(auto);
 

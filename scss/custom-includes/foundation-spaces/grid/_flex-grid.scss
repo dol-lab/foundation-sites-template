@@ -33,9 +33,9 @@
       margin-right: 0;
       margin-left: 0;
     }
-  }
-  @else {
+  } @else {
     @include grid-row-size($size);
+
     margin-right: auto;
     margin-left: auto;
   }
@@ -62,8 +62,7 @@
 
   @if $columns == shrink {
     $flex: 0 0 auto;
-  }
-  @else if $columns != expand {
+  } @else if $columns != expand {
     $flex: 0 0 grid-column($columns);
   }
 

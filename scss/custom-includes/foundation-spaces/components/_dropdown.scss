@@ -42,17 +42,13 @@ $dropdown-sizes: (
 @mixin dropdown-container {
   position: absolute;
   z-index: 10;
-
   display: none;
-
   width: $dropdown-width;
   padding: $dropdown-padding;
-
   visibility: hidden;
   border: $dropdown-border;
   border-radius: $dropdown-radius;
   background-color: $dropdown-background;
-
   font-size: $dropdown-font-size;
 
 

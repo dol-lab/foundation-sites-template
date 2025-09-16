@@ -54,7 +54,6 @@ $input-error-font-weight: $global-weight-bold !default;
   display: none;
   margin-top: $form-spacing * -0.5;
   margin-bottom: $form-spacing;
-
   font-size: $input-error-font-size;
   font-weight: $input-error-font-weight;
   color: $input-error-color;
@@ -75,6 +74,7 @@ $input-error-font-weight: $global-weight-bold !default;
 
   .form-error {
     @include form-error;
+
     &.is-visible {
       display: block;
     }

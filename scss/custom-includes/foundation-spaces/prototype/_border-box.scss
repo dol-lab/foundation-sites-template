@@ -20,7 +20,7 @@ $prototype-border-box-breakpoints: $global-prototype-breakpoints !default;
     @include border-box;
   }
 
-  @if ($prototype-border-box-breakpoints) {
+  @if $prototype-border-box-breakpoints {
     // Loop through Responsive Breakpoints
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {

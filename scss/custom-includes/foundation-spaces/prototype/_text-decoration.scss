@@ -31,7 +31,7 @@ $prototype-text-decoration: (
     }
   }
 
-  @if ($prototype-decoration-breakpoints) {
+  @if $prototype-decoration-breakpoints {
     // Loop through Responsive Breakpoints
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {

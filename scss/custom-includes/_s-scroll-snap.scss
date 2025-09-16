@@ -104,8 +104,7 @@
   @include xy-grid($direction: horizontal, $wrap: false);
 
   position: relative;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: auto hidden;
   -webkit-overflow-scrolling: touch;
 
   @include cross-browser(scroll-snap-type, x mandatory);
@@ -215,7 +214,7 @@
     @each $breakpoint, $width in $breakpoints {
       $index: index(($breakpoints), ($breakpoint $width)) !global;
 
-      @if $index==1 {
+      @if $index == 1 {
         $breakpoint-fallback: append($breakpoint-fallback, $breakpoint);
       }
 
@@ -239,10 +238,9 @@
 						* reference width from 100vw to the grid-container.
 						*/
             @if (
-              strip-unit(rem-calc(strip-unit($width)))
-                >=strip-unit($grid-container)
+              strip-unit(rem-calc(strip-unit($width))) >= strip-unit($grid-container)
             ) {
-              @if ($widescreen-breakpoint== "") {
+              @if $widescreen-breakpoint == "" {
                 $widescreen-breakpoint: $breakpoint;
               }
 

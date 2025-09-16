@@ -31,7 +31,7 @@ $prototype-text-transformation: (
     }
   }
 
-  @if ($prototype-transformation-breakpoints) {
+  @if $prototype-transformation-breakpoints {
     // Loop through Responsive Breakpoints
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {

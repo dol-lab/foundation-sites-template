@@ -72,13 +72,13 @@ $breadcrumbs-item-separator-opacity: 60% !default;
 /// Adds styles for a breadcrumbs container, along with the styles for the `<li>` and `<a>` elements inside of it.
 @mixin breadcrumbs-container {
   @include clearfix;
+
   margin: $breadcrumbs-margin;
   list-style: none;
 
   // Item wrapper
   li {
     float: #{$global-left};
-
     font-size: $breadcrumbs-item-font-size;
     color: $breadcrumbs-item-color-current;
     cursor: default;
@@ -100,8 +100,7 @@ $breadcrumbs-item-separator-opacity: 60% !default;
           opacity: $breadcrumbs-item-separator-opacity;
         }
       }
-    }
-    @else {
+    } @else {
       margin-#{$global-right}: $breadcrumbs-item-margin;
     }
   }
@@ -124,9 +123,11 @@ $breadcrumbs-item-separator-opacity: 60% !default;
 
     .disabled {
       color: $breadcrumbs-item-color-disabled;
+
       // color: color-mix(in oklab, $breadcrumbs-item-color-disabled (100% - $breadcrumbs-item-opacity-disabled), transparent $breadcrumbs-item-opacity-disabled);
       cursor: not-allowed;
-      &:after {
+
+      &::after {
         opacity: 1 !important;
       }
     }

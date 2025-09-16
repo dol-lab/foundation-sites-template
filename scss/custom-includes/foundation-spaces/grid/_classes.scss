@@ -168,7 +168,8 @@
       if($push, '.#{$-zf-size}-#{$push}-0', null),
       if($pull, '.#{$-zf-size}-#{$pull}-0', null),
     );
-    @if ($uncenter or $push or $pull) {
+
+    @if $uncenter or $push or $pull {
       #{$-gutter-unpos-selector} {
         @include grid-col-unpos;
       }

@@ -23,6 +23,7 @@ $responsive-embed-ratios: (
   @if type-of($ratio) == 'string' {
     $ratio: map-get($responsive-embed-ratios, $ratio);
   }
+
   position: relative;
   height: 0;
   margin-bottom: $responsive-embed-margin-bottom;

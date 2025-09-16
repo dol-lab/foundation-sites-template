@@ -186,13 +186,12 @@ $header-styles: (
 		"h6": ("font-size": 17, "color": $color-text-0, "font-style": italic, "font-weight": 400 ),
 	),
 );
-
-$header-text-rendering: optimizeLegibility;
+$header-text-rendering: optimizelegibility;
 $small-font-size: 0.8rem;
 $header-small-font-color: $color-text-0;
 $paragraph-lineheight: 1.6;
 $paragraph-margin-bottom: 1rem;
-$paragraph-text-rendering: optimizeLegibility;
+$paragraph-text-rendering: optimizelegibility;
 $enable-code-inline: true;
 $anchor-color: inherit;
 $anchor-color-hover: inherit;
@@ -240,6 +239,7 @@ $code-color: $color-text-0;
 $code-font-family: $font-family-monospace;
 $code-font-weight: $global-weight-normal;
 $code-background: $color-bg-2;
+
 // $code-background: color-mix(in oklab, $color-text-0 7%, $color-bg-1 93%);
 // $code-border: 1px solid color-mix(in oklab, $color-text-0 11%, $color-bg-1 89%);
 $code-border: 1px solid $color-border-1;
@@ -282,8 +282,9 @@ $accordionmenu-padding: $global-menu-padding;
 $accordionmenu-nested-margin: 0;
 $accordionmenu-submenu-padding: $accordionmenu-padding;
 $accordionmenu-arrows: false;
+
 // $accordionmenu-arrow-color: $color-text-0;
-$accordionmenu-arrow-color: currentColor;
+$accordionmenu-arrow-color: currentcolor;
 $accordionmenu-item-background: null;
 $accordionmenu-border: null;
 $accordionmenu-submenu-toggle-background: null;
@@ -306,7 +307,6 @@ $badge-padding: $badge-height / 4; // <-- this way, it only affects badges with 
 // ---------------
 
 $breadcrumbs-margin: 0;
-
 $breadcrumbs-item-font-size: 0.9rem;
 $breadcrumbs-item-color: $color-text-1;
 $breadcrumbs-item-color-current: $color-text-0;
@@ -329,12 +329,9 @@ $button-sizes: (
 	large: 1rem
 );
 $button-font-family: inherit;
-
 $button-background: $color-text-0;
-
 $button-background-hover: $color-text-1;
 $button-color: $color-bg-0;
-
 $button-font-weight: null;
 $button-padding: 0.5rem 0.75rem; // same as button padding.
 $button-margin: 0 0 map-get($button-sizes, default) 0;
@@ -379,7 +376,7 @@ $card-divider-background: transparent;
 $card-border: none;
 $card-shadow: none;
 $card-border-radius: $global-radius;
-$card-padding: none; //$global-padding;
+$card-padding: none; // $global-padding;
 $card-margin-bottom: 0;
 
 // 15. Close Button
@@ -414,7 +411,7 @@ $drilldown-nested-margin: 0;
 $drilldown-background: $color-bg-1;
 $drilldown-submenu-padding: $drilldown-padding;
 $drilldown-submenu-background: $color-bg-1;
-$drilldown-arrow-color: currentColor;
+$drilldown-arrow-color: currentcolor;
 $drilldown-arrow-size: 6px;
 
 // 17. Dropdown
@@ -442,9 +439,10 @@ $dropdownmenu-arrow-padding: 1.5rem;
 $dropdownmenu-min-width: 200px;
 $dropdownmenu-background: $color-text-0;
 $dropdownmenu-submenu-background: $dropdownmenu-background;
-$dropdownmenu-padding: $global-menu-padding; //0.9rem;
+$dropdownmenu-padding: $global-menu-padding; // 0.9rem;
 $dropdownmenu-nested-margin: 0;
 $dropdownmenu-submenu-padding: 0.75rem 0.9rem;
+
 // $dropdownmenu-border: 1px solid color-mix(in oklab, $color-text-0 10%, $color-bg-1 90%);
 $dropdownmenu-border: 1px solid $color-border-0;
 $dropdown-menu-item-color-active: none;
@@ -464,10 +462,10 @@ $fieldset-padding: rem-calc(20);
 $fieldset-margin: rem-calc(18 0);
 $legend-padding: rem-calc(0 3);
 $form-spacing: rem-calc(16);
-$helptext-color: currentColor;
+$helptext-color: currentcolor;
 $helptext-font-size: rem-calc(13);
 $helptext-font-style: italic;
-$input-prefix-color: currentColor;
+$input-prefix-color: currentcolor;
 $input-prefix-background: inherit;
 $input-prefix-border: 1px solid $color-border-0;
 $input-prefix-padding: 1rem;
@@ -476,9 +474,10 @@ $form-label-font-size: rem-calc(14);
 $form-label-font-weight: $global-weight-normal;
 $form-label-line-height: 1.3;
 $select-background: inherit;
+
 // $select-triangle-color: $color-text-1; <-- has no effect anymore, as scss variables were computed into rgb, then encoded into an svg background attatchment. Browsers cant do that with CSS vars (yet).
 $select-radius: $global-radius;
-$input-color: currentColor;
+$input-color: currentcolor;
 $input-color-disabled: color-mix-opacity(#{$color-text-1}, 50%, 50%);
 $input-font-family: inherit;
 $input-font-size: rem-calc(14);

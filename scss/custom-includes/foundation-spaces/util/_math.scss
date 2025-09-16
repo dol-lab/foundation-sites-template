@@ -16,10 +16,9 @@
 /// @returns {Number} The greatest common divisor.
 @function gcd($a, $b) {
   // From: http://rosettacode.org/wiki/Greatest_common_divisor#JavaScript
-  @if ($b != 0) {
+  @if $b != 0 {
     @return gcd($b, $a % $b);
-  }
-  @else {
+  } @else {
     @return math.abs($a);
   }
 }
@@ -31,20 +30,21 @@
 ///
 /// @returns {Number} The product of the exponentiation.
 @function pow($base, $exponent, $prec: 16) {
-  @if (floor($exponent) != $exponent) {
+  @if floor($exponent) != $exponent {
     $prec2: pow(10, $prec);
     $exponent: round($exponent * $prec2);
     $denominator: gcd($exponent, $prec2);
+
     @return nth-root(pow($base, divide($exponent, $denominator)), divide($prec2, $denominator), $prec);
   }
 
   $value: $base;
+
   @if $exponent > 1 {
     @for $i from 2 through $exponent {
       $value: $value * $base;
     }
-  }
-  @else if $exponent < 1 {
+  } @else if $exponent < 1 {
     @for $i from 0 through -$exponent {
       $value: divide($value, $base);
     }
@@ -70,6 +70,7 @@
 @function ratio-to-percentage($ratio) {
   $w: nth($ratio, 1);
   $h: nth($ratio, 3);
+
   @return divide($h, $w) * 100%;
 }
 
@@ -79,25 +80,22 @@
 ///
 /// @return {List} List of parsed values with numerator at first position and denumerator as second. These values may be null.
 @function zf-parse-fraction($fraction) {
-
   @if type-of($fraction) == 'number' {
     // "50%"
     @if unit($fraction) == '%' {
       @return (strip-unit($fraction), 100);
-    }
-    @else if (unit($fraction) == '') {
+    } @else if unit($fraction) == '' {
       // "0.5"
       @if $fraction < 1 {
         @return ($fraction * 100, 100);
       }
+
       // "50"
       @else {
         @return ($fraction, null);
       }
     }
-  }
-
-  @else if type-of($fraction) == 'list' {
+  } @else if type-of($fraction) == 'list' {
     // "50 of 100", "50/100"...
     @if length($fraction) == 3
     and type-of(nth($fraction, 1) == 'number')
@@ -117,6 +115,7 @@
 /// @return {Boolean} `true` if `$value` represents a fraction, `false` otherwise.
 @function zf-is-fraction($value, $allow-no-denominator: false) {
   $parsed: zf-parse-fraction($value);
+
   @return not(nth($parsed, 1) == null
     or (nth($parsed, 2) == null and $allow-no-denominator == false));
 }
@@ -136,11 +135,11 @@
   @if $parsed-nominator == null {
     @error 'Wrong syntax for "fraction-to-percentage()". Use a number, decimal, percentage, or "n of n" / "n/n".';
   }
+
   @if $parsed-denominator == null {
     @if type-of($denominator) == 'number' {
       $parsed-denominator: $denominator;
-    }
-    @else {
+    } @else {
       @error 'Error with "fraction-to-percentage()". A default "$denominator" is required to support absolute values';
     }
   }
@@ -159,29 +158,37 @@
   $sign: if($dividend > 0 and $divisor > 0 or $dividend < 0 and $divisor < 0, 1, -1);
   $dividend: math.abs($dividend);
   $divisor: math.abs($divisor);
+
   @if $dividend == 0 {
     @return 0;
   }
+
   @if $divisor == 0 {
     @error 'Cannot divide by 0';
   }
+
   $remainder: $dividend;
   $result: 0;
   $factor: 10;
-  @while ($remainder > 0 and $precision >= 0) {
+
+  @while $remainder > 0 and $precision >= 0 {
     $quotient: 0;
-    @while ($remainder >= $divisor) {
+
+    @while $remainder >= $divisor {
       $remainder: $remainder - $divisor;
       $quotient: $quotient + 1;
     }
+
     $result: $result * 10 + $quotient;
     $factor: $factor * 0.1;
     $remainder: $remainder * 10;
     $precision: $precision - 1;
-    @if ($precision < 0 and $remainder >= $divisor * 5) {
+
+    @if $precision < 0 and $remainder >= $divisor * 5 {
       $result: $result + 1;
     }
   }
+
   $result: $result * $factor * $sign;
   $dividend-unit: unit($dividend);
   $divisor-unit: unit($divisor);
@@ -191,7 +198,8 @@
     'em': 1em,
     '%': 1%
   );
-  @if ($dividend-unit != $divisor-unit and map-has-key($unit-map, $dividend-unit)) {
+
+  @if $dividend-unit != $divisor-unit and map-has-key($unit-map, $dividend-unit) {
     $result: $result * map-get($unit-map, $dividend-unit);
   }
 

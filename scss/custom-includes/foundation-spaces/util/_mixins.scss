@@ -21,16 +21,15 @@ $-zf-bp-value: null;
   $size: 20px,
   $color: rgba($black, 0.25)
 ) {
-
   $helper: round($size * 0.65);
 
-  @if ($side == top) {
+  @if $side == top {
     box-shadow: inset 0 $helper $size (-1)*$helper $color;
-  } @else if ($side == left) {
+  } @else if $side == left {
     box-shadow: inset $helper 0 $size (-1)*$helper $color;
-  } @else if ($side == right) {
+  } @else if $side == right {
     box-shadow: inset (-1)*$helper 0 $size (-1)*$helper $color;
-  } @else if ($side == bottom) {
+  } @else if $side == bottom {
     box-shadow: inset 0 (-1)*$helper $size (-1)*$helper $color;
   }
 }
@@ -48,25 +47,26 @@ $-zf-bp-value: null;
   display: block;
   width: 0;
   height: 0;
-
   border-style: solid;
   border-width: $triangle-size;
-
   content: '';
 
-  @if ($triangle-direction == down) {
+  @if $triangle-direction == down {
     border-bottom-width: 0;
     border-color: $triangle-color transparent transparent;
   }
-  @if ($triangle-direction == up) {
+
+  @if $triangle-direction == up {
     border-top-width: 0;
     border-color: transparent transparent $triangle-color;
   }
-  @if ($triangle-direction == right) {
+
+  @if $triangle-direction == right {
     border-right-width: 0;
     border-color: transparent transparent transparent $triangle-color;
   }
-  @if ($triangle-direction == left) {
+
+  @if $triangle-direction == left {
     border-left-width: 0;
     border-color: transparent $triangle-color transparent transparent;
   }
@@ -117,14 +117,11 @@ $-zf-bp-value: null;
     position: absolute;
     top: 0;
     left: 0;
-
     display: block;
     width: 100%;
     height: $weight;
-
     background: $color;
     box-shadow: $shadow;
-
     content: '';
   }
 
@@ -148,19 +145,18 @@ $-zf-bp-value: null;
 ///
 /// @param {Color} $color [$black] - Color to use for the triangle.
 @mixin background-triangle($color: $black) {
-  $red   : round(color.channel($color, "red", $space: rgb));
-  $green : round(color.channel($color, "green", $space: rgb));
-  $blue  : round(color.channel($color, "blue", $space: rgb));
-  $rgb   : 'rgb%28#{$red}, #{$green}, #{$blue}%29';
+  $red: round(color.channel($color, "red", $space: rgb));
+  $green: round(color.channel($color, "green", $space: rgb));
+  $blue: round(color.channel($color, "blue", $space: rgb));
+  $rgb: 'rgb%28#{$red}, #{$green}, #{$blue}%29';
 
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="24" viewBox="0 0 32 24"><polygon points="0,0 32,0 16,24" style="fill: #{$rgb}"></polygon></svg>');
 
-  @media screen and (min-width: 0\0) {
+  @media screen and (width >= 0\0) {
     @if color.channel($color, "lightness", $space: hsl) < 60% {
       // White triangle
       background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNrEkckNgDAMBBfRkEt0ObRBBdsGXUDgmQfK4XhH2m8czQAAy27R3tsw4Qfe2x8uOO6oYLb6GlOor3GF+swURAOmUJ+RwtEJs9WvTGEYxBXqI1MQAZhCfUQKRzDMVj+TwrAIV6jvSUEkYAr1LSkcyTBb/V+KYfX7xAeusq3sLDtGH3kEGACPWIflNZfhRQAAAABJRU5ErkJggg==');
-    }
-    @else {
+    } @else {
       // Black triangle
       background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMBJREFUeNrEllsOhCAMRVszC9IlzU7KCmVHTJsoMWYMUtpyv9BgbuXQB5ZSdgBYYY4ycgBivk8KYFsQMfMiTTBP4o3nUzCKzOabLJbLy2/g31evGkAginR4/ZegKH5qX3bJCscA3t0x3kgO5tQFyhhFf50xRqFLbyMUNJQzgyjGS/wgCpvKqkRBpuWrE4V9d+1E4dPUXqIg107SQOE/2DRQxMwTDygIInVDET9T3lCoj/6j/VCmGjZOl2lKpZ8AAwDQP7zIimDGFQAAAABJRU5ErkJggg==');
     }
@@ -300,40 +296,37 @@ $-zf-bp-value: null;
   // Retrieve the list of breakpoint(s) to iterate on.
   @if $breakpoints == auto {
     $-list: $breakpoint-classes;
-  }
-  @else if type-of($breakpoints) == 'list' {
+  } @else if type-of($breakpoints) == 'list' {
     $-list: $breakpoints;
-  }
-  @else if type-of($breakpoints) == 'string' {
+  } @else if type-of($breakpoints) == 'string' {
     $-list: ($breakpoints);
     $-breakpoints-is-a-list: false;
-  }
-  @else {
+  } @else {
     @error 'Wrong syntax for "$breakpoints" in "-zf-each-breakpoint-in()". Got "#{$breakpoints}" (#{type-of($breakpoints)}). Expected a breakpoint name, a list of breakpoints or "auto"';
   }
 
   // Add or remove the zero breakpoint according to `$zero-breakpoint`
   @if $zero-breakpoint == true {
     $-list: join(($-zf-zero-breakpoint), sl-remove($-list, $-zf-zero-breakpoint));
-  }
-  @else if $zero-breakpoint == false {
+  } @else if $zero-breakpoint == false {
     $-list: sl-remove($-list, $-zf-zero-breakpoint);
   }
 
   // Iterate on breakpoint(s)
   @each $bp in $-list {
     $old-zf-size: null;
+
     @if global-variable-exists(-zf-size) {
       $old-zf-size: $-zf-size;
     }
+
     $-zf-size: $bp !global;
 
-    @if ($media-queries == true or ($media-queries == 'for-lists' and $-breakpoints-is-a-list)) {
+    @if $media-queries == true or ($media-queries == 'for-lists' and $-breakpoints-is-a-list) {
       @include breakpoint($bp) {
         @content;
       }
-    }
-    @else {
+    } @else {
       @content;
     }
 
@@ -360,11 +353,11 @@ $-zf-bp-value: null;
         }
       }
     }
-  }
-  @else {
+  } @else {
     // breakpoint name
     @if type-of($name) == 'string' {
       $bp-value: -zf-get-bp-val($map, $name);
+
       @if $bp-value != null {
         $name: $bp-value;
       }

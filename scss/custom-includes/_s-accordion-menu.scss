@@ -56,6 +56,7 @@ $accordionmenu-arrow-size: 6px !default;
 
     &::after {
       @include css-triangle($accordionmenu-arrow-size, $accordionmenu-arrow-color, down);
+
       position: absolute;
       top: 50%;
       margin-top: -1 * ($accordionmenu-arrow-size * 0.5);
@@ -73,6 +74,7 @@ $accordionmenu-arrow-size: 6px !default;
     left: 1rem;
   }
 }
+
 @mixin spaces-accordion-menu {
   .accordion-menu {
     @if $accordionmenu-border {
@@ -85,7 +87,9 @@ $accordionmenu-arrow-size: 6px !default;
         border-right: $accordionmenu-border;
         border-left: $accordionmenu-border;
       }
+
       width: 100%;
+
       &:not(.is-submenu-item) {
         &:hover,
         &:focus {
@@ -93,6 +97,7 @@ $accordionmenu-arrow-size: 6px !default;
             color: $color-text-0;
 
           }
+
           background-color: $color-bg-2;
         }
       }
@@ -102,6 +107,7 @@ $accordionmenu-arrow-size: 6px !default;
       @if $accordionmenu-item-background {
         background: $accordionmenu-item-background;
       }
+
       padding: $accordionmenu-padding;
       text-decoration: none !important;
     }
@@ -150,12 +156,9 @@ $accordionmenu-arrow-size: 6px !default;
     position: absolute;
     top: 0;
     #{$global-right}: 0;
-
     width: $accordionmenu-submenu-toggle-width;
     height: $accordionmenu-submenu-toggle-height;
-
     cursor: pointer;
-
     border-#{$global-left}: $accordion-submenu-toggle-border;
 
     @if $accordionmenu-submenu-toggle-background {

@@ -23,8 +23,7 @@
 
   @if $root {
     @at-root { @content; }
-  }
-  @else {
+  } @else {
     @content;
   }
 
@@ -57,9 +56,9 @@
       margin-right: 0;
       margin-left: 0;
     }
-  }
-  @else {
+  } @else {
     @include grid-row-size($size);
+
     margin-right: auto;
     margin-left: auto;
   }

@@ -100,7 +100,6 @@ $orbit-control-zindex: 10 !default;
   width: 100%;
   margin-bottom: 0;
   padding: $orbit-caption-padding;
-
   background-color: $orbit-caption-background;
   backdrop-filter: blur(15px);
   color: $color-text-0;
@@ -113,11 +112,9 @@ $orbit-control-zindex: 10 !default;
   @include cross-browser(border-radius, 50px);
 
   z-index: $orbit-control-zindex;
-
   color: $color-text-0;
   background-color: $orbit-control-background;
   border: $orbit-control-border;
-
   opacity: 0.4;
   display: flex;
   width: 36px;
@@ -125,7 +122,7 @@ $orbit-control-zindex: 10 !default;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 0px;
+  font-size: 0;
   padding: 0;
 
   &:hover,
@@ -169,6 +166,7 @@ $orbit-control-zindex: 10 !default;
 /// Adds styles for a container of Orbit bullets. /// Adds styles for the Orbit previous button. These styles are used on the `.orbit-bullets` class.
 @mixin orbit-bullets {
   @include disable-mouse-outline;
+
   position: relative;
   margin-top: $orbit-bullet-margin-top;
   margin-bottom: $orbit-bullet-margin-bottom;
@@ -178,7 +176,6 @@ $orbit-control-zindex: 10 !default;
     width: $orbit-bullet-diameter;
     height: $orbit-bullet-diameter;
     margin: $orbit-bullet-margin;
-
     border-radius: 50%;
     background-color: $orbit-bullet-background;
 

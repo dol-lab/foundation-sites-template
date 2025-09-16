@@ -33,15 +33,12 @@ $breakpoints-hidpi: (
 /// The largest named breakpoint in which to include print as a media type
 /// @type Keyword
 $print-breakpoint: large !default;
-
 $-zf-zero-breakpoint: small !default;
-
 $-zf-breakpoints-keys: map-to-list($breakpoints, 'keys');
 
 @if nth(map-values($breakpoints), 1) != 0 {
   @error 'The first key in the $breakpoints map must have a value of "0".';
-}
-@else {
+} @else {
   $-zf-zero-breakpoint: nth(map-keys($breakpoints), 1);
 }
 
@@ -59,16 +56,22 @@ $breakpoint-classes: (small medium large) !default;
 
   // Size or keyword
   $bp: nth($val, 1);
+
   // Value of the following breakpoint
   $bp-next: null;
+
   // Value for max-width media queries
   $bp-min: null;
+
   // Value for min-width media queries
   $bp-max: null;
+
   // Direction of media query (up, down, or only)
   $dir: if(length($val) > 1, nth($val, 2), up);
+
   // If named, name of the breakpoint
   $name: null;
+
   // If the breakpoint is a HiDPI breakpoint
   $hidpi: false;
 
@@ -83,15 +86,14 @@ $breakpoint-classes: (small medium large) !default;
       $name: $bp;
       $bp: map-get($breakpoints, $name);
       $bp-next: -zf-map-next($breakpoints, $name);
-    }
-    @else if map-has-key($breakpoints-hidpi, $bp) {
+    } @else if map-has-key($breakpoints-hidpi, $bp) {
       $name: $bp;
       $bp: map-get($breakpoints-hidpi, $name);
       $bp-next: -zf-map-next-number($breakpoints-hidpi, $bp);
       $hidpi: true;
-    }
-    @else {
+    } @else {
       $bp: 0;
+
       @warn 'breakpoint(): "#{$val}" is not defined in your `$breakpoints` or `$breakpoints-hidpi` setting.';
     }
   }
@@ -105,12 +107,14 @@ $breakpoint-classes: (small medium large) !default;
   @if $dir == 'only' or $dir == 'up' {
     $bp-min: if($hidpi, strip-unit($bp), -zf-bp-to-em($bp));
   }
+
   // Only 'only' and 'down' have a max limit.
   @if $dir == 'only' or $dir == 'down' {
     // If the breakpoint is a value, use it as max limit.
     @if not $name {
       $bp-max: if($hidpi, strip-unit($bp), -zf-bp-to-em($bp));
     }
+
     // If the breakpoint is named, the max limit is the following breakpoint - 1px.
     @else if $bp-next {
       // Max value is 0.2px under the next breakpoint (0.02 / 16 = 0.00125).
@@ -126,12 +130,12 @@ $breakpoint-classes: (small medium large) !default;
     // See https://caniuse.com/#feat=css-media-resolution
     $bp-min-dpi: if($bp-min, $bp-min * $std-web-dpi * 1dpi, $bp-min);
     $bp-max-dpi: if($bp-max, $bp-max * $std-web-dpi * 1dpi, $bp-max);
+
     @return zf-str-join(
       -zf-bp-join($bp-min, $bp-max, '-webkit-min-device-pixel-ratio', '-webkit-max-device-pixel-ratio'),
       -zf-bp-join($bp-min-dpi, $bp-max-dpi, 'min-resolution', 'max-resolution'),
       ', ');
-  }
-  @else {
+  } @else {
     @return -zf-bp-join($bp-min, $bp-max);
   }
 }
@@ -155,15 +159,16 @@ $breakpoint-classes: (small medium large) !default;
     $str: breakpoint($value);
     $bp: index($-zf-breakpoints-keys, nth($value, 1));
     $pbp: index($-zf-breakpoints-keys, $print-breakpoint);
+
     // Direction of media query (up, down, or only)
     $dir: if(length($value) > 1, nth($value, 2), up);
-
     $old-zf-size: null;
 
     // Make breakpoint size available as a variable
     @if global-variable-exists(-zf-size) {
       $old-zf-size: $-zf-size;
     }
+
     $-zf-size: nth($value, 1) !global; // get the first value to account for `only` and `down` keywords
 
     // If $str is still an empty string, no media query is needed
@@ -180,8 +185,7 @@ $breakpoint-classes: (small medium large) !default;
         @media print, screen and #{$str} {
           @content;
         }
-      }
-      @else {
+      } @else {
         @media screen and #{$str} {
           @content;
         }
@@ -200,9 +204,11 @@ $breakpoint-classes: (small medium large) !default;
 /// @returns {String} A string containing the map's contents.
 @function -zf-bp-serialize($map) {
   $str: '';
+
   @each $key, $value in $map {
     $str: $str + $key + '=' + -zf-bp-to-em($value) + '&';
   }
+
   $str: str-slice($str, 1, -2);
 
   @return $str;
@@ -216,21 +222,20 @@ $breakpoint-classes: (small medium large) !default;
 ///
 /// @returns {Mixed} The value for the key after `$key`, if `$key` was found. If `$key` was not found, or `$key` was the last value in the map, returns `null`.
 @function -zf-map-next($map, $key) {
-
   // Store the keys of the map as a list
   $values: map-keys($map);
-
   $i: 0;
 
   // If the Key Exists, Get the index of the key within the map and add 1 to it for the next breakpoint in the map
-  @if (map-has-key($map, $key)) {
+  @if map-has-key($map, $key) {
     $i: index($values, $key) + 1;
   }
 
   // If the key doesn't exist, or it's the last key in the map, return null
-  @if ($i > length($map) or $i == 0) {
+  @if $i > length($map) or $i == 0 {
     @return null;
   }
+
   // Otherwise, return the value
   @else {
     @return map-get($map, nth($values, $i));
@@ -246,7 +251,6 @@ $breakpoint-classes: (small medium large) !default;
 ///
 /// @returns {Mixed} The number following `$number`, if `$number` was found. If `$number` was not found, or `$number` was the biggest number in the map, returns `null`.
 @function -zf-map-next-number($map, $number) {
-
   $next-number: null;
 
   @each $k, $v in $map {
@@ -270,13 +274,15 @@ $breakpoint-classes: (small medium large) !default;
   $found-key: false;
 
   @each $name in $-zf-breakpoints-keys {
-    @if ($name == $key) {
+    @if $name == $key {
       $found-key: true;
     }
+
     @if not $found-key {
       $list: append($list, $name);
     }
   }
+
   @return $list;
 }
 
@@ -290,8 +296,8 @@ $breakpoint-classes: (small medium large) !default;
 @function -zf-closest-named-breakpoint($breakpoint) {
   $last: $-zf-zero-breakpoint;
   $found: false;
-
   $value: unitless-calc($breakpoint, 1px);
+
   @each $key, $val in $breakpoints {
     @if not $found {
       @if unitless-calc($val) > $value {
@@ -330,11 +336,13 @@ $breakpoint-classes: (small medium large) !default;
       @return null;
     }
   }
+
   // Check if the breakpoint name exists in the local config map
   @else if map-has-key($map, $value) {
     // If it does, just return the value
     @return map-get($map, $value);
   }
+
   // Otherwise, find the next lowest breakpoint and return that value
   @else {
     $anchor: null;
@@ -345,6 +353,7 @@ $breakpoint-classes: (small medium large) !default;
         @if map-has-key($map, $key) {
           $anchor: $key;
         }
+
         @if $key == $value {
           $found: true;
         }
@@ -366,13 +375,11 @@ $breakpoint-classes: (small medium large) !default;
 ///
 /// @return {Keyword} The resolved breakpoint.
 @function -zf-current-breakpoint($value: null, $default: null) {
-  @if ($value != null) {
+  @if $value != null {
     @return $value;
-  }
-  @else if (variable-exists(-zf-size) and type-of($-zf-size) != 'number') and $-zf-size != null {
+  } @else if (variable-exists(-zf-size) and type-of($-zf-size) != 'number') and $-zf-size != null {
     @return $-zf-size;
-  }
-  @else {
+  } @else {
     @return $default;
   }
 }

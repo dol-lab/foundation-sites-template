@@ -32,7 +32,6 @@ $progress-radius: $global-radius !default;
     width: 100%;
     height: $progress-height;
     margin-bottom: $progress-margin-bottom;
-
     appearance: none;
 
     @if has-value($progress-radius) {

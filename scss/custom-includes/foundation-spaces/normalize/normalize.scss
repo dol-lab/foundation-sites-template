@@ -11,7 +11,7 @@
 
   html {
     line-height: 1.15; // 1
-    -webkit-text-size-adjust: 100%; // 2
+    text-size-adjust: 100%; // 2
   }
 
   // Sections
@@ -158,7 +158,7 @@
   [type="button"],
   [type="reset"],
   [type="submit"] {
-    -webkit-appearance: button;
+    appearance: button;
   }
 
   // Remove the inner border and padding in Firefox.
@@ -232,21 +232,21 @@
   // 2. Correct the outline style in Safari.
 
   [type="search"] {
-    -webkit-appearance: textfield; // 1
+    appearance: textfield; // 1
     outline-offset: -2px; // 2
   }
 
   // Remove the inner padding in Chrome and Safari on macOS.
 
   [type="search"]::-webkit-search-decoration {
-    -webkit-appearance: none;
+    appearance: none;
   }
 
   // 1. Correct the inability to style clickable types in iOS and Safari.
   // 2. Change font properties to `inherit` in Safari.
 
   ::-webkit-file-upload-button {
-    -webkit-appearance: button; // 1
+    appearance: button; // 1
     font: inherit; // 2
   }
 
@@ -291,8 +291,8 @@
   }
 
   // Disable iOS callouts when draggable is false
-  [draggable=false] {
+  [draggable="false"] {
     -webkit-touch-callout: none;
-    -webkit-user-select: none;
+    user-select: none;
   }
 }

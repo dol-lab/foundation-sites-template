@@ -53,7 +53,6 @@ $tooltip-radius: $global-radius !default;
 @mixin has-tip {
   position: relative;
   display: inline-block;
-
   border-bottom: $has-tip-border-bottom;
   font-weight: $has-tip-font-weight;
   cursor: $has-tip-cursor;
@@ -63,10 +62,8 @@ $tooltip-radius: $global-radius !default;
   position: absolute;
   top: calc(100% + #{$tooltip-pip-height});
   z-index: 1200;
-
   max-width: $tooltip-max-width;
   padding: $tooltip-padding;
-
   border-radius: $tooltip-radius;
   background-color: $tooltip-background-color;
   font-size: $tooltip-font-size;
@@ -79,6 +76,7 @@ $tooltip-radius: $global-radius !default;
   &.bottom {
     &::before {
       @include css-triangle($tooltip-pip-width, $tooltip-background-color, up);
+
       bottom: 100%;
     }
 
@@ -91,6 +89,7 @@ $tooltip-radius: $global-radius !default;
   &.top {
     &::before {
       @include css-triangle($tooltip-pip-width, $tooltip-background-color, down);
+
       top: 100%;
       bottom: auto;
     }
@@ -104,6 +103,7 @@ $tooltip-radius: $global-radius !default;
   &.left {
     &::before {
       @include css-triangle($tooltip-pip-width, $tooltip-background-color, right);
+
       left: 100%;
     }
 
@@ -117,6 +117,7 @@ $tooltip-radius: $global-radius !default;
   &.right {
     &::before {
       @include css-triangle($tooltip-pip-width, $tooltip-background-color, left);
+
       right: 100%;
       left: auto;
     }

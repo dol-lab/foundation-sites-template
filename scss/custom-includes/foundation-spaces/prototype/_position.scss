@@ -37,15 +37,19 @@ $prototype-position-z-index: 975 !default;
   $left: null
 ) {
   position: $position !important;
+
   @if $top != null {
     top: $top * $global-position !important;
   }
+
   @if $right != null {
     right: $right * $global-position !important;
   }
+
   @if $bottom != null {
     bottom: $bottom * $global-position !important;
   }
+
   @if $left != null {
     left: $left * $global-position !important;
   }
@@ -57,6 +61,7 @@ $prototype-position-z-index: 975 !default;
   $z-index: $prototype-position-z-index
 ) {
   @include position(fixed, 0, 0, null, 0);
+
   z-index: $z-index;
 }
 
@@ -66,6 +71,7 @@ $prototype-position-z-index: 975 !default;
   $z-index: $prototype-position-z-index
 ) {
   @include position(fixed, null, 0, 0, 0);
+
   z-index: $z-index;
 }
 
@@ -81,11 +87,12 @@ $prototype-position-z-index: 975 !default;
   .position-fixed-top {
     @include position-fixed-top;
   }
+
   .position-fixed-bottom {
     @include position-fixed-bottom;
   }
 
-  @if ($prototype-position-breakpoints) {
+  @if $prototype-position-breakpoints {
     // Loop through Responsive Breakpoints
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {

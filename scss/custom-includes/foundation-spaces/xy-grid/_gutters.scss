@@ -24,7 +24,7 @@
   $gutter-type: if($negative, 'margin', $gutter-type);
 
   // Output our margin gutters.
-  @if (type-of($gutters) == 'map') {
+  @if type-of($gutters) == 'map' {
     @include -zf-breakpoint-value(auto, $gutters) {
       $gutter: rem-calc($-zf-bp-value) * 0.5;
 
@@ -33,8 +33,7 @@
         #{$gutter-type}-#{$value}: unquote("#{$operator}#{$gutter}");
       }
     }
-  }
-  @else if (type-of($gutters) == 'number') {
+  } @else if type-of($gutters) == 'number' {
     $gutter: rem-calc($gutters) * 0.5;
 
     // Loop through each gutter position

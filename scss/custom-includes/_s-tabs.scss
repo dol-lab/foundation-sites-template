@@ -56,10 +56,12 @@ $tab-content-padding: 1rem !default;
 /// Adds styles for a tab container. Apply this to a `<ul>`.
 @mixin tabs-container($margin: $tab-margin, $background: $tab-background, $border-color: $tab-content-border) {
   @include clearfix;
+
   margin: $margin;
   border: 1px solid $border-color;
   background: $background;
   list-style-type: none;
+
   // padding: .25em;
   // gap: .25em;
 }
@@ -86,6 +88,7 @@ $tab-content-padding: 1rem !default;
 
   > a {
     @include disable-mouse-outline;
+
     display: flex;
     gap: 0.25em;
     align-items: center;
@@ -185,6 +188,7 @@ $tab-content-padding: 1rem !default;
   .tabs-content.vertical {
     @include tabs-content-vertical;
   }
+
   .tabs-panel {
     @include tabs-panel;
   }

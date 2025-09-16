@@ -56,7 +56,6 @@
   --f-transition-timing-cubic-bezier: #{$global-transition-timing-cubic-bezier};
   --f-drop-shadow: #{$global-drop-shadow};
   --f-drop-shadow-large: #{$global-drop-shadow-large};
-
   --f-margin: #{$global-margin};
   --f-padding: #{$global-padding};
   --f-menu-padding: #{$global-menu-padding};
@@ -77,16 +76,15 @@ html {
 body {
   background-color: $color-bg-0;
   color: $color-text-0;
-
   margin: 0;
   padding: 0;
   min-height: 100dvh;
   font-family: $body-font-family;
   font-weight: $global-weight-normal;
   line-height: $global-lineheight;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
 
-  @if ($body-antialiased) {
+  @if $body-antialiased {
     -webkit-font-smoothing: antialiased; // sass-lint:disable-line no-vendor-prefixes
     -moz-osx-font-smoothing: grayscale; // sass-lint:disable-line no-vendor-prefixes
   }
@@ -182,6 +180,7 @@ textarea {
     padding: 0;
   }
 }
+
 .auto-grid {
   display: grid;
   grid-template-columns: repeat(
@@ -215,6 +214,7 @@ p {
   &:last-child {
     margin-bottom: 0;
   }
+
   color: $color-text-1;
 
   // @include foundation-palette();
@@ -260,13 +260,14 @@ a {
   &:focus {
     outline: none;
   }
-  @include foundation-palette();
+
+  @include foundation-palette;
   @include foundation-palette($selector: "li", $child: ">&");
-  @include button-sizes();
+  @include button-sizes;
 }
 
 body .s-fg-a-c1-parent a {
-  &:not([class^="wp-block"]):not(.primary):not(.secondary):not(.alert):not(.success):not(.warning):not(.accordion-title):not(.button):not([role="tab"]):not([role="menuitem"]) {
+  &:not([class^="wp-block"], .primary, .secondary, .alert, .success, .warning, .accordion-title, .button, [role="tab"], [role="menuitem"]) {
     @extend .brand;
   }
 }
@@ -287,6 +288,7 @@ body .s-fg-a-c1-parent a {
 
 ul {
   font-size: $paragraph-font-size;
+
   // @include foundation-palette();
 }
 
@@ -343,6 +345,7 @@ label[for] {
   min-width: auto;
   flex-grow: 0;
   font-size: $paragraph-font-size;
+
   /* box-shadow:
         0 0 0 nth($hr-border, 1) nth($hr-border, 3),
         0 0 nth($hr-border, 1) 0 nth($hr-border, 3),
@@ -361,7 +364,7 @@ label[for] {
     flex-direction: column;
     padding: 0 !important;
 
-    @include foundation-palette();
+    @include foundation-palette;
   }
 
   &.overflow-auto {
@@ -408,6 +411,7 @@ label[for] {
   align-items: flex-start;
   flex: 1;
   padding: $button-padding;
+
   // padding-bottom: 0.25rem;
   line-height: $paragraph-lineheight;
 
@@ -439,6 +443,7 @@ label[for] {
   display: flex;
   align-items: center;
   font-size: 1rem;
+
   // padding-bottom: 0.3rem;
   line-height: $header-lineheight;
   font-weight: $global-weight-normal;
@@ -468,6 +473,7 @@ label[for] {
   &.flex-dir-row {
     flex-direction: row;
   }
+
   &.flex-dir-row-reverse {
     flex-direction: row-reverse;
   }
@@ -551,10 +557,11 @@ label[for] {
 }
 
 .page-title {
-  /*@extend .card-title;
-	font-size: 1.25rem;*/
+  /* @extend .card-title;
+	font-size: 1.25rem; */
   padding-top: 0.5rem;
-  //for search results, otherwise the title is underlined and bold, which looks quite different from what pages normally look like
+
+  // for search results, otherwise the title is underlined and bold, which looks quite different from what pages normally look like
   a {
     text-decoration: none !important;
     font-weight: 400;
@@ -590,7 +597,9 @@ label[for] {
 
 .space-title {
   line-height: 1.3;
+
   @extend .card-title;
+
   display: flex;
   margin: auto 0;
   padding: 0.35rem 0.5rem;
@@ -598,7 +607,7 @@ label[for] {
   color: $color-text-0;
   background: color-mix-opacity(#{$color-bg-0}, 55%, 45%);
   -webkit-box-orient: vertical;
-  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  backdrop-filter: blur(20px) saturate(200%);
   backdrop-filter: blur(20px) saturate(200%);
   max-width: 80% !important;
   margin-bottom: 5%;
@@ -648,7 +657,7 @@ label[for] {
     margin: 0;
   }
 
-  @media (min-width: 1366px) {
+  @media (width >= 1366px) {
     .space-title {
       left: calc(50vw - ((1080px - 20px) / 2));
       border-radius: $global-radius-small;
@@ -693,9 +702,8 @@ label[for] {
   /* .profile { */
   .accordion-item & {
     display: flex;
-    flex-direction: column;
+    flex-flow: column wrap;
     align-items: flex-start;
-    flex-wrap: wrap;
     color: inherit;
     position: relative;
     height: initial;
@@ -736,6 +744,7 @@ label[for] {
       background-color: $color-bg-0;
       top: 0.5em;
       right: 0.5em;
+
       &::after {
         content: "\f106";
         color: $color-text-1;
@@ -772,9 +781,11 @@ label[for] {
       display: none;
     }
   }
+
   .accordion-content {
     border: none;
   }
+
   /* 	} */
 
   .avatar-container {
@@ -915,6 +926,7 @@ label[for] {
 }
 
 // .user-name.text-truncate {
+
 /* truncate needs display block, so vertical flex center no longer works. */
 // transform: translateY(50%);
 // }
@@ -922,7 +934,8 @@ label[for] {
 .avatar {
   flex: 0 0 auto;
   width: $user-card-default-size;
-  //height: $user-card-default-size;
+
+  // height: $user-card-default-size;
   img {
     border-radius: $global-radius;
   }
@@ -973,7 +986,7 @@ label[for] {
 
 .page-card,
 .post-card {
-  @include header-list();
+  @include header-list;
 }
 
 .page-card,
@@ -984,6 +997,7 @@ label[for] {
     img {
       border-radius: $card-border-radius;
       overflow: clip;
+
       &:has(+ p) {
         margin-bottom: 1em;
       }
@@ -999,14 +1013,17 @@ label[for] {
     overflow: hidden;
     border-radius: $card-border-radius $card-border-radius 0 0;
   }
+
   &.activity-card-new {
     box-shadow: inset 3px 0 0 var(--s-c1, $primary-color);
   }
+
   & > .card-section:first-child {
     & > .avatar-container:first-child {
       overflow: hidden;
       border-radius: $card-border-radius 0 0 0;
     }
+
     & > .avatar-container:last-child {
       overflow: hidden;
       border-radius: 0 $card-border-radius 0 0;
@@ -1016,11 +1033,13 @@ label[for] {
   .card-divider:last-child .comment-avatar-list,
   .card-divider:last-child * .comment-avatar-list {
     --avatar-overlap: 0.6rem;
-    flex-wrap: wrap;
+
+    flex-flow: row-reverse wrap;
+
     /* row-reverse is intended. we want to show most recent activity with higher prio.
 		 * so we send them in reverted directory, hide overflow and then revers. smart!
 		 */
-    flex-direction: row-reverse;
+
     /* alignment needs to be flex-start. test with many avatars... */
     justify-content: flex-end;
     height: map-get($user-card-sizes, small);
@@ -1057,6 +1076,7 @@ label[for] {
       30%
     ) !important;
   }
+
   .activity-description {
     line-height: 1.4;
     word-break: break-word;
@@ -1153,7 +1173,7 @@ label[for] {
 
 .report-card .report-header,
 .page-section .page-header {
-  @include dynamic-box();
+  @include dynamic-box;
 }
 
 .user-generated {
@@ -1166,6 +1186,7 @@ label[for] {
   .alignfull,
   .alignwide {
     @include dynamic-box($edge: margin, $negative: true, $axis: horizontal);
+
     &:not(.no-margin) {
       @each $breakpoint, $width in $breakpoints {
         @include breakpoint($breakpoint) {
@@ -1187,7 +1208,7 @@ label[for] {
 .post-card .post-content,
 .report-card .report-content,
 .page-section .page-content {
-  @include dynamic-box();
+  @include dynamic-box;
 }
 
 // 8. Clipping
@@ -1219,7 +1240,7 @@ label[for] {
     background: $color-bg-2;
 
     /* IE 9+ Hack for object-fit. Possibly good option as standard as well */
-    @media screen and (min-width: 0\0) and (min-resolution: +72dpi) {
+    @media screen and (width >= 0\0) and (resolution >= +72dpi) {
       height: auto;
       transform: translate(-50%, -50%);
     }
@@ -1280,6 +1301,7 @@ label[for] {
 
   &.space-header {
     background: $color-bg-2;
+
     // height: 64px;
     height: 80px;
 
@@ -1375,9 +1397,11 @@ label[for] {
 
   &[id^="user-"][id$="-dropdown"].is-open {
     display: flex;
+
     .remove-user {
       order: 5;
     }
+
     .change-role > a {
       @extend .padding-button;
     }
@@ -1420,6 +1444,7 @@ label[for] {
 
     .info-chip {
       overflow: hidden;
+
       span {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -1474,13 +1499,14 @@ label[for] {
     /* the element has the href attr set, so it is clickable (if not .disable). */
     cursor: pointer;
     box-shadow: $info-border-shadow,
-      0px 1px 1px 0 color-mix-opacity(#{$color-text-0}, 6%, 94%);
+      0 1px 1px 0 color-mix-opacity(#{$color-text-0}, 6%, 94%);
     border: 1px solid $color-border-0;
   }
+
   &[href]:hover {
     // color: $color-text-0;
     box-shadow: $info-border-shadow,
-      0px 1px 1px 0 color-mix-opacity(#{$color-text-0}, 25%, 75%);
+      0 1px 1px 0 color-mix-opacity(#{$color-text-0}, 25%, 75%);
     border: 1px solid $color-border-0;
   }
 
@@ -1488,6 +1514,7 @@ label[for] {
     & > span {
       padding: $info-chip-padding-round;
     }
+
     border-radius: 2rem;
   }
 
@@ -1546,6 +1573,7 @@ label[for] {
     &:last-child {
       @include foundation-palette($property: "background", $hover: "false");
       @include foundation-palette($property: "border-color", $hover: "false");
+
       border-right: none;
     }
 
@@ -1569,7 +1597,7 @@ label[for] {
 
   a:hover > & {
     box-shadow: $info-border-shadow,
-      0px 1px 1px 0 color-mix-opacity($color-text-0, 25%, 75%);
+      0 1px 1px 0 color-mix-opacity($color-text-0, 25%, 75%);
   }
 }
 
@@ -1633,7 +1661,7 @@ label[for] {
     background: none;
 
     &::after {
-      box-shadow: inset 0 0 0 2em currentColor;
+      box-shadow: inset 0 0 0 2em currentcolor;
     }
   }
 
@@ -1732,7 +1760,7 @@ label[for] {
     opacity: 0;
   }
 
-  @include foundation-palette();
+  @include foundation-palette;
 
   font-size: $switch-height;
 
@@ -1804,6 +1832,7 @@ label > [disabled] ~ * {
       content: "";
       box-shadow: inset 0 0 0 2px $color-text-2;
       border-radius: $global-radius-small;
+
       // z-index: 1;
       transition: all $global-transition-medium;
       height: 1em;
@@ -1838,7 +1867,7 @@ label > [disabled] ~ * {
   // Checked
   input:checked ~ .checkbox-label {
     &::before {
-      box-shadow: inset 0 0 0 2em currentColor;
+      box-shadow: inset 0 0 0 2em currentcolor;
       transition: all $global-transition-medium;
     }
 
@@ -1860,6 +1889,7 @@ label > [disabled] ~ * {
       content: "";
       position: absolute;
       box-shadow: inset 0 0 0 2px $color-text-2;
+
       // z-index: 1;
       transition: all $global-transition-medium;
       border-radius: 1em;
@@ -1871,7 +1901,7 @@ label > [disabled] ~ * {
   // Checked
   input:checked ~ .radio-label {
     &::before {
-      box-shadow: inset 0 0 0 calc(0.5em - 2px) currentColor;
+      box-shadow: inset 0 0 0 calc(0.5em - 2px) currentcolor;
       transition: all $global-transition-medium;
     }
   }
@@ -1884,6 +1914,7 @@ label > [disabled] ~ * {
 
   .radio {
     height: auto;
+
 	&:has(input[type="radio"]:focus-visible) {
 		outline: 2px solid Highlight;
 		outline-offset: 2px;
@@ -2022,6 +2053,7 @@ input,
   &.load {
     transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
     color: $color-text-0 !important;
+
     // background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     // background-size: 300% 300%;
     background-color: var(--f-color-success);
@@ -2033,6 +2065,7 @@ input,
 .button-group {
   border-radius: $global-radius;
   overflow: hidden;
+
   &:not(.no-gaps) {
     gap: 1px;
   }
@@ -2051,7 +2084,7 @@ input,
       z-index: 1;
     }
 
-    &:not(:first-child):not(:last-child) {
+    &:not(:first-child, :last-child) {
       border-radius: 0;
     }
 
@@ -2131,6 +2164,7 @@ input,
 
   margin-bottom: $paragraph-margin-bottom;
 }
+
 // button,
 // input,
 // select,
@@ -2207,6 +2241,7 @@ input,
   &::after {
     padding: 0.75rem;
     font: inherit;
+
     /* font-size: 1rem; */
     line-break: normal;
     padding-right: 2rem;
@@ -2227,6 +2262,7 @@ input,
   z-index: 50;
   width: $button-height;
   height: $button-height;
+
   // color: $color-text-1;
   // color: $color-text-1;
 
@@ -2242,11 +2278,13 @@ input,
     white-space: nowrap;
     color: $color-text-2;
   }
+
   &.button {
     &::after {
       height: 0.5rem;
     }
   }
+
   .button & {
     margin: -0.5em -0.75em;
   }
@@ -2297,6 +2335,7 @@ input,
   align-items: center;
   margin-left: auto;
 }
+
 // 13. Excerpt
 // ---------
 
@@ -2342,24 +2381,27 @@ input,
 
 .main-menu {
   --header-height: var(--user-card--small);
+
   color: $color-text-1;
   background-color: $color-bg-1;
   position: relative;
   z-index: 1000;
 
   .bell-icon-svg {
-    fill: currentColor;
+    fill: currentcolor;
   }
 
   hr {
     margin: 0 auto;
     border-bottom: $hr-border;
   }
+
   .menu {
     font-size: 0.875rem;
 
     &.dropdown {
       flex-wrap: nowrap;
+
       & > li {
         & > :is(a, span, button) {
           height: var(--header-height);
@@ -2399,9 +2441,10 @@ input,
       }
 
       .menu-anchor {
-        fill: currentColor;
+        fill: currentcolor;
       }
     }
+
     & > li {
       & > .menu-anchor .fa {
         font-size: 1.25em;
@@ -2411,6 +2454,7 @@ input,
         width: var(--header-height);
         height: var(--header-height);
       }
+
       &.submenu,
       .submenu-element {
         .fa {
@@ -2432,11 +2476,14 @@ input,
       }
     }
   }
+
   .is-dropdown-submenu-parent.avatar {
     width: initial;
     margin-left: var(--f-gutter-small);
+
     & > a {
       padding: 0 !important;
+
       &:hover,
       &.is-active {
         transform: scale(0.97);
@@ -2444,8 +2491,10 @@ input,
     }
   }
 }
+
 .superadmin-only {
   display: none;
+
   body.is-superadmin & {
     display: block;
   }
@@ -2454,6 +2503,7 @@ input,
 #main-menu-toggle-state {
   display: none;
 }
+
 .main-menu .menu {
   &.dropdown {
     & > .navbar-icon {
@@ -2468,6 +2518,7 @@ input,
         }
       }
     }
+
     .search {
       margin-left: auto;
     }
@@ -2486,9 +2537,11 @@ input,
         justify-content: center;
         flex-grow: 1;
         flex-basis: 0;
+
         &.search {
           display: flex;
         }
+
         & > a {
           & > span {
             display: none;
@@ -2506,7 +2559,7 @@ input,
         align-items: center;
         display: flex;
         color: $color-text-1;
-        fill: currentColor;
+        fill: currentcolor;
       }
 
       &:not(.navbar-icon) {
@@ -2520,8 +2573,10 @@ input,
           display: block;
         }
       }
+
       &.superadmin-only {
         display: none;
+
         body.is-superadmin & {
           #menu-state:checked ~ & {
             display: block;
@@ -2533,6 +2588,7 @@ input,
     & > .flex-spacer-left {
       margin-left: initial;
     }
+
     &[data-multi-open="false"]
       .is-accordion-submenu-parent[aria-expanded="true"] {
       box-shadow: none;
@@ -2564,6 +2620,7 @@ input,
       color: $color-text-0;
     }
   }
+
   .dropdown .menu-anchor {
     &:hover {
       background: $color-bg-2;
@@ -2576,6 +2633,7 @@ input,
     .submenu {
       border-top: $hr-border;
       border-radius: 0 0 $global-radius $global-radius;
+
       // overflow: hidden; // if you have lots of blogcategories the selectbox is cropped.
       // box-shadow: $global-drop-shadow;
       z-index: 1; // enforce drop-shadow hierachie.
@@ -2619,6 +2677,7 @@ input,
         padding: 0;
       }
     }
+
     .main-menu-burger {
       & > a {
         padding: 0;
@@ -2633,6 +2692,7 @@ input,
 
   .is-submenu-item {
     border: none;
+
     // & > a, & > .radio {
     // 	padding-left: 2.25rem;
     // }
@@ -2644,6 +2704,7 @@ input,
   & > a {
     &::after {
       @extend .caret;
+
       margin-left: auto;
     }
 
@@ -2673,18 +2734,22 @@ input,
       }
     }
   }
+
   &.has-submenu-toggle {
     & > a {
       margin-right: 0;
       padding-right: 36px;
     }
+
     & > a::after {
       display: none;
     }
+
     ul {
       button.submenu-toggle {
         height: $paragraph-font-size + nth(map-get($padding-sizes, medium), 1) +
           nth(map-get($padding-sizes, medium), 1);
+
         &:hover {
           background-color: $color-bg-2;
         }
@@ -2693,24 +2758,29 @@ input,
 
     button.submenu-toggle {
       text-decoration: none;
-      border-radius: 0px $global-radius 0px 0px;
+      border-radius: 0 $global-radius 0 0;
       height: $paragraph-font-size + nth(map-get($padding-sizes, medium), 1) +
         nth(map-get($padding-sizes, medium), 2);
+
       &:hover {
         background-color: $color-bg-2;
       }
+
       &::after {
         position: absolute;
         top: nth(map-get($padding-sizes, medium), 1);
         left: nth(map-get($padding-sizes, medium), 2);
+
         @extend .caret;
       }
+
       &[aria-expanded="false"] {
         &::after {
           transform: rotate(-90deg);
           transition: $global-transition-medium;
         }
       }
+
       &[aria-expanded="true"] {
         &::after {
           transform: rotate(-180deg);
@@ -2736,9 +2806,11 @@ input,
   display: block;
   width: calc(100% - var(--offset));
   border-radius: $global-radius;
+
   & + * {
     border-top: 0;
   }
+
   & > a {
     border-radius: $global-radius $global-radius 0 0;
     overflow: hidden;
@@ -2749,6 +2821,7 @@ input,
 
 .accordion-menu .is-accordion-submenu-parent {
   --offset: #{$global-gutter-small};
+
   &[aria-expanded="false"] {
     @extend .accordion-submenu-parent-collapsed;
   }
@@ -2948,7 +3021,7 @@ i.fa {
     position: absolute;
     display: block;
     height: $icon-line-weight * 1px;
-    box-shadow: inset 0 0 0 $icon-line-weight * 1px currentColor;
+    box-shadow: inset 0 0 0 $icon-line-weight * 1px currentcolor;
     transition-duration: $global-transition-medium;
     transition-timing-function: $global-transition-timing-cubic-bezier;
   }
@@ -3263,6 +3336,7 @@ i.fa {
       & > a {
         &:hover {
           background: none;
+
           // box-shadow: inset 0 -2px color-mix-opacity(#{$color-text-0}, 83%, 17%);
           box-shadow: inset 0 -2px $color-border-2;
         }
@@ -3294,6 +3368,7 @@ i.fa {
 
   &.bar {
     border-bottom: none;
+
     .tabs-title {
       border-right: $hr-border;
 
@@ -3348,6 +3423,7 @@ i.fa {
       }
     }
   }
+
   // &[id*="menu"],
   // &.line {
   // 	border: 0;
@@ -3363,6 +3439,7 @@ i.fa {
   &[data-transition] .tabs-panel {
     display: none;
   }
+
   // .card>&:last-child {
   // 	border-radius: 0 0 $global-radius $global-radius;
   // }
@@ -3435,7 +3512,7 @@ i.fa {
 }
 
 .dynamic-padding {
-  @include dynamic-box();
+  @include dynamic-box;
 }
 
 .disabled {
@@ -3679,6 +3756,7 @@ i.fa {
     text-overflow: ellipsis;
     overflow: hidden;
   }
+
   small {
     font-size: $small-font-size;
   }
@@ -3768,16 +3846,19 @@ i.fa {
   input {
     width: 100%;
     padding-left: 2rem;
+
     &,
     &:focus {
       transition: 0ms;
     }
+
     &:focus:not(:placeholder-shown) {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       box-shadow: 0 0 0 100vw color-mix-opacity(#{$color-text-0}, 5%, 95%);
     }
   }
+
   .tt-menu {
     border-top: $hr-border;
   }
@@ -3795,6 +3876,7 @@ i.fa {
 
     &.tt-cursor {
       background-color: var(--f-color-success);
+
       &::after {
         content: "\f055";
         font-family: "Font Awesome 6 Free";
@@ -4045,6 +4127,7 @@ i.fa {
 
 // 28. Swiper
 // ---------
+
 /* prbly no longer needed, inside spacesMarkup > blocks > spaces-overview-block now
  .swiper-pagination.timespans {
 	border-bottom: $hr-border;
@@ -4136,6 +4219,7 @@ textarea {
 .spaces-editor-terms .tagify.tagify--focus {
   [data-whatintent="keyboard"] & {
     border: 1px solid $global-focus-color;
+
     @include a11y-focus-inset;
   }
 }
@@ -4161,6 +4245,7 @@ textarea {
 .card .tagify.tagify--focus {
   [data-whatintent="keyboard"] & {
     border: 1px solid $global-focus-color;
+
     @include a11y-focus-inset;
   }
 }
@@ -4216,7 +4301,7 @@ a.sms-single-option:focus {
   border-radius: $card-border-radius;
 }
 
-//maybe rather give first-child more margin-top in this case to prevent jumping on load
+// maybe rather give first-child more margin-top in this case to prevent jumping on load
 .textwidget {
   .activity-container {
     margin-top: 1rem;
@@ -4235,14 +4320,17 @@ details {
     align-items: center;
     width: 100%;
     gap: 1rem;
+
     &::marker {
       content: none;
     }
+
     // @extend .px-small;
     @extend .py-medium;
 
     &::after {
       content: "\f107";
+
       // position: absolute;
       font-family: "Font Awesome 6 Free";
       font-weight: bold;
@@ -4251,21 +4339,26 @@ details {
       display: inline-block;
       transition: all var(--f-transition-medium) ease-out;
     }
+
     &.small {
       font-size: $small-font-size;
     }
   }
+
   &[open] {
     & > summary::after {
       transform: rotate(-180deg);
     }
   }
+
   & > :last-child {
     margin-bottom: 1em;
   }
+
   &:hover,
   &[open] {
     border-radius: 3px;
+
     summary {
       color: $color-text-0;
     }
@@ -4285,6 +4378,7 @@ details {
   transition-behavior: allow-discrete;
   transition-timing-function: ease-out;
 }
+
 .details[open]::details-content {
   block-size: auto;
   block-size: calc-size(auto, size);
@@ -4334,7 +4428,6 @@ details {
         var(--f-color-theme) 14%,
         var(--f-color-neutral-200) 86%
       );
-
       --f-color-text-0: color-mix(
         in oklab,
         var(--f-color-theme) 19%,
@@ -4350,7 +4443,6 @@ details {
         var(--f-color-theme) 25%,
         var(--f-color-neutral-500) 75%
       );
-
       --f-color-brand: color-mix(
         in oklab,
         var(--f-color-theme) 75%,
@@ -4378,7 +4470,6 @@ details {
         var(--f-color-theme) 10%,
         var(--f-color-neutral-300) 90%
       );
-
       --f-color-text-0: color-mix(
         in oklab,
         var(--f-color-theme) 12%,
@@ -4394,7 +4485,6 @@ details {
         var(--f-color-theme) 25%,
         var(--f-color-neutral-500) 75%
       );
-
       --f-color-brand: color-mix(
         in oklab,
         var(--f-color-theme) 55%,
@@ -4427,7 +4517,6 @@ details {
         var(--f-color-theme) 20%,
         var(--f-color-neutral-300) 80%
       );
-
       --f-color-text-0: color-mix(
         in oklab,
         var(--f-color-theme) 19%,
@@ -4443,7 +4532,6 @@ details {
         var(--f-color-theme) 35%,
         var(--f-color-neutral-600) 65%
       );
-
       --f-color-brand: color-mix(
         in oklab,
         var(--f-color-theme) 55%,
@@ -4471,7 +4559,6 @@ details {
         var(--f-color-theme) 15%,
         var(--f-color-neutral-300) 85%
       );
-
       --f-color-text-0: color-mix(
         in oklab,
         var(--f-color-theme) 19%,
@@ -4487,7 +4574,6 @@ details {
         var(--f-color-theme) 35%,
         var(--f-color-neutral-600) 65%
       );
-
       --f-color-brand: color-mix(
         in oklab,
         var(--f-color-theme) 55%,
@@ -4516,6 +4602,7 @@ html {
 
     // Default automatic behavior with prefers-color-scheme.
     @include themed-variables(page, light);
+
     @media (prefers-color-scheme: dark) {
       @include themed-variables(page, dark);
     }
@@ -4544,6 +4631,7 @@ html {
 
       // Default automatic behavior with prefers-color-scheme.
       @include themed-variables(post, light);
+
       @media (prefers-color-scheme: dark) {
         @include themed-variables(post, dark);
       }
@@ -4553,9 +4641,9 @@ html {
       }
 
       i.fa-droplet,
-      i.fa-droplet:before,
+      i.fa-droplet::before,
       i.fa-circle-half-stroke,
-      i.fa-circle-half-stroke:before {
+      i.fa-circle-half-stroke::before {
         color: var(--f-color-theme);
       }
     }
@@ -4570,6 +4658,7 @@ html {
 html[data-theme="light"][themed][style*="--xmeans-color"] {
   @include themed-variables(page, light);
 }
+
 html[data-theme="dark"][themed][style*="--xmeans-color"] {
   @include themed-variables(page, dark);
 }
@@ -4578,6 +4667,7 @@ html[data-theme="dark"][themed][style*="--xmeans-color"] {
 html[data-theme="light"]:not([themed]) [themed][style*="--xmeans-color"] {
   @include themed-variables(post, light);
 }
+
 html[data-theme="dark"]:not([themed]) [themed][style*="--xmeans-color"] {
   @include themed-variables(post, dark);
 }

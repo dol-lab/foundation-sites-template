@@ -87,7 +87,7 @@ $code-block-margin-bottom: 1.5rem !default;
   color: $cite-color;
   font-size: $cite-font-size;
 
-  &:before {
+  &::before {
     content: $cite-pseudo-content;
   }
 }
@@ -97,7 +97,6 @@ $code-block-margin-bottom: 1.5rem !default;
 @mixin code-style {
   border: $code-border;
   background-color: $code-background;
-
   font-family: $code-font-family;
   font-weight: $code-font-weight;
   color: $code-color;
@@ -108,8 +107,7 @@ $code-block-margin-bottom: 1.5rem !default;
 @mixin code-inline {
   display: inline;
   max-width: 100%;
-  word-wrap: break-word;
-
+  overflow-wrap: break-word;
   padding: $code-padding;
 }
 
@@ -119,7 +117,6 @@ $code-block-margin-bottom: 1.5rem !default;
   display: block;
   overflow: auto;
   white-space: pre;
-
   padding: $code-block-padding;
   margin-bottom: $code-block-margin-bottom;
 }
@@ -134,7 +131,6 @@ $code-block-margin-bottom: 1.5rem !default;
   .subheader {
     margin-top: $subheader-margin-top;
     margin-bottom: $subheader-margin-bottom;
-
     font-weight: $subheader-font-weight;
     line-height: $subheader-lineheight;
     color: $subheader-color;

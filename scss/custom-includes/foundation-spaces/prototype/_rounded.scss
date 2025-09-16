@@ -33,7 +33,8 @@ $prototype-border-radius: rem-calc(3) !default;
 
     .switch-paddle {
       @include border-rounded;
-      &:after {
+
+      &::after {
         border-radius: 50%; // For switches
       }
     }
@@ -43,7 +44,7 @@ $prototype-border-radius: rem-calc(3) !default;
     @include border-radius;
   }
 
-  @if ($prototype-rounded-breakpoints) {
+  @if $prototype-rounded-breakpoints {
     // Loop through Responsive Breakpoints
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {

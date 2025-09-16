@@ -34,21 +34,22 @@ $color-text-2: var(--f-color-text-2);
 /// Each palette color is assigned a base value (no suffix), alongside a darker version (e.g. used for hover states, -darker), as well as a text color provides contrast to them (-contrast)
 
 $foundation-palette: (
-  brand: hsl(16 99% 43%),
-  primary: hsl(200 20% 50%),
-  secondary: hsl(199 18% 33%),
-  success: hsl(152 62% 41%),
-  warning: hsl(41 100% 50%),
-  alert: hsl(358 86% 61%)
+  brand: hsl(16deg 99% 43%),
+  primary: hsl(200deg 20% 50%),
+  secondary: hsl(199deg 18% 33%),
+  success: hsl(152deg 62% 41%),
+  warning: hsl(41deg 100% 50%),
+  alert: hsl(358deg 86% 61%)
 );
 $foundation-palette-contrast: (
-  brand: hsl(0, 0%, 100%),
-  primary: hsl(0 0% 100%),
-  secondary: hsl(0 0% 100%),
-  success: hsl(0 0% 100%),
-  warning: hsl(0 0% 0%),
-  alert: hsl(0 0% 100%)
+  brand: hsl(0deg 0% 100%),
+  primary: hsl(0deg 0% 100%),
+  secondary: hsl(0deg 0% 100%),
+  success: hsl(0deg 0% 100%),
+  warning: hsl(0deg 0% 0%),
+  alert: hsl(0deg 0% 100%)
 );
+
 // hsl(16 81% 55%)
 $foundation-palette-darktheme: (
   brand: map.get($foundation-palette, "brand"),
@@ -199,7 +200,6 @@ $neutral-palette: (
 }
 
 :root {
-
   ///
   /// --f-color-brand-base is set to automatically generate a lighter version of --f-color-brand in dark mode.
   /// Don't try to do it without it.
@@ -208,22 +208,22 @@ $neutral-palette: (
   --f-color-brand-base-contrast: #{map.get($foundation-palette-contrast, "brand")};
 
   // Default: apply light theme tokens.
-  @include foundation-apply-light();
+  @include foundation-apply-light;
 
   /// Dark Mode
   ///
   @media (prefers-color-scheme: dark) {
     // Automatic dark mode, based on user preference.
-    @include foundation-apply-dark();
+    @include foundation-apply-dark;
   }
 }
 
 html[data-theme="light"] {
   // Manual override: force light theme.
-  @include foundation-apply-light();
+  @include foundation-apply-light;
 }
 
 html[data-theme="dark"] {
   // Manual override: force dark theme.
-  @include foundation-apply-dark();
+  @include foundation-apply-dark;
 }

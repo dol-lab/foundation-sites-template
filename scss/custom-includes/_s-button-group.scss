@@ -45,8 +45,7 @@ $buttongroup-radius-on-each: true !default;
     &::after {
       display: none; // Disable clearfix
     }
-  }
-  @else {
+  } @else {
     font-size: 0;
   }
 
@@ -117,8 +116,7 @@ $buttongroup-radius-on-each: true !default;
   #{$selector} {
     @if $global-flexbox {
       flex: 1 1 0px; // sass-lint:disable-line zero-unit
-    }
-    @else {
+    } @else {
       // One child
       &:first-child {
         &:last-child {
@@ -156,8 +154,7 @@ $buttongroup-radius-on-each: true !default;
   #{$selector} {
     @if $global-flexbox {
       flex: 0 0 100%;
-    }
-    @else {
+    } @else {
       width: 100%;
     }
 
@@ -189,10 +186,10 @@ $buttongroup-radius-on-each: true !default;
   #{$selector} {
     @if $global-flexbox {
       flex: 0 0 auto;
-    }
-    @else {
+    } @else {
       width: auto;
     }
+
     margin-bottom: 0;
 
     @if not $buttongroup-radius-on-each {
@@ -234,7 +231,7 @@ $buttongroup-radius-on-each: true !default;
 
       &#{$base-selector} {
         // Do not generate button base styles for the default filling
-        @if ($button-fill != $filling) {
+        @if $button-fill != $filling {
           #{$buttongroup-child-selector} {
             @include button-fill($filling);
             @include button-fill-style($filling);
@@ -243,13 +240,12 @@ $buttongroup-radius-on-each: true !default;
 
         // Palette variants: use CSS custom properties for colors (matches button.scss).
         @each $name, $color in $button-palette {
-          @if ($button-fill != $filling) {
+          @if $button-fill != $filling {
             $individual-selector: ' #{$buttongroup-child-selector}.#{"" + $name}';
             &.#{"" + $name} #{$buttongroup-child-selector}, &#{$individual-selector} {
               @include button-fill-style-from-css-vars($filling, $name);
             }
-          }
-          @else {
+          } @else {
             &.#{"" + $name} #{$buttongroup-child-selector} {
               @include button-fill-style-from-css-vars($filling, $name);
             }

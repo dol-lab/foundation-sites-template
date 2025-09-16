@@ -12,7 +12,6 @@
 /// @param {Keyword} $modifier [''] - A modifier to be applied to each text input type (e.g. a class or a pseudo-class). Leave blank to ignore.
 @function text-inputs($types: (), $modifier: '') {
   $return: ();
-
   $all-types: text password date datetime datetime-local month week email number search tel time url color;
 
   @if not has-value($types) {

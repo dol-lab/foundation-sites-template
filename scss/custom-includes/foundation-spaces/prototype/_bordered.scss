@@ -39,7 +39,7 @@ $prototype-border-color: $medium-gray !default;
     @include bordered;
   }
 
-  @if ($prototype-bordered-breakpoints) {
+  @if $prototype-bordered-breakpoints {
     // Loop through Responsive Breakpoints
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {

@@ -41,7 +41,7 @@ $prototype-text-overflow: ellipsis !default;
 
 /// Wrapping of the text. `text-wrap`
 @mixin text-wrap {
-  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 @mixin foundation-prototype-text-utilities {
@@ -61,7 +61,7 @@ $prototype-text-overflow: ellipsis !default;
     @include text-wrap;
   }
 
-  @if ($prototype-utilities-breakpoints) {
+  @if $prototype-utilities-breakpoints {
     // Loop through Responsive Breakpoints
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {

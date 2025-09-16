@@ -65,7 +65,7 @@ $menu-icons-back-compat: true !default;
     flex-wrap: wrap;
   }
 
-  &:not(.dropdown):not(.accordion-menu) {
+  &:not(.dropdown, .accordion-menu) {
   li {
     @include disable-mouse-outline;
 
@@ -179,8 +179,7 @@ $menu-icons-back-compat: true !default;
 @mixin menu-direction($dir: horizontal) {
   @if $dir == horizontal {
     @if $global-flexbox {
-      flex-wrap: wrap;
-      flex-direction: row;
+      flex-flow: row wrap;
     } @else {
       li {
         display: inline-block;
@@ -188,8 +187,7 @@ $menu-icons-back-compat: true !default;
     }
   } @else if $dir == vertical {
     @if $global-flexbox {
-      flex-wrap: nowrap;
-      flex-direction: column;
+      flex-flow: column nowrap;
     } @else {
       li {
         display: block;
@@ -353,7 +351,6 @@ $menu-icons-back-compat: true !default;
 
 @mixin menu-text {
   padding: $global-menu-padding;
-
   font-weight: bold;
   line-height: 1;
   color: inherit;
@@ -459,6 +456,7 @@ $menu-icons-back-compat: true !default;
     .is-active > a {
       @include menu-state-active;
     }
+
     &.dropdown {
       .is-active > a {
         color: $menu-item-color-active;

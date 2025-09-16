@@ -55,12 +55,8 @@ $reveal-overlay-background: color-mix-opacity($color-text-0, 14%, 86%) !default;
 /// @param {Color} $background [$reveal-overlay-background] - Background color of the overlay.
 @mixin reveal-overlay($background: $reveal-overlay-background) {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   z-index: $reveal-zindex;
-
   display: none;
   background-color: $background;
   overflow-y: auto;
@@ -71,13 +67,13 @@ $reveal-overlay-background: color-mix-opacity($color-text-0, 14%, 86%) !default;
 /// Adds base styles for a modal.
 @mixin reveal-modal-base {
   @include disable-mouse-outline;
+
   z-index: $reveal-zindex + 1;
+
   // Workaround android browser z-index bug
   backface-visibility: hidden;
-
   display: none;
   padding: $reveal-padding;
-
   border: $reveal-border;
   border-radius: $reveal-radius;
   background-color: $reveal-background;
@@ -106,6 +102,7 @@ $reveal-overlay-background: color-mix-opacity($color-text-0, 14%, 86%) !default;
 ) {
   // Extends must be made outside of breakpoints for compatibility with newer Sass versions (libsass v3.5)
   @extend %reveal-centered;
+
   @include breakpoint(medium) {
     width: $width;
     max-width: $max-width;
@@ -114,23 +111,17 @@ $reveal-overlay-background: color-mix-opacity($color-text-0, 14%, 86%) !default;
 
 /// Creates a full-screen modal, which stretches the full width and height of the window.
 @mixin reveal-modal-fullscreen {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
+  inset: 0;
   width: 100%;
   max-width: none;
   height: 100%;
   min-height: 100%;
   margin-left: 0;
-
   border: 0;
   border-radius: 0;
 }
 
 @mixin spaces-reveal {
-
   /// Disables the scroll when Reveal is shown to prevent the background from shifting
   html.is-reveal-open {
     position: fixed;
@@ -156,6 +147,7 @@ $reveal-overlay-background: color-mix-opacity($color-text-0, 14%, 86%) !default;
   .reveal {
     @include reveal-modal-base;
     @include reveal-modal-width($reveal-width);
+
     position: relative;
     top: 100px;
     margin-right: auto;

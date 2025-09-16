@@ -49,7 +49,6 @@ $callout-link-tint: 15% !default;
 /// Amount to tint links used within colored panels while hover. Set to `false` to disable this feature.
 /// @type Number | Boolean
 $callout-link-tint-hover: 35% !default;
-
 $callout-default-token: primary !default;
 
 /// Adds basic styles for a callout, including padding and margin.
@@ -75,9 +74,9 @@ $callout-default-token: primary !default;
   $color-weight: (100% - $bg-fade);
 
   background-color: color-mix(in oklab, var(--f-color-#{$name}) #{$color-weight}, $color-bg-1 #{$bg-fade});
-
   border-color: color-mix(in oklab, var(--f-color-#{$name}) 80%, currentColor 20%);
   color: color-mix(in oklab, var(--f-color-#{$name}) 10%, currentColor 90%);
+
   > p,
   > li,
   > h1,
@@ -97,6 +96,7 @@ $callout-default-token: primary !default;
         var(--f-color-#{$name}) #{$callout-link-tint},
         currentColor #{100% - $callout-link-tint}
       );
+
       &:hover,
       &:active,
       &:focus {
@@ -112,10 +112,7 @@ $callout-default-token: primary !default;
 }
 
 @mixin callout-size($padding) {
-  padding-top: $padding;
-  padding-right: $padding;
-  padding-bottom: $padding;
-  padding-left: $padding;
+  padding: $padding $padding $padding $padding;
 }
 
 

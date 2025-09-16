@@ -104,19 +104,18 @@ $button-responsive-expanded: false !default;
   font-family: $button-font-family;
   font-size: map-get($button-sizes, default);
   font-weight: $button-font-weight;
-  -webkit-appearance: none; // sass-lint:disable-line no-vendor-prefixes
+  appearance: none; // sass-lint:disable-line no-vendor-prefixes
   line-height: 1;
   text-align: center;
   cursor: pointer;
 
-  @if (type-of($button-padding) == 'map') {
+  @if type-of($button-padding) == 'map' {
     @each $size, $padding in $button-padding {
       @include breakpoint($size) {
         padding: $padding;
       }
     }
-  }
-  @else {
+  } @else {
     padding: $button-padding;
   }
 
@@ -131,8 +130,7 @@ $button-responsive-expanded: false !default;
     width: 100%;
     margin-right: 0;
     margin-left: 0;
-  }
-  @else {
+  } @else {
     display: inline-block;
     width: auto;
     margin: $button-margin;
@@ -147,8 +145,7 @@ $button-responsive-expanded: false !default;
 ) {
   @if $fill == hollow {
     @include button-hollow;
-  }
-  @else if $fill == clear {
+  } @else if $fill == clear {
     @include button-clear;
   }
 }
@@ -167,11 +164,9 @@ $button-responsive-expanded: false !default;
 ) {
   @if $fill == solid {
     @include button-style($background, $background-hover, $color);
-  }
-  @else if $fill == hollow {
+  } @else if $fill == hollow {
     @include button-hollow-style($background);
-  }
-  @else if $fill == clear {
+  } @else if $fill == clear {
     @include button-clear-style($background);
   }
 }
@@ -185,7 +180,6 @@ $button-responsive-expanded: false !default;
   $background-hover: $button-background-hover,
   $color: $button-color
 ) {
-
   // Default and disabled states
   &,
   &.disabled, &[disabled],
@@ -273,6 +267,7 @@ $button-responsive-expanded: false !default;
 ) {
   @if $fill == solid {
     background-color: var(--f-color-#{$name});
+
     // color: color-mix(in oklab, var(--f-color-#{$name}-contrast) 90%, var(--f-color-#{$name}) 10%);
     @include color-mix(color, var(--f-color-#{$name}-contrast), 90%, var(--f-color-#{$name}), 10%);
 
@@ -280,12 +275,13 @@ $button-responsive-expanded: false !default;
     &:focus {
       background-color: var(--f-color-#{$name}-darker);
 			color: var(--f-color-#{$name}-contrast);
+
       // color: color-mix(in oklab, var(--f-color-#{$name}-contrast) 90%, var(--f-color-#{$name}) 10%);
-      //@include color-mix(color, var(--f-color-#{$name}-contrast), 90%, var(--f-color-#{$name}), 10%);
+      // @include color-mix(color, var(--f-color-#{$name}-contrast), 90%, var(--f-color-#{$name}), 10%);
     }
-  }
-  @else if $fill == hollow {
+  } @else if $fill == hollow {
     border: $button-hollow-border-width solid var(--f-color-#{$name});
+
     // color: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
     // background-color: color-mix(in oklab, var(--f-color-#{$name}) 12%, var(--f-color-bg-contrast) 88%);
     @include color-mix(color, var(--f-color-#{$name}), 90%, var(--f-color-text-0), 10%);
@@ -294,14 +290,15 @@ $button-responsive-expanded: false !default;
     &:hover,
     &:focus {
       border-color: var(--f-color-#{$name}-darker);
+
       // color: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
       // background-color: color-mix(in oklab, var(--f-color-#{$name}) 20%, var(--f-color-bg-contrast) 80%);
-			//@include color-mix(color, var(--f-color-#{$name}), 75%, var(--f-color-text-0), 25%);
+			// @include color-mix(color, var(--f-color-#{$name}), 75%, var(--f-color-text-0), 25%);
       color: var(--f-color-#{$name});
+
 			@include color-mix(background-color, var(--f-color-#{$name}), 25%, var(--f-color-bg-1), 75%);
     }
-  }
-  @else if $fill == clear {
+  } @else if $fill == clear {
     border-color: transparent;
     background-color: transparent;
     color: var(--f-color-#{$name});
@@ -333,9 +330,9 @@ $button-responsive-expanded: false !default;
 ) {
   &::after {
     @include css-triangle($size, $color, down);
+
     position: relative;
     top: 0.4em; // Aligns the arrow with the text of the button
-
     display: inline-block;
     float: #{$global-right};
     margin-#{$global-left}: $offset;
@@ -384,6 +381,7 @@ $button-responsive-expanded: false !default;
             @include button-expand;
           }
         }
+
         @if $size != $-zf-zero-breakpoint {
           @include breakpoint(#{$size} down) {
             &.#{$size}-down-expanded {

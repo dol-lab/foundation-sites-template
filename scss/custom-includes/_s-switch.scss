@@ -78,7 +78,6 @@ $switch-cursor-disabled: not-allowed !default;
   // font-size: rem-calc(14);
   // font-weight: bold;
   color: $switch-background-active;
-
   user-select: none;
 }
 
@@ -100,7 +99,6 @@ $switch-cursor-disabled: not-allowed !default;
   display: block;
   width: $switch-width;
   height: $switch-height;
-
   border-radius: $switch-radius;
   background: $switch-background;
   transition: $switch-paddle-transition;
@@ -108,7 +106,6 @@ $switch-cursor-disabled: not-allowed !default;
   // Resetting these <label> presets so type styles cascade down
   font-weight: inherit;
   color: inherit;
-
   cursor: pointer;
 
   // Needed to override specificity
@@ -121,11 +118,9 @@ $switch-cursor-disabled: not-allowed !default;
     position: absolute;
     top: $switch-paddle-offset;
     #{$global-left}: $switch-paddle-offset;
-
     display: block;
     width: $paddle-width;
     height: $paddle-height;
-
     transform: translate3d(0, 0, 0);
     border-radius: $switch-paddle-radius;
     background: $switch-paddle-background;
@@ -188,7 +183,6 @@ $switch-cursor-disabled: not-allowed !default;
   $switch-height: 2rem,
   $paddle-offset: 0.25rem
 ) {
-
   $switch-width: $switch-height * 2;
   $paddle-width: $switch-height - ($paddle-offset * 2);
   $paddle-height: $switch-height - ($paddle-offset * 2);
@@ -218,6 +212,7 @@ $switch-cursor-disabled: not-allowed !default;
   // Container class
   .switch {
     @include switch-container;
+
     height: $switch-height;
   }
 

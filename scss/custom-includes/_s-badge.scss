@@ -42,14 +42,12 @@ $badge-font-size: 1rem !default;
 
 /// Generates the base styles for a badge.
 @mixin badge-base {
-  
   display: inline-flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
   border-radius: $badge-height / $badge-rounding;
   font-size: $badge-font-size;
-  
   padding: $badge-padding;
   height: $badge-height;
   min-width: $badge-height;
@@ -58,10 +56,11 @@ $badge-font-size: 1rem !default;
 @mixin badge-small {
   &.small {
     font-size: $badge-font-size;
-    
     height: $badge-height * 0.85;
     min-width: $badge-height * 0.85;
+
     $height-sm: $badge-height * 0.85 / $badge-rounding * 100;
+
     border-radius: math.round($height-sm) / 100;
   }
 
@@ -71,7 +70,7 @@ $badge-font-size: 1rem !default;
   .badge {
     @include badge-base;
 
-    &:not(.hollow):not(.clear) {
+    &:not(.hollow, .clear) {
       background: $badge-background;
       color: $badge-color;
   
@@ -82,6 +81,7 @@ $badge-font-size: 1rem !default;
         }
       }
     }
+
     &.hollow {
       border: 1px solid $badge-background;
       color: $badge-background;
@@ -89,21 +89,25 @@ $badge-font-size: 1rem !default;
       @each $name, $color in $badge-palette {
         &.#{$name} {
           --_f-color-readability: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
+
           border: 1px solid var(--_f-color-readability, var(--f-color-#{$name}));
           color: var(--_f-color-readability, var(--f-color-#{$name}));
         }
       }
     }
+
     &.clear {
       color: $badge-background;
   
       @each $name, $color in $badge-palette {
         &.#{$name} {
           --_f-color-readability: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
+
           color: var(--_f-color-readability, var(--f-color-#{$name}));
         }
       }
     }
-    @include badge-small();
+
+    @include badge-small;
   }
 }

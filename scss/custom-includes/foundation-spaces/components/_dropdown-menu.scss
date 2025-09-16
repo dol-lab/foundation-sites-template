@@ -70,6 +70,7 @@ $dropdown-menu-item-background-active: transparent !default;
 
   &.opens-left > a::after {
     @include css-triangle($dropdownmenu-arrow-size, $dropdownmenu-arrow-color, left);
+
     right: auto;
     left: 5px;
   }
@@ -105,13 +106,13 @@ $dropdown-menu-item-background-active: transparent !default;
 
       > li.is-dropdown-submenu-parent > a::after { // sass-lint:disable-line no-qualifying-elements
         @include css-triangle($dropdownmenu-arrow-size, $dropdownmenu-arrow-color, down);
+
         #{$global-right}: 5px;
         #{$global-left}: auto;
         margin-top: -1 * ($dropdownmenu-arrow-size * 0.5);
       }
     }
-  }
-  @else if $dir == vertical {
+  } @else if $dir == vertical {
     > li {
       .is-dropdown-submenu {
         top: 0;
@@ -136,8 +137,7 @@ $dropdown-menu-item-background-active: transparent !default;
         @include zf-dropdown-left-right-arrows;
       }
     }
-  }
-  @else {
+  } @else {
     @warn 'The direction used for dropdown-menu-direction() must be horizontal or vertical.';
   }
 }
@@ -217,12 +217,11 @@ $dropdown-menu-item-background-active: transparent !default;
     }
 
     &.opens-inner > .is-dropdown-submenu {
-
       top: 100%;
+
       @if $global-text-direction == 'rtl' {
         right: auto;
-      }
-      @else {
+      } @else {
         left: auto;
       }
     }
@@ -243,10 +242,8 @@ $dropdown-menu-item-background-active: transparent !default;
     top: 0;
     #{$global-left}: 100%;
     z-index: 1;
-
     display: none;
     min-width: $dropdownmenu-min-width;
-
     border: $dropdownmenu-border;
     background: $dropdownmenu-submenu-background;
 
@@ -260,7 +257,7 @@ $dropdown-menu-item-background-active: transparent !default;
       }
     }
 
-    @if (type-of($dropdownmenu-border-width) == 'number') {
+    @if type-of($dropdownmenu-border-width) == 'number' {
       .is-dropdown-submenu {
         margin-top: (-$dropdownmenu-border-width);
       }
@@ -271,7 +268,7 @@ $dropdown-menu-item-background-active: transparent !default;
     }
 
     // [TODO] Cut back specificity
-    //&:not(.js-dropdown-nohover) > .is-dropdown-submenu-parent:hover > &, // why is this line needed? Opening is handled by JS and this causes some ugly flickering when the sub is re-positioned automatically...
+    // &:not(.js-dropdown-nohover) > .is-dropdown-submenu-parent:hover > &, // why is this line needed? Opening is handled by JS and this causes some ugly flickering when the sub is re-positioned automatically...
     &.js-dropdown-active {
       display: block;
     }

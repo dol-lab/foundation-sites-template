@@ -68,7 +68,7 @@ $prototype-font-bold: $global-weight-bold !default;
     @include font-italic;
   }
 
-  @if ($prototype-font-breakpoints) {
+  @if $prototype-font-breakpoints {
     // Loop through Responsive Breakpoints
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {

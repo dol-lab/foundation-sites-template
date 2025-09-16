@@ -168,7 +168,8 @@ $table-stack-breakpoint: medium !default;
     &.unstriped {
       tbody {
         background-color: $table-background;
-        @include -zf-table-unstripe();
+
+        @include -zf-table-unstripe;
       }
     }
   }
@@ -176,7 +177,7 @@ $table-stack-breakpoint: medium !default;
   // If tables are not striped
   @else if $is-striped == false {
     tbody {
-      @include -zf-table-unstripe();
+      @include -zf-table-unstripe;
     }
 
     &.striped {
@@ -201,8 +202,7 @@ $table-stack-breakpoint: medium !default;
 
   @if $nest {
     @include -zf-table-children-styles($stripe);
-  }
-  @else {
+  } @else {
     @at-root {
       @include -zf-table-children-styles($stripe);
     }
@@ -219,21 +219,21 @@ $table-stack-breakpoint: medium !default;
 /// Slightly darkens the table rows on hover.
 @mixin table-hover {
   thead tr {
-    //Darkens the table header rows on hover.
+    // Darkens the table header rows on hover.
     &:hover {
       background-color: $table-head-row-hover;
     }
   }
 
   tfoot tr {
-    //Darkens the table footer rows on hover.
+    // Darkens the table footer rows on hover.
     &:hover {
       background-color: $table-foot-row-hover;
     }
   }
 
   tbody tr {
-    //Darkens the non-striped table rows on hover.
+    // Darkens the non-striped table rows on hover.
     &:hover {
       background-color: $table-row-hover;
     }
@@ -241,30 +241,28 @@ $table-stack-breakpoint: medium !default;
 
   @if $table-is-striped == true {
     // Darkens the even striped table rows.
-    @if($table-stripe == even) {
+    @if $table-stripe == even {
       &:not(.unstriped) tr:nth-of-type(even):hover {
         background-color: $table-row-stripe-hover;
       }
     }
 
     // Darkens the odd striped table rows.
-    @else if($table-stripe == odd) {
+    @else if $table-stripe == odd {
       &:not(.unstriped) tr:nth-of-type(odd):hover {
         background-color: $table-row-stripe-hover;
       }
     }
-  }
-
-  @else if $table-is-striped == false {
+  } @else if $table-is-striped == false {
     // Darkens the even striped table rows.
-    @if($table-stripe == even) {
+    @if $table-stripe == even {
       &.striped tr:nth-of-type(even):hover {
         background-color: $table-row-stripe-hover;
       }
     }
 
     // Darkens the odd striped table rows.
-    @else if($table-stripe == odd) {
+    @else if $table-stripe == odd {
       &.striped tr:nth-of-type(odd):hover {
         background-color: $table-row-stripe-hover;
       }
@@ -281,8 +279,7 @@ $table-stack-breakpoint: medium !default;
         display: block;
       }
     }
-  }
-  @else {
+  } @else {
     thead {
       display: none;
     }

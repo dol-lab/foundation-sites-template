@@ -15,12 +15,15 @@
   @if $val == null or $val == none {
     @return false;
   }
+
   @if type-of($val) == 'number' and strip-unit($val) == 0 {
     @return false;
   }
+
   @if type-of($val) == 'list' and length($val) == 0 {
     @return false;
   }
+
   @return true;
 }
 
@@ -36,12 +39,15 @@
   @if $length == 1 {
     @return $val;
   }
+
   @if $length == 2 {
     @return map-get((top: nth($val, 1), bottom: nth($val, 1), left: nth($val, 2), right: nth($val, 2), ), $side);
   }
+
   @if $length == 3 {
     @return map-get((top: nth($val, 1), left: nth($val, 2), right: nth($val, 2), bottom: nth($val, 3), ), $side);
   }
+
   @if $length == 4 {
     @return map-get((top: nth($val, 1), right: nth($val, 2), bottom: nth($val, 3), left: nth($val, 4), ), $side);
   }
@@ -57,12 +63,15 @@
   // Find the width, style, or color and return it
   @each $v in $val {
     $type: type-of($v);
+
     @if $elem == width and $type == 'number' {
       @return $v;
     }
+
     @if $elem == style and $type == 'string' {
       @return $v;
     }
+
     @if $elem == color and $type == 'color' {
       @return $v;
     }
@@ -88,6 +97,7 @@
   @each $key in $keys {
     $map: map-get($map, $key);
   }
+
   @return $map;
 }
 
@@ -111,11 +121,9 @@
 
     @if $keep == 'keys' {
       @return $keys;
-    }
-    @else if $keep == 'values' {
+    } @else if $keep == 'values' {
       @return $values;
-    }
-    @else {
+    } @else {
       @return zip($keys, $values);
     }
   }
@@ -146,6 +154,7 @@
       $ret: $ret + $delimiter;
     }
   }
+
   @if $str2 and str-length($str2) > 0 {
     $ret: $ret + $str2;
   }
@@ -160,15 +169,13 @@
 ///
 /// @returns {List} Found value.
 @function map-safe-get($map, $key) {
-  @if (type-of($map) == 'map' or (type-of($map) == 'list' and length($map) == 0)) {
-    @if (map-has-key($map, $key)) {
+  @if type-of($map) == 'map' or (type-of($map) == 'list' and length($map) == 0) {
+    @if map-has-key($map, $key) {
       @return map-get($map, $key);
-    }
-    @else {
+    } @else {
       @error 'Key: `#{$key}` is not available in `#{$map}`';
     }
-  }
-  @else {
+  } @else {
     @error '`#{$map}` is not a valid map';
   }
 }

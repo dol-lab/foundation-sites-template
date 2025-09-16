@@ -24,7 +24,6 @@
  
 @function sl-replace($list, $old, $value) {
   $_: sl-missing-dependencies('sl-is-true', 'sl-purge', 'sl-to-list');
-
   $running: true;
 
   @while $running {
@@ -32,9 +31,7 @@
 
     @if not $index {
       $running: false;
-    }
-
-    @else {
+    } @else {
       $list: set-nth($list, $index, $value);
     }
 

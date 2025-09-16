@@ -39,8 +39,7 @@ $topbar-unstack-breakpoint: medium !default;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
-  }
-  @else {
+  } @else {
     @include clearfix;
   }
 
@@ -50,7 +49,7 @@ $topbar-unstack-breakpoint: medium !default;
   }
 
   // Check if $topbar-background is differnt from $topbar-background-submenu
-  @if ($topbar-background != $topbar-submenu-background) {
+  @if $topbar-background != $topbar-submenu-background {
     ul ul {
       background-color: $topbar-submenu-background;
     }
@@ -84,8 +83,7 @@ $topbar-unstack-breakpoint: medium !default;
       flex: 0 0 100%;
       max-width: 100%;
     }
-  }
-  @else {
+  } @else {
     // Sub-sections
     .top-bar-left,
     .top-bar-right {
@@ -108,8 +106,7 @@ $topbar-unstack-breakpoint: medium !default;
       flex: 0 1 auto;
       margin-left: auto;
     }
-  }
-  @else {
+  } @else {
     .top-bar-left,
     .top-bar-right {
       width: auto;
@@ -121,10 +118,12 @@ $topbar-unstack-breakpoint: medium !default;
   .top-bar {
     @include top-bar-container;
   }
+
   .top-bar {
     // Stack on small screens by default
     @include top-bar-stacked;
   }
+
   // Top bar container
   .top-bar {
     @include breakpoint($topbar-unstack-breakpoint) {
@@ -154,8 +153,7 @@ $topbar-unstack-breakpoint: medium !default;
     .top-bar-right {
       flex: 0 0 auto;
     }
-  }
-  @else {
+  } @else {
     .top-bar-title {
       display: inline-block;
       float: left;

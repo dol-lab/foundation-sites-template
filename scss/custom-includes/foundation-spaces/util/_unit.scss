@@ -82,6 +82,7 @@ $global-font-size: 100% !default;
     @if $unit-warnings {
       @warn inspect($value) + ' was passed to rem-calc(), which is not a number.';
     }
+
     @return $value;
   }
 
@@ -96,7 +97,7 @@ $global-font-size: 100% !default;
   }
 
   // Turn 0rem into 0
-  @if $value == 0rem {
+  @if $value == 0 {
     $value: 0;
   }
 
@@ -110,7 +111,6 @@ $global-font-size: 100% !default;
 ///
 /// @return {Number} - Unitless number
 @function unitless-calc($value, $base: null) {
-
   // If no base is defined, defer to the global font size
   @if $base == null {
     $base: $global-font-size;
