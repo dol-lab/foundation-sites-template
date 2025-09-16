@@ -5,225 +5,159 @@
 @use "sass:color";
 @use "sass:map";
 
-///
 /// Background
-/// stacking - $color-bg-0 (page background), $color-bg-1 (card and wiget background), $color-bg-2 (highlighted element background)
-
+/// stacking - $color-bg-0 (page background), $color-bg-1 (card and widget background), $color-bg-2 (highlighted element background)
 $color-bg-0: var(--f-color-bg-0);
 $color-bg-1: var(--f-color-bg-1);
-$color-bg-2: var(--f-color-bg-2);
+$color-bg-2: var(--f-color-bg-2 );
 
-///
 /// Borders
 /// $color-border-0 (minimal, just about visible), $color-border-1 (increased in visibility)
-
 $color-border-0: var(--f-color-border-0);
 $color-border-1: var(--f-color-border-1);
 $color-border-2: var(--f-color-border-2);
 
-///
 /// Text
 /// decreasing in dominance: $color-text-0 (headlines, links), $color-text-1 (p, card content), $color-text-2 (small)
-
 $color-text-0: var(--f-color-text-0);
 $color-text-1: var(--f-color-text-1);
 $color-text-2: var(--f-color-text-2);
 
-///
+
 /// Palette colors
 /// Each palette color is assigned a base value (no suffix), alongside a darker version (e.g. used for hover states, -darker), as well as a text color provides contrast to them (-contrast)
-
 $foundation-palette: (
-  brand: hsl(16deg 99% 43%),
-  primary: hsl(200deg 20% 50%),
-  secondary: hsl(199deg 18% 33%),
-  success: hsl(152deg 62% 41%),
-  warning: hsl(41deg 100% 50%),
-  alert: hsl(358deg 86% 61%)
+	brand: hsl(16deg 99% 43%),
+	primary: hsl(200deg 20% 50%),
+	secondary: hsl(199deg 18% 33%),
+	success: hsl(152deg 62% 41%),
+	warning: hsl(41deg 100% 50%),
+	alert: hsl(358deg 86% 61%)
 );
 $foundation-palette-contrast: (
-  brand: hsl(0deg 0% 100%),
-  primary: hsl(0deg 0% 100%),
-  secondary: hsl(0deg 0% 100%),
-  success: hsl(0deg 0% 100%),
-  warning: hsl(0deg 0% 0%),
-  alert: hsl(0deg 0% 100%)
+	brand: hsl(0deg 0% 100%),
+	primary: hsl(0deg 0% 100%),
+	secondary: hsl(0deg 0% 100%),
+	success: hsl(0deg 0% 100%),
+	warning: hsl(0deg 0% 0%),
+	alert: hsl(0deg 0% 100%)
 );
-
-// hsl(16 81% 55%)
 $foundation-palette-darktheme: (
-  brand: map.get($foundation-palette, "brand"),
-  primary: map.get($foundation-palette, "primary"),
-  secondary: map.get($foundation-palette, "secondary"),
-  success: map.get($foundation-palette, "success"),
-  warning: map.get($foundation-palette, "warning"),
-  alert: map.get($foundation-palette, "alert")
+	brand: map.get($foundation-palette, "brand"),
+	primary: map.get($foundation-palette, "primary"),
+	secondary: map.get($foundation-palette, "secondary"),
+	success: map.get($foundation-palette, "success"),
+	warning: map.get($foundation-palette, "warning"),
+	alert: map.get($foundation-palette, "alert")
 );
 $foundation-palette-darktheme-contrast: (
-  brand: map.get($foundation-palette-contrast, "brand"),
-  primary: map.get($foundation-palette-contrast, "primary"),
-  secondary: map.get($foundation-palette-contrast, "secondary"),
-  success: map.get($foundation-palette-contrast, "success"),
-  warning: map.get($foundation-palette-contrast, "warning"),
-  alert: map.get($foundation-palette-contrast, "alert")
+	brand: map.get($foundation-palette-contrast, "brand"),
+	primary: map.get($foundation-palette-contrast, "primary"),
+	secondary: map.get($foundation-palette-contrast, "secondary"),
+	success: map.get($foundation-palette-contrast, "success"),
+	warning: map.get($foundation-palette-contrast, "warning"),
+	alert: map.get($foundation-palette-contrast, "alert")
 );
 
-///
-/// Palette for neutral tones.
-/// (lighttheme, darktheme)
-
+/// Palette for neutral tones (light-theme, dark-theme)
 $neutral-palette: (
-  100: ( // --f-color-neutral-100
-    hsl(0 0% 100%),
-    hsl(0, 0%, 4%)
-  ),
-  200: ( // --f-color-neutral-200
-    hsl(0 0% 97%),
-    hsl(0, 0%, 9%)
-  ),
-  300: ( // --f-color-neutral-300
-    hsl(0 0% 94%),
-    hsl(0 0% 14%)
-  ),
-  400: ( // --f-color-neutral-400
-    hsl(0 0% 73%),
-    hsl(0 0% 42%)
-  ),
-  500: ( // --f-color-neutral-500
-    hsl(0 0% 52%),
-    hsl(0 0% 55%)
-  ),
-  600: ( // --f-color-neutral-600
-    hsl(0 0% 37%),
-    hsl(0, 0%, 68%)
-  ),
-  700: ( // --f-color-neutral-700
-    hsl(0 0% 17%),
-    hsl(0 0% 92%)
-  )
+	100: ( // --f-color-neutral-100
+		hsl(0deg 0% 100%),
+		hsl(0deg 0% 4%)),
+	200: ( // --f-color-neutral-200
+		hsl(0deg 0% 97%),
+		hsl(0deg 0% 9%)),
+	300: ( // --f-color-neutral-300
+		hsl(0deg 0% 94%),
+		hsl(0deg 0% 14%)),
+	400: ( // --f-color-neutral-400
+		hsl(0deg 0% 73%),
+		hsl(0deg 0% 42%)),
+	500: ( // --f-color-neutral-500
+		hsl(0deg 0% 52%),
+		hsl(0deg 0% 55%)),
+	600: ( // --f-color-neutral-600
+		hsl(0deg 0% 37%),
+		hsl(0deg 0% 68%)),
+	700: ( // --f-color-neutral-700
+		hsl(0deg 0% 20%),
+		hsl(0deg 0% 2%))
 );
 
 /* ==========================================================================
-   Theming – explicit light/dark mixins to avoid ambiguity
+   Theming
    ========================================================================== */
 
-/**
- * Applies the complete set of CSS custom properties for LIGHT mode.
- * This centralizes all variable assignments for light theme.
- */
-@mixin foundation-apply-light() {
-  // Neutral scale
-  @each $step, $pair in $neutral-palette {
-    --f-color-neutral-#{$step}: #{nth($pair, 1)};
-  }
-
-  // Foundation colors
-  @each $color-name, $color in $foundation-palette {
-    @if $color-name == "brand" {
-      // Use base brand color directly in light mode.
-      --f-color-#{$color-name}: var(--f-color-#{$color-name}-base);
-    } @else {
-      --f-color-#{$color-name}: #{$color};
-    }
-
-    // "Darker" variant with a fallback for color-mix compatibility.
-    --f-color-#{$color-name}-darker: var(--f-color-#{$color-name});
-    --f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
-  }
-
-  // Contrast colors
-  @each $color-name, $color in $foundation-palette-contrast {
-    @if $color-name == "brand" {
-      --f-color-#{$color-name}-contrast: var(--f-color-#{$color-name}-base-contrast);
-    } @else {
-      --f-color-#{$color-name}-contrast: #{$color};
-    }
-  }
-
-  // Surfaces
-  --f-color-bg-0: var(--f-color-neutral-300);
-  --f-color-bg-1: var(--f-color-neutral-100);
-  --f-color-bg-2: var(--f-color-neutral-200);
-
-  // Borders
-  @include color-mix(--f-color-border-0, #{$color-text-0}, 6%, transparent, 94%);
-  @include color-mix(--f-color-border-1, #{$color-text-0}, 12%, transparent, 88%);
-  @include color-mix(--f-color-border-2, #{$color-text-0}, 16%, transparent, 84%);
-
-  // Text
-  --f-color-text-0: var(--f-color-neutral-700);
-  --f-color-text-1: var(--f-color-neutral-600);
-  --f-color-text-2: var(--f-color-neutral-500);
-}
-
-/**
- * Applies the complete set of CSS custom properties for DARK mode.
- * This centralizes all variable assignments for dark theme.
- */
-@mixin foundation-apply-dark() {
-  // Neutral scale
-  @each $step, $pair in $neutral-palette {
-    --f-color-neutral-#{$step}: #{nth($pair, 2)};
-  }
-
-  // Foundation colors
-  @each $color-name, $color in $foundation-palette-darktheme {
-    // Base color
-    --f-color-#{$color-name}: #{$color};
-
-    // Brand is adjusted from its base for better contrast in dark mode.
-    @if $color-name == "brand" {
-      --f-color-#{$color-name}: color-mix(in oklab, var(--f-color-#{$color-name}-base) 87%, white 13%);
-    }
-
-    // "Darker" variant with a fallback for color-mix compatibility.
-    --f-color-#{$color-name}-darker: var(--f-color-#{$color-name});
-    --f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
-
-    // Contrast color mapping for dark theme.
-    --f-color-#{$color-name}-contrast: #{map.get($foundation-palette-darktheme-contrast, $color-name)};
-  }
-
-  // Surfaces
-  --f-color-bg-0: var(--f-color-neutral-100);
-  --f-color-bg-1: var(--f-color-neutral-200);
-  --f-color-bg-2: var(--f-color-neutral-300);
-
-  // Borders
-  @include color-mix(--f-color-border-0, #{$color-text-0}, 8%, transparent, 92%);
-  @include color-mix(--f-color-border-1, #{$color-text-0}, 12%, transparent, 88%);
-
-  // Text
-  --f-color-text-0: var(--f-color-neutral-700);
-  --f-color-text-1: var(--f-color-neutral-600);
-  --f-color-text-2: var(--f-color-neutral-500);
-}
-
 :root {
-  ///
-  /// --f-color-brand-base is set to automatically generate a lighter version of --f-color-brand in dark mode.
-  /// Don't try to do it without it.
-  ///
-  --f-color-brand-base: #{map.get($foundation-palette, "brand")};
-  --f-color-brand-base-contrast: #{map.get($foundation-palette-contrast, "brand")};
+	// Text colors are always derived from the same neutral steps.
+	--f-color-text-0: var(--f-color-neutral-700);
+	--f-color-text-1: var(--f-color-neutral-600);
+	--f-color-text-2: var(--f-color-neutral-500);
 
-  // Default: apply light theme tokens.
-  @include foundation-apply-light;
+	// The 'darker' variant calculation is the same for all themes.
+	// It loops through the base palette to generate a rule for each color name.
+	@each $color-name, $color in $foundation-palette {
+		--f-color-#{$color-name}-darker: var(--f-color-#{$color-name});
+		--f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
+	}
 
-  /// Dark Mode
-  ///
-  @media (prefers-color-scheme: dark) {
-    // Automatic dark mode, based on user preference.
-    @include foundation-apply-dark;
-  }
+	// Borders
+	@include color-mix(--f-color-border-0, #{$color-text-0}, 6%, transparent, 94%);
+	@include color-mix(--f-color-border-1, #{$color-text-0}, 12%, transparent, 88%);
+	@include color-mix(--f-color-border-2, #{$color-text-0}, 16%, transparent, 84%);
+
+	// Default: apply light theme tokens.
+	@include     foundation-apply-theme( 'light' );
+
+	/// Dark Mode
+	@media (prefers-color-scheme: dark) {
+		&:not([data-theme="light"]) {
+			// Override with dark theme tokens when user prefers dark mode and no explicit light mode is set.
+			@include foundation-apply-theme('dark');
+		}
+	}
 }
 
-html[data-theme="light"] {
-  // Manual override: force light theme.
-  @include foundation-apply-light;
-}
+/**
+ * Applies only the theme-specific (light or dark) CSS custom properties.
+ * @param {String} $mode - The theme mode ('light' or 'dark').
+ */
+@mixin foundation-apply-theme($mode: 'light') {
+	// Configure palettes based on the theme mode.
+	$neutral-index: if($mode == 'light', 1, 2);
+	$palette: if($mode == 'light', $foundation-palette, $foundation-palette-darktheme);
+	$contrast-palette: if($mode == 'light', $foundation-palette-contrast, $foundation-palette-darktheme-contrast);
 
-html[data-theme="dark"] {
-  // Manual override: force dark theme.
-  @include foundation-apply-dark;
+	// Apply neutral color scale.
+	@each $step, $pair in $neutral-palette {
+		--f-color-neutral-#{$step}: #{nth($pair, $neutral-index)};
+	}
+
+	// Apply foundation and contrast colors.
+	@each $color-name, $color in $palette {
+		// exclude brand, this is handled later
+		@if $color-name != 'brand' {
+			--f-color-#{$color-name}: #{$color};
+			--f-color-#{$color-name}-contrast: #{map.get($contrast-palette, $color-name)};
+		}
+	}
+
+	// Apply mode-specific variables.
+	@if $mode == 'light' {
+		--f-color-brand: var(--f-color-brand-base, #{map.get($foundation-palette, "brand")});
+		--f-color-brand-contrast: var(--f-color-brand-base-contrast, #{map.get($foundation-palette-contrast, "brand")});
+		--f-color-bg-0: var(--f-color-neutral-300); // body background
+		--f-color-bg-1: var(--f-color-neutral-100); // card and widget background
+		--f-color-bg-2: var(--f-color-neutral-200);
+	} @else {
+		// dark mode
+		--f-color-brand: color-mix(in oklab, var(--f-color-brand-base, #{map.get($foundation-palette, "brand")}) 87%, white 13%);
+		--f-color-brand-contrast: color-mix(in oklab, var(--f-color-brand-contast, #{map.get($foundation-palette, "brand-contrast")}) 87%, white 13%);
+		--f-color-bg-0: var(--f-color-neutral-100); // body background
+		--f-color-bg-1: var(--f-color-neutral-200); // card and widget background (lighter than body bg, also in dark)
+		--f-color-bg-2: var(--f-color-neutral-300);
+
+		// other borders are the same.
+		@include color-mix(--f-color-border-0, #{$color-text-0}, 8%, transparent, 92%);
+	}
 }
