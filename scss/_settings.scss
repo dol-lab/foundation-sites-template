@@ -487,7 +487,7 @@ $input-background: $color-bg-1;
 $input-background-focus: $color-bg-1;
 $input-background-disabled: color-mix-opacity(#{$color-bg-1}, 50%, 50%);
 $input-border-disabled: color-mix-opacity(#{$color-bg-2}, 80%, 20%);
-$input-border: 1px solid $color-border-0;
+$input-border: 1px solid $color-border-1;
 $input-border-focus: 1px solid $color-text-2;
 $input-padding: $form-spacing / 2;
 $input-shadow: none;

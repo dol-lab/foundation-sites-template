@@ -205,7 +205,7 @@ textarea {
 
 p {
   font-size: $paragraph-font-size;
-	color: $color-text-0;
+	color: $color-text-1;
 
   &.small {
     font-size: $small-font-size;
@@ -2384,10 +2384,6 @@ input,
   background-color: $color-bg-1;
   position: relative;
   z-index: 1000;
-
-  .bell-icon-svg {
-    fill: currentcolor;
-  }
 
   hr {
     margin: 0 auto;
