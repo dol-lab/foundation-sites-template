@@ -353,7 +353,7 @@ label[for] {
   transition: box-shadow $global-transition-medium $global-transition-timing;
   background-color: $color-bg-1;
   overflow: clip;
-  color: $color-text-0;
+  color: $color-text-1;
 
   .card-anchor {
     color: inherit;
@@ -4306,14 +4306,33 @@ a.sms-single-option:focus {
 // ---------
 
 details {
+
+	border-left: 1px solid transparent;
+	transition: all var(--f-transition-medium);
+	border-bottom-left-radius:0;
+
+	/* a details-contaner followed by another has a separator-line */
+	&:has( + details ){
+		border-bottom: 1px solid var( --f-color-border-1 );
+	}
+
+	/* a details-container standing alone has border-left, so the indentation is not odd */
+	&:not(:has( + details )){
+		border-left: 1px solid var( --f-color-border-1 );
+	}
+
+	&~details {
+		border-left: 1px solid transparent;
+	}
+
   > summary {
-    display: inline-flex;
     position: relative;
     cursor: pointer;
     justify-content: center;
     align-items: center;
     width: 100%;
     gap: 1rem;
+		width: calc(100% - 0.7rem);
 
     &::marker {
       content: none;
@@ -4325,7 +4344,9 @@ details {
     &::after {
       content: "\f107";
 
-      // position: absolute;
+      position: absolute;
+			right: -0.7rem;
+			top: 0.9rem;
       font-family: "Font Awesome 6 Free";
       font-weight: bold;
       margin-left: auto;
@@ -4343,19 +4364,18 @@ details {
     & > summary::after {
       transform: rotate(-180deg);
     }
+		border-left: 1px solid $color-border-2;
   }
 
   & > :last-child {
     margin-bottom: 1em;
   }
 
-  &:hover,
-  &[open] {
-    border-radius: 3px;
-
+  &:hover {
     summary {
-      color: $color-text-0;
+      filter: brightness(120%);
     }
+		border-left-color: var( --f-color-border-3 );
   }
 
   body & {
