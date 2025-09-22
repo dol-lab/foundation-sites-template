@@ -519,7 +519,7 @@
 	} @else {
 		// dark mode
 		--f-color-brand: color-mix(in oklab, var(--f-color-brand-base, #{map.get($foundation-palette, "brand")}) 87%, white 13%);
-		--f-color-brand-contrast: color-mix(in oklab, var(--f-color-brand-contast, #{map.get($foundation-palette, "brand-contrast")}) 87%, white 13%);
+		--f-color-brand-contrast: color-mix(in oklab, var(--f-color-brand-contast, #{map.get($foundation-palette-contrast, "brand")}) 87%, white 13%);
 		--f-color-bg-0: var(--f-color-neutral-100); // body background
 		--f-color-bg-1: var(--f-color-neutral-200); // card and widget background (lighter than body bg, also in dark)
 		--f-color-bg-2: var(--f-color-neutral-300);
