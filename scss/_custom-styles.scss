@@ -2633,7 +2633,7 @@ input,
       border-radius: 0 0 $global-radius $global-radius;
 
       // overflow: hidden; // if you have lots of blogcategories the selectbox is cropped.
-      // box-shadow: $global-drop-shadow;
+      box-shadow: $global-drop-shadow;
       z-index: 1; // enforce drop-shadow hierachie.
       a {
         border-right: none;
