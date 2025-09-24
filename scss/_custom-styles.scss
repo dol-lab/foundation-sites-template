@@ -4184,12 +4184,12 @@ textarea {
   }
 }
 
-.space-card:focus-within {
+.space-card:has(:focus-visible) {
   box-shadow: $global-focus;
 }
 
 // Tabs
-.tabs-title:focus-within {
+.tabs-title:has(:focus-visible){
   @include a11y-focus-inset;
 }
 
@@ -4205,7 +4205,7 @@ textarea {
 
 [data-whatintent="keyboard"]
   .spaces-editor-dots-dropdown
-  .card-divider:focus-within {
+  .card-divider:has(:focus-visible) {
   @include a11y-focus-inset;
 }
 
@@ -4245,7 +4245,7 @@ textarea {
 }
 
 // Profile page: Masonary cards
-[data-whatintent="keyboard"] .masonry-item:focus-within {
+[data-whatintent="keyboard"] .masonry-item:has(:focus-visible) {
   box-shadow: $global-focus;
 }
 
@@ -4272,8 +4272,8 @@ textarea {
   box-shadow: unset !important;
 }
 
-.sms-options:focus-within,
-.sms-single-bottom-container:focus-within {
+.sms-options:has(:focus-visible),
+.sms-single-bottom-container:has(:focus-visible) {
   box-shadow: $global-focus;
 }
 

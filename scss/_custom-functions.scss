@@ -452,26 +452,16 @@
 ///
 /// @requires $global-focus
 ///
-
 @mixin a11y-focus {
 	&:active,
 	&:focus {
-		box-shadow: $global-focus;
-
 		// Set color to transparent to ensure compatibility with high contrast mode
 		outline-color: transparent !important;
-	}
-
-	&:focus-visible {
 		outline: unset;
 	}
 
-	// Unset box shadow if mouse or touch
-	[data-whatintent="mouse"] &:active,
-	[data-whatintent="mouse"] &:focus,
-	[data-whatintent="touch"] &:active,
-	[data-whatintent="touch"] &:focus {
-		box-shadow: none !important;
+	&:focus-visible {
+		box-shadow: $global-focus;
 	}
 }
 
@@ -480,7 +470,6 @@
 ///
 /// @requires $global-focus
 ///
-
 @mixin a11y-focus-inset {
 	box-shadow: inset $global-focus;
 }
