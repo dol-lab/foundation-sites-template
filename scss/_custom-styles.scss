@@ -4363,7 +4363,6 @@ details {
     & > summary::after {
       transform: rotate(-180deg);
     }
-		border-left: 1px solid transparent;
   }
 
   & > :last-child {
@@ -4374,7 +4373,7 @@ details {
     summary {
       filter: brightness(120%);
     }
-		border-left-color: var( --f-color-border-3 );
+		border-left-color: var( --f-color-border-2 );
   }
 
   body & {
