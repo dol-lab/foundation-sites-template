@@ -4328,7 +4328,6 @@ details {
   > summary {
     position: relative;
     cursor: pointer;
-    justify-content: center;
     align-items: center;
     width: 100%;
     gap: 1rem;
@@ -4364,7 +4363,7 @@ details {
     & > summary::after {
       transform: rotate(-180deg);
     }
-		border-left: 1px solid $color-border-2;
+		border-left: 1px solid transparent;
   }
 
   & > :last-child {
