@@ -396,6 +396,7 @@ $abbr-underline: 1px dotted $black !default;
   // Unordered lists
   ul {
     margin-#{$global-left}: $list-side-margin;
+		padding-#{$global-right}: $list-side-margin; // Added to prevent bullet cut-off on the right/other side.
     list-style-type: $list-style-type;
   }
 
