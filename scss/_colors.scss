@@ -107,13 +107,16 @@ $neutral-palette: (
 	@include color-mix(--f-color-border-2, #{$color-text-0}, 16%, transparent, 84%);
 
 	// Default: apply light theme tokens.
-	@include     foundation-apply-theme( 'light' );
-
-	/// Dark Mode
+	&:not([data-theme="dark"]) {
+		@include foundation-apply-theme( 'light' );
+	}
 	@media (prefers-color-scheme: dark) {
 		&:not([data-theme="light"]) {
 			// Override with dark theme tokens when user prefers dark mode and no explicit light mode is set.
 			@include foundation-apply-theme('dark');
 		}
+	}
+	&[data-theme="dark"] {
+		@include foundation-apply-theme('dark');
 	}
 }
