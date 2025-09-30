@@ -1182,6 +1182,10 @@ label[for] {
     width: 100%;
   }
 
+	ul {
+		padding-#{$global-right}: $list-side-margin; // Added to prevent bullet cut-off on the right/other side.
+	}
+
   .alignfull,
   .alignwide {
     @include dynamic-box($edge: margin, $negative: true, $axis: horizontal);
@@ -4311,10 +4315,12 @@ details {
 	border-left: 1px solid transparent;
 	transition: all var(--f-transition-medium);
 	border-bottom-left-radius:0;
+	margin-bottom: $paragraph-margin-bottom;
 
 	/* a details-contaner followed by another has a separator-line */
 	&:has( + details ){
 		border-bottom: 1px solid var( --f-color-border-1 );
+		margin-bottom: 0;
 	}
 
 	/* a details-container standing alone has border-left, so the indentation is not odd */
@@ -4367,7 +4373,7 @@ details {
   }
 
   & > :last-child {
-    margin-bottom: 1em;
+    margin-bottom: $paragraph-margin-bottom;
   }
 
   &:hover {
@@ -4716,3 +4722,18 @@ html[data-theme="dark"]:not([themed]) [themed][style*="--xmeans-color"] {
 // 	padding-inline-start: 1em;
 //   }
 // }
+
+.highlight-on-load {
+  animation-name: blink-highlight;
+  animation-duration: 1.6s;
+  animation-iteration-count: 2; /* "Blink" two times */
+  animation-timing-function: ease-in-out; /* Smooth transitions between states */
+	border-radius: 3px;
+}
+
+/* Define the keyframes for the "blink" effect */
+@keyframes blink-highlight {
+	50% {
+		box-shadow: inset 0 0 100px 2px var(--f-color-brand);
+  }
+}
