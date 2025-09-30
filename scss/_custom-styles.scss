@@ -1304,6 +1304,12 @@ label[for] {
 
   &.space-header {
     background: $color-bg-2;
+		--s: 75px;
+    --c1: var(--f-color-bg-2);
+    --c2: var(--f-color-bg-0);
+    --c3: var(--f-color-bg-1);
+    background: repeating-conic-gradient(from 30deg, #0000 0 120deg, var(--c3) 0 50%) calc(var(--s) / 2) calc(var(--s) * tan(30deg) / 2), repeating-conic-gradient(from 30deg, var(--c1) 0 60deg, var(--c2) 0 120deg, var(--c3) 0 50%);
+    background-size: var(--s) calc(var(--s) * tan(30deg));
 
     // height: 64px;
     height: 80px;
