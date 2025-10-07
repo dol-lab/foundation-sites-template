@@ -3582,6 +3582,12 @@ i.fa {
   .pb-#{$size-name} {
     padding-block-end: if(length($size) > 1, nth($size, 1), $size);
   }
+  .mx-auto {
+    margin-inline: auto;
+  }
+  .my-auto {
+    margin-block: auto;
+  }
 }
 
 .gutter {
@@ -4743,3 +4749,9 @@ html[data-theme="dark"]:not([themed]) [themed][style*="--xmeans-color"] {
 		box-shadow: inset 0 0 100px 2px var(--f-color-brand);
   }
 }
+
+
+// TODO:
+// [ ] Style Details Tag
+// [ ] Style CK Editor variables
+// [ ] Style highlight-on-load animation

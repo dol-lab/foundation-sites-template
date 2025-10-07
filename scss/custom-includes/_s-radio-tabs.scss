@@ -1,0 +1,246 @@
+/* ==============================================================================
+  Radio Tabs
+============================================================================== */
+
+/// Segmented control–style radio buttons with optional icons and size/layout
+/// modifiers. Theme-aware via CSS custom properties.
+///
+/// ----------------------------------------------------------------------------
+///
+/// Expected HTML structure (supports n buttons):
+///
+/// <fieldset class="radio-tabs radio-tabs-icons stretch small hollow">
+///   <button class="radio-tabs-option">
+///     <i class="fa-solid fa-sun"></i>
+///     <input type="radio" name="icons" id="i1" value="light" />
+///     <label for="i1">Light</label>
+///   </button>
+///   <button class="radio-tabs-option">
+///     <i class="fa-solid fa-moon"></i>
+///     <input type="radio" name="icons" id="i2" value="dark" />
+///     <label for="i2">Dark</label>
+///   </button>
+///   <button class="radio-tabs-option">
+///     <i class="fa-solid fa-desktop"></i>
+///     <input type="radio" name="icons" id="i3" value="system" />
+///     <label for="i3">System</label>
+///   </button>
+///   <!-- Add more buttons as needed -->
+/// </fieldset>
+///
+/// Container: <fieldset.radio-tabs>
+/// Option:    <button.radio-tabs-option> containing optional <i>, the radio
+///            <input>, and a bound <label>.
+///
+/// ----------------------------------------------------------------------------
+///
+/// Variants:
+///   .hollow       outlined container
+///   .small        compact sizing
+///   .stretch      full-width layout (options flex)
+///   .radio-tabs-full   icon + text
+///   .radio-tabs-icons  icon only (labels visually hidden)
+///   .radio-tabs-text   text only (icons hidden)
+/// 
+
+@mixin radio-tabs-global {
+  // Radii and padding for container and children
+  --_br-parent: #{$global-radius * 1.25};
+  --_br-parent: 1em;
+  --_padding-parent: 0.25em;
+  --_br-child: calc(var(--_br-parent) - var(--_padding-parent));
+
+  display: flex;
+  width: fit-content;
+  gap: 0.125em;
+  font-size: 1rem;
+  border-radius: var(--_br-parent);
+  padding: var(--_padding-parent);
+  position: relative;
+  border: 1px solid transparent;
+
+  .radio-tabs-option {
+    position: relative;
+    border: none;
+    appearance: unset;
+    font-size: inherit;
+    background-color: transparent;
+    border-radius: var(--_br-child);
+    color: inherit;
+    padding: 0.65em 0.85em;
+
+    // Active option highlight (fallback when anchor-position unsupported)
+    &:has(:checked) {
+      color: var(--f-color-text-0);
+      background-color: var(--f-color-bg-2);
+    }
+  }
+
+  // Initial state: no selection -> labels use secondary tone
+  &:not(:has(:checked)) {
+    label {
+      color: var(--f-color-text-1);
+    }
+  }
+
+  // Selected state: de-emphasize non-active labels
+  &:has(:checked) {
+    :not(:checked) + label {
+      color: var(--f-color-text-2);
+    }
+  }
+
+  // Radios fill the button for a large hit target; text color reacts on hover/focus
+  input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    z-index: 2;
+    margin: 0;
+
+    &:hover,
+    &:focus {
+      + label {
+        color: var(--f-color-text-0);
+      }
+    }
+  }
+
+  // Smooth color transitions (labels and FA pseudo-elements)
+  label,
+  i::before {
+    font-size: inherit;
+    transition: color 0.35s ease-out;
+  }
+
+  // Shared animated pill for the active option (progressive enhancement)
+  &:before {
+    content: "";
+    position: absolute;
+    position-anchor: --active-tab;
+    background-color: var(--f-color-bg-2);
+    top: anchor(top);
+    left: anchor(left);
+    right: anchor(right);
+    bottom: anchor(bottom);
+    border-radius: var(--_br-child);
+    transition:
+      left 0.25s cubic-bezier(0.9, 0, 0.1, 1),
+      right 0.25s cubic-bezier(0.9, 0, 0.1, 1);
+
+    @supports (anchor-position: --active-tab) {
+      position-anchor: --active-tab;
+    }
+  }
+
+  // When anchor positioning is available, the active option defines the anchor
+  // and its own background is cleared to reveal the shared pill.
+  @supports (anchor-name: --active-tab) {
+    .radio-tabs-option {
+      &:has(:checked) {
+        anchor-name: --active-tab;
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+// Solid container (default look)
+@mixin radio-tabs-solid {
+  background-color: var(--f-color-bg-1);
+}
+
+// Outlined container
+@mixin radio-tabs-hollow {
+  background-color: var(--f-color-bg-0);
+  border: 1px solid var(--f-color-border-1);
+
+  .radio-tabs-option {
+    &:has(:checked) {
+      background-color: var(--f-color-bg-1);
+    }
+  }
+
+  @supports (anchor-name: --active-tab) {
+    &:before {
+      background-color: var(--f-color-bg-1);
+    }
+    .radio-tabs-option {
+      &:has(:checked) {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+// Icon + text
+@mixin radio-tabs-full {
+  i {
+    color: var(--f-color-text-2);
+    display: inline-block;
+    margin-right: 0.1em;
+  }
+}
+
+// Full-width layout
+@mixin radio-tabs-stretch {
+  width: 100%;
+  .radio-tabs-option {
+    flex-grow: 1;
+  }
+}
+
+// Icon-only
+@mixin radio-tabs-icons {
+  label {
+    display: none !important;
+  }
+  .radio-tabs-option {
+    padding: 0.65em;
+  }
+}
+
+// Text-only
+@mixin radio-tabs-text {
+  i {
+    display: none;
+  }
+}
+
+// Emits the .radio-tabs rules and variant hooks
+@mixin spaces-radio-tabs {
+  .radio-tabs {
+    @include radio-tabs-global;
+
+    &:not(.hollow) {
+      @include radio-tabs-solid;
+    }
+
+    &.small {
+      font-size: 0.85rem;
+    }
+
+    &.hollow {
+      @include radio-tabs-hollow;
+    }
+
+    &.stretch {
+      @include radio-tabs-stretch;
+    }
+
+    &-full {
+      @include radio-tabs-full;
+    }
+
+    &-icons {
+      @include radio-tabs-icons;
+    }
+
+    &-text {
+      @include radio-tabs-text;
+    }
+  }
+}

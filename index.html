@@ -147,7 +147,7 @@
 						</path>
 					</svg>
 				</a>
-				<ul class="vertical menu submenu is-dropdown-submenu first-sub" data-submenu="" role="menubar" >
+				<ul class="vertical menu submenu is-dropdown-submenu first-sub" data-submenu="" role="menubar">
 					<li class="is-submenu-item is-dropdown-submenu-item">
 						<div>
 							<!--  -->
@@ -206,7 +206,7 @@
                             ">
 					Study
 				</a>
-				<ul class="vertical menu submenu is-dropdown-submenu first-sub" data-submenu="" role="menubar" >
+				<ul class="vertical menu submenu is-dropdown-submenu first-sub" data-submenu="" role="menubar">
 					<li class="submenu-element is-submenu-item is-dropdown-submenu-item">
 						<a class="submenu-element" tag-type="a" href="https://spaces.kisd.de/course-selection"
 							role="menuitem">
@@ -262,7 +262,7 @@
                             ">
 					Services
 				</a>
-				<ul class="vertical menu submenu is-dropdown-submenu first-sub" data-submenu="" role="menubar" >
+				<ul class="vertical menu submenu is-dropdown-submenu first-sub" data-submenu="" role="menubar">
 					<li class="is-submenu-item is-dropdown-submenu-item">
 						<div class="" tag-type="div">
 							<div id="sm68ad7aa75f612171" class="margin-1">
@@ -1476,81 +1476,34 @@
 						</div>
 					</div>
 				</a>
-				<ul class="vertical menu submenu is-dropdown-submenu first-sub" data-submenu="" role="menubar" >
+				<ul class="vertical menu submenu is-dropdown-submenu first-sub" data-submenu="" role="menubar">
 					<li class="submenu-element is-submenu-item is-dropdown-submenu-item">
 						<a class="submenu-element" tag-type="a" href="#">
 							My Profile
 						</a>
 					</li>
-					<!-- <li class="is-submenu-item is-dropdown-submenu-item">
-						<hr class="" tag-type="hr">
-					</li> -->
-<ul class="radio-accordion icons icon-left success submenu is-accordion-submenu is-active p-medium pb-large"
-    aria-labelledby="space-theme"
-    aria-hidden="false"
-    id="theme-accordion"
-    data-submenu
-    role="group">
-<li class="radio-accordion-item is-submenu-item is-accordion-submenu-item" style="padding: 0;" role="none">
-	Spaces color theme
-</li>
-  <!-- Dark -->
-  <li class="radio-accordion-item is-submenu-item is-accordion-submenu-item" role="none">
-    <div class="radio">
-      <label class="label-wrapper" for="theme_dark">
-        <i class="fa fa-moon"></i>
-        <input type="radio"
-               id="theme_dark"
-               class="radio-input"
-               name="theme_choice"
-               value="dark"
-               data-theme-setting>
-        <span>Dark</span>
-        <label for="theme_dark" class="radio-label flex-spacer-left">
-          <span class="show-for-sr">Dark</span>
-        </label>
-      </label>
-    </div>
-  </li>
+					<li class="submenu-element is-submenu-item is-dropdown-submenu-item pt-medium pb-medium px-large">
+						<span class="pb-small" style="display: inline-block;">Spaces Color Theme</span>
+						<fieldset class="radio-tabs radio-tabs-icons stretch small mx-auto hollow">
+							<button class="radio-tabs-option">
+								<i class="fa-solid fa-sun"></i>
+								<input type="radio" name="icons" id="i1" value="light">
+								<label for="i1">Light</label>
+							</button>
+							<button class="radio-tabs-option">
+								<i class="fa-solid fa-moon"></i>
+								<input type="radio" name="icons" id="i2" value="dark">
+								<label for="i2">Dark</label>
+							</button>
+							<button class="radio-tabs-option">
+								<i class="fa-solid fa-desktop"></i>
+								<input type="radio" name="icons" id="i3" value="system">
+								<label for="i3">System</label>
+							</button>
+						</fieldset>
+						<small class="pt-medium" style="display: inline-block;">Pick between light (legacy), dark, or automatic - depending on your device.</small>
+					</li>
 
-  <!-- Light -->
-  <li class="radio-accordion-item is-submenu-item is-accordion-submenu-item" role="none">
-    <div class="radio">
-      <label class="label-wrapper" for="theme_light">
-        <i class="fa fa-sun"></i>
-        <input type="radio"
-               id="theme_light"
-               class="radio-input"
-               name="theme_choice"
-               value="light"
-               data-theme-setting>
-        <span>Light</span>
-        <label for="theme_light" class="radio-label flex-spacer-left">
-          <span class="show-for-sr">Light</span>
-        </label>
-      </label>
-    </div>
-  </li>
-
-  <!-- System / Auto -->
-  <li class="radio-accordion-item is-submenu-item is-accordion-submenu-item" role="none">
-    <div class="radio">
-      <label class="label-wrapper" for="theme_auto">
-        <i class="fa fa-desktop"></i>
-        <input type="radio"
-               id="theme_auto"
-               class="radio-input"
-               name="theme_choice"
-               value="auto"
-               data-theme-setting>
-        <span>System (Auto)</span>
-        <label for="theme_auto" class="radio-label flex-spacer-left">
-          <span class="show-for-sr">System Preference (Auto)</span>
-        </label>
-      </label>
-    </div>
-  </li>
-</ul>
 
 
 
@@ -1558,9 +1511,7 @@
 						<hr class="" tag-type="hr">
 					</li>
 					<li class="alert is-submenu-item is-dropdown-submenu-item">
-						<a class="alert" tag-type="a"
-							href="#"
-							role="menuitem">
+						<a class="alert" tag-type="a" href="#" role="menuitem">
 							Logout
 						</a>
 					</li>
@@ -2683,75 +2634,108 @@
 
 
 <script>
-  (function () {
-    /* Storage key for persisting theme selection. */
-    var STORAGE_KEY = "theme-preference";
-    var html = document.documentElement;
-    var items = Array.from(document.querySelectorAll('#theme-accordion .radio-accordion-item'));
-    var radios = Array.from(document.querySelectorAll('#theme-accordion input[name="theme_choice"]'));
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
 
-    function applyTheme(mode) {
-      if (mode === 'auto') {
-        html.removeAttribute('data-theme');
-      } else {
-        html.setAttribute('data-theme', mode);
-      }
-    }
+	(function () {
+	/* ===== Config & DOM ===== */
+	var STORAGE_KEY = "theme-preference";                // persist user choice
+	var html = document.documentElement;
+	var scope = document.querySelector('#theme-accordion') || document;
+	var items = Array.from(scope.querySelectorAll('.radio-accordion-item'));
+	var radios = Array.from(scope.querySelectorAll('input[name="theme_choice"]'));
+	// Fallback: if radios don't use name="theme_choice", take any radio with a value
+	if (!radios.length) {
+		radios = Array.from(scope.querySelectorAll('input[type="radio"][value]'));
+	}
 
-    function getInitialMode() {
-      var saved = localStorage.getItem(STORAGE_KEY);
-      if (saved === 'light' || saved === 'dark' || saved === 'auto') return saved;
-      var attr = html.getAttribute('data-theme');
-      if (attr === 'light' || attr === 'dark') return attr;
-      return 'auto';
-    }
+	// "auto" and "system" as synonyms
+	function normalizeMode(v) {
+		if (v === 'system') return 'auto';
+		if (v === 'auto' || v === 'light' || v === 'dark') return v;
+		return 'auto';
+	}
 
-    function reflectUI(mode) {
-      radios.forEach(function (r) {
-        var checked = r.value === mode;
-        r.checked = checked;
-        var item = r.closest('.radio-accordion-item');
-        var content = item && item.querySelector('[data-accordion-content]');
-        if (item) item.classList.toggle('is-active', checked);
-        if (content) {
-          content.classList.toggle('visible', checked);
-          content.setAttribute('aria-hidden', checked ? 'false' : 'true');
-        }
-      });
-    }
+	// Media query for OS dark; infer light if not dark
+	var mqDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-    function onChange(e) {
-      var mode = e.target.value;
-      applyTheme(mode);
-      reflectUI(mode);
-      localStorage.setItem(STORAGE_KEY, mode);
-    }
+	/* ===== Theme application ===== */
+	function applyTheme(mode) {
+		mode = normalizeMode(mode);
+		if (mode === 'auto') {
+		// Remove attribute so CSS can use @media (prefers-color-scheme) or defaults
+		html.removeAttribute('data-theme');
+		} else {
+		html.setAttribute('data-theme', mode); // 'light' or 'dark'
+		}
+	}
 
-    /* Live reaction to OS theme when in auto. */
-    function onSystemChange() {
-      if (currentMode() === 'auto') applyTheme('auto');
-    }
+	/* ===== Initial mode detection ===== */
+	function getInitialMode() {
+		// 1) Saved
+		var saved = normalizeMode(localStorage.getItem(STORAGE_KEY));
+		if (saved) return saved;
 
-    function currentMode() {
-      var checked = radios.find(function (r) { return r.checked; });
-      return checked ? checked.value : 'auto';
-    }
+		// 2) Existing attribute
+		var attr = normalizeMode(html.getAttribute('data-theme'));
+		if (attr === 'light' || attr === 'dark') return attr;
 
-    /* Init */
-    var initial = getInitialMode();
-    applyTheme(initial);
-    reflectUI(initial);
+		// 3) Default to auto/system
+		return 'auto';
+	}
 
-    radios.forEach(function (r) { r.addEventListener('change', onChange); });
-    if (mq.addEventListener) {
-      mq.addEventListener('change', onSystemChange);
-    } else if (mq.addListener) {
-      mq.addListener(onSystemChange);
-    }
-  })();
+	/* ===== UI reflection (accordion + aria) ===== */
+	function reflectUI(mode) {
+		mode = normalizeMode(mode);
+
+		radios.forEach(function (r) {
+		var isChecked = normalizeMode(r.value) === mode;
+		r.checked = isChecked;
+
+		var item = r.closest('.radio-accordion-item');
+		var content = item && item.querySelector('[data-accordion-content]');
+
+		if (item) item.classList.toggle('is-active', isChecked);
+		if (content) {
+			content.classList.toggle('visible', isChecked);
+			content.setAttribute('aria-hidden', isChecked ? 'false' : 'true');
+		}
+		});
+	}
+
+	function currentMode() {
+		var checked = radios.find(function (r) { return r.checked; });
+		return checked ? normalizeMode(checked.value) : 'auto';
+	}
+
+	/* ===== Handlers ===== */
+	function onChange(e) {
+		var mode = normalizeMode(e.target.value);
+		applyTheme(mode);
+		reflectUI(mode);
+		try { localStorage.setItem(STORAGE_KEY, mode); } catch (_) {}
+	}
+
+	// Live reaction to OS theme when in auto/system
+	function onSystemChange() {
+		if (currentMode() === 'auto') applyTheme('auto');
+	}
+
+	/* ===== Init ===== */
+	var initial = getInitialMode();
+	applyTheme(initial);
+	reflectUI(initial);
+
+	// radio listeners
+	radios.forEach(function (r) { r.addEventListener('change', onChange); });
+
+	// media query listeners with broad browser support
+	if (mqDark.addEventListener) {
+		mqDark.addEventListener('change', onSystemChange);
+	} else if (mqDark.addListener) {
+		mqDark.addListener(onSystemChange);
+	}
+	})();
+
 </script>
-
 
 	<div class="space grid-container">
 
