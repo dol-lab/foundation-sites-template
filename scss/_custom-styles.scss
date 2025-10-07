@@ -4736,22 +4736,30 @@ html[data-theme="dark"]:not([themed]) [themed][style*="--xmeans-color"] {
 // }
 
 .highlight-on-load {
-  animation-name: blink-highlight;
-  animation-duration: 1.6s;
-  animation-iteration-count: 2; /* "Blink" two times */
-  animation-timing-function: ease-in-out; /* Smooth transitions between states */
-	border-radius: 3px;
-}
 
-/* Define the keyframes for the "blink" effect */
-@keyframes blink-highlight {
-	50% {
-		box-shadow: inset 0 0 100px 2px var(--f-color-brand);
+  --_f-color-brand-soft: color-mix(in oklab, var(--f-color-brand) 38%, var(--f-color-bg-1) 62%);
+  --_f-color-brand-bg: color-mix(in oklab, var(--f-color-brand) 6%, var(--f-color-bg-1) 94%);
+
+  animation-name: highlight-wave;
+  animation-duration: 1.25s;
+  animation-delay: .3s;
+  animation-iteration-count: 2;
+  animation-timing-function: cubic-bezier(0.226, 0.579, 0, 1);
+
+	border-radius: 3px;
+
+  background-image: linear-gradient(45deg, var(--_f-color-brand-bg) 33.33%, var(--_f-color-brand-soft), var(--_f-color-brand-bg) 66.66%);
+  background-size: 300%;
+  background-position: center right;
+
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--f-color-brand);
+  text-underline-offset: .175em;
+
+  @keyframes highlight-wave {
+    to {
+      background-position: center left;
+    }
   }
 }
-
-
-// TODO:
-// [ ] Style Details Tag
-// [ ] Style CK Editor variables
-// [ ] Style highlight-on-load animation
