@@ -2540,7 +2540,7 @@ input,
     & > li {
       &.navbar-icon {
         justify-content: center;
-        flex-grow: 1;
+        flex-grow: 0;
         flex-basis: 0;
 
         &.search {
