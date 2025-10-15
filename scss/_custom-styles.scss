@@ -616,9 +616,11 @@ label[for] {
   -webkit-box-orient: vertical;
   backdrop-filter: blur(20px) saturate(200%);
   max-width: 80% !important;
-  margin-bottom: 5%;
-  border-radius: 0 2px 2px 0;
-  align-items: center;
+
+  margin-top: 5%;
+  position: absolute;
+
+  border-radius: 0 $global-radius-small $global-radius-small 0;
 
   // span {
   //   white-space: nowrap;
@@ -1022,7 +1024,7 @@ label[for] {
   }
 
   &.activity-card-new {
-    box-shadow: inset 3px 0 0 var(--s-c1, $primary-color);
+    box-shadow: inset 3px 0 0 var(--_s-c1, $primary-color);
   }
 
   & > .card-section:first-child {
@@ -1306,18 +1308,17 @@ label[for] {
 
   &.space-header {
     background: $color-bg-2;
-    --s: 75px;
-    --c1: var(--f-color-bg-2);
-    --c2: var(--f-color-bg-0);
-    --c3: var(--f-color-bg-1);
+    --_s: 75px;
+    --_c1: var(--f-color-bg-2);
+    --_c2: var(--f-color-bg-0);
+    --_c3: var(--f-color-bg-1);
     background:
-      repeating-conic-gradient(from 30deg, #0000 0 120deg, var(--c3) 0 50%) calc(var(--s) / 2)
-        calc(var(--s) * tan(30deg) / 2),
-      repeating-conic-gradient(from 30deg, var(--c1) 0 60deg, var(--c2) 0 120deg, var(--c3) 0 50%);
-    background-size: var(--s) calc(var(--s) * tan(30deg));
-
-    // height: 64px;
+      repeating-conic-gradient(from 30deg, #0000 0 120deg, var(--_c3) 0 50%) calc(var(--_s) / 2)
+        calc(var(--_s) * tan(30deg) / 2),
+      repeating-conic-gradient(from 30deg, var(--_c1) 0 60deg, var(--_c2) 0 120deg, var(--_c3) 0 50%);
+    background-size: var(--_s) calc(var(--_s) * tan(30deg));
     height: 80px;
+    align-items: center;
 
     .large > &,
     .large > a > & {
@@ -2386,7 +2387,7 @@ input,
 }
 
 .main-menu {
-  --header-height: var(--user-card--small);
+  --header-height: var(--user-card--_small);
 
   color: $color-text-1;
   background-color: $color-bg-1;
