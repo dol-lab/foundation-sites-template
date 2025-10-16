@@ -202,24 +202,20 @@
 ///
 
 @mixin dynamic-box($edge: padding, $negative: false, $axis: both) {
-	$multiplier: if($negative, -1, 1);
+  $mult: if($negative, -1, 1);
 
-	@each $breakpoint, $edge-size in $dynamic-relation {
-		@include breakpoint($breakpoint) {
-			@if $axis == both {
-				#{$edge}: multiply-list(map-get($padding-sizes, $edge-size), $multiplier);
-			} @else if $axis == vertical {
-				#{$edge}: multiply-list(extract-from-compact(map-get($padding-sizes, $edge-size), top), $multiplier) 0;
-			} @else if $axis == horizontal {
-				#{$edge}: 0 multiply-list(extract-from-compact(map-get($padding-sizes, $edge-size), left), $multiplier);
+  @if $axis == both {
+    #{$edge}: if($negative, multiply-list(var(--f-dynamic-box), $mult), var(--f-dynamic-box));
+  } @else if $axis == vertical {
+    #{$edge}: calc(var(--f-dynamic-box-y) * #{$mult}) 0;
+  } @else {
+    #{$edge}: 0 calc(var(--f-dynamic-box-x) * #{$mult});
 
-				@if $negative {
-					max-width: calc(100% + (#{extract-from-compact(map-get($padding-sizes, $edge-size), left)} * 2));
-					width: calc(100% + (#{extract-from-compact(map-get($padding-sizes, $edge-size), left)} * 2));
-				}
-			}
-		}
-	}
+    @if $negative {
+      max-width: calc(100% + var(--f-dynamic-box-x) * 2);
+      width: calc(100% + var(--f-dynamic-box-x) * 2);
+    }
+  }
 }
 
 /* ==============================================================================

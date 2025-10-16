@@ -44,6 +44,7 @@
 
 :root {
   interpolate-size: allow-keywords;
+	scrollbar-color: $color-text-2 $color-bg-0;
 
   --f-radius: #{$global-radius};
   --f-radius-small: #{$global-radius-small};
@@ -61,9 +62,24 @@
   --f-menu-padding: #{$global-menu-padding};
   --f-menu-nested-margin: #{$global-menu-nested-margin};
 
+	@each $size, $value in $padding-sizes {
+		--f-padding-#{$size}: #{$value};
+	}
+
   @each $size, $value in $user-card-sizes {
-    --user-card--#{$size}: #{$value};
+    --user-card-#{$size}: #{$value};
   }
+
+  @each $breakpoint, $edge-size in $dynamic-relation {
+    @each $breakpoint, $edge-size in $dynamic-relation {
+			@include breakpoint($breakpoint) {
+				$padding-value: map-get($padding-sizes, $edge-size);
+				--f-dynamic-box: #{$padding-value};
+				--f-dynamic-box-y: #{extract-from-compact($padding-value, top)};
+				--f-dynamic-box-x: #{extract-from-compact($padding-value, left)};
+			}
+		}
+	}
 }
 
 // 0. General
@@ -998,21 +1014,6 @@ label[for] {
   @include header-list;
 }
 
-.page-card,
-.post-card {
-  .post-content,
-  .page-secion {
-    figure,
-    img {
-      border-radius: $card-border-radius;
-      overflow: clip;
-
-      &:has(+ p) {
-        margin-bottom: 1em;
-      }
-    }
-  }
-}
 
 .post-card,
 .activity-card {
@@ -1024,7 +1025,7 @@ label[for] {
   }
 
   &.activity-card-new {
-    box-shadow: inset 3px 0 0 var(--_s-c1, $primary-color);
+    box-shadow: inset 3px 0 0 var(--s-c1, $primary-color);
   }
 
   & > .card-section:first-child {
@@ -1213,9 +1214,21 @@ label[for] {
 }
 
 .post-card .post-content,
+.post-card .comment-content,
 .report-card .report-content,
 .page-section .page-content {
-  @include dynamic-box;
+
+  padding: var(--f-dynamic-box);
+
+	figure,
+    img {
+      border-radius: $card-border-radius;
+      overflow: clip;
+
+      &:has(+ p) {
+        margin-bottom: 1em;
+      }
+    }
 }
 
 // 8. Clipping
@@ -2387,7 +2400,7 @@ input,
 }
 
 .main-menu {
-  --header-height: var(--user-card--_small);
+  --header-height: var(--user-card-small);
 
   color: $color-text-1;
   background-color: $color-bg-1;
@@ -4564,9 +4577,6 @@ html[data-theme="dark"]:not([themed]) [themed][style*="--xmeans-color"] {
   @include themed-variables(post, dark);
 }
 
-:root {
-  scrollbar-color: $color-text-2 $color-bg-0;
-}
 
 .info-chip-taxonomy {
   .value {
