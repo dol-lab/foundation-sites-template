@@ -46,7 +46,7 @@
   interpolate-size: allow-keywords;
 	scrollbar-color: $color-text-2 $color-bg-0;
 
-  --f-radius: 1.5rem;
+  --f-radius: 0.5rem;
   --f-radius-small: #{$global-radius-small};
   --f-gutter-small: #{$global-gutter-small};
   --f-gutter-large: #{$global-gutter-large};
@@ -1208,15 +1208,16 @@ label[for] {
 		margin-inline: -#{nth(map-get($padding-sizes, medium), 2)}; // negate .card-section
 	}  */
 
-  a:hover {
+  /* a:hover {
     text-decoration: underline;
-  }
+  } */
 }
 
 .post-card .post-content,
 .post-card .comment-content,
 .report-card .report-content,
-.page-section .page-content {
+.page-section .page-content,
+.dynamic-padding {
 
   padding: var(--f-dynamic-box);
 
@@ -1229,6 +1230,10 @@ label[for] {
         margin-bottom: 1em;
       }
     }
+}
+
+.dynamic-margin {
+	margin: var(--f-dynamic-box);
 }
 
 // 8. Clipping
@@ -2281,7 +2286,6 @@ input,
   cursor: pointer;
   z-index: 50;
   width: $button-height;
-  height: $button-height;
 
   // color: $color-text-1;
   // color: $color-text-1;
@@ -4512,9 +4516,9 @@ html {
       @include themed-variables(page, dark);
     }
 
-    .post-content.user-generated a {
+    /* .post-content.user-generated a {
       text-decoration: underline;
-    }
+    } */
 
     body {
       background-image: radial-gradient(
@@ -4541,9 +4545,9 @@ html {
         @include themed-variables(post, dark);
       }
 
-      .post-content.user-generated a {
+      /* .post-content.user-generated a {
         text-decoration: underline;
-      }
+      } */
 
       i.fa-droplet,
       i.fa-droplet::before,

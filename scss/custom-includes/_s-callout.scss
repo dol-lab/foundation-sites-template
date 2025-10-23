@@ -75,7 +75,7 @@ $callout-default-token: primary !default;
 
   background-color: color-mix(in oklab, var(--f-color-#{$name}) #{$color-weight}, $color-bg-1 #{$bg-fade});
   border-color: color-mix(in oklab, var(--f-color-#{$name}) 80%, currentColor 20%);
-  color: color-mix(in oklab, var(--f-color-#{$name}) 10%, currentColor 90%);
+  color: color-mix(in oklab, var(--f-color-#{$name}) 50%, currentColor 90%);
 
   > p,
   > li,
@@ -85,8 +85,13 @@ $callout-default-token: primary !default;
   > h4,
   > h5,
   > h6 {
-    color: color-mix(in oklab, var(--f-color-#{$name}) 10%, currentColor 90%);
+    color: color-mix(in oklab, var(--f-color-#{$name}) 50%, currentColor 90%);
   }
+
+	> .close-button {
+		color: inherit;
+		opacity: 0.9;
+	}
 
   // Optional: tint links inside colored callouts (keeps Foundation’s intent)
   @if $callout-link-tint != false {
