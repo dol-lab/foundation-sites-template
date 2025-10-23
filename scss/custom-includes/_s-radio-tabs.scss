@@ -41,11 +41,11 @@
 ///   .radio-tabs-full   icon + text
 ///   .radio-tabs-icons  icon only (labels visually hidden)
 ///   .radio-tabs-text   text only (icons hidden)
-/// 
+///
 
 @mixin radio-tabs-global {
   // Radii and padding for container and children
-  --_br-parent: #{$global-radius * 1.25};
+  --_br-parent: calc( $global-radius * 1.25 );
   --_br-parent: 1em;
   --_padding-parent: 0.25em;
   --_br-child: calc(var(--_br-parent) - var(--_padding-parent));

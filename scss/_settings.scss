@@ -98,7 +98,7 @@ $global-padding: 1rem;
 $global-position: 1rem;
 $global-weight-normal: 400;
 $global-weight-bold: 500;
-$global-radius: 0.45rem;
+$global-radius: var( --f-radius );
 $global-menu-padding: 0.75rem 0.9rem;
 $global-menu-nested-margin: 1rem;
 $global-text-direction: ltr;

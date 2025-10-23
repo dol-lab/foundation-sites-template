@@ -46,7 +46,7 @@
   interpolate-size: allow-keywords;
 	scrollbar-color: $color-text-2 $color-bg-0;
 
-  --f-radius: #{$global-radius};
+  --f-radius: 1.5rem;
   --f-radius-small: #{$global-radius-small};
   --f-gutter-small: #{$global-gutter-small};
   --f-gutter-large: #{$global-gutter-large};
