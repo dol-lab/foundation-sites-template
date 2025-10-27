@@ -1,31 +1,34 @@
-///
-/// Color roles used to simplify handling
-///
 
+/* Color roles used to simplify handling */
 @use "sass:color";
 @use "sass:map";
 
-/// Background
-/// stacking - $color-bg-0 (page background), $color-bg-1 (card and widget background), $color-bg-2 (highlighted element background)
+/* Background
+stacking - $color-bg-0 (page background), $color-bg-1 (card and widget background), $color-bg-2 (highlighted element background)
+*/
 $color-bg-0: var(--f-color-bg-0);
 $color-bg-1: var(--f-color-bg-1);
 $color-bg-2: var(--f-color-bg-2 );
 
-/// Borders
-/// $color-border-0 (minimal, just about visible), $color-border-1 (increased in visibility)
+/* Borders
+ * $color-border-0 (minimal, just about visible), $color-border-1 (increased in visibility)
+ */
 $color-border-0: var(--f-color-border-0);
 $color-border-1: var(--f-color-border-1);
 $color-border-2: var(--f-color-border-2);
 
-/// Text
-/// decreasing in dominance: $color-text-0 (headlines, links), $color-text-1 (p, card content), $color-text-2 (small)
+/* Text
+ * decreasing in dominance: $color-text-0 (headlines, links), $color-text-1 (p, card content), $color-text-2 (small)
+*/
 $color-text-0: var(--f-color-text-0);
 $color-text-1: var(--f-color-text-1);
 $color-text-2: var(--f-color-text-2);
 
 
-/// Palette colors
-/// Each palette color is assigned a base value (no suffix), alongside a darker version (e.g. used for hover states, -darker), as well as a text color provides contrast to them (-contrast)
+/* Palette colors
+ Each palette color is assigned a base value (no suffix), alongside a darker version (e.g. used for hover states, -darker),
+ as well as a text color provides contrast to them (-contrast)
+ */
 $foundation-palette: (
 	brand: hsl(16deg 99% 43%),
 	primary: hsl(200deg 20% 50%),
@@ -59,7 +62,7 @@ $foundation-palette-darktheme-contrast: (
 	alert: map.get($foundation-palette-contrast, "alert")
 );
 
-/// Palette for neutral tones (light-theme, dark-theme)
+/* Palette for neutral tones (light-theme, dark-theme) */
 $neutral-palette: (
 	100: ( // --f-color-neutral-100
 		hsl(0deg 0% 100%),
@@ -88,35 +91,16 @@ $neutral-palette: (
    Theming
    ========================================================================== */
 
-:root {
-	// Text colors are always derived from the same neutral steps.
-	--f-color-text-0: var(--f-color-neutral-700);
-	--f-color-text-1: var(--f-color-neutral-600);
-	--f-color-text-2: var(--f-color-neutral-500);
+:host(:not([data-theme="dark"])),:root:not([data-theme="dark"]),[data-theme="light"] {
+    @include foundation-apply-theme( 'light' );
+}
 
-	// The 'darker' variant calculation is the same for all themes.
-	// It loops through the base palette to generate a rule for each color name.
-	@each $color-name, $color in $foundation-palette {
-		--f-color-#{$color-name}-darker: var(--f-color-#{$color-name});
-		--f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
+@media only screen and (prefers-color-scheme: dark) {
+    :host(:not([data-theme])),:root:not([data-theme]) {
+        @include foundation-apply-theme('dark');
 	}
+}
 
-	// Borders
-	@include color-mix(--f-color-border-0, #{$color-text-0}, 6%, transparent, 94%);
-	@include color-mix(--f-color-border-1, #{$color-text-0}, 12%, transparent, 88%);
-	@include color-mix(--f-color-border-2, #{$color-text-0}, 16%, transparent, 84%);
-
-	// Default: apply light theme tokens.
-	&:not([data-theme="dark"]) {
-		@include foundation-apply-theme( 'light' );
-	}
-	@media (prefers-color-scheme: dark) {
-		&:not([data-theme="light"]) {
-			// Override with dark theme tokens when user prefers dark mode and no explicit light mode is set.
-			@include foundation-apply-theme('dark');
-		}
-	}
-	&[data-theme="dark"] {
-		@include foundation-apply-theme('dark');
-	}
+[data-theme="dark"] {
+    @include foundation-apply-theme('dark');
 }

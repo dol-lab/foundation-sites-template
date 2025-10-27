@@ -4,16 +4,8 @@
 		"postcss",
 		"css"
 	],
-	//"stylelint.configFile": "../.stylelintrc.json",
-	//"stylelint.configBasedir": "../..",
 	"[scss]": {
 		"editor.defaultFormatter": "stylelint.vscode-stylelint",
-		"editor.formatOnSave": true // Optional: formats automatically on save
-	},
-	"stylelint.config": {
-		"extends": "stylelint-config-standard-scss",
-		"plugins": [
-			"stylelint-scss"
-		]
+		"editor.formatOnSave": false
 	}
 }

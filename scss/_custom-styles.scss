@@ -2287,9 +2287,6 @@ input,
   z-index: 50;
   width: $button-height;
 
-  // color: $color-text-1;
-  // color: $color-text-1;
-
   &::after {
     position: relative;
     display: flex;
@@ -2300,7 +2297,6 @@ input,
     font-weight: $global-weight-bold;
     font-size: 1.25rem;
     white-space: nowrap;
-    color: $color-text-2;
   }
 
   &.button {

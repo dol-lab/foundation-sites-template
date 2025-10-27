@@ -475,6 +475,8 @@
  * @param {String} $mode - The theme mode ('light' or 'dark').
  */
 @mixin foundation-apply-theme($mode: 'light') {
+	color-scheme: if($mode == 'light', 'light', 'dark');
+
 	// Configure palettes based on the theme mode.
 	$neutral-index: if($mode == 'light', 1, 2);
 	$palette: if($mode == 'light', $foundation-palette, $foundation-palette-darktheme);
@@ -512,4 +514,21 @@
 		// other borders are the same.
 		@include color-mix(--f-color-border-0, #{$color-text-0}, 8%, transparent, 92%);
 	}
+
+	// Text colors are always derived from the same neutral steps.
+	--f-color-text-0: var(--f-color-neutral-700);
+	--f-color-text-1: var(--f-color-neutral-600);
+	--f-color-text-2: var(--f-color-neutral-500);
+
+	// The 'darker' variant calculation is the same for all themes.
+	// It loops through the base palette to generate a rule for each color name.
+	@each $color-name, $color in $foundation-palette {
+		--f-color-#{$color-name}-darker: var(--f-color-#{$color-name});
+		--f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
+	}
+
+	// Borders
+	@include color-mix(--f-color-border-0, #{$color-text-0}, 6%, transparent, 94%);
+	@include color-mix(--f-color-border-1, #{$color-text-0}, 12%, transparent, 88%);
+	@include color-mix(--f-color-border-2, #{$color-text-0}, 16%, transparent, 84%);
 }
