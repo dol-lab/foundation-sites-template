@@ -61,8 +61,11 @@ $accordion-content-padding: 1rem !default;
   margin-#{$global-left}: 0;
   background: $background;
   list-style-type: none;
-  border: $border;
   border-radius: $global-radius;
+
+	:not(.card)>&{
+		border: $border;
+	}
 
   &[disabled] {
     .accordion-title {
