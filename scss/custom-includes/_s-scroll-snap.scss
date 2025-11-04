@@ -231,7 +231,7 @@
 
           // this is the cell, e.g. medium-8.
           & > .#{$breakpoint}-#{$i} {
-            $container-width: 100vw;
+            $container-width: 100%;
 
             /**
 						* If breakpoint width is greater or equal to grid-container we set the
