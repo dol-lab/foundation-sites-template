@@ -1,0 +1,121 @@
+///
+///  Space badges are small button-like elements that style references to spaces in a specific way - distinguishing them from links or tags.
+/// 
+
+////
+/// @group badge-space
+////
+
+/// Default background color for space-badges.
+/// @type Color
+$badge-space-background: var(--f-color-bg-2) !default;
+
+/// Default background color for space-badges on hover.
+/// @type Color
+$badge-space-background-hover: var(--f-color-bg-0) !default;
+
+/// Default color for space-badges.
+/// @type Color
+$badge-space-color: inherit !default;
+
+/// Default border color for space-badges.
+/// @type Color
+$badge-space-border-color: transparent !default;
+
+/// Default border color for space-badges on hover.
+/// @type Color
+$badge-space-border-color-hover: var(--f-color-border-2) !default;
+
+/// Default color for inline (in paragraph) space-badges.
+/// @type Color
+$badge-space-color-inline: var(--f-color-text-0) !default;
+
+/// Default color for space-badges on hover.
+/// @type Color
+$badge-space-color-hover: var(--f-color-text-0) !default;
+
+/// Default colorful accent for space-badge icons.
+/// @type Color
+$badge-space-icon-color-accent: var(--f-color-brand) !default;
+
+/// Default background color for space-badge icons.
+/// @type Color
+$badge-space-icon-color-base: var(--f-color-border-2) !default;
+
+
+
+
+@mixin badge-space-default {
+
+    gap: 0.45em;
+    
+    background-color: $badge-space-background;
+    color: $badge-space-color !important;
+
+    box-shadow: 0 0 0 1px $badge-space-border-color;
+    padding: 0.35em 0.55em 0.3em 0.45em;
+    border-radius: 0.5em;
+    
+    display: inline-flex;
+    align-items: center;
+
+    line-height: 1;
+    letter-spacing: .2px; // compensating for lowerd font sizes
+    font-size: inherit;
+    vertical-align: middle;
+    text-decoration: none;
+
+    transition: all $global-transition-medium $global-transition-timing;
+
+
+
+    &::before {
+        content: '';
+
+        aspect-ratio: 136 / 148.1;
+        height: 1em;
+        display: inline-block;
+        margin-bottom: 1px; // Visual balancing
+        
+        clip-path: url(#space-container-path);
+        -webkit-clip-path: url(#space-container-path);
+
+        transition: all $global-transition-medium $global-transition-timing;
+
+        background: radial-gradient(
+            circle at -10% -15%,
+                $badge-space-icon-color-accent 0%,
+                $badge-space-icon-color-base 80%
+            );
+
+        background-size: 100% 100%;
+    }
+
+
+    &:hover, &:focus {
+        color: $badge-space-color-hover;
+        background-color: $badge-space-background-hover;
+        box-shadow: 0 0 0 1px $badge-space-border-color-hover;
+        
+        &:before {
+            background-size: 200% 200%;
+        }
+    }
+}
+
+@mixin badge-space-inline {
+    font-size: .8em;
+    color: $badge-space-color-inline !important;
+    letter-spacing: .35px; // compensating for lowerd font sizes
+}
+
+
+@mixin spaces-badge-space {
+    .badge-space {
+        @include badge-space-default;
+
+        &.inline {
+            @include badge-space-inline;
+        }
+    }
+}

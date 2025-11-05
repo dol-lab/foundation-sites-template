@@ -26,24 +26,24 @@ $dynamic-relation: (
   large: xlarge,
 );
 
-// 11. Info Chip
+// Info Chip
 // ---------
 $info-chip-padding: 0.35em 0.5em 0.20em;
 $info-chip-padding-round: 0.37em 0.8em;
 $info-border-shadow: 0 0 0 0.7px color-mix-opacity(#{$color-text-0}, 10%, 90%);
 
-// 11. Button & Input
+// Button & Input
 // ---------
 $input-height: $button-height;
 
-// 14. Menu
+// Menu
 // ---------
 $border: 1px solid $color-bg-2;
 
-// icons
+// Icons
 $icon-line-weight: 2;
 
-// 21. Spinner
+// Spinner
 // ---------
 
 $spinner-sizes: (
@@ -53,7 +53,7 @@ $spinner-sizes: (
   large: $switch-height-large,
 );
 
-// 27. Breadcrumbs
+// Breadcrumbs
 // ---------
 
 $breadcrumbs-margin: 0;
@@ -67,3 +67,20 @@ $breadcrumbs-item-separator: true;
 $breadcrumbs-item-separator-item: "·";
 $breadcrumbs-item-separator-item-rtl: "·";
 $breadcrumbs-item-separator-color: $breadcrumbs-item-color;
+
+
+// Space Badge
+// ---------
+
+$badge-space-background: var(--f-color-bg-2);
+$badge-space-background-hover: var(--f-color-bg-0);
+
+$badge-space-color: inherit;
+$badge-space-color-inline: var(--f-color-text-0);
+$badge-space-color-hover: var(--f-color-text-0);
+
+$badge-space-border-color: transparent;
+$badge-space-border-color-hover: var(--f-color-border-2);
+
+$badge-space-icon-color-accent: var(--f-color-brand);
+$badge-space-icon-color-base: var(--f-color-border-2);
