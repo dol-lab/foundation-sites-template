@@ -4638,3 +4638,17 @@ html[data-theme="dark"]:not([themed]) [themed][style*="--xmeans-color"] {
     }
   }
 }
+
+// 35 . Accessabuility helpers
+.fa-sr-only, .fa-sr-only-focusable:not(:focus), .sr-only, .sr-only-focusable:not(:focus) {
+	  /* This has been livin in fontawesome 6 lost in 7 */
+	  position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
