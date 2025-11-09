@@ -41,8 +41,7 @@ $meter-fill-bad: $alert-color !default;
     // We have disabled autoprefixer first and are just only using 
     // `-moz-appearance: none` as a prefix and neglecting the webkit.
     
-    /*! autoprefixer: off */
-    appearance: none; // sass-lint:disable-line no-vendor-prefixes
+    /*! autoprefixer: off */ // sass-lint:disable-line no-vendor-prefixes
     appearance: none;
 
     @if has-value($meter-radius) {

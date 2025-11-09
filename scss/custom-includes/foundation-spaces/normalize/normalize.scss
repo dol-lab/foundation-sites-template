@@ -158,7 +158,7 @@
   [type="button"],
   [type="reset"],
   [type="submit"] {
-    appearance: button;
+    appearance: auto;
   }
 
   // Remove the inner border and padding in Firefox.
@@ -246,7 +246,7 @@
   // 2. Change font properties to `inherit` in Safari.
 
   ::-webkit-file-upload-button {
-    appearance: button; // 1
+    appearance: auto; // 1
     font: inherit; // 2
   }
 

@@ -58,6 +58,7 @@ $select-radius: $global-radius !default;
   :root[data-theme="dark"] & {
     background-image: var(--_f-chevron-for-dark);
   }
+
   :root[data-theme="light"] & {
     background-image: var(--_f-chevron-for-light);
   }

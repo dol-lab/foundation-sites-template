@@ -117,15 +117,12 @@
   }
 
   // Shared animated pill for the active option (progressive enhancement)
-  &:before {
+  &::before {
     content: "";
     position: absolute;
     position-anchor: --active-tab;
     background-color: var(--f-color-bg-2);
-    top: anchor(top);
-    left: anchor(left);
-    right: anchor(right);
-    bottom: anchor(bottom);
+    inset: anchor(top) anchor(right) anchor(bottom) anchor(left);
     border-radius: var(--_br-child);
     transition:
       left 0.25s cubic-bezier(0.9, 0, 0.1, 1),
@@ -165,9 +162,10 @@
   }
 
   @supports (anchor-name: --active-tab) {
-    &:before {
+    &::before {
       background-color: var(--f-color-bg-1);
     }
+
     .radio-tabs-option {
       &:has(:checked) {
         background-color: transparent;
@@ -188,6 +186,7 @@
 // Full-width layout
 @mixin radio-tabs-stretch {
   width: 100%;
+
   .radio-tabs-option {
     flex-grow: 1;
   }
@@ -198,6 +197,7 @@
   label {
     display: none !important;
   }
+
   .radio-tabs-option {
     padding: 0.65em;
   }

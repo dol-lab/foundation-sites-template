@@ -46,48 +46,36 @@ $badge-space-icon-color-base: var(--f-color-border-2) !default;
 
 
 @mixin badge-space-default {
-
     gap: 0.45em;
-    
     background-color: $badge-space-background;
     color: $badge-space-color !important;
-
     box-shadow: 0 0 0 1px $badge-space-border-color;
     padding: 0.35em 0.55em 0.3em 0.45em;
     border-radius: 0.5em;
-    
     display: inline-flex;
     align-items: center;
-
     line-height: 1;
     letter-spacing: .2px; // compensating for lowerd font sizes
     font-size: inherit;
     vertical-align: middle;
     text-decoration: none;
-
     transition: all $global-transition-medium $global-transition-timing;
 
 
 
     &::before {
         content: '';
-
         aspect-ratio: 136 / 148.1;
         height: 1em;
         display: inline-block;
         margin-bottom: 1px; // Visual balancing
-        
-        clip-path: url(#space-container-path);
-        -webkit-clip-path: url(#space-container-path);
-
+        clip-path: url("#space-container-path");
         transition: all $global-transition-medium $global-transition-timing;
-
         background: radial-gradient(
             circle at -10% -15%,
                 $badge-space-icon-color-accent 0%,
                 $badge-space-icon-color-base 80%
             );
-
         background-size: 100% 100%;
     }
 
@@ -97,7 +85,7 @@ $badge-space-icon-color-base: var(--f-color-border-2) !default;
         background-color: $badge-space-background-hover;
         box-shadow: 0 0 0 1px $badge-space-border-color-hover;
         
-        &:before {
+        &::before {
             background-size: 200% 200%;
         }
     }

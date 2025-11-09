@@ -4,17 +4,21 @@
 
 // @import "custom-includes/foundation-spaces/helpers/missing-dependencies";
 @import "custom-includes/foundation-spaces/helpers/true";
+
 //
 @import 'custom-includes/foundation-spaces/functions/contain';
 @import 'custom-includes/foundation-spaces/functions/purge';
 @import 'custom-includes/foundation-spaces/functions/remove';
 @import 'custom-includes/foundation-spaces/functions/replace';
 @import 'custom-includes/foundation-spaces/functions/to-list';
+
 //
 @import 'custom-includes/foundation-spaces/util/util';
+
 //
 @import 'custom-includes/foundation-spaces/util/util';
 @import 'custom-includes/foundation-spaces/global';
+
 //
 @import "custom-includes/foundation-spaces/forms/forms";
 @import 'custom-includes/foundation-spaces/typography/typography';
@@ -37,6 +41,7 @@
 @import 'custom-includes/foundation-spaces/components/dropdown';
 @import 'custom-includes/foundation-spaces/components/pagination';
 @import 'custom-includes/foundation-spaces/components/tooltip';
+
 //
 @import "custom-includes/_s-accordion";
 @import 'custom-includes/foundation-spaces/components/media-object';
@@ -54,6 +59,7 @@
 @import 'custom-includes/foundation-spaces/components/sticky';
 @import 'custom-includes/foundation-spaces/components/title-bar';
 @import 'custom-includes/foundation-spaces/components/top-bar';
+
 //
 @import 'custom-includes/foundation-spaces/components/flex';
 @import 'custom-includes/foundation-spaces/components/visibility';
