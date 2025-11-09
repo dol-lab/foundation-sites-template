@@ -6,7 +6,9 @@
 	"scripts": {
 		"start": "gulp",
 		"build": "gulp sass",
-		"lint": "stylelint scss/**/*.scss --fix"
+		"lint": "stylelint '**/*.scss'",
+		"lint:fix": "stylelint '**/*.scss' --fix",
+		"format": "prettier --write '**/*.scss'"
 	},
 	"author": "Foundation Yetinauts <contact@get.foundation> (https://get.foundation)",
 	"license": "MIT",
