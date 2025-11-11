@@ -1026,7 +1026,7 @@ label[for] {
   }
 
   &.activity-card-new {
-    box-shadow: inset 3px 0 0 var(--s-c1, $primary-color);
+    box-shadow: inset 3px 0 0 var(--f-color-brand, $primary-color);
   }
 
   & > .card-section:first-child {
