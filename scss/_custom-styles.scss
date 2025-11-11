@@ -4481,39 +4481,40 @@ details {
     /// This section covers page-wide theming, e.g. inside a space.
     ///
     @if $mode == light {
+      --_f-color-theme-light: oklch(from var(--f-color-theme) .55 .06 h);
       --f-color-bg-0: color-mix(
         in oklab,
-        var(--f-color-theme) 20%,
+        var(--_f-color-theme-light) 20%,
         var(--f-color-neutral-100) 80%
       );
       --f-color-bg-1: color-mix(
         in oklab,
-        var(--f-color-theme) 9%,
+        var(--_f-color-theme-light) 9%,
         var(--f-color-neutral-100) 91%
       );
       --f-color-bg-2: color-mix(
         in oklab,
-        var(--f-color-theme) 14%,
+        var(--_f-color-theme-light) 14%,
         var(--f-color-neutral-200) 86%
       );
       --f-color-text-0: color-mix(
         in oklab,
-        var(--f-color-theme) 19%,
+        var(--_f-color-theme-light) 19%,
         var(--f-color-neutral-700) 81%
       );
       --f-color-text-1: color-mix(
         in oklab,
-        var(--f-color-theme) 25%,
+        var(--_f-color-theme-light) 25%,
         var(--f-color-neutral-700) 75%
       );
       --f-color-text-2: color-mix(
         in oklab,
-        var(--f-color-theme) 25%,
+        var(--_f-color-theme-light) 25%,
         var(--f-color-neutral-500) 75%
       );
       --f-color-brand: color-mix(
         in oklab,
-        var(--f-color-theme) 75%,
+        var(--_f-color-theme-light) 75%,
         var(--f-color-neutral-700) 25%
       );
       --f-color-brand-contrast: #fff;
@@ -4525,37 +4526,37 @@ details {
     } @else if $mode == dark {
       --f-color-bg-0: color-mix(
         in oklab,
-        var(--f-color-theme) 11%,
+        var(--_f-color-theme-light) 11%,
         var(--f-color-neutral-100) 89%
       );
       --f-color-bg-1: color-mix(
         in oklab,
-        var(--f-color-theme) 8%,
+        var(--_f-color-theme-light) 8%,
         var(--f-color-neutral-200) 92%
       );
       --f-color-bg-2: color-mix(
         in oklab,
-        var(--f-color-theme) 10%,
+        var(--_f-color-theme-light) 10%,
         var(--f-color-neutral-300) 90%
       );
       --f-color-text-0: color-mix(
         in oklab,
-        var(--f-color-theme) 12%,
+        var(--_f-color-theme-light) 12%,
         var(--f-color-neutral-700) 88%
       );
       --f-color-text-1: color-mix(
         in oklab,
-        var(--f-color-theme) 25%,
+        var(--_f-color-theme-light) 25%,
         var(--f-color-neutral-700) 75%
       );
       --f-color-text-2: color-mix(
         in oklab,
-        var(--f-color-theme) 25%,
+        var(--_f-color-theme-light) 25%,
         var(--f-color-neutral-500) 75%
       );
       --f-color-brand: color-mix(
         in oklab,
-        var(--f-color-theme) 55%,
+        var(--_f-color-theme-light) 55%,
         var(--f-color-neutral-700) 45%
       );
       --f-color-brand-contrast: #000;
