@@ -32,25 +32,23 @@
 ///  Previously called custom-foundation-global-styles-not-prefixed
 @import "custom-normalize";
 
-
 ///
-///  Some foundation styles are used to make back-end editing of posts, etc. 
-///  integrate better into user's platform experiences. 
+///  Some foundation styles are used to make back-end editing of posts, etc.
+///  integrate better into user's platform experiences.
 ///  Styles need to be prefixed to prevent unforseeable effects.
 .f {
-	///
-	///  @include statements for foundation mixins
-	///  Some are "custom forks" to allow for CSS variable usage.
-	@import "custom-foundation-includes";
+  ///
+  ///  @include statements for foundation mixins
+  ///  Some are "custom forks" to allow for CSS variable usage.
+  @import "custom-foundation-includes";
 
-	///
-	///  Our styling, comes late to overwrite foundation styles.
-	@import "custom-styles";
+  ///
+  ///  Our styling, comes late to overwrite foundation styles.
+  @import "custom-styles";
 
-	///
-	///  Motion UI stuff
-	@import "motion-ui";
-	@include motion-ui-transitions;
-	@include motion-ui-animations;
-
+  ///
+  ///  Motion UI stuff
+  @import "motion-ui";
+  @include motion-ui-transitions;
+  @include motion-ui-animations;
 }

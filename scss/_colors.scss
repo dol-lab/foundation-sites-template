@@ -1,4 +1,3 @@
-
 /* Color roles used to simplify handling */
 @use "sass:color";
 @use "sass:map";
@@ -8,7 +7,7 @@ stacking - $color-bg-0 (page background), $color-bg-1 (card and widget backgroun
 */
 $color-bg-0: var(--f-color-bg-0);
 $color-bg-1: var(--f-color-bg-1);
-$color-bg-2: var(--f-color-bg-2 );
+$color-bg-2: var(--f-color-bg-2);
 
 /* Borders
  * $color-border-0 (minimal, just about visible), $color-border-1 (increased in visibility)
@@ -24,83 +23,99 @@ $color-text-0: var(--f-color-text-0);
 $color-text-1: var(--f-color-text-1);
 $color-text-2: var(--f-color-text-2);
 
-
 /* Palette colors
  Each palette color is assigned a base value (no suffix), alongside a darker version (e.g. used for hover states, -darker),
  as well as a text color provides contrast to them (-contrast)
  */
 $foundation-palette: (
-	brand: hsl(16deg 99% 43%),
-	primary: hsl(200deg 20% 50%),
-	secondary: hsl(199deg 18% 33%),
-	success: hsl(152deg 62% 41%),
-	warning: hsl(41deg 100% 50%),
-	alert: hsl(358deg 86% 61%)
+  brand: hsl(16deg 99% 43%),
+  primary: hsl(200deg 20% 50%),
+  secondary: hsl(199deg 18% 33%),
+  success: hsl(152deg 62% 41%),
+  warning: hsl(41deg 100% 50%),
+  alert: hsl(358deg 86% 61%),
 );
 $foundation-palette-contrast: (
-	brand: hsl(0deg 0% 100%),
-	primary: hsl(0deg 0% 100%),
-	secondary: hsl(0deg 0% 100%),
-	success: hsl(0deg 0% 100%),
-	warning: hsl(0deg 0% 0%),
-	alert: hsl(0deg 0% 100%)
+  brand: hsl(0deg 0% 100%),
+  primary: hsl(0deg 0% 100%),
+  secondary: hsl(0deg 0% 100%),
+  success: hsl(0deg 0% 100%),
+  warning: hsl(0deg 0% 0%),
+  alert: hsl(0deg 0% 100%),
 );
 $foundation-palette-darktheme: (
-	brand: map.get($foundation-palette, "brand"),
-	primary: map.get($foundation-palette, "primary"),
-	secondary: map.get($foundation-palette, "secondary"),
-	success: map.get($foundation-palette, "success"),
-	warning: map.get($foundation-palette, "warning"),
-	alert: map.get($foundation-palette, "alert")
+  brand: map.get($foundation-palette, "brand"),
+  primary: map.get($foundation-palette, "primary"),
+  secondary: map.get($foundation-palette, "secondary"),
+  success: map.get($foundation-palette, "success"),
+  warning: map.get($foundation-palette, "warning"),
+  alert: map.get($foundation-palette, "alert"),
 );
 $foundation-palette-darktheme-contrast: (
-	brand: map.get($foundation-palette-contrast, "brand"),
-	primary: map.get($foundation-palette-contrast, "primary"),
-	secondary: map.get($foundation-palette-contrast, "secondary"),
-	success: map.get($foundation-palette-contrast, "success"),
-	warning: map.get($foundation-palette-contrast, "warning"),
-	alert: map.get($foundation-palette-contrast, "alert")
+  brand: map.get($foundation-palette-contrast, "brand"),
+  primary: map.get($foundation-palette-contrast, "primary"),
+  secondary: map.get($foundation-palette-contrast, "secondary"),
+  success: map.get($foundation-palette-contrast, "success"),
+  warning: map.get($foundation-palette-contrast, "warning"),
+  alert: map.get($foundation-palette-contrast, "alert"),
 );
 
 /* Palette for neutral tones (light-theme, dark-theme) */
 $neutral-palette: (
-	100: ( // --f-color-neutral-100
-		hsl(0deg 0% 100%),
-		hsl(0deg 0% 4%)),
-	200: ( // --f-color-neutral-200
-		hsl(0deg 0% 97%),
-		hsl(0deg 0% 9%)),
-	300: ( // --f-color-neutral-300
-		hsl(0deg 0% 94%),
-		hsl(0deg 0% 14%)),
-	400: ( // --f-color-neutral-400
-		hsl(0deg 0% 73%),
-		hsl(0deg 0% 42%)),
-	500: ( // --f-color-neutral-500
-		hsl(0deg 0% 52%),
-		hsl(0deg 0% 55%)),
-	600: ( // --f-color-neutral-600 -> --f-color-text-1
-		hsl(0deg 0% 27%),
-		hsl(0deg 0% 68%)),
-	700: ( // --f-color-neutral-700
-		hsl(0deg 0% 20%),
-		hsl(0deg 0% 96%))
+  100: (
+    // --f-color-neutral-100
+    hsl(0deg 0% 100%),
+    hsl(0deg 0% 4%),
+  ),
+  200: (
+    // --f-color-neutral-200
+    hsl(0deg 0% 97%),
+    hsl(0deg 0% 9%),
+  ),
+  300: (
+    // --f-color-neutral-300
+    hsl(0deg 0% 94%),
+    hsl(0deg 0% 14%),
+  ),
+  400: (
+    // --f-color-neutral-400
+    hsl(0deg 0% 73%),
+    hsl(0deg 0% 42%),
+  ),
+  500: (
+    // --f-color-neutral-500
+    hsl(0deg 0% 52%),
+    hsl(0deg 0% 55%),
+  ),
+  600: (
+    // --f-color-neutral-600 -> --f-color-text-1
+    hsl(0deg 0% 27%),
+    hsl(0deg 0% 68%),
+  ),
+  700: (
+    // --f-color-neutral-700
+    hsl(0deg 0% 20%),
+    hsl(0deg 0% 96%),
+  ),
 );
 
 /* ==========================================================================
    Theming
    ========================================================================== */
 
-:host(:not([data-theme="dark"])),:root:not([data-theme="dark"]),[data-theme="light"] {
-    @include foundation-apply-theme( 'light' );
+:host(:not([data-theme="dark"])),
+:root:not([data-theme="dark"]),
+[data-theme="light"] {
+  @include foundation-apply-theme("light");
 }
 
 @media only screen and (prefers-color-scheme: dark) {
-    :host(:not([data-theme])),:root:not([data-theme]) {
-        @include foundation-apply-theme('dark');
-	}
+  :host(:not([data-theme])),
+  :root:not([data-theme]) {
+    @include foundation-apply-theme("dark");
+  }
 }
 
 [data-theme="dark"] {
-    @include foundation-apply-theme('dark');
+  @include foundation-apply-theme("dark");
 }

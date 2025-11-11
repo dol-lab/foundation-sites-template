@@ -199,10 +199,7 @@ textarea {
 
 .auto-grid {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(min(var(--grid-column-min-width, 250px), 100%), 1fr)
-  );
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--grid-column-min-width, 250px), 100%), 1fr));
 }
 
 .reverse-grid-container {
@@ -1058,9 +1055,7 @@ label[for] {
     max-width: 40%;
     overflow: hidden;
     border-radius: 0 0 0 $card-border-radius;
-    padding-left: calc(
-      var(--avatar-overlap) + #{nth(map-get($padding-sizes, small), 1)}
-    );
+    padding-left: calc(var(--avatar-overlap) + #{nth(map-get($padding-sizes, small), 1)});
     margin-right: calc(-0.7 * var(--avatar-overlap));
 
     .avatar-container {
@@ -1081,11 +1076,7 @@ label[for] {
   }
 
   .activity-blog {
-    text-decoration-color: color-mix-opacity(
-      #{$color-text-0},
-      70%,
-      30%
-    ) !important;
+    text-decoration-color: color-mix-opacity(#{$color-text-0}, 70%, 30%) !important;
   }
 
   .activity-description {
@@ -1339,14 +1330,9 @@ label[for] {
     --_c3: var(--f-color-bg-1);
 
     background:
-      repeating-conic-gradient(from 30deg, #0000 0 120deg, var(--_c3) 0 50%)
-        calc(var(--_s) / 2) calc(var(--_s) * tan(30deg) / 2),
-      repeating-conic-gradient(
-        from 30deg,
-        var(--_c1) 0 60deg,
-        var(--_c2) 0 120deg,
-        var(--_c3) 0 50%
-      );
+      repeating-conic-gradient(from 30deg, #0000 0 120deg, var(--_c3) 0 50%) calc(var(--_s) / 2)
+        calc(var(--_s) * tan(30deg) / 2),
+      repeating-conic-gradient(from 30deg, var(--_c1) 0 60deg, var(--_c2) 0 120deg, var(--_c3) 0 50%);
     background-size: var(--_s) calc(var(--_s) * tan(30deg));
     height: 80px;
     align-items: center;
@@ -1375,8 +1361,7 @@ label[for] {
       pointer-events: none;
       backdrop-filter: blur(50px) saturate(200%);
       backdrop-filter: blur(20px);
-      transition: background-color $global-transition-medium
-        $global-transition-timing;
+      transition: background-color $global-transition-medium $global-transition-timing;
     }
   }
 
@@ -1514,16 +1499,8 @@ label[for] {
     }
   }
 
-  @include foundation-palette(
-    $child: ".info-chip span:last-child",
-    $property: "border-color",
-    $hover: "false"
-  );
-  @include foundation-palette(
-    $child: ".info-chip span:last-child",
-    $property: "background",
-    $hover: "false"
-  );
+  @include foundation-palette($child: ".info-chip span:last-child", $property: "border-color", $hover: "false");
+  @include foundation-palette($child: ".info-chip span:last-child", $property: "background", $hover: "false");
 }
 
 .info-chip {
@@ -1701,8 +1678,7 @@ label[for] {
       top: initial;
       left: 0;
       border-radius: 50%;
-      box-shadow: inset 0 0 0 2px
-        color-mix(in oklab, $color-text-0 22%, $color-bg-1 78%);
+      box-shadow: inset 0 0 0 2px color-mix(in oklab, $color-text-0 22%, $color-bg-1 78%);
     }
   }
 
@@ -2106,8 +2082,7 @@ input,
     // background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     // background-size: 300% 300%;
     background-color: var(--f-color-success);
-    animation: background-pulse 2s $global-transition-timing-cubic-bezier
-      infinite;
+    animation: background-pulse 2s $global-transition-timing-cubic-bezier infinite;
   }
 }
 
@@ -2629,8 +2604,7 @@ input,
       margin-left: initial;
     }
 
-    &[data-multi-open="false"]
-      .is-accordion-submenu-parent[aria-expanded="true"] {
+    &[data-multi-open="false"] .is-accordion-submenu-parent[aria-expanded="true"] {
       box-shadow: none;
       width: 100%;
       margin: initial;
@@ -2787,8 +2761,7 @@ input,
 
     ul {
       button.submenu-toggle {
-        height: $paragraph-font-size + nth(map-get($padding-sizes, medium), 1) +
-          nth(map-get($padding-sizes, medium), 1);
+        height: $paragraph-font-size + nth(map-get($padding-sizes, medium), 1) + nth(map-get($padding-sizes, medium), 1);
 
         &:hover {
           background-color: $color-bg-2;
@@ -2799,8 +2772,7 @@ input,
     button.submenu-toggle {
       text-decoration: none;
       border-radius: 0 $global-radius 0 0;
-      height: $paragraph-font-size + nth(map-get($padding-sizes, medium), 1) +
-        nth(map-get($padding-sizes, medium), 2);
+      height: $paragraph-font-size + nth(map-get($padding-sizes, medium), 1) + nth(map-get($padding-sizes, medium), 2);
 
       &:hover {
         background-color: $color-bg-2;
@@ -3579,14 +3551,9 @@ i.fa {
         padding: $size;
 
         @if length($size) >3 {
-          margin: (nth($size, 1) * -1)
-            (nth($size, 2) * -1)
-            (nth($size, 3) * -1)
-            (nth($size, 4) * -1);
+          margin: (nth($size, 1) * -1) (nth($size, 2) * -1) (nth($size, 3) * -1) (nth($size, 4) * -1);
         } @else if length($size) >2 {
-          margin: (nth($size, 1) * -1)
-            (nth($size, 2) * -1)
-            (nth($size, 3) * -1);
+          margin: (nth($size, 1) * -1) (nth($size, 2) * -1) (nth($size, 3) * -1);
         } @else if length($size) >1 {
           margin: (nth($size, 1) * -1) (nth($size, 2) * -1);
         } @else {
@@ -4259,9 +4226,7 @@ textarea {
   }
 }
 
-[data-whatintent="keyboard"]
-  .spaces-editor-dots-dropdown
-  .card-divider:has(:focus-visible) {
+[data-whatintent="keyboard"] .spaces-editor-dots-dropdown .card-divider:has(:focus-visible) {
   @include a11y-focus-inset;
 }
 
@@ -4481,179 +4446,51 @@ details {
     /// This section covers page-wide theming, e.g. inside a space.
     ///
     @if $mode == light {
-      --_f-color-theme-light: oklch(from var(--f-color-theme) .55 .06 h);
-      --f-color-bg-0: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 20%,
-        var(--f-color-neutral-100) 80%
-      );
-      --f-color-bg-1: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 9%,
-        var(--f-color-neutral-100) 91%
-      );
-      --f-color-bg-2: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 14%,
-        var(--f-color-neutral-200) 86%
-      );
-      --f-color-text-0: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 19%,
-        var(--f-color-neutral-700) 81%
-      );
-      --f-color-text-1: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 25%,
-        var(--f-color-neutral-700) 75%
-      );
-      --f-color-text-2: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 25%,
-        var(--f-color-neutral-500) 75%
-      );
-      --f-color-brand: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 75%,
-        var(--f-color-neutral-700) 25%
-      );
+      --_f-color-theme-light: oklch(from var(--f-color-theme, --f-color-brand) 0.55 0.06 h);
+      --f-color-bg-0: color-mix(in oklab, var(--_f-color-theme-light) 20%, var(--f-color-neutral-100) 80%);
+      --f-color-bg-1: color-mix(in oklab, var(--_f-color-theme-light) 9%, var(--f-color-neutral-100) 91%);
+      --f-color-bg-2: color-mix(in oklab, var(--_f-color-theme-light) 14%, var(--f-color-neutral-200) 86%);
+      --f-color-text-0: color-mix(in oklab, var(--_f-color-theme-light) 19%, var(--f-color-neutral-700) 81%);
+      --f-color-text-1: color-mix(in oklab, var(--_f-color-theme-light) 25%, var(--f-color-neutral-700) 75%);
+      --f-color-text-2: color-mix(in oklab, var(--_f-color-theme-light) 25%, var(--f-color-neutral-500) 75%);
+      --f-color-brand: color-mix(in oklab, var(--_f-color-theme-light) 75%, var(--f-color-neutral-700) 25%);
       --f-color-brand-contrast: #fff;
-      --f-color-brand-darker: color-mix(
-        in oklab,
-        var(--f-color-brand) 88%,
-        black 12%
-      );
+      --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
     } @else if $mode == dark {
-      --f-color-bg-0: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 11%,
-        var(--f-color-neutral-100) 89%
-      );
-      --f-color-bg-1: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 8%,
-        var(--f-color-neutral-200) 92%
-      );
-      --f-color-bg-2: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 10%,
-        var(--f-color-neutral-300) 90%
-      );
-      --f-color-text-0: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 12%,
-        var(--f-color-neutral-700) 88%
-      );
-      --f-color-text-1: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 25%,
-        var(--f-color-neutral-700) 75%
-      );
-      --f-color-text-2: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 25%,
-        var(--f-color-neutral-500) 75%
-      );
-      --f-color-brand: color-mix(
-        in oklab,
-        var(--_f-color-theme-light) 55%,
-        var(--f-color-neutral-700) 45%
-      );
+      --f-color-bg-0: color-mix(in oklab, var(--_f-color-theme-light) 11%, var(--f-color-neutral-100) 89%);
+      --f-color-bg-1: color-mix(in oklab, var(--_f-color-theme-light) 8%, var(--f-color-neutral-200) 92%);
+      --f-color-bg-2: color-mix(in oklab, var(--_f-color-theme-light) 10%, var(--f-color-neutral-300) 90%);
+      --f-color-text-0: color-mix(in oklab, var(--_f-color-theme-light) 12%, var(--f-color-neutral-700) 88%);
+      --f-color-text-1: color-mix(in oklab, var(--_f-color-theme-light) 25%, var(--f-color-neutral-700) 75%);
+      --f-color-text-2: color-mix(in oklab, var(--_f-color-theme-light) 25%, var(--f-color-neutral-500) 75%);
+      --f-color-brand: color-mix(in oklab, var(--_f-color-theme-light) 55%, var(--f-color-neutral-700) 45%);
       --f-color-brand-contrast: #000;
-      --f-color-brand-darker: color-mix(
-        in oklab,
-        var(--f-color-brand) 88%,
-        black 12%
-      );
+      --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
     }
   } @else if $scope == post {
     ///
     /// This section covers post theming, which can't be active in a themed space.
     ///
     @if $mode == light {
-      --f-color-bg-0: color-mix(
-        in oklab,
-        var(--f-color-theme) 40%,
-        var(--f-color-neutral-100) 60%
-      );
-      --f-color-bg-1: color-mix(
-        in oklab,
-        var(--f-color-theme) 15%,
-        var(--f-color-neutral-200) 85%
-      );
-      --f-color-bg-2: color-mix(
-        in oklab,
-        var(--f-color-theme) 20%,
-        var(--f-color-neutral-300) 80%
-      );
-      --f-color-text-0: color-mix(
-        in oklab,
-        var(--f-color-theme) 19%,
-        var(--f-color-neutral-700) 81%
-      );
-      --f-color-text-1: color-mix(
-        in oklab,
-        var(--f-color-theme) 25%,
-        var(--f-color-neutral-700) 75%
-      );
-      --f-color-text-2: color-mix(
-        in oklab,
-        var(--f-color-theme) 35%,
-        var(--f-color-neutral-600) 65%
-      );
-      --f-color-brand: color-mix(
-        in oklab,
-        var(--f-color-theme) 55%,
-        var(--f-color-neutral-700) 45%
-      );
+      --f-color-bg-0: color-mix(in oklab, var(--f-color-theme) 40%, var(--f-color-neutral-100) 60%);
+      --f-color-bg-1: color-mix(in oklab, var(--f-color-theme) 15%, var(--f-color-neutral-200) 85%);
+      --f-color-bg-2: color-mix(in oklab, var(--f-color-theme) 20%, var(--f-color-neutral-300) 80%);
+      --f-color-text-0: color-mix(in oklab, var(--f-color-theme) 19%, var(--f-color-neutral-700) 81%);
+      --f-color-text-1: color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-700) 75%);
+      --f-color-text-2: color-mix(in oklab, var(--f-color-theme) 35%, var(--f-color-neutral-600) 65%);
+      --f-color-brand: color-mix(in oklab, var(--f-color-theme) 55%, var(--f-color-neutral-700) 45%);
       --f-color-brand-contrast: #fff;
-      --f-color-brand-darker: color-mix(
-        in oklab,
-        var(--f-color-brand) 88%,
-        black 12%
-      );
+      --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
     } @else if $mode == dark {
-      --f-color-bg-0: color-mix(
-        in oklab,
-        var(--f-color-theme) 15%,
-        var(--f-color-neutral-100) 85%
-      );
-      --f-color-bg-1: color-mix(
-        in oklab,
-        var(--f-color-theme) 10%,
-        var(--f-color-neutral-200) 90%
-      );
-      --f-color-bg-2: color-mix(
-        in oklab,
-        var(--f-color-theme) 15%,
-        var(--f-color-neutral-300) 85%
-      );
-      --f-color-text-0: color-mix(
-        in oklab,
-        var(--f-color-theme) 19%,
-        var(--f-color-neutral-700) 81%
-      );
-      --f-color-text-1: color-mix(
-        in oklab,
-        var(--f-color-theme) 25%,
-        var(--f-color-neutral-700) 75%
-      );
-      --f-color-text-2: color-mix(
-        in oklab,
-        var(--f-color-theme) 35%,
-        var(--f-color-neutral-600) 65%
-      );
-      --f-color-brand: color-mix(
-        in oklab,
-        var(--f-color-theme) 55%,
-        var(--f-color-neutral-700) 45%
-      );
+      --f-color-bg-0: color-mix(in oklab, var(--f-color-theme) 15%, var(--f-color-neutral-100) 85%);
+      --f-color-bg-1: color-mix(in oklab, var(--f-color-theme) 10%, var(--f-color-neutral-200) 90%);
+      --f-color-bg-2: color-mix(in oklab, var(--f-color-theme) 15%, var(--f-color-neutral-300) 85%);
+      --f-color-text-0: color-mix(in oklab, var(--f-color-theme) 19%, var(--f-color-neutral-700) 81%);
+      --f-color-text-1: color-mix(in oklab, var(--f-color-theme) 25%, var(--f-color-neutral-700) 75%);
+      --f-color-text-2: color-mix(in oklab, var(--f-color-theme) 35%, var(--f-color-neutral-600) 65%);
+      --f-color-brand: color-mix(in oklab, var(--f-color-theme) 55%, var(--f-color-neutral-700) 45%);
       --f-color-brand-contrast: #000;
-      --f-color-brand-darker: color-mix(
-        in oklab,
-        var(--f-color-brand) 88%,
-        black 12%
-      );
+      --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
     }
   }
 }
@@ -4770,16 +4607,8 @@ html[data-theme="dark"]:not([themed]) [themed][style*="--f-color-theme"] {
 // }
 
 .highlight-on-load {
-  --_f-color-brand-soft: color-mix(
-    in oklab,
-    var(--f-color-brand) 38%,
-    var(--f-color-bg-1) 62%
-  );
-  --_f-color-brand-bg: color-mix(
-    in oklab,
-    var(--f-color-brand) 6%,
-    var(--f-color-bg-1) 94%
-  );
+  --_f-color-brand-soft: color-mix(in oklab, var(--f-color-brand) 38%, var(--f-color-bg-1) 62%);
+  --_f-color-brand-bg: color-mix(in oklab, var(--f-color-brand) 6%, var(--f-color-bg-1) 94%);
 
   animation-name: highlight-wave;
   animation-duration: 1.25s;

@@ -6,27 +6,27 @@
 @import "custom-includes/foundation-spaces/helpers/true";
 
 //
-@import 'custom-includes/foundation-spaces/functions/contain';
-@import 'custom-includes/foundation-spaces/functions/purge';
-@import 'custom-includes/foundation-spaces/functions/remove';
-@import 'custom-includes/foundation-spaces/functions/replace';
-@import 'custom-includes/foundation-spaces/functions/to-list';
+@import "custom-includes/foundation-spaces/functions/contain";
+@import "custom-includes/foundation-spaces/functions/purge";
+@import "custom-includes/foundation-spaces/functions/remove";
+@import "custom-includes/foundation-spaces/functions/replace";
+@import "custom-includes/foundation-spaces/functions/to-list";
 
 //
-@import 'custom-includes/foundation-spaces/util/util';
+@import "custom-includes/foundation-spaces/util/util";
 
 //
-@import 'custom-includes/foundation-spaces/util/util';
-@import 'custom-includes/foundation-spaces/global';
+@import "custom-includes/foundation-spaces/util/util";
+@import "custom-includes/foundation-spaces/global";
 
 //
 @import "custom-includes/foundation-spaces/forms/forms";
-@import 'custom-includes/foundation-spaces/typography/typography';
-@import 'custom-includes/foundation-spaces/grid/grid';
-@import 'custom-includes/foundation-spaces/xy-grid/xy-grid';
+@import "custom-includes/foundation-spaces/typography/typography";
+@import "custom-includes/foundation-spaces/grid/grid";
+@import "custom-includes/foundation-spaces/xy-grid/xy-grid";
 @import "custom-includes/_s-button";
 @import "custom-includes/_s-button-group";
-@import 'custom-includes/foundation-spaces/components/close-button';
+@import "custom-includes/foundation-spaces/components/close-button";
 @import "custom-includes/_s-label";
 @import "custom-includes/_s-progress-bar";
 @import "custom-includes/_s-scroll-snap"; // <- custom component, not foundation-native.
@@ -37,30 +37,30 @@
 @import "custom-includes/_s-badge-space";
 @import "custom-includes/_s-breadcrumbs";
 @import "custom-includes/_s-callout";
-@import 'custom-includes/foundation-spaces/components/card';
-@import 'custom-includes/foundation-spaces/components/dropdown';
-@import 'custom-includes/foundation-spaces/components/pagination';
-@import 'custom-includes/foundation-spaces/components/tooltip';
+@import "custom-includes/foundation-spaces/components/card";
+@import "custom-includes/foundation-spaces/components/dropdown";
+@import "custom-includes/foundation-spaces/components/pagination";
+@import "custom-includes/foundation-spaces/components/tooltip";
 
 //
 @import "custom-includes/_s-accordion";
-@import 'custom-includes/foundation-spaces/components/media-object';
+@import "custom-includes/foundation-spaces/components/media-object";
 @import "custom-includes/_s-orbit";
-@import 'custom-includes/foundation-spaces/components/responsive-embed';
+@import "custom-includes/foundation-spaces/components/responsive-embed";
 @import "custom-includes/_s-tabs";
-@import 'custom-includes/foundation-spaces/components/thumbnail';
+@import "custom-includes/foundation-spaces/components/thumbnail";
 @import "custom-includes/_s-menu";
-@import 'custom-includes/foundation-spaces/components/menu-icon';
+@import "custom-includes/foundation-spaces/components/menu-icon";
 @import "custom-includes/_s-accordion-menu";
-@import 'custom-includes/foundation-spaces/components/drilldown';
-@import 'custom-includes/foundation-spaces/components/dropdown-menu';
-@import 'custom-includes/foundation-spaces/components/off-canvas';
+@import "custom-includes/foundation-spaces/components/drilldown";
+@import "custom-includes/foundation-spaces/components/dropdown-menu";
+@import "custom-includes/foundation-spaces/components/off-canvas";
 @import "custom-includes/_s-reveal";
-@import 'custom-includes/foundation-spaces/components/sticky';
-@import 'custom-includes/foundation-spaces/components/title-bar';
-@import 'custom-includes/foundation-spaces/components/top-bar';
+@import "custom-includes/foundation-spaces/components/sticky";
+@import "custom-includes/foundation-spaces/components/title-bar";
+@import "custom-includes/foundation-spaces/components/top-bar";
 
 //
-@import 'custom-includes/foundation-spaces/components/flex';
-@import 'custom-includes/foundation-spaces/components/visibility';
-@import 'custom-includes/foundation-spaces/prototype/prototype';
+@import "custom-includes/foundation-spaces/components/flex";
+@import "custom-includes/foundation-spaces/components/visibility";
+@import "custom-includes/foundation-spaces/prototype/prototype";

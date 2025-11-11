@@ -76,9 +76,14 @@
 ///
 
 @mixin color-mix(
-  $property,                       // 'color' | 'background' | 'bg' | 'background-color' | 'border' | 'border-color'
-  $color-a, $color-a--percentage,  // e.g. --f-color-success, 30%
-  $color-b, $color-b--percentage,  // e.g. --f-color-text-0, 70%
+  $property,
+  // 'color' | 'background' | 'bg' | 'background-color' | 'border' | 'border-color'
+  $color-a,
+  $color-a--percentage,
+  // e.g. --f-color-success, 30%
+  $color-b,
+  $color-b--percentage,
+  // e.g. --f-color-text-0, 70%
   $space: oklab
 ) {
   $prop-name: null;
@@ -114,7 +119,6 @@
   #{$prop-name}: color-mix(in #{$space}, #{$color-a} #{$color-a--percentage}, #{$color-b} #{$color-b--percentage});
 }
 
-
 /* ==============================================================================
   04 - cross-browser Mixin
 ============================================================================== */
@@ -127,10 +131,10 @@
 ///
 
 @mixin cross-browser($property, $val) {
-	-webkit-#{$property}: $val;
-	-moz-#{$property}: $val;
-	-ms-#{$property}: $val;
-	#{$property}: $val;
+  -webkit-#{$property}: $val;
+  -moz-#{$property}: $val;
+  -ms-#{$property}: $val;
+  #{$property}: $val;
 }
 
 /* ==============================================================================
@@ -150,21 +154,21 @@
 ///
 
 @mixin foundation-palette($selector: "&", $child: "", $property: "color", $hover: "true") {
-	@each $color-name, $color in $foundation-palette {
-		#{$selector}.#{$color-name} #{$child} {
-			#{$property}: var(--f-color-#{$color-name});
+  @each $color-name, $color in $foundation-palette {
+    #{$selector}.#{$color-name} #{$child} {
+      #{$property}: var(--f-color-#{$color-name});
 
-			@if $property == "background" {
-				color: var(--f-color-#{$color-name}-contrast);
-			}
+      @if $property == "background" {
+        color: var(--f-color-#{$color-name}-contrast);
+      }
 
-			@if $hover == "true" {
-				&:hover {
-					#{$property}: var(--f-color-#{$color-name}-darker);
-				}
-			}
-		}
-	}
+      @if $hover == "true" {
+        &:hover {
+          #{$property}: var(--f-color-#{$color-name}-darker);
+        }
+      }
+    }
+  }
 }
 
 /* ==============================================================================
@@ -178,11 +182,11 @@
 ///
 
 @mixin button-sizes() {
-	@each $size-name, $size in $button-sizes {
-		&.#{$size-name} {
-			font-size: $size;
-		}
-	}
+  @each $size-name, $size in $button-sizes {
+    &.#{$size-name} {
+      font-size: $size;
+    }
+  }
 }
 
 /* ==============================================================================
@@ -235,15 +239,15 @@
 ///
 
 @mixin header-style($header-size, $property: ("font-size", "margin-bottom")) {
-	@each $breakpoint, $header-style in $header-styles {
-		@include breakpoint($breakpoint) {
-			$size: rem-calc(map-deep-get($header-styles, $breakpoint, $header-size, font-size));
+  @each $breakpoint, $header-style in $header-styles {
+    @include breakpoint($breakpoint) {
+      $size: rem-calc(map-deep-get($header-styles, $breakpoint, $header-size, font-size));
 
-			@each $property, $value in $property {
-				#{$property}: $size;
-			}
-		}
-	}
+      @each $property, $value in $property {
+        #{$property}: $size;
+      }
+    }
+  }
 }
 
 /* ==============================================================================
@@ -262,35 +266,35 @@
 ///
 
 @mixin header-list(
-	$scale: (
-		h1: h1,
-		h2: h2,
-		h3: h3,
-		h4: h4,
-		h5: h5,
-		h6: h6
-	),
-	$property-list: null
+  $scale: (
+    h1: h1,
+    h2: h2,
+    h3: h3,
+    h4: h4,
+    h5: h5,
+    h6: h6,
+  ),
+  $property-list: null
 ) {
-	@each $breakpoint in ("small", "medium", "large") {
-		@include breakpoint($breakpoint) {
-			@each $header-size, $properties in map-get($header-styles, $breakpoint) {
-				$h: map-get($scale, $header-size); // h1 -> h3
-				$size: map-get(map-get($header-styles, $breakpoint), $h); // small -> ()
-				#{$header-size} {
-					@each $label, $value in $size {
-						@if $property-list == null or index($property-list, $label) {
-							@if $label == "font-size" {
-								$value: rem-calc($value);
-							}
+  @each $breakpoint in ("small", "medium", "large") {
+    @include breakpoint($breakpoint) {
+      @each $header-size, $properties in map-get($header-styles, $breakpoint) {
+        $h: map-get($scale, $header-size); // h1 -> h3
+        $size: map-get(map-get($header-styles, $breakpoint), $h); // small -> ()
+        #{$header-size} {
+          @each $label, $value in $size {
+            @if $property-list == null or index($property-list, $label) {
+              @if $label == "font-size" {
+                $value: rem-calc($value);
+              }
 
-							#{$label}: $value;
-						}
-					}
-				}
-			}
-		}
-	}
+              #{$label}: $value;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 /* ==============================================================================
@@ -305,11 +309,11 @@
 ///
 
 @function strip-unit($number) {
-	@if type-of($number) == "number" and not unitless($number) {
-		@return $number / ($number * 0 + 1);
-	}
+  @if type-of($number) == "number" and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
 
-	@return $number;
+  @return $number;
 }
 
 /* ==============================================================================
@@ -325,13 +329,13 @@
 ////
 
 @function multiply-list($list, $multiplier) {
-	$new-list: ();
+  $new-list: ();
 
-	@each $item in $list {
-		$new-list: join($new-list, ($item * $multiplier));
-	}
+  @each $item in $list {
+    $new-list: join($new-list, ($item * $multiplier));
+  }
 
-	@return $new-list;
+  @return $new-list;
 }
 
 /* ==============================================================================
@@ -348,51 +352,51 @@
 ///
 
 @function extract-from-compact($value, $side) {
-	$index: 1;
+  $index: 1;
 
-	// Top values are always at index 1. The same for when the list has only one item
-	@if $side == top or length($value) == 1 {
-		$index: 1;
-	}
+  // Top values are always at index 1. The same for when the list has only one item
+  @if $side == top or length($value) == 1 {
+    $index: 1;
+  }
 
-	// Covers "vertical horizontal" style
-	@else if length($value) == 2 {
-		@if $side == left or $side == right {
-			$index: 2;
-		}
+  // Covers "vertical horizontal" style
+  @else if length($value) == 2 {
+    @if $side == left or $side == right {
+      $index: 2;
+    }
 
-		@if $side == bottom {
-			$index: 1;
-		}
-	}
+    @if $side == bottom {
+      $index: 1;
+    }
+  }
 
-	// Covers "top horizontal bottom" style
-	@else if length($value) == 3 {
-		@if $side == left or $side == right {
-			$index: 2;
-		}
+  // Covers "top horizontal bottom" style
+  @else if length($value) == 3 {
+    @if $side == left or $side == right {
+      $index: 2;
+    }
 
-		@if $side == bottom {
-			$index: 3;
-		}
-	}
+    @if $side == bottom {
+      $index: 3;
+    }
+  }
 
-	// Covers "top right bottom left" style
-	@else if length($value) == 4 {
-		@if $side == right {
-			$index: 2;
-		}
+  // Covers "top right bottom left" style
+  @else if length($value) == 4 {
+    @if $side == right {
+      $index: 2;
+    }
 
-		@if $side == bottom {
-			$index: 3;
-		}
+    @if $side == bottom {
+      $index: 3;
+    }
 
-		@if $side == left {
-			$index: 4;
-		}
-	}
+    @if $side == left {
+      $index: 4;
+    }
+  }
 
-	@return nth($value, $index);
+  @return nth($value, $index);
 }
 
 /* ==============================================================================
@@ -411,31 +415,31 @@
 ///
 
 @mixin excerpt($font-size: 1em, $line-height: 1.4, $lines-to-show: 3, $expand: false) {
-	@if $expand == true {
-		max-height: initial;
+  @if $expand == true {
+    max-height: initial;
 
-		/* Fallback for non-webkit */
-		-webkit-line-clamp: initial;
-		line-clamp: initial;
-		-webkit-box-orient: vertical;
-		overflow: initial;
-		text-overflow: initial;
-	} @else {
-		max-height: $font-size * $line-height * $lines-to-show;
+    /* Fallback for non-webkit */
+    -webkit-line-clamp: initial;
+    line-clamp: initial;
+    -webkit-box-orient: vertical;
+    overflow: initial;
+    text-overflow: initial;
+  } @else {
+    max-height: $font-size * $line-height * $lines-to-show;
 
-		/* Fallback for non-webkit */
-		-webkit-line-clamp: $lines-to-show;
-		line-clamp: $lines-to-show;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+    /* Fallback for non-webkit */
+    -webkit-line-clamp: $lines-to-show;
+    line-clamp: $lines-to-show;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-	line-height: $line-height;
-	display: block;
+  line-height: $line-height;
+  display: block;
 
-	/* Fallback for non-webkit */
-	font-size: $font-size;
+  /* Fallback for non-webkit */
+  font-size: $font-size;
 }
 
 /* ==============================================================================
@@ -449,16 +453,16 @@
 /// @requires $global-focus
 ///
 @mixin a11y-focus {
-	&:active,
-	&:focus {
-		// Set color to transparent to ensure compatibility with high contrast mode
-		outline-color: transparent !important;
-		outline: unset;
-	}
+  &:active,
+  &:focus {
+    // Set color to transparent to ensure compatibility with high contrast mode
+    outline-color: transparent !important;
+    outline: unset;
+  }
 
-	&:focus-visible {
-		box-shadow: $global-focus;
-	}
+  &:focus-visible {
+    box-shadow: $global-focus;
+  }
 }
 
 ////
@@ -467,68 +471,76 @@
 /// @requires $global-focus
 ///
 @mixin a11y-focus-inset {
-	box-shadow: inset $global-focus;
+  box-shadow: inset $global-focus;
 }
 
 /**
  * Applies only the theme-specific (light or dark) CSS custom properties.
  * @param {String} $mode - The theme mode ('light' or 'dark').
  */
-@mixin foundation-apply-theme($mode: 'light') {
-	color-scheme: if($mode == 'light', 'light', 'dark');
+@mixin foundation-apply-theme($mode: "light") {
+  color-scheme: if($mode == "light", "light", "dark");
 
-	// Configure palettes based on the theme mode.
-	$neutral-index: if($mode == 'light', 1, 2);
-	$palette: if($mode == 'light', $foundation-palette, $foundation-palette-darktheme);
-	$contrast-palette: if($mode == 'light', $foundation-palette-contrast, $foundation-palette-darktheme-contrast);
+  // Configure palettes based on the theme mode.
+  $neutral-index: if($mode == "light", 1, 2);
+  $palette: if($mode == "light", $foundation-palette, $foundation-palette-darktheme);
+  $contrast-palette: if($mode == "light", $foundation-palette-contrast, $foundation-palette-darktheme-contrast);
 
-	// Apply neutral color scale.
-	@each $step, $pair in $neutral-palette {
-		--f-color-neutral-#{$step}: #{nth($pair, $neutral-index)};
-	}
+  // Apply neutral color scale.
+  @each $step, $pair in $neutral-palette {
+    --f-color-neutral-#{$step}: #{nth($pair, $neutral-index)};
+  }
 
-	// Apply foundation and contrast colors.
-	@each $color-name, $color in $palette {
-		// exclude brand, this is handled later
-		@if $color-name != 'brand' {
-			--f-color-#{$color-name}: #{$color};
-			--f-color-#{$color-name}-contrast: #{map.get($contrast-palette, $color-name)};
-		}
-	}
+  // Apply foundation and contrast colors.
+  @each $color-name, $color in $palette {
+    // exclude brand, this is handled later
+    @if $color-name != "brand" {
+      --f-color-#{$color-name}: #{$color};
+      --f-color-#{$color-name}-contrast: #{map.get($contrast-palette, $color-name)};
+    }
+  }
 
-	// Apply mode-specific variables.
-	@if $mode == 'light' {
-		--f-color-brand: var(--f-color-brand-base, #{map.get($foundation-palette, "brand")});
-		--f-color-brand-contrast: var(--f-color-brand-base-contrast, #{map.get($foundation-palette-contrast, "brand")});
-		--f-color-bg-0: var(--f-color-neutral-300); // body background
-		--f-color-bg-1: var(--f-color-neutral-100); // card and widget background
-		--f-color-bg-2: var(--f-color-neutral-200);
-	} @else {
-		// dark mode
-		--f-color-brand: color-mix(in oklab, var(--f-color-brand-base, #{map.get($foundation-palette, "brand")}) 87%, white 13%);
-		--f-color-brand-contrast: color-mix(in oklab, var(--f-color-brand-contast, #{map.get($foundation-palette-contrast, "brand")}) 87%, white 13%);
-		--f-color-bg-0: var(--f-color-neutral-100); // body background
-		--f-color-bg-1: var(--f-color-neutral-200); // card and widget background (lighter than body bg, also in dark)
-		--f-color-bg-2: var(--f-color-neutral-300);
+  // Apply mode-specific variables.
+  @if $mode == "light" {
+    --f-color-brand: var(--f-color-brand-base, #{map.get($foundation-palette, "brand")});
+    --f-color-brand-contrast: var(--f-color-brand-base-contrast, #{map.get($foundation-palette-contrast, "brand")});
+    --f-color-bg-0: var(--f-color-neutral-300); // body background
+    --f-color-bg-1: var(--f-color-neutral-100); // card and widget background
+    --f-color-bg-2: var(--f-color-neutral-200);
+  } @else {
+    // dark mode
+    --f-color-brand: color-mix(
+      in oklab,
+      var(--f-color-brand-base, #{map.get($foundation-palette, "brand")}) 87%,
+      white 13%
+    );
+    --f-color-brand-contrast: color-mix(
+      in oklab,
+      var(--f-color-brand-contast, #{map.get($foundation-palette-contrast, "brand")}) 87%,
+      white 13%
+    );
+    --f-color-bg-0: var(--f-color-neutral-100); // body background
+    --f-color-bg-1: var(--f-color-neutral-200); // card and widget background (lighter than body bg, also in dark)
+    --f-color-bg-2: var(--f-color-neutral-300);
 
-		// other borders are the same.
-		@include color-mix(--f-color-border-0, #{$color-text-0}, 8%, transparent, 92%);
-	}
+    // other borders are the same.
+    @include color-mix(--f-color-border-0, #{$color-text-0}, 8%, transparent, 92%);
+  }
 
-	// Text colors are always derived from the same neutral steps.
-	--f-color-text-0: var(--f-color-neutral-700);
-	--f-color-text-1: var(--f-color-neutral-600);
-	--f-color-text-2: var(--f-color-neutral-500);
+  // Text colors are always derived from the same neutral steps.
+  --f-color-text-0: var(--f-color-neutral-700);
+  --f-color-text-1: var(--f-color-neutral-600);
+  --f-color-text-2: var(--f-color-neutral-500);
 
-	// The 'darker' variant calculation is the same for all themes.
-	// It loops through the base palette to generate a rule for each color name.
-	@each $color-name, $color in $foundation-palette {
-		--f-color-#{$color-name}-darker: var(--f-color-#{$color-name});
-		--f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
-	}
+  // The 'darker' variant calculation is the same for all themes.
+  // It loops through the base palette to generate a rule for each color name.
+  @each $color-name, $color in $foundation-palette {
+    --f-color-#{$color-name}-darker: var(--f-color-#{$color-name});
+    --f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
+  }
 
-	// Borders
-	@include color-mix(--f-color-border-0, #{$color-text-0}, 6%, transparent, 94%);
-	@include color-mix(--f-color-border-1, #{$color-text-0}, 12%, transparent, 88%);
-	@include color-mix(--f-color-border-2, #{$color-text-0}, 16%, transparent, 84%);
+  // Borders
+  @include color-mix(--f-color-border-0, #{$color-text-0}, 6%, transparent, 94%);
+  @include color-mix(--f-color-border-1, #{$color-text-0}, 12%, transparent, 88%);
+  @include color-mix(--f-color-border-2, #{$color-text-0}, 16%, transparent, 84%);
 }
