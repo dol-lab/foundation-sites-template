@@ -27,7 +27,14 @@ function inlineFile(absPath, stack = []) {
     const child = path.resolve(baseDir, rel);
     return inlineFile(child, [...stack, filePath]);
   });
-  return html;
+  const relPath = path.relative(process.cwd(), filePath);
+  const warning = `<!--
+  ATTENTION: This is an included file.
+  You are viewing the generated output.
+  EDIT ${relPath} INSTEAD.
+-->
+  `.trim();
+  return `\n\n${warning}\n${html}`;
 }
 
 // Gulp transform stream for converting *.src.html into *.html with inlined partials
@@ -41,8 +48,9 @@ function gulpInlinePartials() {
         return;
       }
       try {
-        const out = inlineFile(file.path);
-        file.contents = Buffer.from(out, 'utf8');
+        const sourceName = path.basename(file.path);
+        const out = inlineFile(file.path, [sourceName]);
+        file.contents = Buffer.from(`${out}`, 'utf8');
         file.path = file.path.replace(/\.src\.html$/, '.html');
         cb(null, file);
       } catch (e) {

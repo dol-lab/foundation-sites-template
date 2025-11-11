@@ -7,6 +7,9 @@ vendor/
 # exclude all subdirectories + files
 node_modules/**
 
+# don't include this generated file.
+index.html
+
 css/**
 !css/*.css
 _deleted
