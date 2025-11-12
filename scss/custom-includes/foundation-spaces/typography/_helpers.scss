@@ -20,7 +20,7 @@ $subheader-lineheight: 1.4 !default;
 
 /// Default font color for subheaders.
 /// @type Color
-$subheader-color: $dark-gray !default;
+$subheader-color: $color-text-2;
 
 /// Default font weight for subheaders.
 /// @type String
@@ -48,7 +48,7 @@ $cite-font-size: rem-calc(13) !default;
 
 /// Pseudo content for `.cite-block` component.
 /// @type String
-$cite-pseudo-content: '\2014 \0020' !default;
+$cite-pseudo-content: "\2014 \0020" !default;
 
 /// Text color of `.code-inline` and `.code-block` components.
 /// @type Color
@@ -152,7 +152,8 @@ $code-block-margin-bottom: 1.5rem !default;
     }
   }
 
-  ul, ol {
+  ul,
+  ol {
     // Use to remove numbers from ordered list & bullets from unordered list
     &.no-bullet {
       margin-#{$global-left}: 0;
