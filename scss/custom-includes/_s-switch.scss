@@ -72,7 +72,7 @@ $switch-cursor-disabled: not-allowed !default;
   margin-bottom: $switch-margin;
   outline: 0;
   display: flex;
-	align-items: center;
+  align-items: center;
 
   // These properties cascade down to the switch text
   // font-size: rem-calc(14);
@@ -125,7 +125,7 @@ $switch-cursor-disabled: not-allowed !default;
     border-radius: $switch-paddle-radius;
     background: $switch-paddle-background;
     transition: $switch-paddle-transition;
-    content: '';
+    content: "";
   }
 
   // Change the visual style when the switch is active
@@ -178,11 +178,7 @@ $switch-cursor-disabled: not-allowed !default;
 /// @param {Number} $font-size [1rem] - Font size of label text within the switch.
 /// @param {Number} $switch-height [2rem] - Height of the switch body.
 /// @param {Number} $paddle-offset [0.25rem] - Spacing between the switch paddle and the edge of the switch body.
-@mixin switch-size(
-  $font-size: 1rem,
-  $switch-height: 2rem,
-  $paddle-offset: 0.25rem
-) {
+@mixin switch-size($font-size: 1rem, $switch-height: 2rem, $paddle-offset: 0.25rem) {
   $switch-width: $switch-height * 2;
   $paddle-width: $switch-height - ($paddle-offset * 2);
   $paddle-height: $switch-height - ($paddle-offset * 2);
@@ -214,6 +210,11 @@ $switch-cursor-disabled: not-allowed !default;
     @include switch-container;
 
     height: $switch-height;
+    &:has(input[type="checkbox"]:focus-visible) {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
   }
 
   // <input> element
