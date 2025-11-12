@@ -98,24 +98,3 @@ $neutral-palette: (
     hsl(0deg 0% 96%),
   ),
 );
-
-/* ==========================================================================
-   Theming
-   ========================================================================== */
-
-:host(:not([data-theme="dark"])),
-:root:not([data-theme="dark"]),
-[data-theme="light"] {
-  @include foundation-apply-theme("light");
-}
-
-@media only screen and (prefers-color-scheme: dark) {
-  :host(:not([data-theme])),
-  :root:not([data-theme]) {
-    @include foundation-apply-theme("dark");
-  }
-}
-
-[data-theme="dark"] {
-  @include foundation-apply-theme("dark");
-}

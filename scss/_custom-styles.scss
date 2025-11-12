@@ -47,7 +47,7 @@
   scrollbar-color: $color-text-2 $color-bg-0;
 
   --f-radius: 0.5rem;
-  --f-radius-small: #{$global-radius-small};
+  --f-radius-small: 0.25rem;
   --f-gutter-small: #{$global-gutter-small};
   --f-gutter-large: #{$global-gutter-large};
   --f-transition-short: #{$global-transition-short};
@@ -55,8 +55,10 @@
   --f-transition-long: #{$global-transition-long};
   --f-transition-timing: #{$global-transition-timing};
   --f-transition-timing-cubic-bezier: #{$global-transition-timing-cubic-bezier};
-  --f-drop-shadow: #{$global-drop-shadow};
-  --f-drop-shadow-large: #{$global-drop-shadow-large};
+  --f-drop-shadow: 0 5px 20px color-mix-opacity(var(--f-color-text-1), 5%, 95%),
+    0 2px 5px color-mix-opacity(var(--f-color-text-1), 15%, 85%);
+  --f-drop-shadow-large: 0 14px 28px color-mix-opacity(var(--f-color-text-1), 25%, 75%),
+    0 10px 10px color-mix-opacity(var(--f-color-text-1), 22%, 78%);
   --f-margin: #{$global-margin};
   --f-padding: #{$global-padding};
   --f-menu-padding: #{$global-menu-padding};
@@ -81,6 +83,27 @@
       }
     }
   }
+}
+
+/* ==========================================================================
+   Theming - should come after root variables.
+   ========================================================================== */
+
+:host(:not([data-theme="dark"])),
+:root:not([data-theme="dark"]),
+[data-theme="light"] {
+  @include foundation-apply-theme("light");
+}
+
+@media only screen and (prefers-color-scheme: dark) {
+  :host(:not([data-theme])),
+  :root:not([data-theme]) {
+    @include foundation-apply-theme("dark");
+  }
+}
+
+[data-theme="dark"] {
+  @include foundation-apply-theme("dark");
 }
 
 // 0. General
@@ -578,6 +601,9 @@ label[for] {
 
 .box-shadow {
   box-shadow: $global-drop-shadow;
+}
+.box-shadow-large {
+  box-shadow: $global-drop-shadow-large;
 }
 
 .page-title {
@@ -4446,10 +4472,19 @@ details {
     /// This section covers page-wide theming, e.g. inside a space.
     ///
     @if $mode == light {
-      --_f-color-theme-light: oklch(from var(--f-color-theme) 0.66 calc(c / 3.5) h); // lightness, chroma, hue
-      --f-color-bg-0: color-mix(in oklab, var(--_f-color-theme-light) 20%, var(--f-color-neutral-100));
+      // static lightness, chroma reduced for light mode, hue preserved.
+      --_f-color-theme-light: oklch(from var(--f-color-theme) 0.7 calc(c / 1.65) h); // lightness, chroma, hue
+      /*       --f-color-bg-0: color-mix(in oklab, var(--_f-color-theme-light) 20%, var(--f-color-neutral-100));
       --f-color-bg-1: color-mix(in oklab, var(--_f-color-theme-light) 9%, var(--f-color-neutral-100));
-      --f-color-bg-2: color-mix(in oklab, var(--_f-color-theme-light) 14%, var(--f-color-neutral-200));
+      --f-color-bg-2: color-mix(in oklab, var(--_f-color-theme-light) 14%, var(--f-color-neutral-200)); */
+
+      --f-color-bg-0: color-mix(in oklab, var(--_f-color-theme-light) 7%, var(--f-color-neutral-200));
+      --f-color-bg-1: color-mix(in oklab, var(--_f-color-theme-light) 3%, var(--f-color-neutral-100));
+      --f-color-bg-2: color-mix(in oklab, var(--_f-color-theme-light) 8%, var(--f-color-neutral-300));
+
+      /* --f-color-bg-0: var(--f-color-theme);
+      --f-color-bg-1: var(--_f-color-theme-light); */
+
       --f-color-text-0: color-mix(in oklab, var(--_f-color-theme-light) 19%, var(--f-color-neutral-700));
       --f-color-text-1: color-mix(in oklab, var(--_f-color-theme-light) 25%, var(--f-color-neutral-700));
       --f-color-text-2: color-mix(in oklab, var(--_f-color-theme-light) 25%, var(--f-color-neutral-500));
@@ -4457,12 +4492,15 @@ details {
       // --f-color-brand-contrast: #fff;
       --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
     } @else if $mode == dark {
-      --f-color-bg-0: color-mix(in oklab, var(--_f-color-theme-light) 11%, var(--f-color-neutral-100));
-      --f-color-bg-1: color-mix(in oklab, var(--_f-color-theme-light) 8%, var(--f-color-neutral-200));
-      --f-color-bg-2: color-mix(in oklab, var(--_f-color-theme-light) 10%, var(--f-color-neutral-300));
-      --f-color-text-0: color-mix(in oklab, var(--_f-color-theme-light) 12%, var(--f-color-neutral-700));
-      --f-color-text-1: color-mix(in oklab, var(--_f-color-theme-light) 25%, var(--f-color-neutral-700));
-      --f-color-text-2: color-mix(in oklab, var(--_f-color-theme-light) 25%, var(--f-color-neutral-500));
+      --_f-color-theme-dark: oklch(from var(--f-color-theme) 0.455 c h); // lightness, chroma, hue
+
+      --f-color-bg-0: color-mix(in oklab, var(--_f-color-theme-dark) 16%, var(--f-color-neutral-100));
+      --f-color-bg-1: color-mix(in oklab, var(--_f-color-theme-dark) 8%, var(--f-color-neutral-200));
+      --f-color-bg-2: color-mix(in oklab, var(--_f-color-theme-dark) 12%, var(--f-color-neutral-300));
+
+      --f-color-text-0: color-mix(in oklab, var(--_f-color-theme-dark) 12%, var(--f-color-neutral-700));
+      --f-color-text-1: color-mix(in oklab, var(--_f-color-theme-dark) 18%, var(--f-color-neutral-700));
+      --f-color-text-2: color-mix(in oklab, var(--_f-color-theme-dark) 20%, var(--f-color-neutral-600));
       //--f-color-brand: color-mix(in oklab, var(--_f-color-theme-light) 55%, var(--f-color-neutral-700) 45%);
       //--f-color-brand-contrast: #000;
       --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
@@ -4507,11 +4545,11 @@ html {
     --f-color-theme: var(--f-color-theme);
 
     // Default automatic behavior with prefers-color-scheme.
-    @include themed-variables(page, light);
+    /*    @include themed-variables(page, light);
 
     @media (prefers-color-scheme: dark) {
       @include themed-variables(page, dark);
-    }
+    } */
 
     /* .post-content.user-generated a {
       text-decoration: underline;
@@ -4528,7 +4566,7 @@ html {
     }
   }
 
-  &:not([themed]) {
+  /*   &:not([themed]) {
     [themed][style*="--f-color-theme"] {
       ///
       /// This section covers post theming, which can't be active in a themed space.
@@ -4542,9 +4580,6 @@ html {
         @include themed-variables(post, dark);
       }
 
-      /* .post-content.user-generated a {
-        text-decoration: underline;
-      } */
 
       i.fa-droplet,
       i.fa-droplet::before,
@@ -4553,7 +4588,7 @@ html {
         color: var(--f-color-theme);
       }
     }
-  }
+  } */
 }
 
 /* ==========================================================================
@@ -4570,13 +4605,13 @@ html[data-theme="dark"][themed][style*="--f-color-theme"] {
 }
 
 /* Post theming forced modes (when the page itself is not themed) */
-html[data-theme="light"]:not([themed]) [themed][style*="--f-color-theme"] {
+/* html[data-theme="light"]:not([themed]) [themed][style*="--f-color-theme"] {
   @include themed-variables(post, light);
 }
 
 html[data-theme="dark"]:not([themed]) [themed][style*="--f-color-theme"] {
   @include themed-variables(post, dark);
-}
+} */
 
 .info-chip-taxonomy {
   .value {

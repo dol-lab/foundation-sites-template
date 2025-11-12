@@ -509,6 +509,8 @@
     --f-color-bg-2: var(--f-color-neutral-200);
   } @else {
     // dark mode
+    --f-drop-shadow: 0 5px 20px rgba(0, 0, 0, 0.4), 0 2px 5px rgba(0, 0, 0, 0.3);
+    --f-drop-shadow-large: 0 14px 28px rgba(0, 0, 0, 0.3), 0 10px 10px rgba(0, 0, 0, 0.3);
     --f-color-brand: color-mix(
       in oklab,
       var(--f-color-brand-base, #{map.get($foundation-palette, "brand")}) 87%,

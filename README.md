@@ -23,3 +23,20 @@ Finally, run `npm run start` to run the Sass compiler. It will re-run every time
 * Revisit color-mix declarations. Most of them have fallbacks, some do not, especially when declared through scss variables.
 * Revisit text sizing.
 * Increase global border-radius settings.
+
+
+### Colors
+
+Light and dark are not symetric.
+
+```css
+/** the Idea is "layers". LIGHT  */
+--f-color-bg-0: var(--f-color-neutral-300); /* 94%  white -> background */
+--f-color-bg-1: var(--f-color-neutral-100); /* 100% white -> card */
+--f-color-bg-2: var(--f-color-neutral-200); /* 97%  white -> ...something */
+
+/** the Idea is "layers". DARK  */
+--f-color-bg-0: var(--f-color-neutral-300); /* 14%  white -> background */
+--f-color-bg-1: var(--f-color-neutral-100); /* 4% white -> card */
+--f-color-bg-2: var(--f-color-neutral-200); /* 9%  white -> ...something */
+```

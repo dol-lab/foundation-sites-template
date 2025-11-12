@@ -66,7 +66,7 @@
 
 // 0. Custom Settings (not Foundation-default)
 
-$global-radius-small: 0.25rem;
+$global-radius-small: var(--global-radius-small);
 $global-gutter-small: 10px;
 $global-gutter-large: 16px;
 $global-transition-short: 100ms;
@@ -74,12 +74,8 @@ $global-transition-medium: $global-transition-short * 2.5;
 $global-transition-long: $global-transition-short * 5;
 $global-transition-timing: ease-in-out;
 $global-transition-timing-cubic-bezier: cubic-bezier(0.8, 0, 0.2, 1.2);
-$global-drop-shadow:
-  0 5px 20px color-mix-opacity($color-text-0, 5%, 95%),
-  0 2px 5px color-mix-opacity($color-text-0, 15%, 85%);
-$global-drop-shadow-large:
-  0 14px 28px color-mix-opacity($color-text-0, 25%, 75%),
-  0 10px 10px color-mix-opacity($color-text-0, 22%, 78%);
+$global-drop-shadow: var(--f-drop-shadow);
+$global-drop-shadow-large: var(--f-drop-shadow-large);
 $global-focus-color: Highlight;
 $global-focus: 0 0 0 2px $global-focus-color;
 $paragraph-font-size: 0.9rem;
