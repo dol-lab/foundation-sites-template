@@ -4454,7 +4454,7 @@ details {
       --f-color-text-1: color-mix(in oklab, var(--_f-color-theme-light) 25%, var(--f-color-neutral-700));
       --f-color-text-2: color-mix(in oklab, var(--_f-color-theme-light) 25%, var(--f-color-neutral-500));
       // --f-color-brand: color-mix(in oklab, var(--_f-color-theme-light) 75%, var(--f-color-neutral-700) 25%);
-      --f-color-brand-contrast: #fff;
+      // --f-color-brand-contrast: #fff;
       --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
     } @else if $mode == dark {
       --f-color-bg-0: color-mix(in oklab, var(--_f-color-theme-light) 11%, var(--f-color-neutral-100));
@@ -4464,7 +4464,7 @@ details {
       --f-color-text-1: color-mix(in oklab, var(--_f-color-theme-light) 25%, var(--f-color-neutral-700));
       --f-color-text-2: color-mix(in oklab, var(--_f-color-theme-light) 25%, var(--f-color-neutral-500));
       //--f-color-brand: color-mix(in oklab, var(--_f-color-theme-light) 55%, var(--f-color-neutral-700) 45%);
-      --f-color-brand-contrast: #000;
+      //--f-color-brand-contrast: #000;
       --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
     }
   } @else if $scope == post {
