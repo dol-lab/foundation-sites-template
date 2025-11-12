@@ -10,27 +10,28 @@
 /// Expected HTML structure (supports n buttons):
 ///
 /// <fieldset class="radio-tabs radio-tabs-icons stretch small hollow">
-///   <button class="radio-tabs-option">
+///   <label for="theme-toggle-1-light" class="radio-tabs-option" aria-label="Light">
 ///     <i class="fa-solid fa-sun"></i>
-///     <input type="radio" name="icons" id="i1" value="light" />
-///     <label for="i1">Light</label>
-///   </button>
-///   <button class="radio-tabs-option">
+///     <input id="theme-toggle-1-light" type="radio" name="theme-toggle-1" value="light" />
+///     <span>Light</span>
+///   </label>
+///   <label for="theme-toggle-1-dark" class="radio-tabs-option" aria-label="Dark">
 ///     <i class="fa-solid fa-moon"></i>
-///     <input type="radio" name="icons" id="i2" value="dark" />
-///     <label for="i2">Dark</label>
-///   </button>
-///   <button class="radio-tabs-option">
+///     <input id="theme-toggle-1-dark" type="radio" name="theme-toggle-1" value="dark" />
+///     <span>Dark</span>
+///   </label>
+///   <label for="theme-toggle-1-system" class="radio-tabs-option" aria-label="System">
 ///     <i class="fa-solid fa-desktop"></i>
-///     <input type="radio" name="icons" id="i3" value="system" />
-///     <label for="i3">System</label>
-///   </button>
+///     <input id="theme-toggle-1-system" type="radio" name="theme-toggle-1" value="system" />
+///     <span>System</span>
+///   </label>
 ///   <!-- Add more buttons as needed -->
 /// </fieldset>
 ///
 /// Container: <fieldset.radio-tabs>
-/// Option:    <button.radio-tabs-option> containing optional <i>, the radio
-///            <input>, and a bound <label>.
+/// Option:    <label.radio-tabs-option> with aria-label,
+///            containing <i> (icon), <input> (radio), and <span> (text label)
+/// Note:      Only the input is focusable; the label is highlighted when its input has focus
 ///
 /// ----------------------------------------------------------------------------
 ///
@@ -45,7 +46,7 @@
 
 @mixin radio-tabs-global {
   // Radii and padding for container and children
-  --_br-parent: calc( $global-radius * 1.25 );
+  --_br-parent: calc($global-radius * 1.25);
   --_br-parent: 1em;
   --_padding-parent: 0.25em;
   --_br-child: calc(var(--_br-parent) - var(--_padding-parent));
@@ -68,6 +69,10 @@
     border-radius: var(--_br-child);
     color: inherit;
     padding: 0.65em 0.85em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 
     // Active option highlight (fallback when anchor-position unsupported)
     &:has(:checked) {
@@ -78,14 +83,14 @@
 
   // Initial state: no selection -> labels use secondary tone
   &:not(:has(:checked)) {
-    label {
+    span {
       color: var(--f-color-text-1);
     }
   }
 
   // Selected state: de-emphasize non-active labels
   &:has(:checked) {
-    :not(:checked) + label {
+    .radio-tabs-option:not(:has(:checked)) span {
       color: var(--f-color-text-2);
     }
   }
@@ -101,16 +106,26 @@
     z-index: 2;
     margin: 0;
 
-    &:hover,
+    &:hover ~ span {
+      color: var(--f-color-text-0);
+    }
+
+    // Highlight the entire label when input is focused
     &:focus {
-      + label {
+      ~ span {
         color: var(--f-color-text-0);
       }
     }
   }
 
+  // Highlight the label when its input is focused
+  .radio-tabs-option:has(input[type="radio"]:focus-visible) {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
   // Smooth color transitions (labels and FA pseudo-elements)
-  label,
+  span,
   i::before {
     font-size: inherit;
     transition: color 0.35s ease-out;
@@ -194,10 +209,9 @@
 
 // Icon-only
 @mixin radio-tabs-icons {
-  label {
+  span {
     display: none !important;
   }
-
   .radio-tabs-option {
     padding: 0.65em;
   }
