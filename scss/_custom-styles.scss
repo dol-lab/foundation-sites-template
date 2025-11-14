@@ -55,10 +55,10 @@
   --f-transition-long: #{$global-transition-long};
   --f-transition-timing: #{$global-transition-timing};
   --f-transition-timing-cubic-bezier: #{$global-transition-timing-cubic-bezier};
-  --f-drop-shadow: 0 5px 20px color-mix-opacity(var(--f-color-text-1), 5%, 95%),
-    0 2px 5px color-mix-opacity(var(--f-color-text-1), 15%, 85%);
-  --f-drop-shadow-large: 0 14px 28px color-mix-opacity(var(--f-color-text-1), 25%, 75%),
-    0 10px 10px color-mix-opacity(var(--f-color-text-1), 22%, 78%);
+  --f-drop-shadow: 0 5px 20px color-mix(in srgb, var(--f-color-text-1) 5%, transparent),
+    0 2px 5px color-mix(in srgb, var(--f-color-text-1) 15%, transparent);
+  --f-drop-shadow-large: 0 14px 28px color-mix(in srgb, var(--f-color-text-1) 25%, transparent),
+    0 10px 10px color-mix(in srgb, var(--f-color-text-1) 22%, transparent);
   --f-margin: #{$global-margin};
   --f-padding: #{$global-padding};
   --f-menu-padding: #{$global-menu-padding};
