@@ -65,13 +65,15 @@
 @import "custom-includes/foundation-spaces/util/util";
 
 // 0. Custom Settings (not Foundation-default)
+// Note: Values used in SCSS calculations must remain as SCSS variables.
+// They are also exported as CSS variables in _custom-styles.scss :root for runtime use.
 
-$global-radius-small: var(--global-radius-small);
+$global-radius-small: 0.25rem;
 $global-gutter-small: 10px;
 $global-gutter-large: 16px;
 $global-transition-short: 100ms;
-$global-transition-medium: $global-transition-short * 2.5;
-$global-transition-long: $global-transition-short * 5;
+$global-transition-medium: 250ms;
+$global-transition-long: 500ms;
 $global-transition-timing: ease-in-out;
 $global-transition-timing-cubic-bezier: cubic-bezier(0.8, 0, 0.2, 1.2);
 $global-drop-shadow: var(--f-drop-shadow);
@@ -95,7 +97,7 @@ $global-padding: 1rem;
 $global-position: 1rem;
 $global-weight-normal: 400;
 $global-weight-bold: 500;
-$global-radius: var(--f-radius);
+$global-radius: 0.5rem;
 $global-menu-padding: 0.75rem 0.9rem;
 $global-menu-nested-margin: 1rem;
 $global-text-direction: ltr;
@@ -367,19 +369,9 @@ $badge-padding: $badge-height / 4; // <-- this way, it only affects badges with 
 
 // 10. Breadcrumbs
 // ---------------
+// Breadcrumbs settings are defined in _custom-settings.scss
 
-$breadcrumbs-margin: 0;
-$breadcrumbs-item-font-size: 0.9rem;
-$breadcrumbs-item-color: $color-text-1;
-$breadcrumbs-item-color-current: $color-text-0;
-$breadcrumbs-item-color-disabled: $color-text-2;
 $breadcrumbs-item-opacity-disabled: 40%;
-$breadcrumbs-item-margin: 0.5rem;
-$breadcrumbs-item-uppercase: false;
-$breadcrumbs-item-separator: true;
-$breadcrumbs-item-separator-item: "·";
-$breadcrumbs-item-separator-item-rtl: "·";
-$breadcrumbs-item-separator-color: $breadcrumbs-item-color;
 $breadcrumbs-item-separator-opacity: 60%;
 
 // 11. Button
