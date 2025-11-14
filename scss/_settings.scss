@@ -314,30 +314,17 @@ $code-block-margin-bottom: 1.5rem;
 // 6. Abide
 // --------
 
-$abide-inputs: true;
-$abide-labels: true;
 $input-background-invalid: var(--f-color-alert);
 $form-label-color-invalid: var(--f-color-alert);
 $input-error-color: var(--f-color-alert);
-$input-error-font-size: $small-font-size;
-$input-error-font-weight: $global-weight-normal;
 
 // 7. Accordion
 // ------------
 
-$accordion-background: $color-bg-1;
-$accordion-plusminus: true;
-$accordion-plus-content: "\002B";
-$accordion-minus-content: "\2013";
-$accordion-title-font-size: rem-calc(12);
-$accordion-item-color: $color-text-0;
-$accordion-item-background-hover: $color-bg-2;
-$accordion-item-padding: 1.25rem 1rem;
 $accordion-content-background: transparent;
 $accordion-content-border-color: $color-border-0;
 $accordion-content-border: 1px solid $accordion-content-border-color;
 $accordion-content-color: $color-text-1;
-$accordion-content-padding: 1rem;
 
 // 8. Accordion Menu
 // -----------------
@@ -371,9 +358,6 @@ $badge-padding: $badge-height / 4; // <-- this way, it only affects badges with 
 // ---------------
 // Breadcrumbs settings are defined in _custom-settings.scss
 
-$breadcrumbs-item-opacity-disabled: 40%;
-$breadcrumbs-item-separator-opacity: 60%;
-
 // 11. Button
 // ----------
 $button-sizes: (
@@ -382,24 +366,16 @@ $button-sizes: (
   default: 0.9rem,
   large: 1rem,
 );
-$button-font-family: inherit;
 $button-background: $color-text-0;
 $button-background-hover: $color-text-1;
 $button-color: $color-bg-0;
-$button-font-weight: null;
-$button-padding: 0.5rem 0.75rem; // same as button padding.
+$button-padding: 0.5rem 0.75rem;
 $button-margin: 0 0 map-get($button-sizes, default) 0;
-$button-fill: solid;
-$button-radius: $global-radius;
 $button-hollow-border-width: 0;
-$button-border: 1px solid transparent;
-$button-hollow-border-width: 1px;
 $button-opacity-disabled: 0.5;
 $button-transition:
   background-color $global-transition-short $global-transition-timing,
   color $global-transition-short $global-transition-timing;
-$button-responsive-expanded: false;
-$button-palette: $foundation-palette;
 
 // 12. Button Group
 // ----------------

@@ -1,0 +1,97 @@
+================================================================================
+SCSS VARIABLES TO REMOVE - QUICK REFERENCE
+================================================================================
+
+These variables can be safely removed because they have IDENTICAL values to
+their defaults in component files. Removing them will eliminate duplication
+while maintaining the same functionality.
+
+================================================================================
+FROM _custom-settings.scss - REMOVE 10 VARIABLES (Lines 66, 75-83)
+================================================================================
+
+Line 66:  $breadcrumbs-item-separator: true;
+
+Line 75:  $badge-space-background: var(--f-color-bg-2);
+Line 76:  $badge-space-background-hover: var(--f-color-bg-0);
+Line 77:  $badge-space-color: inherit;
+Line 78:  $badge-space-color-inline: var(--f-color-text-0);
+Line 79:  $badge-space-color-hover: var(--f-color-text-0);
+Line 80:  $badge-space-border-color: transparent;
+Line 81:  $badge-space-border-color-hover: var(--f-color-border-2);
+Line 82:  $badge-space-icon-color-accent: var(--f-color-brand);
+Line 83:  $badge-space-icon-color-base: var(--f-color-border-2);
+
+ACTION: Delete lines 66 and 75-83 from _custom-settings.scss
+
+================================================================================
+FROM _settings.scss - REMOVE 259 VARIABLES (Partial List Below)
+================================================================================
+
+High Priority - Entire Sections (Remove All):
+
+ABIDE (Lines 317-318):
+  $abide-inputs: true
+  $abide-labels: true
+
+ACCORDION (Lines 328-335, 340):
+  $accordion-background: $color-bg-1
+  $accordion-plusminus: true
+  $accordion-plus-content: "\002B"
+  $accordion-minus-content: "\2013"
+  $accordion-title-font-size: rem-calc(12)
+  $accordion-item-color: $color-text-0
+  $accordion-item-background-hover: $color-bg-2
+  $accordion-item-padding: 1.25rem 1rem
+  $accordion-content-padding: 1rem
+
+ACCORDION MENU (Lines 345, 347, 352-354, 357):
+  $accordionmenu-padding: $global-menu-padding
+  $accordionmenu-submenu-padding: $accordionmenu-padding
+  $accordionmenu-item-background: null
+  $accordionmenu-border: null
+  $accordionmenu-submenu-toggle-background: null
+  $accordionmenu-submenu-toggle-height: $accordionmenu-submenu-toggle-width
+
+ANCHOR (Lines 263-264):
+  $anchor-text-decoration: none
+  $anchor-text-decoration-hover: none
+
+BADGE (Line 365):
+  $badge-palette: $foundation-palette
+
+BREADCRUMBS (Lines 374-375):
+  $breadcrumbs-item-opacity-disabled: 40%
+  $breadcrumbs-item-separator-opacity: 60%
+
+BUTTON (Lines 385, 392, 395):
+  $button-font-family: inherit
+  $button-fill: solid
+  $button-border: 1px solid transparent
+
+CODE (Lines 303-304):
+  $code-font-family: $font-family-monospace
+  $code-font-weight: $global-weight-normal
+
+And 229 more variables...
+
+See DUPLICATE_VARIABLES_REPORT.md for complete list.
+
+================================================================================
+VARIABLES TO KEEP (These are intentional overrides - DO NOT REMOVE)
+================================================================================
+
+From _custom-settings.scss - KEEP THESE:
+  $breadcrumbs-margin: 0  (overrides '0 0 $global-margin 0')
+  $breadcrumbs-item-font-size: 0.875rem  (overrides 'rem-calc(11)')
+  $breadcrumbs-item-color: $color-text-2  (overrides '$color-text-1')
+  ... and 7 more breadcrumbs overrides
+
+From _settings.scss - KEEP THESE (examples):
+  $body-background: $color-bg-2  (overrides '$white')
+  $body-font-color: $color-text-0  (overrides '$black')
+  $button-background: $color-text-0  (overrides '$color-text-1')
+  $switch-height: 1rem  (overrides '2rem')
+  ... and 180 more intentional overrides
+
+================================================================================
