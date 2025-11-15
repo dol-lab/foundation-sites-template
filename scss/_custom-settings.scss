@@ -38,12 +38,12 @@ $user-card-sizes: (
   xxlarge: 240px,
 );
 $user-card-default-size: map-get($user-card-sizes, medium);
-// Updated for numeric spacing scale
+// Dynamic spacing that changes based on breakpoint
+// Maps breakpoint names to spacing scale numbers
 $dynamic-relation: (
-  1: 2,  // small → medium
-  2: 3,  // medium → large
-  3: 4,  // large → xlarge (2rem)
-  4: 5,  // xlarge → xxlarge (3rem)
+  small: 2,   // At small breakpoint, use p-2 (0.75rem)
+  medium: 3,  // At medium breakpoint, use p-3 (1rem)
+  large: 4,   // At large breakpoint, use p-4 (2rem)
 );
 
 // Info Chip
