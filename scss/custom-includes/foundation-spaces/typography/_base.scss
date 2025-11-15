@@ -28,7 +28,7 @@ $header-font-family: $body-font-family !default;
 
 /// Font weight of headers.
 /// @type String
-$header-font-weight: $global-weight-normal !default;
+$header-font-weight: $global-weight-bold !default;
 
 /// Font style (e.g. italicized) of headers.
 /// @type String
@@ -36,7 +36,7 @@ $header-font-style: normal !default;
 
 /// Font stack used for elements that use monospaced type, such as code samples
 /// @type String | List
-$font-family-monospace: consolas, 'Liberation Mono', courier, monospace !default;
+$font-family-monospace: monaco, "Consolas", "Liberation Mono", "Courier New", courier, monospace !default;
 
 /// Color of headers.
 /// @type Color
@@ -44,7 +44,7 @@ $header-color: inherit !default;
 
 /// Line height of headers.
 /// @type Number
-$header-lineheight: 1.4 !default;
+$header-lineheight: 1.1 !default;
 
 /// Bottom margin of headers.
 /// @type Number
@@ -54,20 +54,28 @@ $header-margin-bottom: 0.5rem !default;
 /// @type Map
 $header-styles: (
   small: (
-    'h1': ('font-size': 24),
-    'h2': ('font-size': 20),
-    'h3': ('font-size': 19),
-    'h4': ('font-size': 18),
-    'h5': ('font-size': 17),
-    'h6': ('font-size': 16),
+    'h1': ('font-size': 23 * 0.8, 'font-weight': 400),
+    'h2': ('font-size': 21 * 0.8, 'font-weight': 500),
+    'h3': ('font-size': 19 * 0.8, 'font-weight': 500),
+    'h4': ('font-size': 19 * 0.8, 'color': $color-text-0, 'font-weight': 400),
+    'h5': ('font-size': 17 * 0.8, 'color': $color-text-0, 'font-weight': 400),
+    'h6': ('font-size': 17 * 0.8, 'color': $color-text-0, 'font-style': italic, 'font-weight': 400),
   ),
   medium: (
-    'h1': ('font-size': 48),
-    'h2': ('font-size': 40),
-    'h3': ('font-size': 31),
-    'h4': ('font-size': 25),
-    'h5': ('font-size': 20),
-    'h6': ('font-size': 16),
+    'h1': ('font-size': 23 * 0.9, 'font-weight': 400),
+    'h2': ('font-size': 21 * 0.9, 'font-weight': 500),
+    'h3': ('font-size': 19 * 0.9, 'font-weight': 500),
+    'h4': ('font-size': 19 * 0.9, 'color': $color-text-0, 'font-weight': 400),
+    'h5': ('font-size': 17 * 0.9, 'color': $color-text-0, 'font-weight': 400),
+    'h6': ('font-size': 17 * 0.9, 'color': $color-text-0, 'font-style': italic, 'font-weight': 400),
+  ),
+  large: (
+    'h1': ('font-size': 23, 'font-weight': 400),
+    'h2': ('font-size': 21, 'font-weight': 500),
+    'h3': ('font-size': 19, 'font-weight': 500),
+    'h4': ('font-size': 19, 'color': $color-text-0, 'font-weight': 400),
+    'h5': ('font-size': 17, 'color': $color-text-0, 'font-weight': 400),
+    'h6': ('font-size': 17, 'color': $color-text-0, 'font-style': italic, 'font-weight': 400),
   ),
 ) !default;
 
@@ -102,11 +110,11 @@ $header-text-rendering: optimizelegibility !default;
 
 /// Font size of `<small>` elements.
 /// @type Number
-$small-font-size: 80% !default;
+$small-font-size: 0.8rem !default;
 
 /// Color of `<small>` elements when placed inside headers.
 /// @type Color
-$header-small-font-color: $medium-gray !default;
+$header-small-font-color: $color-text-0 !default;
 
 /// Line height of text inside `<p>` elements.
 /// @type Number
@@ -114,7 +122,7 @@ $paragraph-lineheight: 1.6 !default;
 
 /// Bottom margin of paragraphs.
 /// @type Number
-$paragraph-margin-bottom: 1rem !default;
+$paragraph-margin-bottom: 0.8rem !default;
 
 /// Text rendering method for paragraph text.
 /// @type String
@@ -126,11 +134,11 @@ $enable-code-inline: true !default;
 
 /// Default color for links.
 /// @type Color
-$anchor-color: $primary-color !default;
+$anchor-color: inherit !default;
 
 /// Default color for links on hover.
 /// @type Color
-$anchor-color-hover: scale-color($anchor-color, $lightness: -14%) !default;
+$anchor-color-hover: inherit !default;
 
 /// Default text decoration for links.
 /// @type String
@@ -144,9 +152,13 @@ $anchor-text-decoration-hover: none !default;
 /// @type Number
 $hr-width: $global-width !default;
 
+/// Border color for dividers.
+/// @type Color
+$hr-border-color: $color-border-0 !default;
+
 /// Default border for a divider.
 /// @type List
-$hr-border: 1px solid $medium-gray !default;
+$hr-border: 1px solid $hr-border-color !default;
 
 /// Default margin for a divider.
 /// @type Number | List
@@ -170,11 +182,11 @@ $list-style-position: outside !default;
 
 /// Left (or right) margin for lists.
 /// @type Number
-$list-side-margin: 1.25rem !default;
+$list-side-margin: rem-calc(20) !default;
 
 /// Left (or right) margin for a list inside a list.
 /// @type Number
-$list-nested-side-margin: 1.25rem !default;
+$list-nested-side-margin: 1rem !default;
 
 /// Bottom margin for `<dl>` elements.
 /// @type Number
@@ -190,15 +202,15 @@ $defnlist-term-margin-bottom: 0.3rem !default;
 
 /// Text color of `<blockquote>` elements.
 /// @type Color
-$blockquote-color: $dark-gray !default;
+$blockquote-color: $color-text-1 !default;
 
 /// Padding inside a `<blockquote>` element.
 /// @type Number | List
-$blockquote-padding: rem-calc(9 20 0 19) !default;
+$blockquote-padding: rem-calc(0 20 0 19) !default;
 
 /// Side border for `<blockquote>` elements.
 /// @type List
-$blockquote-border: 1px solid $medium-gray !default;
+$blockquote-border: 1px solid $color-border-2 !default;
 
 /// Use the `.cite-block` component as default for `<cite>` elements.
 /// @type Boolean
@@ -210,11 +222,11 @@ $keystroke-font: $font-family-monospace !default;
 
 /// Text color for `<kbd>` elements.
 /// @type Color
-$keystroke-color: $black !default;
+$keystroke-color: $color-text-0 !default;
 
 /// Background color for `<kbd>` elements.
 /// @type Color
-$keystroke-background: $light-gray !default;
+$keystroke-background: $color-bg-2 !default;
 
 /// Padding for `<kbd>` elements.
 /// @type Number | List
@@ -222,11 +234,11 @@ $keystroke-padding: rem-calc(2 4 0) !default;
 
 /// Border radius for `<kbd>` elements.
 /// @type Number | List
-$keystroke-radius: $global-radius !default;
+$keystroke-radius: $global-radius-small !default;
 
 /// Bottom border style for `<abbr>` elements.
 /// @type List
-$abbr-underline: 1px dotted $black !default;
+$abbr-underline: 1px dotted $color-text-0 !default;
 
 @mixin foundation-typography-base {
   // Typography resets

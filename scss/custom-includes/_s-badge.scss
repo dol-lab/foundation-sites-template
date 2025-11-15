@@ -10,11 +10,11 @@
 
 /// Default background color for badges.
 /// @type Color
-$badge-background: var(--f-color-text-0) !default;
+$badge-background: $color-text-0 !default;
 
 /// Default text color for badges.
 /// @type Color
-$badge-color: var(--f-color-bg-contrast) !default;
+$badge-color: $color-bg-1 !default;
 
 // Alternate text color for badges.
 // @type Color
@@ -24,21 +24,21 @@ $badge-color: var(--f-color-bg-contrast) !default;
 /// @type Map
 $badge-palette: $foundation-palette !default;
 
-/// Default padding inside badges.
-/// @type Number
-$badge-padding: 0.3em !default;
-
-/// Roundness of badges. Values ≤ 2 mean rounded. 
-/// @type Number
-$badge-rounding: 2 !default;
-
 /// Maximum height of a badge.
 /// @type Number
-$badge-height: 1.25em !default;
+$badge-height: 1.25rem !default;
 
 /// Default font size for badges.
 /// @type Number
-$badge-font-size: 1rem !default;
+$badge-font-size: 0.7em !default;
+
+/// Default padding inside badges.
+/// @type Number
+$badge-padding: $badge-height / 4 !default;
+
+/// Roundness of badges. Values ≤ 2 mean rounded.
+/// @type Number
+$badge-rounding: 2 !default;
 
 /// Generates the base styles for a badge.
 @mixin badge-base {

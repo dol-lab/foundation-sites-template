@@ -24,21 +24,21 @@ $closebutton-default-size: medium !default;
 /// Right (or left) offset(s) for a close button.
 /// @type Number|Map
 $closebutton-offset-horizontal: (
-  small: 0.66rem,
-  medium: 1rem,
+  small: 1rem,
+  medium: 0.75rem,
 ) !default;
 
 /// Top (or bottom) offset(s) for a close button.
 /// @type Number|Map
 $closebutton-offset-vertical: (
-  small: 0.33em,
+  small: 1rem,
   medium: 0.5rem,
 ) !default;
 
 /// Size(s) of the close button. Used to generate sizing modifiers.
 /// @type Number|Map
 $closebutton-size: (
-  small: 1.5em,
+  small: 0.9rem,
   medium: 2em,
 ) !default;
 
@@ -48,11 +48,11 @@ $closebutton-lineheight: 1 !default;
 
 /// Default color of the close button.
 /// @type Color
-$closebutton-color: $dark-gray !default;
+$closebutton-color: $color-text-1 !default;
 
 /// Default color of the close button when being hovered on.
 /// @type Color
-$closebutton-color-hover: $black !default;
+$closebutton-color-hover: $color-text-0 !default;
 
 
 /// Get the size and position for a close button. If the input value is a number, the number is returned. If the input value is a config map and the map has the key `$size`, the value is returned.

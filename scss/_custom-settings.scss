@@ -9,7 +9,7 @@ $padding-sizes: (
   /* same as accordionmenu-submenu-padding */ large: 1rem 1.25rem,
   xlarge: 1.25rem 2rem 1.5rem,
   xxlarge: 1.5rem 2.5rem 1.75rem,
-  button: $button-padding,
+  button: 0.5rem 0.75rem, // matches button-padding
 );
 $user-card-sizes: (
   xsmall: 24px,
@@ -47,22 +47,9 @@ $icon-line-weight: 2;
 // ---------
 
 $spinner-sizes: (
-  tiny: $switch-height-tiny,
-  small: $switch-height-small,
-  medium: $switch-height,
-  large: $switch-height-large,
+  tiny: 0.625rem, // matches switch-height-tiny
+  small: 0.75rem, // matches switch-height-small
+  medium: 1rem, // matches switch-height
+  large: 1.5rem, // matches switch-height-large
 );
 
-// Breadcrumbs
-// ---------
-
-$breadcrumbs-margin: 0;
-$breadcrumbs-item-font-size: 0.875rem;
-$breadcrumbs-item-color: $color-text-2;
-$breadcrumbs-item-color-current: $color-text-1;
-$breadcrumbs-item-color-disabled: $color-text-2;
-$breadcrumbs-item-margin: 0.5rem;
-$breadcrumbs-item-uppercase: false;
-$breadcrumbs-item-separator-item: "·";
-$breadcrumbs-item-separator-item-rtl: "·";
-$breadcrumbs-item-separator-color: $breadcrumbs-item-color;

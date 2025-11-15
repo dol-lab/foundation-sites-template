@@ -16,19 +16,19 @@ $orbit-bullet-background-active: $color-text-0 !default;
 
 /// Default diameter for Orbit's bullets.
 /// @type Number
-$orbit-bullet-diameter: 1.2rem !default;
+$orbit-bullet-diameter: 0.75rem !default;
 
 /// Default margin between Orbit's bullets.
 /// @type Number
-$orbit-bullet-margin: 0.1rem !default;
+$orbit-bullet-margin: 0.25rem !default;
 
 /// Default distance from slide region for Orbit's bullets.
 /// @type Number
-$orbit-bullet-margin-top: 0.8rem !default;
+$orbit-bullet-margin-top: 0.5rem !default;
 
 /// Default bottom margin from Orbit's bullets to whatever content may lurk below it.
 /// @type Number
-$orbit-bullet-margin-bottom: 0.8rem !default;
+$orbit-bullet-margin-bottom: 0.5rem !default;
 
 /// Default background color for Orbit's caption.
 /// @type String
@@ -36,7 +36,7 @@ $orbit-caption-background: color-mix-opacity($color-bg-1, 75%, 35%) !default;
 
 /// Default padding for Orbit's caption.
 /// @type Number
-$orbit-caption-padding: 1rem !default;
+$orbit-caption-padding: 0.25rem !default;
 
 /// Default background color for Orbit's controls when hovered.
 /// @type String

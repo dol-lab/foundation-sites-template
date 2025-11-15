@@ -8,7 +8,7 @@
 
 /// Color for form labels.
 /// @type Color
-$form-label-color: $color-text-0 !default;
+$form-label-color: inherit !default;
 
 /// Font size for form labels.
 /// @type Number
@@ -20,7 +20,7 @@ $form-label-font-weight: $global-weight-normal !default;
 
 /// Line height for form labels. The higher the number, the more space between the label and its input field.
 /// @type Number
-$form-label-line-height: 1.8 !default;
+$form-label-line-height: 1.3 !default;
 
 @mixin form-label {
   display: block;

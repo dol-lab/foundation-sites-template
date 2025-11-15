@@ -18,8 +18,8 @@ $grid-column-count: 12 !default;
 /// @type Map | Length
 /// @since 6.1.0
 $grid-column-gutter: (
-  small: 20px,
-  medium: 30px,
+  small: $global-gutter-small,
+  medium: $global-gutter-small,
 ) !default;
 
 /// If `true`, the last column in a row will align to the opposite edge of the row.

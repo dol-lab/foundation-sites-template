@@ -16,19 +16,19 @@ $meter-radius: $global-radius !default;
 
 /// Background color of a `<meter>` element.
 /// @type Color
-$meter-background: $color-bg-2 !default;
+$meter-background: $color-bg-1 !default;
 
 /// Meter fill for an optimal value in a `<meter>` element.
 /// @type Color
-$meter-fill-good: $success-color !default;
+$meter-fill-good: var(--f-color-success) !default;
 
 /// Meter fill for an average value in a `<meter>` element.
 /// @type Color
-$meter-fill-medium: $warning-color !default;
+$meter-fill-medium: var(--f-color-warning) !default;
 
 /// Meter fill for a suboptimal value in a `<meter>` element.
 /// @type Color
-$meter-fill-bad: $alert-color !default;
+$meter-fill-bad: var(--f-color-alert) !default;
 
 @mixin foundation-meter-element {
   meter {

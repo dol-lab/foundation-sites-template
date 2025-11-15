@@ -12,15 +12,15 @@
 
 /// Font size attribute applied to `<html>` and `<body>`. We use 100% by default so the value is inherited from the user's browser settings.
 /// @type Number
-$global-font-size: 100% !default;
+$global-font-size: 1rem !default;
 
 /// Global width of your site. Used by the grid to determine row width.
 /// @type Number
-$global-width: rem-calc(1200) !default;
+$global-width: rem-calc(1120) !default;
 
 /// Default line height for all type. `$global-lineheight` is 24px while `$global-font-size` is 16px
 /// @type Number
-$global-lineheight: 1.5 !default;
+$global-lineheight: 1.4 !default;
 
 /// Colors used for buttons, callouts, links, etc. There must always be a color called `primary`.
 /// @type Map
@@ -54,15 +54,15 @@ $white: #fefefe !default;
 
 /// Background color of the body.
 /// @type Color
-$body-background: $white !default;
+$body-background: $color-bg-2 !default;
 
 /// Text color of the body.
 /// @type Color
-$body-font-color: $black !default;
+$body-font-color: $color-text-0 !default;
 
 /// Font stack of the body.
 /// @type List
-$body-font-family: 'Helvetica Neue', helvetica, roboto, arial, sans-serif !default;
+$body-font-family: "Roboto", helvetica, arial, sans-serif !default;
 
 /// Set to `true` to enable safe padding on the body for non-rectangular devices (i.e. phones with notches)
 /// @type Boolean
@@ -86,19 +86,71 @@ $global-position: 1rem !default;
 
 /// Global font weight used for normal type.
 /// @type Keyword | Number
-$global-weight-normal: normal !default;
+$global-weight-normal: 400 !default;
 
 /// Global font weight used for bold type.
 /// @type Keyword | Number
-$global-weight-bold: bold !default;
+$global-weight-bold: 500 !default;
 
 /// Global value used for all elements that have a border radius.
 /// @type Number
-$global-radius: 0 !default;
+$global-radius: 0.5rem !default;
+
+/// Custom: Smaller border radius for compact components.
+/// @type Number
+$global-radius-small: 0.125rem !default;
+
+/// Custom: Small gutter size for compact layouts.
+/// @type Number
+$global-gutter-small: 8px !default;
+
+/// Custom: Large gutter size for spacious layouts.
+/// @type Number
+$global-gutter-large: 12px !default;
+
+/// Custom: Short transition duration.
+/// @type Number
+$global-transition-short: 150ms !default;
+
+/// Custom: Medium transition duration.
+/// @type Number
+$global-transition-medium: 300ms !default;
+
+/// Custom: Long transition duration.
+/// @type Number
+$global-transition-long: 400ms !default;
+
+/// Custom: Transition timing function.
+/// @type String
+$global-transition-timing: ease !default;
+
+/// Custom: Cubic bezier transition timing function.
+/// @type String
+$global-transition-timing-cubic-bezier: cubic-bezier(0.4, 0, 0.2, 1) !default;
+
+/// Custom: Global drop shadow value (references CSS variable).
+/// @type String
+$global-drop-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !default;
+
+/// Custom: Large drop shadow value (references CSS variable).
+/// @type String
+$global-drop-shadow-large: 0 4px 8px rgba(0, 0, 0, 0.15) !default;
+
+/// Custom: Focus outline color.
+/// @type Color
+$global-focus-color: #005fcc !default;
+
+/// Custom: Focus outline style.
+/// @type String
+$global-focus: 0 0 0 2px $global-focus-color !default;
+
+/// Custom: Paragraph font size.
+/// @type Number
+$paragraph-font-size: 1rem !default;
 
 /// Global value used for all menu styles. Can be overwritten at individual menu component level.
 /// @type Number
-$global-menu-padding: 0.7rem 1rem !default;
+$global-menu-padding: 0.75rem 0.9rem !default;
 
 /// Global value used for all menu styles. Nested margin for submenu.
 $global-menu-nested-margin: 1rem !default;
@@ -132,7 +184,7 @@ $-zf-flex-justify: -zf-flex-justify($global-text-direction);
 
 /// Global tolerance for color pick contrast.
 /// @type Number
-$global-color-pick-contrast-tolerance: 0 !default;
+$global-color-pick-contrast-tolerance: 3 !default;
 
 // Internal variables used for colors
 @include add-foundation-colors;

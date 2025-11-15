@@ -8,23 +8,23 @@
 
 /// Padding for dropdown panes.
 /// @type List
-$dropdown-padding: 1rem !default;
+$dropdown-padding: 0 !default;
 
 /// Background for dropdown panes.
 /// @type Color
-$dropdown-background: $body-background !default;
+$dropdown-background: $color-bg-1 !default;
 
 /// Border for dropdown panes.
 /// @type List
-$dropdown-border: 1px solid $medium-gray !default;
+$dropdown-border: none !default;
 
 /// Font size for dropdown panes.
 /// @type List
-$dropdown-font-size: 1rem !default;
+$dropdown-font-size: 0.75rem !default;
 
 /// Width for dropdown panes.
 /// @type Number
-$dropdown-width: 300px !default;
+$dropdown-width: 250px !default;
 
 /// Border radius dropdown panes.
 /// @type Number
