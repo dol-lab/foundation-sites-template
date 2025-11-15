@@ -86,37 +86,38 @@ git checkout .
 
 ---
 
-## 🎯 Migration Mapping
+## 🎯 Migration Mapping (CORRECTED - Ascending Order)
 
 ### Standard Classes
 
-| Before | After | Value |
-|--------|-------|-------|
-| `padding-small` | `p-1` | 5px |
-| `padding-medium` | `p-2` | 12px |
-| `padding-large` | `p-3` | 16px |
-| `padding-1` | `p-3` | 16px |
-| `padding-2` | `p-4` | 32px |
-| `padding-3` | `p-5` | 48px |
-| `px-small` | `px-1` | 5px |
-| `py-medium` | `py-2` | 12px |
-| `margin-large` | `m-3` | 16px |
+| Before | After | Value | Pixels |
+|--------|-------|-------|--------|
+| `padding-small` | `p-1` | 0.3125rem | 5px |
+| `padding-medium` | `p-3` | 0.75rem | 12px |
+| `padding-large` | `p-4` | 1rem | 16px |
+| `padding-1` | `p-4` | 1rem | 16px |
+| `padding-2` | `p-7` | 2rem | 32px |
+| `padding-3` | `p-9` | 3rem | 48px |
+| `px-small` | `px-1` | 0.3125rem | 5px |
+| `px-medium` | `px-3` | 0.75rem | 12px |
+| `py-medium` | `py-3` | 0.75rem | 12px |
+| `margin-large` | `m-4` | 1rem | 16px |
 
 ### Special Classes (Now Included!)
 
 | Before | After | Notes |
 |--------|-------|-------|
-| `padding-button` | `py-6 px-2` | 0.5rem vertical, 0.75rem horizontal |
-| `p-button` | `py-6 px-2` | Short form |
-| `padding-xlarge` | `p-7` | 1.25rem (simplified) |
-| `p-xlarge` | `p-7` | Short form |
-| `padding-xxlarge` | `p-8` | 1.5rem (simplified) |
-| `p-xxlarge` | `p-8` | Short form |
-| `margin-button` | `my-6 mx-2` | Same as padding-button |
-| `margin-xlarge` | `m-7` | Same as padding-xlarge |
-| `margin-xxlarge` | `m-8` | Same as padding-xxlarge |
+| `padding-button` | `py-2 px-3` | 0.5rem (8px) vertical, 0.75rem (12px) horizontal |
+| `p-button` | `py-2 px-3` | Short form |
+| `padding-xlarge` | `p-5` | 1.25rem (20px) simplified |
+| `p-xlarge` | `p-5` | Short form |
+| `padding-xxlarge` | `p-6` | 1.5rem (24px) simplified |
+| `p-xxlarge` | `p-6` | Short form |
+| `margin-button` | `my-2 mx-3` | Same as padding-button |
+| `margin-xlarge` | `m-5` | Same as padding-xlarge |
+| `margin-xxlarge` | `m-6` | Same as padding-xxlarge |
 
-**✨ New sizes available:** `p-0`, `p-6`, `p-7`, `p-8`, `p-9` (and all directional variants)
+**✨ Complete spacing scale:** `p-0` (0), `p-1` (5px), `p-2` (8px), `p-3` (12px), `p-4` (16px), `p-5` (20px), `p-6` (24px), `p-7` (32px), `p-8` (40px), `p-9` (48px)
 
 ---
 
@@ -180,22 +181,22 @@ git commit -m "feat: migrate spacing classes"
 
 After running the migration script, update your SCSS:
 
-### 1. Copy SCSS Configuration
+### 1. Copy SCSS Configuration (CORRECTED - Ascending Order)
 
 From `scss/_custom-settings.scss`:
 
 ```scss
 $spacing-scale: (
-  0: 0,
-  1: 0.3125rem,  // 5px
-  2: 0.75rem,    // 12px
-  3: 1rem,       // 16px
-  4: 2rem,       // 32px
-  5: 3rem,       // 48px
-  6: 0.5rem,     // 8px
-  7: 1.25rem,    // 20px
-  8: 1.5rem,     // 24px
-  9: 2.5rem,     // 40px
+  0: 0,              // 0px
+  1: 0.3125rem,      // 5px - was padding-small
+  2: 0.5rem,         // 8px - compact spacing (button vertical padding)
+  3: 0.75rem,        // 12px - was padding-medium
+  4: 1rem,           // 16px - was padding-large and padding-1 (base size)
+  5: 1.25rem,        // 20px - was xlarge base
+  6: 1.5rem,         // 24px - was xxlarge base
+  7: 2rem,           // 32px - was padding-2
+  8: 2.5rem,         // 40px - extra large spacing
+  9: 3rem,           // 48px - was padding-3
 );
 ```
 

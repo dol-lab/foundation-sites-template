@@ -26,14 +26,14 @@ Our spacing system uses a Tailwind-like numeric scale for consistent spacing thr
 |-------|-------|--------|----------|
 | `*-0` | 0 | 0px | No spacing |
 | `*-1` | 0.3125rem | 5px | Tiny spacing |
-| `*-2` | 0.75rem | 12px | Small spacing |
-| `*-3` | 1rem | 16px | Base spacing |
-| `*-4` | 2rem | 32px | Medium spacing |
-| `*-5` | 3rem | 48px | Large spacing |
-| `*-6` | 0.5rem | 8px | Compact spacing |
-| `*-7` | 1.25rem | 20px | Extra spacing |
-| `*-8` | 1.5rem | 24px | XL spacing |
-| `*-9` | 2.5rem | 40px | XXL spacing |
+| `*-2` | 0.5rem | 8px | Compact spacing (button vertical) |
+| `*-3` | 0.75rem | 12px | Small spacing |
+| `*-4` | 1rem | 16px | Base spacing |
+| `*-5` | 1.25rem | 20px | Extra spacing |
+| `*-6` | 1.5rem | 24px | XL spacing |
+| `*-7` | 2rem | 32px | Medium spacing |
+| `*-8` | 2.5rem | 40px | XXL spacing |
+| `*-9` | 3rem | 48px | Large spacing |
 
 ### Padding Classes
 
@@ -41,11 +41,14 @@ Our spacing system uses a Tailwind-like numeric scale for consistent spacing thr
 ```html
 <div class="p-0">No padding</div>
 <div class="p-1">Tiny padding (5px)</div>
-<div class="p-2">Small padding (12px)</div>
-<div class="p-3">Base padding (16px)</div>
-<div class="p-4">Medium padding (32px)</div>
-<div class="p-5">Large padding (48px)</div>
-<!-- p-6 through p-9 also available -->
+<div class="p-2">Compact padding (8px)</div>
+<div class="p-3">Small padding (12px)</div>
+<div class="p-4">Base padding (16px)</div>
+<div class="p-5">Extra padding (20px)</div>
+<div class="p-6">XL padding (24px)</div>
+<div class="p-7">Medium padding (32px)</div>
+<div class="p-8">XXL padding (40px)</div>
+<div class="p-9">Large padding (48px)</div>
 ```
 
 #### Directional Padding
@@ -80,11 +83,14 @@ Our spacing system uses a Tailwind-like numeric scale for consistent spacing thr
 ```html
 <div class="m-0">No margin</div>
 <div class="m-1">Tiny margin (5px)</div>
-<div class="m-2">Small margin (12px)</div>
-<div class="m-3">Base margin (16px)</div>
-<div class="m-4">Medium margin (32px)</div>
-<div class="m-5">Large margin (48px)</div>
-<!-- m-6 through m-9 also available -->
+<div class="m-2">Compact margin (8px)</div>
+<div class="m-3">Small margin (12px)</div>
+<div class="m-4">Base margin (16px)</div>
+<div class="m-5">Extra margin (20px)</div>
+<div class="m-6">XL margin (24px)</div>
+<div class="m-7">Medium margin (32px)</div>
+<div class="m-8">XXL margin (40px)</div>
+<div class="m-9">Large margin (48px)</div>
 ```
 
 #### Directional Margin

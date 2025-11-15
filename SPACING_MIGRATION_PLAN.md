@@ -1,31 +1,42 @@
 # Spacing Classes Migration Plan
 
 ## Overview
-Migrating from mixed naming convention (padding-small/medium/large + padding-1/2/3) to a unified Tailwind-like system (p-0 through p-5).
+Migrating from mixed naming convention (padding-small/medium/large + padding-1/2/3) to a unified Tailwind-like system (p-0 through p-9) with proper ascending order.
 
-## New Spacing Scale
+## New Spacing Scale (Corrected - Ascending Order)
 
 ### Padding Classes
+| Old Class | Old Value | New Class | New Value | Pixels |
+|-----------|-----------|-----------|-----------|--------|
+| `padding-none` / `p-none` | 0 | `p-0` | 0 | 0px |
+| `padding-small` / `p-small` | 0.3125rem | `p-1` | 0.3125rem | 5px |
+| N/A | N/A | `p-2` | 0.5rem | 8px |
+| `padding-medium` / `p-medium` | 0.75rem | `p-3` | 0.75rem | 12px |
+| `padding-large` / `p-large` / `padding-1` | 1rem | `p-4` | 1rem | 16px |
+| `padding-xlarge` | 1.25rem | `p-5` | 1.25rem | 20px |
+| `padding-xxlarge` | 1.5rem | `p-6` | 1.5rem | 24px |
+| `padding-2` | 2rem | `p-7` | 2rem | 32px |
+| N/A | N/A | `p-8` | 2.5rem | 40px |
+| `padding-3` | 3rem | `p-9` | 3rem | 48px |
+
+### Special Padding Classes
 | Old Class | Old Value | New Class | New Value |
 |-----------|-----------|-----------|-----------|
-| `padding-none` / `p-none` | 0 | `p-0` | 0 |
-| `padding-small` / `p-small` | 0.3125rem | `p-1` | 0.3125rem |
-| `padding-medium` / `p-medium` | 0.75rem 0.9rem | `p-2` | 0.75rem |
-| `padding-large` / `p-large` | 1rem 1.25rem | `p-3` | 1rem |
-| `padding-1` | 1rem | `p-3` | 1rem |
-| `padding-2` | 2rem | `p-4` | 2rem |
-| `padding-3` | 3rem | `p-5` | 3rem |
+| `padding-button` | 0.5rem 0.75rem | `py-2 px-3` | vertical: 0.5rem, horizontal: 0.75rem |
 
 ### Margin Classes
-| Old Class | New Class |
-|-----------|-----------|
-| `margin-none` | `m-0` |
-| `margin-small` | `m-1` |
-| `margin-medium` | `m-2` |
-| `margin-large` | `m-3` |
-| `margin-1` | `m-3` |
-| `margin-2` | `m-4` |
-| `margin-3` | `m-5` |
+| Old Class | New Class | Value | Pixels |
+|-----------|-----------|-------|--------|
+| `margin-none` | `m-0` | 0 | 0px |
+| `margin-small` | `m-1` | 0.3125rem | 5px |
+| N/A | `m-2` | 0.5rem | 8px |
+| `margin-medium` | `m-3` | 0.75rem | 12px |
+| `margin-large` / `margin-1` | `m-4` | 1rem | 16px |
+| `margin-xlarge` | `m-5` | 1.25rem | 20px |
+| `margin-xxlarge` | `m-6` | 1.5rem | 24px |
+| `margin-2` | `m-7` | 2rem | 32px |
+| N/A | `m-8` | 2.5rem | 40px |
+| `margin-3` | `m-9` | 3rem | 48px |
 
 ### Directional Helper Classes
 
@@ -53,39 +64,51 @@ Migrating from mixed naming convention (padding-small/medium/large + padding-1/2
 
 ## Regex Migration Patterns
 
-### 1. Main Padding Classes
+### 1. Main Padding Classes (Corrected Mappings)
 
 ```regex
 # padding-none → p-0
 Find: \b(padding-none|p-none)\b
 Replace: p-0
 
-# padding-small → p-1
+# padding-small → p-1 (5px)
 Find: \b(padding-small|p-small)\b
 Replace: p-1
 
-# padding-medium → p-2
+# padding-medium → p-3 (12px) - CORRECTED from p-2
 Find: \b(padding-medium|p-medium)\b
-Replace: p-2
+Replace: p-3
 
-# padding-large → p-3
+# padding-large → p-4 (16px) - CORRECTED from p-3
 Find: \b(padding-large|p-large)\b
-Replace: p-3
-
-# padding-1 → p-3 (NOTE: same as padding-large)
-Find: \bpadding-1\b
-Replace: p-3
-
-# padding-2 → p-4
-Find: \bpadding-2\b
 Replace: p-4
 
-# padding-3 → p-5
+# padding-1 → p-4 (1rem = 16px) - CORRECTED from p-3
+Find: \bpadding-1\b
+Replace: p-4
+
+# padding-2 → p-7 (2rem = 32px) - CORRECTED from p-4
+Find: \bpadding-2\b
+Replace: p-7
+
+# padding-3 → p-9 (3rem = 48px) - CORRECTED from p-5
 Find: \bpadding-3\b
+Replace: p-9
+
+# padding-xlarge → p-5 (20px) - NEW
+Find: \bpadding-xlarge\b
 Replace: p-5
+
+# padding-xxlarge → p-6 (24px) - NEW
+Find: \bpadding-xxlarge\b
+Replace: p-6
+
+# padding-button → py-2 px-3 (8px vertical, 12px horizontal) - NEW
+Find: \bpadding-button\b
+Replace: py-2 px-3
 ```
 
-### 2. Directional Padding Classes
+### 2. Directional Padding Classes (Corrected Mappings)
 
 ```regex
 # px-none → px-0
@@ -96,13 +119,13 @@ Replace: px-0
 Find: \bpx-small\b
 Replace: px-1
 
-# px-medium → px-2
+# px-medium → px-3 - CORRECTED from px-2
 Find: \bpx-medium\b
-Replace: px-2
-
-# px-large → px-3
-Find: \bpx-large\b
 Replace: px-3
+
+# px-large → px-4 - CORRECTED from px-3
+Find: \bpx-large\b
+Replace: px-4
 
 # py-none → py-0
 Find: \bpy-none\b
@@ -112,13 +135,13 @@ Replace: py-0
 Find: \bpy-small\b
 Replace: py-1
 
-# py-medium → py-2
+# py-medium → py-3 - CORRECTED from py-2
 Find: \bpy-medium\b
-Replace: py-2
-
-# py-large → py-3
-Find: \bpy-large\b
 Replace: py-3
+
+# py-large → py-4 - CORRECTED from py-3
+Find: \bpy-large\b
+Replace: py-4
 
 # pt-none → pt-0
 Find: \bpt-none\b
@@ -128,13 +151,13 @@ Replace: pt-0
 Find: \bpt-small\b
 Replace: pt-1
 
-# pt-medium → pt-2
+# pt-medium → pt-3 - CORRECTED from pt-2
 Find: \bpt-medium\b
-Replace: pt-2
-
-# pt-large → pt-3
-Find: \bpt-large\b
 Replace: pt-3
+
+# pt-large → pt-4 - CORRECTED from pt-3
+Find: \bpt-large\b
+Replace: pt-4
 
 # pr-none → pr-0
 Find: \bpr-none\b
@@ -144,13 +167,13 @@ Replace: pr-0
 Find: \bpr-small\b
 Replace: pr-1
 
-# pr-medium → pr-2
+# pr-medium → pr-3 - CORRECTED from pr-2
 Find: \bpr-medium\b
-Replace: pr-2
-
-# pr-large → pr-3
-Find: \bpr-large\b
 Replace: pr-3
+
+# pr-large → pr-4 - CORRECTED from pr-3
+Find: \bpr-large\b
+Replace: pr-4
 
 # pb-none → pb-0
 Find: \bpb-none\b
@@ -160,13 +183,13 @@ Replace: pb-0
 Find: \bpb-small\b
 Replace: pb-1
 
-# pb-medium → pb-2
+# pb-medium → pb-3 - CORRECTED from pb-2
 Find: \bpb-medium\b
-Replace: pb-2
-
-# pb-large → pb-3
-Find: \bpb-large\b
 Replace: pb-3
+
+# pb-large → pb-4 - CORRECTED from pb-3
+Find: \bpb-large\b
+Replace: pb-4
 
 # pl-none → pl-0
 Find: \bpl-none\b
@@ -176,16 +199,16 @@ Replace: pl-0
 Find: \bpl-small\b
 Replace: pl-1
 
-# pl-medium → pl-2
+# pl-medium → pl-3 - CORRECTED from pl-2
 Find: \bpl-medium\b
-Replace: pl-2
-
-# pl-large → pl-3
-Find: \bpl-large\b
 Replace: pl-3
+
+# pl-large → pl-4 - CORRECTED from pl-3
+Find: \bpl-large\b
+Replace: pl-4
 ```
 
-### 3. Main Margin Classes
+### 3. Main Margin Classes (Corrected Mappings)
 
 ```regex
 # margin-none → m-0
@@ -196,28 +219,36 @@ Replace: m-0
 Find: \bmargin-small\b
 Replace: m-1
 
-# margin-medium → m-2
+# margin-medium → m-3 - CORRECTED from m-2
 Find: \bmargin-medium\b
-Replace: m-2
+Replace: m-3
 
-# margin-large → m-3
+# margin-large → m-4 - CORRECTED from m-3
 Find: \bmargin-large\b
-Replace: m-3
-
-# margin-1 → m-3 (NOTE: same as margin-large)
-Find: \bmargin-1\b
-Replace: m-3
-
-# margin-2 → m-4
-Find: \bmargin-2\b
 Replace: m-4
 
-# margin-3 → m-5
+# margin-1 → m-4 (1rem = 16px) - CORRECTED from m-3
+Find: \bmargin-1\b
+Replace: m-4
+
+# margin-2 → m-7 (2rem = 32px) - CORRECTED from m-4
+Find: \bmargin-2\b
+Replace: m-7
+
+# margin-3 → m-9 (3rem = 48px) - CORRECTED from m-5
 Find: \bmargin-3\b
+Replace: m-9
+
+# margin-xlarge → m-5 (20px) - NEW
+Find: \bmargin-xlarge\b
 Replace: m-5
+
+# margin-xxlarge → m-6 (24px) - NEW
+Find: \bmargin-xxlarge\b
+Replace: m-6
 ```
 
-### 4. Directional Margin Classes
+### 4. Directional Margin Classes (Corrected Mappings)
 
 ```regex
 # mx-none → mx-0
@@ -228,13 +259,13 @@ Replace: mx-0
 Find: \bmx-small\b
 Replace: mx-1
 
-# mx-medium → mx-2
+# mx-medium → mx-3 - CORRECTED from mx-2
 Find: \bmx-medium\b
-Replace: mx-2
-
-# mx-large → mx-3
-Find: \bmx-large\b
 Replace: mx-3
+
+# mx-large → mx-4 - CORRECTED from mx-3
+Find: \bmx-large\b
+Replace: mx-4
 
 # my-none → my-0
 Find: \bmy-none\b
@@ -244,13 +275,13 @@ Replace: my-0
 Find: \bmy-small\b
 Replace: my-1
 
-# my-medium → my-2
+# my-medium → my-3 - CORRECTED from my-2
 Find: \bmy-medium\b
-Replace: my-2
-
-# my-large → my-3
-Find: \bmy-large\b
 Replace: my-3
+
+# my-large → my-4 - CORRECTED from my-3
+Find: \bmy-large\b
+Replace: my-4
 
 # mt-none → mt-0
 Find: \bmt-none\b
@@ -260,13 +291,13 @@ Replace: mt-0
 Find: \bmt-small\b
 Replace: mt-1
 
-# mt-medium → mt-2
+# mt-medium → mt-3 - CORRECTED from mt-2
 Find: \bmt-medium\b
-Replace: mt-2
-
-# mt-large → mt-3
-Find: \bmt-large\b
 Replace: mt-3
+
+# mt-large → mt-4 - CORRECTED from mt-3
+Find: \bmt-large\b
+Replace: mt-4
 
 # mr-none → mr-0
 Find: \bmr-none\b
@@ -276,13 +307,13 @@ Replace: mr-0
 Find: \bmr-small\b
 Replace: mr-1
 
-# mr-medium → mr-2
+# mr-medium → mr-3 - CORRECTED from mr-2
 Find: \bmr-medium\b
-Replace: mr-2
-
-# mr-large → mr-3
-Find: \bmr-large\b
 Replace: mr-3
+
+# mr-large → mr-4 - CORRECTED from mr-3
+Find: \bmr-large\b
+Replace: mr-4
 
 # mb-none → mb-0
 Find: \bmb-none\b
@@ -292,13 +323,13 @@ Replace: mb-0
 Find: \bmb-small\b
 Replace: mb-1
 
-# mb-medium → mb-2
+# mb-medium → mb-3 - CORRECTED from mb-2
 Find: \bmb-medium\b
-Replace: mb-2
-
-# mb-large → mb-3
-Find: \bmb-large\b
 Replace: mb-3
+
+# mb-large → mb-4 - CORRECTED from mb-3
+Find: \bmb-large\b
+Replace: mb-4
 
 # ml-none → ml-0
 Find: \bml-none\b
@@ -308,13 +339,13 @@ Replace: ml-0
 Find: \bml-small\b
 Replace: ml-1
 
-# ml-medium → ml-2
+# ml-medium → ml-3 - CORRECTED from ml-2
 Find: \bml-medium\b
-Replace: ml-2
-
-# ml-large → ml-3
-Find: \bml-large\b
 Replace: ml-3
+
+# ml-large → ml-4 - CORRECTED from ml-3
+Find: \bml-large\b
+Replace: ml-4
 ```
 
 ### 5. Old Prototype Spacing Classes (Verbose Forms)
