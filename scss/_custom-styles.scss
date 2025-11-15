@@ -64,8 +64,8 @@
   --f-menu-padding: 0.75rem 0.9rem;
   --f-menu-nested-margin: 1rem;
 
-  @each $size, $value in $padding-sizes {
-    --f-padding-#{$size}: #{$value};
+  @each $size, $value in $spacing-scale {
+    --f-spacing-#{$size}: #{$value};
   }
 
   @each $size, $value in $user-card-sizes {
@@ -75,11 +75,11 @@
   @each $breakpoint, $edge-size in $dynamic-relation {
     @each $breakpoint, $edge-size in $dynamic-relation {
       @include breakpoint($breakpoint) {
-        $padding-value: map-get($padding-sizes, $edge-size);
+        $spacing-value: map-get($spacing-scale, $edge-size);
 
-        --f-dynamic-box: #{$padding-value};
-        --f-dynamic-box-y: #{extract-from-compact($padding-value, top)};
-        --f-dynamic-box-x: #{extract-from-compact($padding-value, left)};
+        --f-dynamic-box: #{$spacing-value};
+        --f-dynamic-box-y: #{$spacing-value};
+        --f-dynamic-box-x: #{$spacing-value};
       }
     }
   }
@@ -508,10 +508,10 @@ label[for] {
 
 .card-section,
 .card-divider {
-  padding: map-get($padding-sizes, medium);
+  padding: map-get($spacing-scale, 2);
 
   &-negative {
-    margin-inline: -#{nth(map-get($padding-sizes, medium), 2)};
+    margin-inline: -#{map-get($spacing-scale, 2)};
   }
 
   display: flex;
@@ -1081,7 +1081,7 @@ label[for] {
     max-width: 40%;
     overflow: hidden;
     border-radius: 0 0 0 $card-border-radius;
-    padding-left: calc(var(--avatar-overlap) + #{nth(map-get($padding-sizes, small), 1)});
+    padding-left: calc(var(--avatar-overlap) + #{map-get($spacing-scale, 1)});
     margin-right: calc(-0.7 * var(--avatar-overlap));
 
     .avatar-container {
@@ -1229,7 +1229,7 @@ label[for] {
   }
 
   /* .alignfull > * {
-		margin-inline: -#{nth(map-get($padding-sizes, medium), 2)}; // negate .card-section
+		margin-inline: -#{map-get($spacing-scale, 2)}; // negate .card-section
 	}  */
 
   /* a:hover {
@@ -2787,7 +2787,7 @@ input,
 
     ul {
       button.submenu-toggle {
-        height: $paragraph-font-size + nth(map-get($padding-sizes, medium), 1) + nth(map-get($padding-sizes, medium), 1);
+        height: $paragraph-font-size + map-get($spacing-scale, 2) + map-get($spacing-scale, 2);
 
         &:hover {
           background-color: $color-bg-2;
@@ -2798,7 +2798,7 @@ input,
     button.submenu-toggle {
       text-decoration: none;
       border-radius: 0 $global-radius 0 0;
-      height: $paragraph-font-size + nth(map-get($padding-sizes, medium), 1) + nth(map-get($padding-sizes, medium), 2);
+      height: $paragraph-font-size + map-get($spacing-scale, 2) + map-get($spacing-scale, 2);
 
       &:hover {
         background-color: $color-bg-2;
@@ -2806,8 +2806,8 @@ input,
 
       &::after {
         position: absolute;
-        top: nth(map-get($padding-sizes, medium), 1);
-        left: nth(map-get($padding-sizes, medium), 2);
+        top: map-get($spacing-scale, 2);
+        left: map-get($spacing-scale, 2);
 
         @extend .caret;
       }
@@ -2824,7 +2824,7 @@ input,
           transform: rotate(-180deg);
           transition: $global-transition-medium;
           left: auto;
-          right: nth(map-get($padding-sizes, medium), 2);
+          right: map-get($spacing-scale, 2);
         }
       }
     }
@@ -3559,14 +3559,14 @@ i.fa {
   cursor: not-allowed;
 }
 
-@each $size-name, $size in $padding-sizes {
-  .margin-#{$size-name} {
-    margin: $size;
-  }
-  .p-#{$size-name},
-  .padding-#{$size-name} {
+// Modern spacing utilities (Tailwind-like)
+// Generates classes like p-0, p-1, p-2, etc. and m-0, m-1, m-2, etc.
+@each $size-number, $size in $spacing-scale {
+  // Padding utilities
+  .p-#{$size-number} {
     padding: $size;
 
+    // Support for clickable padding areas in cards
     & > a,
     & > a:last-child {
       &,
@@ -3575,48 +3575,105 @@ i.fa {
         align-items: center;
         width: 100%;
         padding: $size;
-
-        @if length($size) >3 {
-          margin: (nth($size, 1) * -1) (nth($size, 2) * -1) (nth($size, 3) * -1) (nth($size, 4) * -1);
-        } @else if length($size) >2 {
-          margin: (nth($size, 1) * -1) (nth($size, 2) * -1) (nth($size, 3) * -1);
-        } @else if length($size) >1 {
-          margin: (nth($size, 1) * -1) (nth($size, 2) * -1);
-        } @else {
-          margin: $size * -1;
-        }
+        margin: $size * -1;
       }
 
       & + * {
-        margin-top: nth($size, 1);
+        margin-block-start: $size;
       }
     }
   }
-  .px-#{$size-name} {
+
+  // Padding directional utilities
+  .px-#{$size-number} {
     padding-inline: $size;
   }
-  .py-#{$size-name} {
+
+  .py-#{$size-number} {
     padding-block: $size;
   }
-  .pr-#{$size-name} {
-    padding-inline-end: if(length($size) > 1, nth($size, 2), $size);
-  }
-  .pl-#{$size-name} {
-    padding-inline-start: if(length($size) > 1, nth($size, 2), $size);
-  }
-  .pt-#{$size-name} {
-    padding-block-start: if(length($size) > 1, nth($size, 1), $size);
-  }
-  .pb-#{$size-name} {
-    padding-block-end: if(length($size) > 1, nth($size, 1), $size);
+
+  .pt-#{$size-number} {
+    padding-block-start: $size;
   }
 
-  .mx-auto {
-    margin-inline: auto;
+  .pr-#{$size-number} {
+    padding-inline-end: $size;
   }
 
-  .my-auto {
-    margin-block: auto;
+  .pb-#{$size-number} {
+    padding-block-end: $size;
+  }
+
+  .pl-#{$size-number} {
+    padding-inline-start: $size;
+  }
+
+  // Margin utilities
+  .m-#{$size-number} {
+    margin: $size;
+  }
+
+  // Margin directional utilities
+  .mx-#{$size-number} {
+    margin-inline: $size;
+  }
+
+  .my-#{$size-number} {
+    margin-block: $size;
+  }
+
+  .mt-#{$size-number} {
+    margin-block-start: $size;
+  }
+
+  .mr-#{$size-number} {
+    margin-inline-end: $size;
+  }
+
+  .mb-#{$size-number} {
+    margin-block-end: $size;
+  }
+
+  .ml-#{$size-number} {
+    margin-inline-start: $size;
+  }
+}
+
+// Margin auto utilities
+.m-auto {
+  margin: auto;
+}
+
+.mx-auto {
+  margin-inline: auto;
+}
+
+.my-auto {
+  margin-block: auto;
+}
+
+.mt-auto {
+  margin-block-start: auto;
+}
+
+.mr-auto {
+  margin-inline-end: auto;
+}
+
+.mb-auto {
+  margin-block-end: auto;
+}
+
+.ml-auto {
+  margin-inline-start: auto;
+}
+
+// Legacy special padding sizes (for backward compatibility during migration)
+// TODO: Remove after full migration
+@each $size-name, $size in $padding-special {
+  .padding-#{$size-name} {
+    padding: $size;
   }
 }
 
@@ -3820,11 +3877,11 @@ i.fa {
 .menu .twitter-typeahead,
 .global-search-modal {
   .tt-dataset-blogs:not(:empty) {
-    padding: nth(map-get($padding-sizes, medium), 1);
+    padding: map-get($spacing-scale, 2);
 
     .tt-suggestion,
     .global-search-suggestion {
-      padding: nth(map-get($padding-sizes, medium), 1);
+      padding: map-get($spacing-scale, 2);
     }
   }
 
@@ -3833,7 +3890,7 @@ i.fa {
     padding: 0;
 
     .card {
-      @extend .margin-medium;
+      @extend .m-2;
     }
 
     &.user {
@@ -4158,7 +4215,7 @@ i.fa {
 // ---------
 
 .breadcrumbs {
-  /* padding: map-get($padding-sizes, medium); */
+  /* padding: map-get($spacing-scale, 2); */
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -4384,8 +4441,8 @@ details {
       content: none;
     }
 
-    // @extend .px-small;
-    @extend .py-medium;
+    // @extend .px-1;
+    @extend .py-2;
 
     &::after {
       content: "\f107";
@@ -4424,7 +4481,7 @@ details {
   }
 
   body & {
-    @extend .px-medium;
+    @extend .px-2;
   }
 }
 

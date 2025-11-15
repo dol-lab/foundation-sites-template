@@ -2,14 +2,32 @@
 @use "sass:map";
 
 $button-height: 2.4rem;
-$padding-sizes: (
-  none: 0,
-  small: 0.3125rem,
-  medium: 0.75rem 0.9rem,
-  /* same as accordionmenu-submenu-padding */ large: 1rem 1.25rem,
-  xlarge: 1.25rem 2rem 1.5rem,
-  xxlarge: 1.5rem 2.5rem 1.75rem,
-  button: 0.5rem 0.75rem, // matches button-padding
+// Unified spacing scale (Tailwind-like system)
+// Used for both padding and margin utilities
+// Extended to cover all previous special sizes
+$spacing-scale: (
+  0: 0,              // 0px
+  1: 0.3125rem,      // 5px - was padding-small
+  2: 0.75rem,        // 12px - was padding-medium (simplified)
+  3: 1rem,           // 16px - was padding-large and padding-1 (base size)
+  4: 2rem,           // 32px - was padding-2
+  5: 3rem,           // 48px - was padding-3
+  // Additional sizes for fine-grained control
+  6: 0.5rem,         // 8px - useful for compact spacing (button vertical)
+  7: 1.25rem,        // 20px - was xlarge base
+  8: 1.5rem,         // 24px - was xxlarge base
+  9: 2.5rem,         // 40px - for larger spacing
+);
+
+// Legacy special sizes (kept for backward compatibility during migration)
+// Migration guide:
+// - padding-button (0.5rem 0.75rem) → py-6 px-2 (or just p-6 if uniform is acceptable)
+// - padding-xlarge (1.25rem 2rem 1.5rem) → pt-7 px-4 pb-8 (or simplify to p-7)
+// - padding-xxlarge (1.5rem 2.5rem 1.75rem) → pt-8 px-9 pb-8 (or simplify to p-8/p-9)
+$padding-special: (
+  button: 0.5rem 0.75rem,           // Complex: vertical 0.5rem, horizontal 0.75rem
+  xlarge: 1.25rem 2rem 1.5rem,      // Complex: top 1.25rem, horizontal 2rem, bottom 1.5rem
+  xxlarge: 1.5rem 2.5rem 1.75rem,   // Complex: top 1.5rem, horizontal 2.5rem, bottom 1.75rem
 );
 $user-card-sizes: (
   xsmall: 24px,
@@ -20,10 +38,12 @@ $user-card-sizes: (
   xxlarge: 240px,
 );
 $user-card-default-size: map-get($user-card-sizes, medium);
+// Updated for numeric spacing scale
 $dynamic-relation: (
-  small: medium,
-  medium: large,
-  large: xlarge,
+  1: 2,  // small → medium
+  2: 3,  // medium → large
+  3: 4,  // large → xlarge (2rem)
+  4: 5,  // xlarge → xxlarge (3rem)
 );
 
 // Info Chip
