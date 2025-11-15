@@ -16,7 +16,7 @@ $reveal-width: calc(100% - 2 * #{$global-gutter-large}) !default;
 
 /// Default maximum width of a modal.
 /// @type Number
-$reveal-max-width: $global-width !default;
+$reveal-max-width: map-get($breakpoints, large) !default;
 
 /// Default padding inside a modal.
 /// @type Number
@@ -24,7 +24,7 @@ $reveal-padding: $global-padding !default;
 
 /// Default border around a modal.
 /// @type Number
-$reveal-border: 1px solid $color-border-0 !default;
+$reveal-border: none !default;
 
 /// Default radius for modal.
 /// @type Number

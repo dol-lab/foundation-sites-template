@@ -8,27 +8,27 @@
 
 /// Background color of a switch.
 /// @type Color
-$switch-background: $color-text-0 !default;
+$switch-background: inherit !default;
 
 /// Background active color of a switch.
 /// @type Color
-$switch-background-active: $primary-color !default;
+$switch-background-active: $color-text-1 !default;
 
 /// Height of a switch, with no class applied.
 /// @type Number
-$switch-height: 2rem !default;
+$switch-height: 1rem !default;
 
 /// Height of a switch with .tiny class.
 /// @type Number
-$switch-height-tiny: 1.5rem !default;
+$switch-height-tiny: 0.625rem !default;
 
 /// Height of a switch with .small class.
 /// @type Number
-$switch-height-small: 1.75rem !default;
+$switch-height-small: 0.75rem !default;
 
 /// Height of a switch with .large class.
 /// @type Number
-$switch-height-large: 2.5rem !default;
+$switch-height-large: 1.5rem !default;
 
 /// Border radius of the switch
 /// @type Number
@@ -36,15 +36,15 @@ $switch-radius: $global-radius !default;
 
 /// border around a modal.
 /// @type Number
-$switch-margin: $global-margin !default;
+$switch-margin: 0 !default;
 
 /// Background color for the switch container and paddle.
 /// @type Color
-$switch-paddle-background: $color-bg-0 !default;
+$switch-paddle-background: $color-bg-1 !default;
 
 /// Spacing between a switch paddle and the edge of the body.
 /// @type Number
-$switch-paddle-offset: 0.25rem !default;
+$switch-paddle-offset: 0 !default;
 
 /// border radius of the switch paddle
 /// @type Number
@@ -52,7 +52,10 @@ $switch-paddle-radius: $global-radius !default;
 
 /// switch transition.
 /// @type Number
-$switch-paddle-transition: all 0.2s ease-out !default;
+$switch-paddle-transition:
+  left $global-transition-short $global-transition-timing,
+  color $global-transition-short $global-transition-timing,
+  box-shadow $global-transition-medium $global-transition-timing !default;
 
 /// Opacity of a disabled switch.
 /// @type Number

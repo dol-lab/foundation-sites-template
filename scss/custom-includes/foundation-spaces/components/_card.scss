@@ -8,19 +8,19 @@
 
 /// Default background color.
 /// @type Color
-$card-background: $white !default;
+$card-background: $color-bg-1 !default;
 
 /// Default font color for cards.
 /// @type Color
-$card-font-color: $body-font-color !default;
+$card-font-color: inherit !default;
 
 /// Default background.
 /// @type Color
-$card-divider-background: $light-gray !default;
+$card-divider-background: transparent !default;
 
 /// Default border style.
 /// @type List
-$card-border: 1px solid $light-gray !default;
+$card-border: none !default;
 
 /// Default card shadow.
 /// @type List
@@ -32,11 +32,11 @@ $card-border-radius: $global-radius !default;
 
 /// Default padding.
 /// @type Number
-$card-padding: $global-padding !default;
+$card-padding: none !default;
 
 /// Default bottom margin.
 /// @type number
-$card-margin-bottom: $global-margin !default;
+$card-margin-bottom: 0 !default;
 
 /// Adds styles for a card container.
 /// @param {Color} $background - Background color of the card.
@@ -73,10 +73,7 @@ $card-margin-bottom: $global-margin !default;
 }
 
 /// Adds styles for a card divider.
-@mixin card-divider(
-  $background: $card-divider-background,
-  $padding: $card-padding
-) {
+@mixin card-divider($background: $card-divider-background, $padding: $card-padding) {
   @if $global-flexbox {
     display: flex;
     flex: 0 1 auto;
@@ -91,9 +88,7 @@ $card-margin-bottom: $global-margin !default;
 }
 
 /// Adds styles for a card section.
-@mixin card-section(
-  $padding: $card-padding
-) {
+@mixin card-section($padding: $card-padding) {
   @if $global-flexbox {
     flex: 1 0 auto;
   }

@@ -40,15 +40,19 @@ $accordion-item-padding: 1.25rem 1rem !default;
 
 /// Default background color of tab content.
 /// @type Color
-$accordion-content-background: $color-bg-1 !default;
+$accordion-content-background: transparent !default;
+
+/// Border color for accordion content.
+/// @type Color
+$accordion-content-border-color: $color-border-0 !default;
 
 /// Default border of tab content.
 /// @type String
-$accordion-content-border: 1px solid $color-bg-2 !default;
+$accordion-content-border: 1px solid $accordion-content-border-color !default;
 
 /// Default text color of tab content.
 /// @type Color
-$accordion-content-color: $color-text-0 !default;
+$accordion-content-color: $color-text-1 !default;
 
 /// Default padding for tab content.
 /// @type Number | List

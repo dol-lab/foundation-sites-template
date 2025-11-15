@@ -17,11 +17,11 @@ $prototype-arrow-directions: (
 
 /// Width of the Arrow, `0.4375rem` by default.
 /// @type Number
-$prototype-arrow-size: 0.4375rem;
+$prototype-arrow-size: 0.4375rem !default;
 
 /// Color of the Arrow, `$black` by default.
 /// @type Color
-$prototype-arrow-color: $color-text-0;
+$prototype-arrow-color: $color-text-0 !default;
 
 @mixin foundation-prototype-arrow {
   @each $prototype-arrow-direction in $prototype-arrow-directions {

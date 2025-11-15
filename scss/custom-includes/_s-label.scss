@@ -10,11 +10,11 @@
 
 /// Default font size for labels.
 /// @type Number
-$label-font-size: 0.8rem !default;
+$label-font-size: $paragraph-font-size !default;
 
 /// Default padding inside labels.
 /// @type Number
-$label-padding: 0.33333rem 0.5rem !default;
+$label-padding: 0.5rem 0.75rem !default;
 
 /// Default radius of labels.
 /// @type Number

@@ -8,23 +8,23 @@
 
 /// Margin around a breadcrumbs container.
 /// @type Number
-$breadcrumbs-margin: 0 0 $global-margin 0 !default;
+$breadcrumbs-margin: 0 !default;
 
 /// Font size of breadcrumb links.
 /// @type Number
-$breadcrumbs-item-font-size: rem-calc(11) !default;
+$breadcrumbs-item-font-size: 0.875rem !default;
 
 /// Color of breadcrumb links.
 /// @type Color
-$breadcrumbs-item-color: $color-text-1 !default;
+$breadcrumbs-item-color: $color-text-2 !default;
 
 /// Color of the active breadcrumb link.
 /// @type Color
-$breadcrumbs-item-color-current: $color-text-0 !default;
+$breadcrumbs-item-color-current: $color-text-1 !default;
 
 /// Color of disabled breadcrumb links.
 /// @type Color
-$breadcrumbs-item-color-disabled: $color-text-1 !default;
+$breadcrumbs-item-color-disabled: $color-text-2 !default;
 
 /// Opacity of disabled breadcrumb links.
 /// @type Number
@@ -32,11 +32,11 @@ $breadcrumbs-item-opacity-disabled: 40% !default;
 
 /// Margin between breadcrumb items.
 /// @type Number
-$breadcrumbs-item-margin: 0.75rem !default;
+$breadcrumbs-item-margin: 0.5rem !default;
 
 /// If `true`, makes breadcrumb links uppercase.
 /// @type Boolean
-$breadcrumbs-item-uppercase: true !default;
+$breadcrumbs-item-uppercase: false !default;
 
 /// If `true`, adds a seperator between breadcrumb links.
 /// @type Boolean
@@ -49,15 +49,15 @@ $breadcrumbs-item-separator: true !default;
 
 /// Used character for the breadcrumb separator.
 /// @type Content
-$breadcrumbs-item-separator-item: '/' !default;
+$breadcrumbs-item-separator-item: "·" !default;
 
 /// Used character for the breadcrumb separator in rtl mode.
 /// @type Content
-$breadcrumbs-item-separator-item-rtl: '\\' !default;
+$breadcrumbs-item-separator-item-rtl: "·" !default;
 
 /// Color of breadcrumb separator item.
 /// @type Color
-$breadcrumbs-item-separator-color: $color-text-1 !default;
+$breadcrumbs-item-separator-color: $breadcrumbs-item-color !default;
 
 /// Opacity of breadcrumb separatpor item.
 /// @type Number

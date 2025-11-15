@@ -8,7 +8,7 @@
 
 /// Background color for select menus.
 /// @type Color
-$select-background: $color-bg-1 !default;
+$select-background: inherit !default;
 
 /// Color of the dropdown triangle inside select menus. Set to `transparent` to remove it entirely.
 /// @type Color

@@ -8,7 +8,7 @@
 
 /// Transition property to use for animating menus.
 /// @type Transition
-$drilldown-transition: transform 0.15s linear !default;
+$drilldown-transition: transform $global-transition-short $global-transition-timing !default;
 
 /// Adds arrows to drilldown items with submenus, as well as the back button.
 /// @type Boolean
@@ -24,7 +24,7 @@ $drilldown-nested-margin: 0 !default;
 
 /// Background color for drilldown top level items.
 /// @type Color
-$drilldown-background: $white !default;
+$drilldown-background: $color-bg-1 !default;
 
 /// Sets drilldown menu item padding in the submenu.
 /// @type Number
@@ -32,11 +32,11 @@ $drilldown-submenu-padding: $drilldown-padding !default;
 
 /// Background color for drilldown submenus.
 /// @type Color
-$drilldown-submenu-background: $white !default;
+$drilldown-submenu-background: $color-bg-1 !default;
 
 /// Sets drilldown arrow color if arrow is used.
 /// @type Color
-$drilldown-arrow-color: $primary-color !default;
+$drilldown-arrow-color: currentcolor !default;
 
 /// Sets drilldown arrow size if arrow is used.
 /// @type Length

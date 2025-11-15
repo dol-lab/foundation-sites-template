@@ -12,7 +12,7 @@ $tab-margin: 0 !default;
 
 /// Default background color of a tab bar.
 /// @type Color
-$tab-background: $color-bg-1 !default;
+$tab-background: transparent !default;
 
 /// Font color of tab item.
 /// @type Color
@@ -28,22 +28,22 @@ $tab-active-color: $color-text-0 !default;
 
 /// Font size of tab items.
 /// @type Number
-$tab-item-font-size: rem-calc(12) !default;
+$tab-item-font-size: inherit !default;
 
 /// Default background color on hover for items in a Menu.
 $tab-item-background-hover: $color-bg-2 !default;
 
 /// Default padding of a tab item.
 /// @type Number
-$tab-item-padding: 1.25rem 1.5rem !default;
+$tab-item-padding: 0.25rem 0.5rem !default;
 
 /// Default background color of tab content.
 /// @type Color
-$tab-content-background: $color-bg-1 !default;
+$tab-content-background: transparent !default;
 
 /// Default border color of tab content.
 /// @type Color
-$tab-content-border: $color-bg-2 !default;
+$tab-content-border: $color-border-0 !default;
 
 /// Default text color of tab content.
 /// @type Color
@@ -51,7 +51,7 @@ $tab-content-color: $color-text-1 !default;
 
 /// Default padding for tab content.
 /// @type Number | List
-$tab-content-padding: 1rem !default;
+$tab-content-padding: 0 !default;
 
 /// Adds styles for a tab container. Apply this to a `<ul>`.
 @mixin tabs-container($margin: $tab-margin, $background: $tab-background, $border-color: $tab-content-border) {

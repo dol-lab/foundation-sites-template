@@ -8,11 +8,11 @@
 
 /// Color of labels prefixed to an input.
 /// @type Color
-$input-prefix-color: $color-text-0 !default;
+$input-prefix-color: currentcolor !default;
 
 /// Background color of labels prefixed to an input.
 /// @type Color
-$input-prefix-background: $color-bg-2 !default;
+$input-prefix-background: inherit !default;
 
 /// Border around labels prefixed to an input.
 /// @type Border

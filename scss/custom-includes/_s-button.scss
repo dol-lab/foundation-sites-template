@@ -17,11 +17,20 @@ $button-font-weight: null !default;
 
 /// Padding inside buttons.
 /// @type List
-$button-padding: 0.85em 1em !default;
+$button-padding: 0.5rem 0.75rem !default;
+
+/// Sizes for buttons.
+/// @type Map
+$button-sizes: (
+  tiny: 0.625rem,
+  small: 0.8rem,
+  default: 0.9rem,
+  large: 1rem
+) !default;
 
 /// Margin around buttons.
 /// @type List
-$button-margin: 0 0 $global-margin 0 !default;
+$button-margin: 0 0 map-get($button-sizes, default) 0 !default;
 
 /// Default fill for buttons. Can either be `solid` or `hollow`.
 /// @type Keyword
@@ -29,15 +38,15 @@ $button-fill: solid !default;
 
 /// Default background color for buttons.
 /// @type Color
-$button-background: $color-text-1 !default;
+$button-background: $color-text-0 !default;
 
 /// Background color on hover for buttons.
 /// @type Color
-$button-background-hover: $color-text-2 !default;
+$button-background-hover: $color-text-1 !default;
 
 /// Default font color for buttons.
 /// @type List
-$button-color: $color-bg-1 !default;
+$button-color: $color-bg-0 !default;
 
 /// Border radius for buttons, defaulted to global-radius.
 /// @type Number
@@ -49,16 +58,7 @@ $button-border: 1px solid transparent !default;
 
 /// Border width for hollow outline buttons
 /// @type Number
-$button-hollow-border-width: 1px !default;
-
-/// Sizes for buttons.
-/// @type Map
-$button-sizes: (
-  tiny: 0.6rem,
-  small: 0.75rem,
-  default: 0.9rem,
-  large: 1.25rem
-) !default;
+$button-hollow-border-width: 0 !default;
 
 /// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, and so on.
 /// @type Map
@@ -66,7 +66,7 @@ $button-palette: $foundation-palette !default;
 
 /// opacity for a disabled button.
 /// @type List
-// $button-opacity-disabled: 0.25 !default;
+$button-opacity-disabled: 0.5 !default;
 
 /// Background color lightness on hover for buttons.
 /// @type Number
@@ -86,8 +86,8 @@ $button-palette: $foundation-palette !default;
 /// transitions for buttons.
 /// @type List
 $button-transition:
-  background-color 0.25s ease-out,
-  color 0.25s ease-out !default;
+  background-color $global-transition-short $global-transition-timing,
+  color $global-transition-short $global-transition-timing !default;
 
 /// Additional responsive classes for .expanded
 /// @type Boolean

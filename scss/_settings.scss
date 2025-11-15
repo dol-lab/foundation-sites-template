@@ -63,789 +63,165 @@
 //  56. Xy Grid
 
 @import "custom-includes/foundation-spaces/util/util";
+@import "custom-includes/foundation-spaces/global";
 
 // 0. Custom Settings (not Foundation-default)
-
-$global-radius-small: var(--global-radius-small);
-$global-gutter-small: 10px;
-$global-gutter-large: 16px;
-$global-transition-short: 100ms;
-$global-transition-medium: $global-transition-short * 2.5;
-$global-transition-long: $global-transition-short * 5;
-$global-transition-timing: ease-in-out;
-$global-transition-timing-cubic-bezier: cubic-bezier(0.8, 0, 0.2, 1.2);
-$global-drop-shadow: var(--f-drop-shadow);
-$global-drop-shadow-large: var(--f-drop-shadow-large);
-$global-focus-color: Highlight;
-$global-focus: 0 0 0 2px $global-focus-color;
-$paragraph-font-size: 0.9rem;
+// Custom settings have been moved to foundation-spaces/_global.scss
 
 // 1. Global
-// ---------
-
-$global-font-size: 1rem;
-$global-width: rem-calc(1120);
-$global-lineheight: 1.4;
-$body-background: $color-bg-2;
-$body-font-color: $color-text-0;
-$body-font-family: "Roboto", helvetica, arial, sans-serif;
-$body-antialiased: true;
-$global-margin: 1rem;
-$global-padding: 1rem;
-$global-position: 1rem;
-$global-weight-normal: 400;
-$global-weight-bold: 500;
-$global-radius: var(--f-radius);
-$global-menu-padding: 0.75rem 0.9rem;
-$global-menu-nested-margin: 1rem;
-$global-text-direction: ltr;
-$global-flexbox: true;
-$global-prototype-breakpoints: false;
-$global-button-cursor: auto;
-$global-color-pick-contrast-tolerance: 3;
-$print-transparent-backgrounds: true;
-$print-hrefs: true;
-$global-left: if($global-text-direction == rtl, right, left);
-$global-right: if($global-text-direction == rtl, left, right);
-
-@include add-foundation-colors;
+// Global settings have been moved to foundation-spaces/_global.scss
 
 // 2. Breakpoints
-// --------------
-
-$breakpoints: (
-  small: 0,
-  medium: 480px,
-  large: 720px,
-  xlarge: 960px,
-  xxlarge: 1200px,
-);
-$breakpoints-hidpi: (
-  hidpi-1: 1,
-  hidpi-1-5: 1.5,
-  hidpi-2: 2,
-  retina: 2,
-  hidpi-3: 3,
-);
-$print-breakpoint: large;
-$breakpoint-classes: (small medium large xlarge xxlarge);
+// Breakpoint settings have been moved to util/_breakpoint.scss
 
 // 3. The Grid
-// -----------
-
-$grid-row-width: $global-width;
-$grid-column-count: 12;
-$grid-column-gutter: (
-  small: $global-gutter-small,
-  medium: $global-gutter-small,
-);
-$grid-column-align-edge: true;
-$grid-column-alias: "columns";
-$block-grid-max: 8;
+// Grid settings have been moved to grid/_grid.scss
 
 // 4. Base Typography
-// ------------------
-
-$header-font-family: inherit;
-$header-font-weight: $global-weight-bold;
-$header-font-style: normal;
-$font-family-monospace: monaco, "Consolas", "Liberation Mono", "Courier New", courier, monospace;
-$header-color: inherit;
-$header-lineheight: 1.1;
-$header-margin-bottom: 0.5rem;
-
-///
-/// @todo
-/// This is a terrible way of doing this, especially the font size calculations. For fluid typography, use clamp(). --> https://clamp.font-size.app/
-$header-styles: (
-  small: (
-    "h1": (
-      "font-size": 23 * 0.8,
-      "font-weight": 400,
-    ),
-    "h2": (
-      "font-size": 21 * 0.8,
-      "font-weight": 500,
-    ),
-    "h3": (
-      "font-size": 19 * 0.8,
-      "font-weight": 500,
-    ),
-    "h4": (
-      "font-size": 19 * 0.8,
-      "color": $color-text-0,
-      "font-weight": 400,
-    ),
-    "h5": (
-      "font-size": 17 * 0.8,
-      "color": $color-text-0,
-      "font-weight": 400,
-    ),
-    "h6": (
-      "font-size": 17 * 0.8,
-      "color": $color-text-0,
-      "font-style": italic,
-      "font-weight": 400,
-    ),
-  ),
-  medium: (
-    "h1": (
-      "font-size": 23 * 0.9,
-      "font-weight": 400,
-    ),
-    "h2": (
-      "font-size": 21 * 0.9,
-      "font-weight": 500,
-    ),
-    "h3": (
-      "font-size": 19 * 0.9,
-      "font-weight": 500,
-    ),
-    "h4": (
-      "font-size": 19 * 0.9,
-      "color": $color-text-0,
-      "font-weight": 400,
-    ),
-    "h5": (
-      "font-size": 17 * 0.9,
-      "color": $color-text-0,
-      "font-weight": 400,
-    ),
-    "h6": (
-      "font-size": 17 * 0.9,
-      "color": $color-text-0,
-      "font-style": italic,
-      "font-weight": 400,
-    ),
-  ),
-  large: (
-    "h1": (
-      "font-size": 23,
-      "font-weight": 400,
-    ),
-    "h2": (
-      "font-size": 21,
-      "font-weight": 500,
-    ),
-    "h3": (
-      "font-size": 19,
-      "font-weight": 500,
-    ),
-    "h4": (
-      "font-size": 19,
-      "color": $color-text-0,
-      "font-weight": 400,
-    ),
-    "h5": (
-      "font-size": 17,
-      "color": $color-text-0,
-      "font-weight": 400,
-    ),
-    "h6": (
-      "font-size": 17,
-      "color": $color-text-0,
-      "font-style": italic,
-      "font-weight": 400,
-    ),
-  ),
-);
-$header-text-rendering: optimizelegibility;
-$small-font-size: 0.8rem;
-$header-small-font-color: $color-text-0;
-$paragraph-lineheight: 1.6;
-$paragraph-margin-bottom: 0.8rem;
-$paragraph-text-rendering: optimizelegibility;
-$enable-code-inline: true;
-$anchor-color: inherit;
-$anchor-color-hover: inherit;
-$anchor-text-decoration: none;
-$anchor-text-decoration-hover: none;
-$hr-width: $global-width;
-$hr-border-color: $color-border-0;
-$hr-border: 1px solid $hr-border-color;
-$hr-margin: rem-calc(20) auto;
-$list-lineheight: $paragraph-lineheight;
-$list-margin-bottom: $paragraph-margin-bottom;
-$list-style-type: disc;
-$list-style-position: outside;
-$list-side-margin: rem-calc(20);
-$list-nested-side-margin: 1rem; // nested lists in wp-content
-$defnlist-margin-bottom: 1rem;
-$defnlist-term-weight: $global-weight-bold;
-$defnlist-term-margin-bottom: 0.3rem;
-$blockquote-color: $color-text-1;
-$blockquote-padding: rem-calc(0 20 0 19);
-$blockquote-border: 1px solid $color-border-2;
-$enable-cite-block: true;
-$keystroke-font: $font-family-monospace;
-$keystroke-color: $color-text-0;
-$keystroke-background: $color-bg-2;
-$keystroke-padding: rem-calc(2 4 0);
-$keystroke-radius: $global-radius-small;
-$abbr-underline: 1px dotted $color-text-0;
+// Base Typography settings have been moved to typography/_base.scss
 
 // 5. Typography Helpers
-// ---------------------
-
-$lead-font-size: rem-calc($global-font-size * 1.25);
-$lead-lineheight: 1.5;
-$subheader-lineheight: 1.4;
-$subheader-font-weight: $global-weight-normal;
-$subheader-margin-top: 0.2rem;
-$subheader-margin-bottom: 0.5rem;
-$stat-font-size: 3rem;
-$cite-color: $blockquote-color;
-$cite-font-size: rem-calc(13);
-$cite-pseudo-content: "\2014 \0020";
-$code-color: $color-text-0;
-$code-font-family: $font-family-monospace;
-$code-font-weight: $global-weight-normal;
-$code-background: $color-bg-2;
-
-// $code-background: color-mix(in oklab, $color-text-0 7%, $color-bg-1 93%);
-// $code-border: 1px solid color-mix(in oklab, $color-text-0 11%, $color-bg-1 89%);
-$code-border: 1px solid $color-border-1;
-$code-padding: rem-calc(2 5 1);
-$code-block-padding: 1rem;
-$code-block-margin-bottom: 1.5rem;
+// Typography Helpers settings have been moved to typography/_helpers.scss
 
 // 6. Abide
-// --------
-
-$abide-inputs: true;
-$abide-labels: true;
-$input-background-invalid: var(--f-color-alert);
-$form-label-color-invalid: var(--f-color-alert);
-$input-error-color: var(--f-color-alert);
-$input-error-font-size: $small-font-size;
-$input-error-font-weight: $global-weight-normal;
+// Abide settings have been moved to forms/_error.scss
 
 // 7. Accordion
 // ------------
-
-$accordion-background: $color-bg-1;
-$accordion-plusminus: true;
-$accordion-plus-content: "\002B";
-$accordion-minus-content: "\2013";
-$accordion-title-font-size: rem-calc(12);
-$accordion-item-color: $color-text-0;
-$accordion-item-background-hover: $color-bg-2;
-$accordion-item-padding: 1.25rem 1rem;
-$accordion-content-background: transparent;
-$accordion-content-border-color: $color-border-0;
-$accordion-content-border: 1px solid $accordion-content-border-color;
-$accordion-content-color: $color-text-1;
-$accordion-content-padding: 1rem;
+// Accordion settings have been moved to _s-accordion.scss
 
 // 8. Accordion Menu
 // -----------------
-
-$accordionmenu-padding: $global-menu-padding;
-$accordionmenu-nested-margin: 0;
-$accordionmenu-submenu-padding: $accordionmenu-padding;
-$accordionmenu-arrows: false;
-
-// $accordionmenu-arrow-color: $color-text-0;
-$accordionmenu-arrow-color: currentcolor;
-$accordionmenu-item-background: null;
-$accordionmenu-border: null;
-$accordionmenu-submenu-toggle-background: null;
-$accordion-submenu-toggle-border: $accordionmenu-border;
-$accordionmenu-submenu-toggle-width: 36px;
-$accordionmenu-submenu-toggle-height: $accordionmenu-submenu-toggle-width;
-$accordionmenu-arrow-size: 4px;
+// Accordion Menu settings have been moved to _s-accordion-menu.scss
 
 // 9. Badge
-// --------
-
-$badge-background: $color-text-0;
-$badge-color: $color-bg-1;
-$badge-palette: $foundation-palette;
-$badge-height: 1.25rem;
-$badge-font-size: 0.7em;
-$badge-padding: $badge-height / 4; // <-- this way, it only affects badges with longer text.
+// Badge settings have been moved to _s-badge.scss
 
 // 10. Breadcrumbs
 // ---------------
-
-$breadcrumbs-margin: 0;
-$breadcrumbs-item-font-size: 0.9rem;
-$breadcrumbs-item-color: $color-text-1;
-$breadcrumbs-item-color-current: $color-text-0;
-$breadcrumbs-item-color-disabled: $color-text-2;
-$breadcrumbs-item-opacity-disabled: 40%;
-$breadcrumbs-item-margin: 0.5rem;
-$breadcrumbs-item-uppercase: false;
-$breadcrumbs-item-separator: true;
-$breadcrumbs-item-separator-item: "·";
-$breadcrumbs-item-separator-item-rtl: "·";
-$breadcrumbs-item-separator-color: $breadcrumbs-item-color;
-$breadcrumbs-item-separator-opacity: 60%;
+// Breadcrumbs settings are defined in _custom-settings.scss
 
 // 11. Button
 // ----------
-$button-sizes: (
-  tiny: 0.625rem,
-  small: 0.8rem,
-  default: 0.9rem,
-  large: 1rem,
-);
-$button-font-family: inherit;
-$button-background: $color-text-0;
-$button-background-hover: $color-text-1;
-$button-color: $color-bg-0;
-$button-font-weight: null;
-$button-padding: 0.5rem 0.75rem; // same as button padding.
-$button-margin: 0 0 map-get($button-sizes, default) 0;
-$button-fill: solid;
-$button-radius: $global-radius;
-$button-hollow-border-width: 0;
-$button-border: 1px solid transparent;
-$button-hollow-border-width: 1px;
-$button-opacity-disabled: 0.5;
-$button-transition:
-  background-color $global-transition-short $global-transition-timing,
-  color $global-transition-short $global-transition-timing;
-$button-responsive-expanded: false;
-$button-palette: $foundation-palette;
+// Button settings have been moved to _s-button.scss
 
 // 12. Button Group
-// ----------------
-
-$buttongroup-margin: map-get($button-sizes, default);
-$buttongroup-spacing: 1px;
-$buttongroup-child-selector: ".button";
-$buttongroup-expand-max: 6;
-$buttongroup-radius-on-each: false;
+// Button Group settings have been moved to _s-button-group.scss
 
 // 13. Callout
 // -----------
-
-$callout-background-fade: 85%;
-$callout-margin: 0 0 1rem 0;
-$callout-sizes: (
-  small: 0.5rem,
-  default: 1rem,
-  large: 3rem,
-);
-$callout-radius: $global-radius;
-$callout-link-tint: 15%;
+// All callout variables match their defaults - no overrides needed
 
 // 14. Card
 // --------
-
-$card-background: $color-bg-1;
-$card-font-color: inherit;
-$card-divider-background: transparent;
-$card-border: none;
-$card-shadow: none;
-$card-border-radius: $global-radius;
-$card-padding: none; // $global-padding;
-$card-margin-bottom: 0;
+// Card settings have been moved to foundation-spaces/components/_card.scss
 
 // 15. Close Button
-// ----------------
-
-$closebutton-position: right top;
-$closebutton-z-index: 10;
-$closebutton-default-size: medium;
-$closebutton-offset-horizontal: (
-  small: 1rem,
-  medium: 0.75rem,
-);
-$closebutton-offset-vertical: (
-  small: 1rem,
-  medium: 0.5rem,
-);
-$closebutton-size: (
-  small: 0.9rem,
-  medium: 2em,
-);
-$closebutton-lineheight: 1;
-$closebutton-color: $color-text-1;
-$closebutton-color-hover: $color-text-0;
+// Close Button settings have been moved to components/_close-button.scss
 
 // 16. Drilldown
-// -------------
-
-$drilldown-transition: transform $global-transition-short $global-transition-timing;
-$drilldown-arrows: true;
-$drilldown-padding: $global-menu-padding;
-$drilldown-nested-margin: 0;
-$drilldown-background: $color-bg-1;
-$drilldown-submenu-padding: $drilldown-padding;
-$drilldown-submenu-background: $color-bg-1;
-$drilldown-arrow-color: currentcolor;
-$drilldown-arrow-size: 6px;
+// Drilldown settings have been moved to components/_drilldown.scss
 
 // 17. Dropdown
-// ------------
-
-$dropdown-padding: 0;
-$dropdown-background: $card-background;
-$dropdown-border: none;
-$dropdown-font-size: 0.75rem;
-$dropdown-width: 250px;
-$dropdown-radius: $global-radius;
-$dropdown-sizes: (
-  tiny: 100px,
-  small: 200px,
-  large: 400px,
-);
+// Dropdown settings have been moved to components/_dropdown.scss
 
 // 18. Dropdown Menu
-// -----------------
-
-$dropdownmenu-arrows: true;
-$dropdownmenu-arrow-color: $anchor-color;
-$dropdownmenu-arrow-size: 6px;
-$dropdownmenu-arrow-padding: 1.5rem;
-$dropdownmenu-min-width: 200px;
-$dropdownmenu-background: $color-text-0;
-$dropdownmenu-submenu-background: $dropdownmenu-background;
-$dropdownmenu-padding: $global-menu-padding; // 0.9rem;
-$dropdownmenu-nested-margin: 0;
-$dropdownmenu-submenu-padding: 0.75rem 0.9rem;
-
-// $dropdownmenu-border: 1px solid color-mix(in oklab, $color-text-0 10%, $color-bg-1 90%);
-$dropdownmenu-border: 1px solid $color-border-0;
-$dropdown-menu-item-color-active: none;
-$dropdown-menu-item-background-active: $color-bg-2;
+// Dropdown Menu settings have been moved to components/_dropdown-menu.scss
 
 // 19. Flexbox Utilities
-// ---------------------
-
-$flex-source-ordering-count: 6;
-$flexbox-responsive-breakpoints: true;
+// Flexbox Utilities settings have been moved to components/_flex.scss
 
 // 20. Forms
 // ---------
-
-$fieldset-border: 1px solid $color-border-0;
-$fieldset-padding: rem-calc(20);
-$fieldset-margin: rem-calc(18 0);
-$legend-padding: rem-calc(0 3);
-$form-spacing: rem-calc(16);
-$helptext-color: currentcolor;
-$helptext-font-size: rem-calc(13);
-$helptext-font-style: italic;
-$input-prefix-color: currentcolor;
-$input-prefix-background: inherit;
-$input-prefix-border: 1px solid $color-border-0;
-$input-prefix-padding: 1rem;
-$form-label-color: inherit;
-$form-label-font-size: rem-calc(14);
-$form-label-font-weight: $global-weight-normal;
-$form-label-line-height: 1.3;
-$select-background: inherit;
-
-// $select-triangle-color: $color-text-1; <-- has no effect anymore, as scss variables were computed into rgb, then encoded into an svg background attatchment. Browsers cant do that with CSS vars (yet).
-$select-radius: $global-radius;
-$input-color: currentcolor;
-$input-color-disabled: color-mix-opacity(#{$color-text-1}, 50%, 50%);
-$input-font-family: inherit;
-$input-font-size: rem-calc(14);
-$input-font-weight: $global-weight-normal;
-$input-line-height: $global-lineheight;
-$input-background: $color-bg-1;
-$input-background-focus: $color-bg-1;
-$input-background-disabled: color-mix-opacity(#{$color-bg-1}, 50%, 50%);
-$input-border-disabled: color-mix-opacity(#{$color-bg-2}, 80%, 20%);
-$input-border: 1px solid $color-border-1;
-$input-border-focus: 1px solid $color-text-2;
-$input-padding: $form-spacing / 2;
-$input-shadow: none;
-$input-shadow-focus: none;
-$input-cursor-disabled: not-allowed;
-$input-transition:
-  box-shadow $global-transition-long $global-transition-timing,
-  border-color $global-transition-medium $global-transition-timing;
-$input-number-spinners: true;
-$input-radius: $global-radius;
-$form-button-radius: $global-radius;
+// Forms settings have been moved to foundation-spaces/forms/* files
 
 // 21. Label
-// ---------
-$label-background-default: $color-text-1;
-$label-color-default: $color-bg-1;
-$label-palette: $foundation-palette;
-$label-font-size: $paragraph-font-size;
-$label-padding: 0.5rem 0.75rem; // same as button padding
-$label-radius: $global-radius;
+// Label settings have been moved to _s-label.scss
 
 // 22. Media Object
-// ----------------
-
-$mediaobject-margin-bottom: $global-margin;
-$mediaobject-section-padding: $global-padding;
-$mediaobject-image-width-stacked: 100%;
+// Media Object settings have been moved to components/_media-object.scss
 
 // 23. Menu
-// --------
-
-$menu-margin: 0;
-$menu-nested-margin: $global-menu-nested-margin;
-$menu-items-padding: $global-menu-padding;
-$menu-simple-margin: 1rem;
-$menu-item-color-active: $color-text-0;
-$menu-item-background-active: $color-bg-2; // none;
-$menu-icon-spacing: 0.5rem;
-$menu-item-background-hover: $color-bg-2;
-$menu-state-back-compat: true;
-$menu-centered-back-compat: true;
-$menu-icons-back-compat: true;
+// Menu settings have been moved to _s-menu.scss
 
 // 24. Meter
-// ---------
-
-$meter-height: 1rem;
-$meter-radius: $global-radius;
-$meter-background: $color-bg-1;
-$meter-fill-good: var(--f-color-success);
-$meter-fill-medium: var(--f-color-warning);
-$meter-fill-bad: var(--f-color-alert);
+// Meter settings have been moved to forms/_meter.scss
 
 // 25. Off-canvas
-// --------------
-
-$offcanvas-sizes: (
-  small: 250px,
-);
-$offcanvas-vertical-sizes: (
-  small: 250px,
-);
-$offcanvas-background: $color-bg-2;
-$offcanvas-shadow: 0 0 10px color-mix-opacity(#{$color-text-0}, 70%, 30%);
-$offcanvas-inner-shadow-size: 20px;
-$offcanvas-inner-shadow-color: color-mix-opacity(#{$color-text-0}, 25%, 75%);
-$offcanvas-overlay-zindex: 11;
-$offcanvas-push-zindex: 12;
-$offcanvas-overlap-zindex: 13;
-$offcanvas-reveal-zindex: 12;
-$offcanvas-transition-length: $global-transition-long;
-$offcanvas-transition-timing: $global-transition-timing;
-$offcanvas-fixed-reveal: true;
-$offcanvas-exit-background: color-mix-opacity(#{$color-bg-0}, 25%, 75%);
-$maincontent-class: "off-canvas-content";
+// Off-canvas settings have been moved to components/_off-canvas.scss
 
 // 26. Orbit
-// ---------
-
-$orbit-bullet-background: color-mix-opacity(#{$color-text-0}, 10%, 90%);
-$orbit-bullet-background-active: $color-text-0;
-$orbit-bullet-diameter: 0.75rem;
-$orbit-bullet-margin: 0.25rem;
-$orbit-bullet-margin-top: 0.5rem;
-$orbit-bullet-margin-bottom: 0.5rem;
-$orbit-caption-background: color-mix-opacity(#{$color-bg-1}, 75%, 35%);
-$orbit-caption-padding: 0.25rem;
-$orbit-control-background: $color-bg-0;
-$orbit-control-padding: 1rem;
-$orbit-control-zindex: 10;
+// Orbit settings have been moved to _s-orbit.scss
 
 // 27. Pagination
-// --------------
-
-$pagination-font-size: rem-calc(14);
-$pagination-margin-bottom: 0;
-$pagination-item-color: $color-text-1;
-$pagination-item-padding: rem-calc(3 10);
-$pagination-item-spacing: 0.125rem;
-$pagination-radius: $global-radius;
-$pagination-item-background-hover: $color-bg-1;
-$pagination-item-background-current: $color-bg-1;
-$pagination-item-color-current: $color-text-0;
-$pagination-item-color-disabled: color-mix-opacity(#{$color-text-1}, 50%, 50%);
-$pagination-ellipsis-color: $color-text-0;
-$pagination-mobile-items: false;
-$pagination-mobile-current-item: false;
-$pagination-arrows: true;
-$pagination-arrow-previous: "\00AB";
-$pagination-arrow-next: "\00BB";
+// Pagination settings have been moved to components/_pagination.scss
 
 // 28. Progress Bar
-// ----------------
-
-$progress-height: 1rem;
-$progress-background: color-mix-blend(#{$color-text-1}, 7%, #{$color-bg-1}, 93%);
-$progress-margin-bottom: $global-margin;
-$progress-meter-background: var(--f-color-brand);
-$progress-radius: $global-radius;
+// Progress Bar settings have been moved to forms/_progress.scss
 
 // 29. Prototype Arrow
-// -------------------
-
-$prototype-arrow-directions: (down, up, right, left);
-$prototype-arrow-size: 0.4375rem;
-$prototype-arrow-color: $color-text-0;
+// Prototype Arrow settings have been moved to prototype/_arrow.scss
 
 // 30. Prototype Border-Box
-// ------------------------
-
-$prototype-border-box-breakpoints: $global-prototype-breakpoints;
+// Prototype Border-Box settings have been moved to prototype/_border-box.scss
 
 // 31. Prototype Border-None
-// -------------------------
-
-$prototype-border-none-breakpoints: $global-prototype-breakpoints;
+// Prototype Border-None settings have been moved to prototype/_border-none.scss
 
 // 32. Prototype Bordered
-// ----------------------
-
-$prototype-bordered-breakpoints: $global-prototype-breakpoints;
-$prototype-border-width: rem-calc(1);
-$prototype-border-type: solid;
-$prototype-border-color: $color-border-0;
+// Prototype Bordered settings have been moved to prototype/_bordered.scss
 
 // 33. Prototype Display
-// ---------------------
-
-$prototype-display-breakpoints: $global-prototype-breakpoints;
-$prototype-display: (inline, inline-block, block, table, table-cell);
+// Prototype Display settings have been moved to prototype/_display.scss
 
 // 34. Prototype Font-Styling
-// --------------------------
-
-$prototype-font-breakpoints: $global-prototype-breakpoints;
-$prototype-wide-letter-spacing: rem-calc(4);
-$prototype-font-normal: $global-weight-normal;
-$prototype-font-bold: $global-weight-bold;
+// Prototype Font-Styling settings have been moved to prototype/_font-styling.scss
 
 // 35. Prototype List-Style-Type
-// -----------------------------
-
-$prototype-list-breakpoints: $global-prototype-breakpoints;
-$prototype-style-type-unordered: (disc, circle, square);
-$prototype-style-type-ordered: (decimal, lower-alpha, lower-latin, lower-roman, upper-alpha, upper-latin, upper-roman);
+// Prototype List-Style-Type settings have been moved to prototype/_list-style-type.scss
 
 // 36. Prototype Overflow
-// ----------------------
-
-$prototype-overflow-breakpoints: $global-prototype-breakpoints;
-$prototype-overflow: (visible, hidden, scroll);
+// Prototype Overflow settings have been moved to prototype/_overflow.scss
 
 // 37. Prototype Position
-// ----------------------
-
-$prototype-position-breakpoints: $global-prototype-breakpoints;
-$prototype-position: (static, relative, absolute, fixed);
-$prototype-position-z-index: 975;
+// Prototype Position settings have been moved to prototype/_position.scss
 
 // 38. Prototype Rounded
-// ---------------------
-
-$prototype-rounded-breakpoints: $global-prototype-breakpoints;
-$prototype-border-radius: rem-calc(3);
+// Prototype Rounded settings have been moved to prototype/_rounded.scss
 
 // 39. Prototype Separator
-// -----------------------
-
-$prototype-separator-breakpoints: $global-prototype-breakpoints;
-$prototype-separator-align: center;
-$prototype-separator-height: rem-calc(2);
-$prototype-separator-width: 3rem;
-$prototype-separator-background: $primary-color;
-$prototype-separator-margin-top: $global-margin;
+// Prototype Separator settings have been moved to prototype/_separator.scss
 
 // 40. Prototype Shadow
-// --------------------
-
-$prototype-shadow-breakpoints: $global-prototype-breakpoints;
-$prototype-box-shadow:
-  0 2px 5px 0 color-mix-opacity(#{$color-text-0}, 16%, 84%),
-  0 2px 10px 0 color-mix-opacity(#{$color-text-0}, 12%, 88%);
+// Prototype Shadow settings have been moved to prototype/_shadow.scss
 
 // 41. Prototype Sizing
-// --------------------
-
-$prototype-sizing-breakpoints: $global-prototype-breakpoints;
-$prototype-sizing: (width, height);
-$prototype-sizes: (
-  25: 25%,
-  50: 50%,
-  75: 75%,
-  100: 100%,
-);
+// Prototype Sizing settings have been moved to prototype/_sizing.scss
 
 // 42. Prototype Spacing
-// ---------------------
-
-$prototype-spacing-breakpoints: $global-prototype-breakpoints;
-$prototype-spacers-count: 3;
+// Prototype Spacing settings have been moved to prototype/_spacing.scss
 
 // 43. Prototype Text-Decoration
-// -----------------------------
-
-$prototype-decoration-breakpoints: $global-prototype-breakpoints;
-$prototype-text-decoration: (overline, underline, line-through);
+// Prototype Text-Decoration settings have been moved to prototype/_text-decoration.scss
 
 // 44. Prototype Text-Transformation
-// ---------------------------------
-
-$prototype-transformation-breakpoints: $global-prototype-breakpoints;
-$prototype-text-transformation: (lowercase, uppercase, capitalize);
+// Prototype Text-Transformation settings have been moved to prototype/_text-transformation.scss
 
 // 45. Prototype Text-Utilities
-// ----------------------------
-
-$prototype-utilities-breakpoints: $global-prototype-breakpoints;
-$prototype-text-overflow: ellipsis;
+// Prototype Text-Utilities settings have been moved to prototype/_text-utilities.scss
 
 // 46. Responsive Embed
-// --------------------
-
-$responsive-embed-margin-bottom: rem-calc(16);
-$responsive-embed-ratios: (
-  default: 4 by 3,
-  widescreen: 16 by 9,
-);
+// Responsive Embed settings have been moved to components/_responsive-embed.scss
 
 // 47. Reveal
-// ----------
-
-$reveal-background: $color-bg-1;
-$reveal-width: calc(100% - 2 * #{$global-gutter-large});
-$reveal-max-width: map-get($breakpoints, large);
-$reveal-padding: $global-padding;
-$reveal-border: none;
-$reveal-radius: $global-radius;
-$reveal-zindex: 1005;
-$reveal-overlay-background: color-mix-opacity(#{$color-text-0}, 14%, 86%);
+// Reveal settings have been moved to _s-reveal.scss
 
 // 48. Slider
-// ----------
-
-$slider-width-vertical: 0.5rem;
-$slider-transition: all $global-transition-medium $global-transition-timing;
-$slider-height: 0.25rem;
-$slider-background: color-mix-opacity(#{$color-text-0}, 14%, 86%);
-$slider-fill-background: color-mix-opacity(#{$color-text-0}, 30%, 70%);
-$slider-handle-height: 1.4rem;
-$slider-handle-width: 1rem;
-$slider-handle-background: $color-text-0;
-$slider-opacity-disabled: 0.25;
-$slider-radius: $global-radius;
+// Slider settings have been moved to _s-slider.scss and forms/_range.scss
 
 // 49. Switch
 // ----------
-
-$switch-background: inherit;
-$switch-background-active: $color-text-1;
-$switch-height: 1rem;
-$switch-height-tiny: 0.625rem;
-$switch-height-small: 0.75rem;
-$switch-height-large: 1.5rem;
-$switch-radius: $global-radius;
-$switch-margin: 0;
-$switch-paddle-background: $color-bg-1;
-$switch-paddle-offset: 0;
-$switch-paddle-radius: $global-radius;
-$switch-paddle-transition:
-  left $global-transition-short $global-transition-timing,
-  color $global-transition-short $global-transition-timing,
-  box-shadow $global-transition-medium $global-transition-timing;
-$switch-opacity-disabled: 0.5;
-$switch-cursor-disabled: not-allowed;
+// Switch settings have been moved to _s-switch.scss
 
 // 50. Table
 // ---------
@@ -854,86 +230,19 @@ $switch-cursor-disabled: not-allowed;
 
 // 51. Tabs
 // --------
-
-$tab-margin: 0;
-$tab-background: transparent;
-$tab-color: $color-text-1;
-$tab-background-active: $color-bg-2;
-$tab-active-color: $color-text-0;
-$tab-item-font-size: inherit;
-$tab-item-background-hover: $color-bg-2;
-$tab-item-padding: 0.25rem 0.5rem;
-$tab-content-background: transparent;
-$tab-content-border: $color-border-0;
-$tab-content-color: $color-text-1;
-$tab-content-padding: 0;
+// Tabs settings have been moved to _s-tabs.scss
 
 // 52. Thumbnail
-// -------------
-
-$thumbnail-border: 4px solid $color-border-0;
-$thumbnail-margin-bottom: $global-margin;
-$thumbnail-shadow: none;
-$thumbnail-shadow-hover: $global-drop-shadow;
-$thumbnail-transition: box-shadow $global-transition-medium $global-transition-timing;
-$thumbnail-radius: $global-radius;
+// Thumbnail settings have been moved to components/_thumbnail.scss
 
 // 53. Title Bar
-// -------------
-
-$titlebar-background: $color-bg-1;
-$titlebar-color: $color-text-1;
-$titlebar-padding: 0.5rem;
-$titlebar-text-font-weight: bold;
-$titlebar-icon-color: $color-text-2;
-$titlebar-icon-color-hover: $color-text-1;
-$titlebar-icon-spacing: 0.25rem;
+// Title Bar settings have been moved to components/_title-bar.scss
 
 // 54. Tooltip
-// -----------
-
-$has-tip-cursor: help;
-$has-tip-font-weight: $global-weight-normal;
-$has-tip-border-bottom: none; // dotted 1px $color-text-2;
-$tooltip-background-color: $color-text-0;
-$tooltip-color: $color-bg-1;
-$tooltip-padding: 0.75rem;
-$tooltip-max-width: 12rem;
-$tooltip-font-size: $small-font-size;
-$tooltip-pip-width: 0.75rem;
-$tooltip-pip-height: $tooltip-pip-width * 0.866;
-$tooltip-radius: $global-radius;
+// Tooltip settings have been moved to components/_tooltip.scss
 
 // 55. Top Bar
-// -----------
+// Top Bar settings have been moved to components/_top-bar.scss
 
-$topbar-padding: 0.5rem;
-$topbar-background: $color-bg-1;
-$topbar-submenu-background: $topbar-background;
-$topbar-title-spacing: 0.5rem 1rem 0.5rem 0;
-$topbar-input-width: 200px;
-$topbar-unstack-breakpoint: medium;
-
-// 56. Xy Grid
-// -----------
-
-$xy-grid: true;
-$grid-container: $global-width;
-$grid-columns: 12;
-$grid-margin-gutters: (
-  small: $global-gutter-small,
-  medium: $global-gutter-small,
-  large: $global-gutter-large,
-  xlarge: $global-gutter-large,
-  xxlarge: $global-gutter-large,
-);
-$grid-padding-gutters: $grid-margin-gutters;
-$grid-container-padding: (
-  small: 2 * $global-gutter-small,
-  medium: 2 * $global-gutter-small,
-  large: 2 * $global-gutter-large,
-  xlarge: 2 * $global-gutter-large,
-  xxlarge: 2 * $global-gutter-large,
-);
-$grid-container-max: $global-width;
-$xy-block-grid-max: 8;
+// 56. XY Grid
+// XY Grid settings have been moved to xy-grid/_xy-grid.scss

@@ -8,11 +8,11 @@
 
 /// Default font size for lead paragraphs.
 /// @type Number
-$lead-font-size: $global-font-size * 1.25 !default;
+$lead-font-size: rem-calc($global-font-size * 1.25) !default;
 
 /// Default line height for lead paragraphs.
 /// @type String
-$lead-lineheight: 1.6 !default;
+$lead-lineheight: 1.5 !default;
 
 /// Default line height for subheaders.
 /// @type Number
@@ -36,11 +36,11 @@ $subheader-margin-bottom: 0.5rem !default;
 
 /// Default font size for statistic numbers.
 /// @type Number
-$stat-font-size: 2.5rem !default;
+$stat-font-size: 3rem !default;
 
 /// Text color for `.cite-block` component.
 /// @type Color
-$cite-color: $dark-gray !default;
+$cite-color: $blockquote-color !default;
 
 /// Font size for `.cite-block` component.
 /// @type Number
@@ -52,7 +52,7 @@ $cite-pseudo-content: "\2014 \0020" !default;
 
 /// Text color of `.code-inline` and `.code-block` components.
 /// @type Color
-$code-color: $black !default;
+$code-color: $color-text-0 !default;
 
 /// Font family of `.code-inline` and `.code-block` components.
 /// @type String | List
@@ -64,11 +64,11 @@ $code-font-weight: $global-weight-normal !default;
 
 /// Background color of `.code-inline` and `.code-block` components.
 /// @type Color
-$code-background: $light-gray !default;
+$code-background: $color-bg-2 !default;
 
 /// Border around `.code-inline` and `.code-block` components.
 /// @type List
-$code-border: 1px solid $medium-gray !default;
+$code-border: 1px solid $color-border-1 !default;
 
 /// Padding around text of the `.code-inline` component.
 /// @type Number | List

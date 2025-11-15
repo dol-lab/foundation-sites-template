@@ -12,11 +12,11 @@ $pagination-font-size: rem-calc(14) !default;
 
 /// Default bottom margin of the pagination object.
 /// @type Number
-$pagination-margin-bottom: $global-margin !default;
+$pagination-margin-bottom: 0 !default;
 
 /// Text color of pagination items.
 /// @type Color
-$pagination-item-color: $black !default;
+$pagination-item-color: $color-text-1 !default;
 
 /// Padding inside of pagination items.
 /// @type Number
@@ -24,7 +24,7 @@ $pagination-item-padding: rem-calc(3 10) !default;
 
 /// Right margin to separate pagination items.
 /// @type Number
-$pagination-item-spacing: rem-calc(1) !default;
+$pagination-item-spacing: 0.125rem !default;
 
 /// Default radius for pagination items.
 /// @type Number
@@ -32,23 +32,23 @@ $pagination-radius: $global-radius !default;
 
 /// Background color of pagination items on hover.
 /// @type Color
-$pagination-item-background-hover: $light-gray !default;
+$pagination-item-background-hover: $color-bg-1 !default;
 
 /// Background color of pagination item for the current page.
 /// @type Color
-$pagination-item-background-current: $primary-color !default;
+$pagination-item-background-current: $color-bg-1 !default;
 
 /// Text color of the pagination item for the current page.
 /// @type Color
-$pagination-item-color-current: $white !default;
+$pagination-item-color-current: $color-text-0 !default;
 
 /// Text color of a disabled pagination item.
 /// @type Color
-$pagination-item-color-disabled: $medium-gray !default;
+$pagination-item-color-disabled: color-mix-opacity(#{$color-text-1}, 50%, 50%) !default;
 
 /// Color of the ellipsis in a pagination menu.
 /// @type Color
-$pagination-ellipsis-color: $black !default;
+$pagination-ellipsis-color: $color-text-0 !default;
 
 /// If `false`, don't display page number links on mobile, only next/previous links
 /// and optionally current page number.

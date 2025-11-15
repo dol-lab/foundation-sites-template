@@ -48,21 +48,21 @@
 
   --f-radius: 0.5rem;
   --f-radius-small: 0.25rem;
-  --f-gutter-small: #{$global-gutter-small};
-  --f-gutter-large: #{$global-gutter-large};
-  --f-transition-short: #{$global-transition-short};
-  --f-transition-medium: #{$global-transition-medium};
-  --f-transition-long: #{$global-transition-long};
-  --f-transition-timing: #{$global-transition-timing};
-  --f-transition-timing-cubic-bezier: #{$global-transition-timing-cubic-bezier};
+  --f-gutter-small: 10px;
+  --f-gutter-large: 16px;
+  --f-transition-short: 100ms;
+  --f-transition-medium: 250ms;
+  --f-transition-long: 500ms;
+  --f-transition-timing: ease-in-out;
+  --f-transition-timing-cubic-bezier: cubic-bezier(0.8, 0, 0.2, 1.2);
   --f-drop-shadow: 0 5px 20px color-mix(in srgb, var(--f-color-text-1) 5%, transparent),
     0 2px 5px color-mix(in srgb, var(--f-color-text-1) 15%, transparent);
   --f-drop-shadow-large: 0 14px 28px color-mix(in srgb, var(--f-color-text-1) 25%, transparent),
     0 10px 10px color-mix(in srgb, var(--f-color-text-1) 22%, transparent);
-  --f-margin: #{$global-margin};
-  --f-padding: #{$global-padding};
-  --f-menu-padding: #{$global-menu-padding};
-  --f-menu-nested-margin: #{$global-menu-nested-margin};
+  --f-margin: 1rem;
+  --f-padding: 1rem;
+  --f-menu-padding: 0.75rem 0.9rem;
+  --f-menu-nested-margin: 1rem;
 
   @each $size, $value in $padding-sizes {
     --f-padding-#{$size}: #{$value};

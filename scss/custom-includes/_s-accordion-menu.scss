@@ -8,7 +8,7 @@ $accordionmenu-padding: $global-menu-padding !default;
 
 /// Sets accordion menu nested margin
 /// @type Number
-$accordionmenu-nested-margin: $global-menu-nested-margin !default;
+$accordionmenu-nested-margin: 0 !default;
 
 /// Sets accordion menu submenu padding.
 /// @type Number
@@ -16,11 +16,11 @@ $accordionmenu-submenu-padding: $accordionmenu-padding !default;
 
 /// Sets if accordion menus have the default arrow styles.
 /// @type Boolean
-$accordionmenu-arrows: true !default;
+$accordionmenu-arrows: false !default;
 
 /// Sets accordion menu arrow color if arrow is used.
 /// @type Color
-$accordionmenu-arrow-color: $color-text-1 !default;
+$accordionmenu-arrow-color: currentcolor !default;
 
 /// Sets accordion menu item padding.
 /// @type Color
@@ -40,7 +40,7 @@ $accordion-submenu-toggle-border: $accordionmenu-border !default;
 
 /// Sets accordion menu submenu toggle background width.
 /// @type Number
-$accordionmenu-submenu-toggle-width: 40px !default;
+$accordionmenu-submenu-toggle-width: 36px !default;
 
 /// Sets accordion menu submenu toggle background height.
 /// @type Number
@@ -48,7 +48,7 @@ $accordionmenu-submenu-toggle-height: $accordionmenu-submenu-toggle-width !defau
 
 /// Sets accordion menu arrow size if arrow is used.
 /// @type Length
-$accordionmenu-arrow-size: 6px !default;
+$accordionmenu-arrow-size: 4px !default;
 
 @mixin zf-accordion-menu-left-right-arrows {
   .is-accordion-submenu-parent:not(.has-submenu-toggle) > a {

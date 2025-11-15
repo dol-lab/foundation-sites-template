@@ -15,7 +15,7 @@ $slider-width-vertical: 0.5rem !default;
 
 /// Transition properties to apply to the slider handle and fill. (Doesn't apply to the native slider.)
 /// @type Transition
-$slider-transition: all 0.2s ease-in-out !default;
+$slider-transition: all $global-transition-medium $global-transition-timing !default;
 
 /// Adds the general styles for sliders.
 @mixin slider-container {

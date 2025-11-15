@@ -8,7 +8,7 @@
 
 /// Font color of text inputs.
 /// @type Color
-$input-color: $color-text-0 !default;
+$input-color: currentcolor !default;
 
 /// Font color of placeholder text within text inputs.
 /// @type Color
@@ -20,7 +20,7 @@ $input-font-family: inherit !default;
 
 /// Font size of text inputs.
 /// @type Number
-$input-font-size: rem-calc(16) !default;
+$input-font-size: rem-calc(14) !default;
 
 /// Font weight of text inputs.
 /// @type Keyword
@@ -40,15 +40,15 @@ $input-background-focus: $color-bg-1 !default;
 
 /// Background color of disabled text inputs.
 /// @type Color
-$input-background-disabled: $color-bg-2 !default;
+$input-background-disabled: color-mix-opacity(#{$color-bg-1}, 50%, 50%) !default;
 
 /// Border color of disabled text inputs.
 /// @type Color
-$input-border-disabled: $color-text-2 !default;
+$input-border-disabled: color-mix-opacity(#{$color-bg-2}, 80%, 20%) !default;
 
 /// Color of disabled text inputs.
 /// @type Color
-$input-color-disabled: $color-text-2 !default;
+$input-color-disabled: color-mix-opacity(#{$color-text-1}, 50%, 50%) !default;
 
 /// Border around text inputs.
 /// @type Border
@@ -56,7 +56,7 @@ $input-border: 1px solid $color-border-1 !default;
 
 /// Border around focused text inputs.
 /// @type Color
-$input-border-focus: 1px solid $color-text-1 !default;
+$input-border-focus: 1px solid $color-text-2 !default;
 
 /// Padding of text inputs.
 /// @type Color
@@ -64,11 +64,11 @@ $input-padding: $form-spacing * 0.5 !default;
 
 /// Box shadow inside text inputs when not focused.
 /// @type Shadow
-$input-shadow: inset 0 1px 2px color-mix-opacity($color-text-0, 10%, 90%) !default;
+$input-shadow: none !default;
 
 /// Box shadow outside text inputs when focused.
 /// @type Shadow
-$input-shadow-focus: 0 0 5px $color-border !default;
+$input-shadow-focus: none !default;
 
 /// Cursor to use when hovering over a disabled text input.
 /// @type Cursor
@@ -76,7 +76,9 @@ $input-cursor-disabled: not-allowed !default;
 
 /// Properties to transition on text inputs.
 /// @type Transition
-$input-transition: box-shadow 0.5s, border-color 0.25s ease-in-out !default;
+$input-transition:
+  box-shadow $global-transition-long $global-transition-timing,
+  border-color $global-transition-medium $global-transition-timing !default;
 
 /// Enables the up/down buttons that Chrome and Firefox add to `<input type='number'>` elements.
 /// @type Boolean

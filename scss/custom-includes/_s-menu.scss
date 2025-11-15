@@ -36,7 +36,11 @@ $menu-item-background-active: $color-bg-2 !default;
 
 /// Spacing between an icon and text in a menu item.
 /// @type Number
-$menu-icon-spacing: 0.25rem !default;
+$menu-icon-spacing: 0.5rem !default;
+
+/// Background color on hover for menu items.
+/// @type String
+$menu-item-background-hover: $color-bg-2 !default;
 
 /// Backward compatibility for menu state. If true, this duplicate `active` with `is-active`.
 /// But please note that `active` will be removed in upcoming versions.

@@ -8,11 +8,11 @@
 
 /// Background color of a title bar.
 /// @type Color
-$titlebar-background: $black !default;
+$titlebar-background: $color-bg-1 !default;
 
 /// Color of text inside a title bar.
 /// @type Color
-$titlebar-color: $white !default;
+$titlebar-color: $color-text-1 !default;
 
 /// Padding inside a title bar.
 /// @type Length
@@ -24,11 +24,11 @@ $titlebar-text-font-weight: bold !default;
 
 /// Color of menu icons inside a title bar.
 /// @type Color
-$titlebar-icon-color: $white !default;
+$titlebar-icon-color: $color-text-2 !default;
 
 /// Color of menu icons inside a title bar on hover.
 /// @type Color
-$titlebar-icon-color-hover: $medium-gray !default;
+$titlebar-icon-color-hover: $color-text-1 !default;
 
 /// Spacing between the menu icon and text inside a title bar.
 /// @type Length

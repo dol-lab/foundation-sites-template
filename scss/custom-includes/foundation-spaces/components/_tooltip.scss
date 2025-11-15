@@ -12,19 +12,19 @@ $has-tip-cursor: help !default;
 
 /// Default font weight of the defined term.
 /// @type Keyword | Number
-$has-tip-font-weight: $global-weight-bold !default;
+$has-tip-font-weight: $global-weight-normal !default;
 
 /// Default border bottom of the defined term.
 /// @type List
-$has-tip-border-bottom: dotted 1px $dark-gray !default;
+$has-tip-border-bottom: none !default;
 
 /// Default color of the tooltip background.
 /// @type Color
-$tooltip-background-color: $black !default;
+$tooltip-background-color: $color-text-0 !default;
 
 /// Default color of the tooltip font.
 /// @type Color
-$tooltip-color: $white !default;
+$tooltip-color: $color-bg-1 !default;
 
 /// Default padding of the tooltip background.
 /// @type Number
@@ -32,7 +32,7 @@ $tooltip-padding: 0.75rem !default;
 
 /// Default max width for tooltips.
 /// @type Number
-$tooltip-max-width: 10rem !default;
+$tooltip-max-width: 12rem !default;
 
 /// Default font size of the tooltip text. By default, we recommend a smaller font size than the body copy.
 /// @type Number
