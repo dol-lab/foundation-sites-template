@@ -88,6 +88,8 @@ git checkout .
 
 ## 🎯 Migration Mapping
 
+### Standard Classes
+
 | Before | After | Value |
 |--------|-------|-------|
 | `padding-small` | `p-1` | 5px |
@@ -99,6 +101,20 @@ git checkout .
 | `px-small` | `px-1` | 5px |
 | `py-medium` | `py-2` | 12px |
 | `margin-large` | `m-3` | 16px |
+
+### Special Classes (Now Included!)
+
+| Before | After | Notes |
+|--------|-------|-------|
+| `padding-button` | `py-6 px-2` | 0.5rem vertical, 0.75rem horizontal |
+| `p-button` | `py-6 px-2` | Short form |
+| `padding-xlarge` | `p-7` | 1.25rem (simplified) |
+| `p-xlarge` | `p-7` | Short form |
+| `padding-xxlarge` | `p-8` | 1.5rem (simplified) |
+| `p-xxlarge` | `p-8` | Short form |
+| `margin-button` | `my-6 mx-2` | Same as padding-button |
+| `margin-xlarge` | `m-7` | Same as padding-xlarge |
+| `margin-xxlarge` | `m-8` | Same as padding-xxlarge |
 
 **✨ New sizes available:** `p-0`, `p-6`, `p-7`, `p-8`, `p-9` (and all directional variants)
 

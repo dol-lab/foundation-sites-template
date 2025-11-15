@@ -259,9 +259,14 @@ s/\bpadding-3\b/p-5/g
 
 # Special classes (if you want to migrate them to specific combinations)
 # Uncomment and adjust as needed:
-# s/\bpadding-button\b/py-6 px-2/g
-# s/\bpadding-xlarge\b/p-7/g
-# s/\bpadding-xxlarge\b/p-8/g
+s/\bpadding-button\b/py-6 px-2/g
+s/\bpadding-xlarge\b/p-7/g
+s/\bpadding-xxlarge\b/p-8/g
+
+# Short forms of special classes
+s/\bp-button\b/py-6 px-2/g
+s/\bp-xlarge\b/p-7/g
+s/\bp-xxlarge\b/p-8/g
 
 # ============================================================================
 # 5. Main Margin Classes
@@ -277,6 +282,16 @@ s/\bmargin-0\b/m-0/g
 s/\bmargin-1\b/m-3/g
 s/\bmargin-2\b/m-4/g
 s/\bmargin-3\b/m-5/g
+
+
+# Short forms of special margin classes
+s/\bm-button\b/my-6 mx-2/g
+s/\bm-xlarge\b/m-7/g
+s/\bm-xxlarge\b/m-8/g
+# Special margin classes
+s/\bmargin-button\b/my-6 mx-2/g
+s/\bmargin-xlarge\b/m-7/g
+s/\bmargin-xxlarge\b/m-8/g
 
 # ============================================================================
 # 6. Responsive Classes (if you have them)
