@@ -7,17 +7,24 @@
 #
 # Usage:
 #   ./migrate-spacing.sh [directory] [file-pattern] [options]
+#   <file-list> | ./migrate-spacing.sh [options]
 #
 # Examples:
 #   ./migrate-spacing.sh ./src "*.html"              # Migrate HTML files in src/
 #   ./migrate-spacing.sh . "*.{html,php,vue}" -d     # Dry run on multiple file types
 #   ./migrate-spacing.sh ./templates "*.hbs" -b      # Create backups
 #
+#   # Pipe files (useful for git tracked files):
+#   git ls-files '*.html' | ./migrate-spacing.sh -b -v
+#   find . -name "*.vue" -type f | ./migrate-spacing.sh --dry-run
+#   git diff --name-only | grep '\.html$' | ./migrate-spacing.sh
+#
 # Options:
 #   -d, --dry-run    Show what would be changed without modifying files
 #   -b, --backup     Create .bak backup files before modification
 #   -v, --verbose    Show detailed output
 #   -h, --help       Show this help message
+#   --stdin          Force reading from stdin (auto-detected if piped)
 # ============================================================================
 
 set -e
@@ -33,6 +40,7 @@ NC='\033[0m' # No Color
 DRY_RUN=false
 CREATE_BACKUP=false
 VERBOSE=false
+USE_STDIN=false
 DIRECTORY="."
 FILE_PATTERN="*.html"
 
@@ -51,8 +59,12 @@ while [[ $# -gt 0 ]]; do
             VERBOSE=true
             shift
             ;;
+        --stdin)
+            USE_STDIN=true
+            shift
+            ;;
         -h|--help)
-            head -n 20 "$0" | tail -n +3 | sed 's/^# //'
+            head -n 27 "$0" | tail -n +3 | sed 's/^# //'
             exit 0
             ;;
         -*)
@@ -70,8 +82,13 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Validate directory
-if [ ! -d "$DIRECTORY" ]; then
+# Auto-detect if stdin is being piped
+if [ ! -t 0 ] && [ "$USE_STDIN" = false ]; then
+    USE_STDIN=true
+fi
+
+# Validate directory (only if not using stdin)
+if [ "$USE_STDIN" = false ] && [ ! -d "$DIRECTORY" ]; then
     echo -e "${RED}Error: Directory '$DIRECTORY' does not exist${NC}"
     exit 1
 fi
@@ -81,18 +98,30 @@ echo -e "${BLUE}Spacing Classes Migration Script${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
 echo -e "${YELLOW}Configuration:${NC}"
-echo -e "  Directory:     $DIRECTORY"
-echo -e "  Pattern:       $FILE_PATTERN"
+
+if [ "$USE_STDIN" = true ]; then
+    echo -e "  Input:         stdin (piped)"
+else
+    echo -e "  Directory:     $DIRECTORY"
+    echo -e "  Pattern:       $FILE_PATTERN"
+fi
+
 echo -e "  Dry run:       $DRY_RUN"
 echo -e "  Create backup: $CREATE_BACKUP"
 echo -e "  Verbose:       $VERBOSE"
 echo ""
 
 # Count files to process
-FILE_COUNT=$(find "$DIRECTORY" -type f -name "$FILE_PATTERN" 2>/dev/null | wc -l)
+if [ "$USE_STDIN" = true ]; then
+    # Read from stdin into array
+    mapfile -t FILE_LIST
+    FILE_COUNT=${#FILE_LIST[@]}
+else
+    FILE_COUNT=$(find "$DIRECTORY" -type f -name "$FILE_PATTERN" 2>/dev/null | wc -l)
+fi
 
 if [ "$FILE_COUNT" -eq 0 ]; then
-    echo -e "${YELLOW}Warning: No files found matching pattern '$FILE_PATTERN' in '$DIRECTORY'${NC}"
+    echo -e "${YELLOW}Warning: No files to process${NC}"
     exit 0
 fi
 
@@ -257,8 +286,7 @@ s/\bpadding-1\b/p-3/g
 s/\bpadding-2\b/p-4/g
 s/\bpadding-3\b/p-5/g
 
-# Special classes (if you want to migrate them to specific combinations)
-# Uncomment and adjust as needed:
+# Special classes
 s/\bpadding-button\b/py-6 px-2/g
 s/\bpadding-xlarge\b/p-7/g
 s/\bpadding-xxlarge\b/p-8/g
@@ -283,89 +311,98 @@ s/\bmargin-1\b/m-3/g
 s/\bmargin-2\b/m-4/g
 s/\bmargin-3\b/m-5/g
 
-
 # Short forms of special margin classes
 s/\bm-button\b/my-6 mx-2/g
 s/\bm-xlarge\b/m-7/g
 s/\bm-xxlarge\b/m-8/g
+
 # Special margin classes
 s/\bmargin-button\b/my-6 mx-2/g
 s/\bmargin-xlarge\b/m-7/g
 s/\bmargin-xxlarge\b/m-8/g
 
-# ============================================================================
-# 6. Responsive Classes (if you have them)
-# ============================================================================
-# Add patterns for responsive variants like medium-padding-small, etc.
-# Example:
-# s/\bmedium-padding-small\b/medium-p-1/g
-# s/\blarge-padding-medium\b/large-p-2/g
-
 EOF
 
-# Statistics
-TOTAL_CHANGES=0
-FILES_MODIFIED=0
-
-# Process files
-echo -e "${BLUE}Processing files...${NC}"
-echo ""
-
-find "$DIRECTORY" -type f -name "$FILE_PATTERN" | while read -r file; do
+# Function to process a single file
+process_file() {
+    local file="$1"
+    
     # Skip backup files
     if [[ "$file" == *.bak ]]; then
-        continue
+        return
     fi
-
+    
+    # Skip if file doesn't exist
+    if [ ! -f "$file" ]; then
+        [ "$VERBOSE" = true ] && echo -e "${YELLOW}⚠ Skipped (not found): $file${NC}"
+        return
+    fi
+    
     # Create backup if requested
     if [ "$CREATE_BACKUP" = true ] && [ "$DRY_RUN" = false ]; then
         cp "$file" "$file.bak"
         [ "$VERBOSE" = true ] && echo -e "${YELLOW}Created backup: $file.bak${NC}"
     fi
-
+    
     # Run sed
     if [ "$DRY_RUN" = true ]; then
         # Dry run: show differences
         TEMP_OUTPUT=$(mktemp)
         sed -f "$TEMP_SED" "$file" > "$TEMP_OUTPUT"
-
+        
         if ! diff -q "$file" "$TEMP_OUTPUT" > /dev/null 2>&1; then
             echo -e "${YELLOW}Would modify: $file${NC}"
-
+            
             if [ "$VERBOSE" = true ]; then
                 echo -e "${BLUE}Changes:${NC}"
                 diff -u "$file" "$TEMP_OUTPUT" | grep -E "^[\+\-]" | grep -v "^[\+\-]{3}" | head -20
                 echo ""
             fi
-
-            # Count changes
-            CHANGES=$(diff -U 0 "$file" "$TEMP_OUTPUT" | grep -c "^[-+]" || true)
-            TOTAL_CHANGES=$((TOTAL_CHANGES + CHANGES / 2))
+            
             FILES_MODIFIED=$((FILES_MODIFIED + 1))
         fi
-
+        
         rm "$TEMP_OUTPUT"
     else
         # Actual modification
         TEMP_OUTPUT=$(mktemp)
         sed -f "$TEMP_SED" "$file" > "$TEMP_OUTPUT"
-
+        
         if ! diff -q "$file" "$TEMP_OUTPUT" > /dev/null 2>&1; then
             mv "$TEMP_OUTPUT" "$file"
             echo -e "${GREEN}✓ Modified: $file${NC}"
-
-            if [ "$VERBOSE" = true ]; then
+            
+            if [ "$VERBOSE" = true ] && [ "$CREATE_BACKUP" = true ]; then
                 CHANGES=$(diff -U 0 "$file.bak" "$file" 2>/dev/null | grep -c "^[-+]" || echo "0")
                 echo -e "  ${BLUE}Changes: $((CHANGES / 2))${NC}"
             fi
-
+            
             FILES_MODIFIED=$((FILES_MODIFIED + 1))
         else
             rm "$TEMP_OUTPUT"
             [ "$VERBOSE" = true ] && echo -e "${BLUE}○ No changes: $file${NC}"
         fi
     fi
-done
+}
+
+# Statistics
+FILES_MODIFIED=0
+
+# Process files
+echo -e "${BLUE}Processing files...${NC}"
+echo ""
+
+if [ "$USE_STDIN" = true ]; then
+    # Process files from stdin
+    for file in "${FILE_LIST[@]}"; do
+        process_file "$file"
+    done
+else
+    # Process files from find
+    while IFS= read -r file; do
+        process_file "$file"
+    done < <(find "$DIRECTORY" -type f -name "$FILE_PATTERN")
+fi
 
 # Cleanup
 rm "$TEMP_SED"
@@ -382,8 +419,8 @@ if [ "$DRY_RUN" = true ]; then
     echo -e "${GREEN}Files that would be modified: $FILES_MODIFIED${NC}"
 else
     echo -e "${GREEN}Files modified: $FILES_MODIFIED${NC}"
-
-    if [ "$CREATE_BACKUP" = true ]; then
+    
+    if [ "$CREATE_BACKUP" = true ] && [ "$FILES_MODIFIED" -gt 0 ]; then
         echo -e "${YELLOW}Backup files created with .bak extension${NC}"
         echo -e "${YELLOW}To restore: for f in *.bak; do mv \"\$f\" \"\${f%.bak}\"; done${NC}"
     fi
