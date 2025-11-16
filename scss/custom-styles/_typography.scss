@@ -1,0 +1,178 @@
+// 3. Typography
+// ---------
+
+p {
+  font-size: $paragraph-font-size;
+  color: $color-text-1;
+
+  &.small {
+    font-size: $small-font-size;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  // @include foundation-palette();
+}
+
+.stat {
+  font-weight: $global-weight-bold;
+  line-height: 1.2;
+  text-transform: uppercase;
+
+  @include breakpoint(medium down) {
+    font-size: 2rem;
+  }
+}
+
+.lead {
+  font-size: 1.25em;
+}
+
+.highlight-word {
+  &::before {
+    content: "»";
+  }
+
+  &::after {
+    content: "«";
+  }
+
+  margin-right: 1ch;
+}
+
+span {
+  &.small {
+    font-size: $small-font-size;
+  }
+}
+
+.fa {
+  @include foundation-palette($hover: false);
+}
+
+a {
+  &:focus {
+    outline: none;
+  }
+
+  @include foundation-palette;
+  @include foundation-palette($selector: "li", $child: ">&");
+  @include button-sizes;
+}
+
+body .s-fg-a-c1-parent a {
+  &:not(
+      [class^="wp-block"],
+      .primary,
+      .secondary,
+      .alert,
+      .success,
+      .warning,
+      .accordion-title,
+      .button,
+      [role="tab"],
+      [role="menuitem"]
+    ) {
+    @extend .brand;
+  }
+}
+
+.line-clamp {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  hyphens: auto;
+  overflow: hidden;
+  display: -webkit-box;
+  display: flex;
+}
+
+.hover-underline:hover {
+  text-decoration: underline;
+}
+
+ul {
+  font-size: $paragraph-font-size;
+
+  // @include foundation-palette();
+}
+
+small {
+  color: $color-text-2;
+  display: inline-block;
+  line-height: $header-lineheight;
+
+  & > a {
+    &:hover {
+      color: $color-text-0;
+    }
+  }
+}
+
+code {
+  border-radius: $global-radius-small;
+  font-size: 0.85em;
+  position: relative;
+  top: -0.08em;
+  padding: 0.15em 0.4em;
+  white-space: pre;
+}
+
+pre {
+  tab-size: 2ch;
+}
+
+input,
+textarea,
+select {
+  font-size: $paragraph-font-size;
+  flex: 1;
+}
+
+small > label,
+label.small {
+  font-size: $small-font-size;
+}
+
+label[for] {
+  cursor: pointer;
+}
+
+.hover-underline {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// 17. Sections
+// -----------
+
+.section-title {
+  @include header-style("h1");
+
+  font-weight: $global-weight-bold;
+  line-height: $header-lineheight;
+}
+
+.section-header {
+  @include header-style("h2");
+
+  font-weight: $global-weight-normal;
+  line-height: $header-lineheight;
+}
+
+.section-wrap {
+  margin: 2rem auto;
+  width: 100%;
+  max-width: $global-width;
+
+  &.small {
+    max-width: calc(#{$global-width} / 3 * 2);
+  }
+
+  @include breakpoint(medium) {
+    width: $global-width;
+  }
+}

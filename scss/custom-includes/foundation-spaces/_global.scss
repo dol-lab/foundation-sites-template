@@ -8,7 +8,7 @@
 /// @group global
 ////
 
-@import 'util/util';
+@import "util/util";
 
 /// Font size attribute applied to `<html>` and `<body>`. We use 100% by default so the value is inherited from the user's browser settings.
 /// @type Number
@@ -150,7 +150,7 @@ $paragraph-font-size: 1rem !default;
 
 /// Global value used for all menu styles. Can be overwritten at individual menu component level.
 /// @type Number
-$global-menu-padding: 0.75rem 0.9rem !default;
+$global-menu-padding: 0.75rem 0.75rem !default;
 
 /// Global value used for all menu styles. Nested margin for submenu.
 $global-menu-nested-margin: 1rem !default;
@@ -194,7 +194,7 @@ $global-color-pick-contrast-tolerance: 3 !default;
 
   // These styles are applied to a <meta> tag, which is read by the Foundation JavaScript
   .foundation-mq {
-    font-family: '#{-zf-bp-serialize($breakpoints)}';
+    font-family: "#{-zf-bp-serialize($breakpoints)}";
   }
 
   html {
@@ -216,7 +216,10 @@ $global-color-pick-contrast-tolerance: 3 !default;
 
     @if $body-safe-padding {
       // using environment variables to account for non-rectangular displays e.g. phones with notches
-      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      padding: env(safe-area-inset-top)
+        env(safe-area-inset-right)
+        env(safe-area-inset-bottom)
+        env(safe-area-inset-left);
     }
 
     background: $body-background;

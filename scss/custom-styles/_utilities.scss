@@ -1,0 +1,285 @@
+// 19. Utilities
+// ---------
+
+.flex-spacer-left {
+  margin-left: auto;
+}
+
+.flex-spacer-right {
+  margin-right: auto;
+}
+
+.flex-spacer-around {
+  margin-inline: auto;
+}
+
+.width-article {
+  width: 640px;
+}
+
+.no-border {
+  border: 0;
+}
+
+.no-padding {
+  padding: 0;
+
+  & > a {
+    display: flex;
+  }
+}
+
+.dynamic-padding {
+  @include dynamic-box;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+// Modern spacing utilities (Tailwind-like)
+// Organized by property specificity (least to most specific)
+// This ensures more specific utilities override less specific ones
+// e.g., pl-1 overrides p-2, pr-2 overrides px-9
+
+// Padding utilities - all sides
+@each $size-number, $size in $spacing-scale {
+  .p-#{$size-number} {
+    padding: $size;
+  }
+}
+
+// Padding utilities - horizontal
+@each $size-number, $size in $spacing-scale {
+  .px-#{$size-number} {
+    padding-inline: $size;
+  }
+}
+
+// Padding utilities - vertical
+@each $size-number, $size in $spacing-scale {
+  .py-#{$size-number} {
+    padding-block: $size;
+  }
+}
+
+// Padding utilities - top
+@each $size-number, $size in $spacing-scale {
+  .pt-#{$size-number} {
+    padding-block-start: $size;
+  }
+}
+
+// Padding utilities - right
+@each $size-number, $size in $spacing-scale {
+  .pr-#{$size-number} {
+    padding-inline-end: $size;
+  }
+}
+
+// Padding utilities - bottom
+@each $size-number, $size in $spacing-scale {
+  .pb-#{$size-number} {
+    padding-block-end: $size;
+  }
+}
+
+// Padding utilities - left
+@each $size-number, $size in $spacing-scale {
+  .pl-#{$size-number} {
+    padding-inline-start: $size;
+  }
+}
+
+// Margin utilities - all sides
+@each $size-number, $size in $spacing-scale {
+  .m-#{$size-number} {
+    margin: $size;
+  }
+}
+
+// Margin utilities - horizontal
+@each $size-number, $size in $spacing-scale {
+  .mx-#{$size-number} {
+    margin-inline: $size;
+  }
+}
+
+// Margin utilities - vertical
+@each $size-number, $size in $spacing-scale {
+  .my-#{$size-number} {
+    margin-block: $size;
+  }
+}
+
+// Margin utilities - top
+@each $size-number, $size in $spacing-scale {
+  .mt-#{$size-number} {
+    margin-block-start: $size;
+  }
+}
+
+// Margin utilities - right
+@each $size-number, $size in $spacing-scale {
+  .mr-#{$size-number} {
+    margin-inline-end: $size;
+  }
+}
+
+// Margin utilities - bottom
+@each $size-number, $size in $spacing-scale {
+  .mb-#{$size-number} {
+    margin-block-end: $size;
+  }
+}
+
+// Margin utilities - left
+@each $size-number, $size in $spacing-scale {
+  .ml-#{$size-number} {
+    margin-inline-start: $size;
+  }
+}
+
+// Margin auto utilities
+.m-auto {
+  margin: auto;
+}
+
+.mx-auto {
+  margin-inline: auto;
+}
+
+.my-auto {
+  margin-block: auto;
+}
+
+.mt-auto {
+  margin-block-start: auto;
+}
+
+.mr-auto {
+  margin-inline-end: auto;
+}
+
+.mb-auto {
+  margin-block-end: auto;
+}
+
+.ml-auto {
+  margin-inline-start: auto;
+}
+
+// Legacy special padding sizes
+@each $size-name, $size in $padding-special {
+  .padding-#{$size-name} {
+    padding: $size;
+  }
+}
+
+.gutter {
+  @each $breakpoint, $width in $breakpoints {
+    @include breakpoint(#{$breakpoint} only) {
+      $gutter: map-get($grid-margin-gutters, #{$breakpoint});
+
+      margin: $gutter !important;
+
+      &-vertical {
+        margin-block: $gutter !important;
+      }
+
+      &-horizontal {
+        margin-inline: $gutter !important;
+      }
+
+      &-left {
+        margin-inline-start: $gutter !important;
+      }
+
+      &-top {
+        margin-block-start: $gutter !important;
+      }
+
+      &-right {
+        margin-inline-end: $gutter !important;
+      }
+
+      &-bottom {
+        margin-block-end: $gutter !important;
+      }
+
+      &-padding {
+        padding: $gutter !important;
+
+        &-vertical {
+          padding-block: $gutter !important;
+        }
+
+        &-horizontal {
+          padding-inline: $gutter !important;
+        }
+
+        &-left {
+          padding-inline-start: $gutter !important;
+        }
+
+        &-top {
+          padding-block-start: $gutter !important;
+        }
+
+        &-right {
+          padding-inline-end: $gutter !important;
+        }
+
+        &-bottom {
+          margin-block-end: $gutter !important;
+        }
+      }
+    }
+  }
+}
+
+.flex {
+  display: flex !important;
+}
+
+.flex-justify-between {
+  justify-content: space-between;
+}
+
+.flex-align-center {
+  align-items: center;
+}
+
+.align-flex-start {
+  justify-content: flex-start;
+}
+
+.align-flex-end {
+  justify-content: flex-end;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.flex-grow-0 {
+  flex-grow: 0;
+}
+
+.flex-shrink-1 {
+  flex-shrink: 1;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}

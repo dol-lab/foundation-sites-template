@@ -30,7 +30,7 @@
 						@@include('html-partials/_content-post-2.html')
 						@@include('html-partials/_content-post-3.html')
 						@@include('html-partials/_content-post-6.html')
-						
+
 						@@include('html-partials/_content-tabs-thumbnail.html')
 
 						@@include('html-partials/_content-details.html')
@@ -60,6 +60,45 @@
 	</div>
 
 	@@include('html-partials/_styles-syntaxhighlighter.html')
+
+	<!-- Helper Classes Documentation -->
+	<div id="helper-docs-modal" class="reveal large" data-reveal>
+		<div class="p-4">
+			<button class="close-button" data-close aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div id="markdown-content"></div>
+		</div>
+	</div>
+
+	<!-- Floating Documentation Button -->
+	<div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+		<button class="button primary p-3"
+		        onclick="loadHelperDocs()"
+		        title="View Helper Classes Documentation">
+			<span style="font-size: 1.2rem;">📚</span> Helper Classes
+		</button>
+	</div>
+
+	<!-- Markdown Parser and Loader -->
+	<script src="https://cdn.jsdelivr.net/npm/marked@11.1.0/marked.min.js"></script>
+	<script>
+		async function loadHelperDocs() {
+			try {
+				const response = await fetch('HELPER_CLASSES.md');
+				const markdown = await response.text();
+				const html = marked.parse(markdown);
+				document.getElementById('markdown-content').innerHTML = html;
+
+				// Open modal
+				const modal = new Foundation.Reveal($('#helper-docs-modal'));
+				modal.open();
+			} catch (error) {
+				console.error('Error loading documentation:', error);
+				alert('Error loading documentation. Please see HELPER_CLASSES.md in the project root.');
+			}
+		}
+	</script>
 
 </body>
 

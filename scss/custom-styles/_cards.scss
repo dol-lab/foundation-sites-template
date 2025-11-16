@@ -1,0 +1,1016 @@
+// 4. Card
+// ---------
+
+.card {
+  min-width: auto;
+  flex-grow: 0;
+  font-size: $paragraph-font-size;
+
+  border: $hr-border;
+  transition: box-shadow $global-transition-medium $global-transition-timing;
+  background-color: $color-bg-1;
+  overflow: clip;
+  color: $color-text-1;
+
+  .card-anchor {
+    color: inherit;
+    text-decoration: none !important;
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important;
+
+    @include foundation-palette;
+  }
+
+  &.overflow-auto {
+    overflow: auto;
+  }
+
+  &.overflow-hidden {
+    overflow: hidden;
+  }
+
+  &.overflow-initial {
+    overflow: initial;
+  }
+
+  &.muted {
+    opacity: 0.5;
+  }
+
+  &:not(.static) {
+    &:hover {
+      cursor: pointer;
+      box-shadow: $global-drop-shadow;
+      transition: box-shadow $global-transition-short $global-transition-timing;
+    }
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: $paragraph-font-size;
+  }
+
+  &.accordion {
+    background: $card-background;
+  }
+}
+
+.card-header {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  padding: $button-padding;
+  line-height: $paragraph-lineheight;
+
+  h1 {
+    margin-bottom: 0;
+    word-break: break-word;
+  }
+
+  &:not(.align-justify) {
+    justify-content: flex-start;
+  }
+
+  &:is(.flex-dir-row) {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &.no-padding {
+    padding: 0;
+    padding-left: nth($button-padding, 2);
+  }
+}
+
+.post-card-anchor {
+  width: 100%;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  line-height: $header-lineheight;
+  font-weight: $global-weight-normal;
+  margin: 0;
+
+  &.small {
+    font-size: 0.875rem;
+  }
+
+  .fa {
+    font-size: 0.75em;
+    margin-right: 0.5em;
+  }
+}
+
+.card-section,
+.card-divider {
+  padding: map-get($spacing-scale, 2);
+  display: flex;
+  flex-direction: column;
+
+  &-negative {
+    margin-inline: -#{map-get($spacing-scale, 2)};
+  }
+
+  &.flex-dir-row {
+    flex-direction: row;
+  }
+
+  &.flex-dir-row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  &.flex-dir-column {
+    flex-direction: column;
+  }
+
+  &.small {
+    line-height: 1.25rem;
+  }
+
+  & > a {
+    text-decoration: none;
+
+    &::only-child:hover {
+      background: $color-bg-2;
+    }
+  }
+
+  &.no-padding {
+    & > [type="text"],
+    & > [type="password"],
+    & > [type="date"],
+    & > [type="datetime"],
+    & > [type="datetime-local"],
+    & > [type="month"],
+    & > [type="week"],
+    & > [type="email"],
+    & > [type="number"],
+    & > [type="search"],
+    & > [type="tel"],
+    & > [type="time"],
+    & > [type="url"],
+    & > [type="color"],
+    & > textarea,
+    & > select,
+    & > .input {
+      border: none;
+      resize: none;
+    }
+
+    & > a {
+      box-sizing: border-box;
+    }
+  }
+
+  @each $size-label, $size in $user-card-sizes {
+    &.#{$size-label} {
+      &:last-child {
+        height: $size;
+      }
+    }
+  }
+}
+
+.card-divider {
+  border-top: $hr-border;
+
+  &.accordion-content {
+    border-top: $hr-border !important;
+  }
+
+  &:first-child {
+    border: none;
+  }
+}
+
+.box-shadow {
+  box-shadow: $global-drop-shadow;
+}
+.box-shadow-large {
+  box-shadow: $global-drop-shadow-large;
+}
+
+.page-title {
+  padding-top: 0.5rem;
+
+  a {
+    text-decoration: none !important;
+    font-weight: 400;
+  }
+}
+
+.page-content {
+  padding: 1rem 0;
+}
+
+.card-divider,
+.card-section {
+  &.nested {
+    border-top: none;
+    margin-top: -1rem;
+
+    .card-section.no-padding.flex-dir-row {
+      border-top: $hr-border;
+      margin-top: -1.375rem;
+      padding-top: 0.75rem;
+
+      .page-title {
+        font-size: 1rem;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+// 5. Spaces Card
+// ---------
+
+.space-title {
+  line-height: 1.3;
+
+  @extend .card-title;
+
+  display: flex;
+  margin: auto 0;
+  padding: 0.35rem 0.5rem;
+  z-index: 1;
+  color: $color-text-0;
+  background: color-mix-opacity(#{$color-bg-0}, 55%, 45%);
+  -webkit-box-orient: vertical;
+  backdrop-filter: blur(20px) saturate(200%);
+  max-width: 80% !important;
+  margin-top: 5%;
+  position: absolute;
+  border-radius: 0 $global-radius-small $global-radius-small 0;
+
+  .fa {
+    font-size: 0.75em;
+    margin-right: 0.5em;
+    align-self: center;
+  }
+
+  .large & {
+    @include header-style("h2", "font-size");
+
+    white-space: normal;
+    max-height: 3em;
+
+    @include breakpoint(large) {
+      max-height: initial;
+    }
+
+    & > * {
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      hyphens: auto;
+      overflow: hidden;
+      padding: 2px;
+      margin: -2px;
+    }
+  }
+}
+
+.wide {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+
+  .large {
+    border-radius: 0;
+    margin: 0;
+  }
+
+  @media (width >= 1366px) {
+    .space-title {
+      left: calc(50vw - ((1080px - 20px) / 2));
+      border-radius: $global-radius-small;
+    }
+  }
+}
+
+// 6. User Card
+// ---------
+
+.card-user {
+  .user-card-header {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .card-header {
+    min-height: $user-card-default-size;
+  }
+
+  .checkbox-label {
+    height: $user-card-default-size;
+    width: $user-card-default-size;
+  }
+
+  @each $size-label, $size in $user-card-sizes {
+    .#{$size-label} &,
+    &.#{$size-label} {
+      .card-header {
+        min-height: $size;
+      }
+
+      .checkbox-label {
+        height: $size;
+        width: $size;
+      }
+    }
+  }
+
+  .accordion-item & {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+    color: inherit;
+    position: relative;
+    height: initial;
+
+    @include breakpoint(medium only) {
+      flex-direction: row;
+    }
+  }
+
+  .accordion-item.is-active {
+    .user-name {
+      font-size: 1rem;
+    }
+
+    .avatar-container {
+      width: 100%;
+
+      @include breakpoint(medium only) {
+        width: map-get($user-card-sizes, large);
+      }
+
+      transition: $global-transition-medium;
+    }
+
+    .card-header {
+      transition: $global-transition-medium;
+
+      @include breakpoint(medium only) {
+        min-height: map-get($user-card-sizes, large);
+        height: map-get($user-card-sizes, large);
+        padding-left: 1rem;
+      }
+    }
+
+    .expand-button {
+      border-radius: 50%;
+      opacity: 1;
+      background-color: $color-bg-0;
+      top: 0.5em;
+      right: 0.5em;
+
+      &::after {
+        content: "\f106";
+        color: $color-text-1;
+        font-size: 0.75rem;
+        opacity: 1;
+        transform-origin: 0.35em 0.7em;
+      }
+    }
+  }
+
+  .accordion-item:not(.is-active) & {
+    flex-direction: row;
+    align-items: center;
+
+    .card-header {
+      max-width: calc(100% - #{$user-card-default-size} * 1.5);
+    }
+
+    .user-name {
+      font-size: 0.875rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      display: inline-block;
+
+      & + .user-info {
+        display: block;
+        font-size: 0.875rem;
+      }
+    }
+
+    .accordion-content {
+      display: none;
+    }
+  }
+
+  .accordion-content {
+    border: none;
+  }
+
+  .avatar-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $global-transition-medium;
+
+    .clipped {
+      z-index: 10;
+    }
+
+    .checkbox {
+      position: absolute;
+
+      [type="checkbox"] + label {
+        display: flex;
+        margin-inline: 0;
+      }
+
+      & ~ .clipped {
+        transition: $global-transition-medium;
+      }
+    }
+
+    .spinner-container {
+      position: absolute;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      z-index: 10;
+      background: $reveal-overlay-background;
+    }
+
+    .profile .accordion-item & {
+      width: $user-card-default-size;
+      transition: $global-transition-medium;
+    }
+  }
+
+  &:hover .avatar-container,
+  &.is-selected {
+    .checkbox ~ .clipped {
+      pointer-events: none;
+      transform: scale(0.5);
+      opacity: 0;
+      transition: $global-transition-short;
+    }
+  }
+}
+
+.profile .accordion-item {
+  &.is-active {
+    @include breakpoint(medium only) {
+      .margin-top-1[data-visible-on="display"] {
+        margin-top: 0 !important;
+      }
+    }
+  }
+
+  .user-email {
+    margin-top: 0 !important;
+  }
+}
+
+.avatar-container {
+  z-index: 20;
+  width: $user-card-default-size;
+  min-width: $user-card-default-size;
+
+  @each $user-card-size, $size in $user-card-sizes {
+    &.#{$user-card-size} {
+      width: $size;
+      min-width: $size;
+    }
+  }
+
+  img[data-toggle],
+  img[role="button"] {
+    cursor: pointer;
+    transition: $global-transition-short;
+  }
+
+  img[data-move] {
+    cursor: move;
+    transition: $global-transition-short;
+  }
+
+  &:hover img[data-toggle],
+  &:hover img[data-move],
+  &:hover img[role="button"],
+  img[role="button"].open,
+  [aria-expanded="true"] {
+    border-radius: $global-radius;
+    transform: scale(0.8);
+  }
+
+  @each $size-label, $size in $user-card-sizes {
+    .#{$size-label} & {
+      width: $size;
+      min-width: $size;
+    }
+  }
+}
+
+.user-name {
+  font-size: 0.875rem;
+  margin: 0;
+  display: inline-block;
+
+  .fa {
+    margin-left: 1em;
+    color: $color-text-2;
+  }
+
+  .small & {
+    height: 1.125rem;
+
+    &:last-child {
+      height: initial;
+    }
+  }
+
+  .large & {
+    font-size: 1rem;
+  }
+
+  .xlarge & {
+    font-size: 1.5rem;
+  }
+
+  .xxlarge & {
+    font-size: 1.5rem;
+  }
+}
+
+.avatar {
+  flex: 0 0 auto;
+  width: $user-card-default-size;
+
+  img {
+    border-radius: $global-radius;
+  }
+
+  @each $user-card-size, $size in $user-card-sizes {
+    &.#{$user-card-size},
+    .avatar.#{$user-card-size} & {
+      width: $size;
+      height: $size;
+    }
+  }
+}
+
+.avatar-array {
+  position: relative;
+  width: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .avatar-item {
+    position: relative;
+    flex: 1 1 auto;
+    min-width: 28px;
+
+    & + .avatar-item {
+      margin-left: -25%;
+    }
+
+    @for $i from 1 through 5 {
+      &:nth-child(#{$i}) {
+        z-index: 5 - $i;
+      }
+    }
+  }
+
+  img {
+    width: 28px;
+    height: 28px;
+    box-shadow: 0 0 0 1px $color-bg-2;
+    margin: 0 auto;
+    border-radius: 50%;
+  }
+}
+
+// 7. Post Card
+// ---------
+
+.page-card,
+.post-card {
+  @include header-list;
+}
+
+.post-card,
+.activity-card {
+  a:first-child .post-feature-image,
+  .post-feature-image:first-child,
+  .space-header:first-child {
+    overflow: hidden;
+    border-radius: $card-border-radius $card-border-radius 0 0;
+  }
+
+  &.activity-card-new {
+    box-shadow: inset 3px 0 0 var(--f-color-brand, $primary-color);
+  }
+
+  & > .card-section:first-child {
+    & > .avatar-container:first-child {
+      overflow: hidden;
+      border-radius: $card-border-radius 0 0 0;
+    }
+
+    & > .avatar-container:last-child {
+      overflow: hidden;
+      border-radius: 0 $card-border-radius 0 0;
+    }
+  }
+
+  .card-divider:last-child .comment-avatar-list,
+  .card-divider:last-child * .comment-avatar-list {
+    --avatar-overlap: 0.6rem;
+
+    flex-flow: row-reverse wrap;
+    justify-content: flex-end;
+    height: map-get($user-card-sizes, small);
+    min-width: map-get($user-card-sizes, small);
+    max-width: 40%;
+    overflow: hidden;
+    border-radius: 0 0 0 $card-border-radius;
+    padding-left: calc(var(--avatar-overlap) + #{map-get($spacing-scale, 1)});
+    margin-right: calc(-0.7 * var(--avatar-overlap));
+
+    .avatar-container {
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid $color-bg-1;
+      box-sizing: border-box;
+      margin-left: calc(-1 * var(--avatar-overlap));
+    }
+  }
+
+  .user:not(:first-child) {
+    border-top: $hr-border;
+  }
+
+  .dropdown-pane {
+    width: 150px;
+  }
+
+  .activity-blog {
+    text-decoration-color: color-mix-opacity(#{$color-text-0}, 70%, 30%) !important;
+  }
+
+  .activity-description {
+    line-height: 1.4;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+.post-card-footer,
+.activity-card-footer {
+  box-sizing: content-box;
+}
+
+.main-menu {
+  .activity-card {
+    min-width: calc(min(350px, 90vw));
+
+    a.card-section {
+      z-index: 100;
+      width: 100%;
+    }
+  }
+}
+
+.dot-list {
+  & > *:not(:last-child)::after {
+    content: "\00b7";
+    margin: 0 0.5em;
+  }
+}
+
+.dot-list-dot-before {
+  & > *:not(:first-child)::before {
+    content: "\00b7";
+    margin: 0 0.5em;
+  }
+}
+
+.dot-after {
+  &::after {
+    content: "\00b7";
+    margin: 0 0.5em;
+  }
+}
+
+.additional-comments {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-bg-2;
+  color: $color-text-1;
+  font-weight: $global-weight-bold;
+  font-size: $small-font-size;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: $small-font-size;
+  margin: -0.25rem;
+
+  a {
+    padding: 0.25rem;
+    width: initial;
+  }
+}
+
+.comment-reply-content {
+  width: 100%;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+
+  textarea {
+    &.comment-reply-text {
+      min-height: initial;
+      height: initial;
+
+      &,
+      &:focus,
+      &:active {
+        border: none;
+      }
+    }
+  }
+
+  .comment-reply-submit {
+    position: absolute;
+  }
+}
+
+.report-card .report-header,
+.page-section .page-header {
+  @include dynamic-box;
+}
+
+.user-generated {
+  align-items: flex-start;
+  overflow-wrap: break-word;
+  & > * {
+    width: 100%;
+  }
+
+  ul {
+    padding-#{$global-right}: $list-side-margin;
+  }
+
+  .alignfull,
+  .alignwide {
+    @include dynamic-box($edge: margin, $negative: true, $axis: horizontal);
+
+    &:not(.no-margin) {
+      @each $breakpoint, $width in $breakpoints {
+        @include breakpoint($breakpoint) {
+          margin-block: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.post-card .post-content,
+.post-card .comment-content,
+.report-card .report-content,
+.page-section .page-content,
+.dynamic-padding {
+  padding: var(--f-dynamic-box);
+
+  figure,
+  img {
+    border-radius: $card-border-radius;
+    overflow: clip;
+
+    &:has(+ p) {
+      margin-bottom: 1em;
+    }
+  }
+}
+
+.dynamic-margin {
+  margin: var(--f-dynamic-box);
+}
+
+// 8. Clipping
+// ---------
+
+.clipped {
+  position: relative;
+  display: flex;
+  align-content: center;
+  width: 100%;
+  overflow: hidden;
+
+  img {
+    object-position: 50% 33%;
+
+    &[src=""],
+    &:not([src]) {
+      display: none;
+    }
+  }
+
+  img,
+  iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: $color-bg-2;
+
+    @media screen and (width >= 0\0) and (resolution >= +72dpi) {
+      height: auto;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &.tint {
+    color: $color-bg-0;
+    background-color: $color-text-0;
+
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background-color: $color-text-0;
+      opacity: 0.375;
+      transition: opacity $global-transition-medium $global-transition-timing;
+    }
+
+    & > *:not(img) {
+      z-index: 10;
+    }
+
+    img,
+    iframe {
+      z-index: 0;
+    }
+
+    &.tint-negativ {
+      color: $color-text-0;
+      background-color: $color-bg-0;
+
+      &::after {
+        background-color: $color-bg-0;
+      }
+    }
+  }
+
+  a:hover &.tint,
+  .is-active &.tint {
+    &::after {
+      opacity: 0.625;
+      transition: opacity $global-transition-medium $global-transition-timing;
+    }
+  }
+
+  &.square {
+    padding-bottom: 100%;
+    height: 0;
+  }
+
+  &.letterbox {
+    padding-bottom: 56.25%;
+    height: 0;
+  }
+
+  &.space-header {
+    background: $color-bg-2;
+
+    --_s: 75px;
+    --_c1: var(--f-color-bg-2);
+    --_c2: var(--f-color-bg-0);
+    --_c3: var(--f-color-bg-1);
+
+    background:
+      repeating-conic-gradient(from 30deg, #0000 0 120deg, var(--_c3) 0 50%) calc(var(--_s) / 2)
+        calc(var(--_s) * tan(30deg) / 2),
+      repeating-conic-gradient(from 30deg, var(--_c1) 0 60deg, var(--_c2) 0 120deg, var(--_c3) 0 50%);
+    background-size: var(--_s) calc(var(--_s) * tan(30deg));
+    height: 80px;
+    align-items: center;
+
+    .large > &,
+    .large > a > & {
+      height: 200px;
+      max-height: 25vw;
+      min-height: 64px;
+    }
+
+    .activity-card > & {
+      height: 36px;
+    }
+  }
+
+  &.line {
+    background: $color-bg-2;
+    height: 10px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      backdrop-filter: blur(50px) saturate(200%);
+      backdrop-filter: blur(20px);
+      transition: background-color $global-transition-medium $global-transition-timing;
+    }
+  }
+
+  &.feature-image {
+    background: $color-bg-1;
+    height: 100px;
+
+    &.large {
+      height: 200px;
+    }
+  }
+
+  &.variable {
+    padding-bottom: 0;
+    height: 100%;
+    max-height: 200px;
+
+    img {
+      position: relative;
+    }
+  }
+
+  &.full {
+    padding-bottom: 100vh;
+  }
+
+  .add-new {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 100%;
+    background: $color-bg-1;
+    color: $color-text-1;
+    font-size: 1.25rem;
+
+    &::after {
+      content: "\f055";
+      font-family: "Font Awesome 7 Free";
+      font-weight: bold;
+    }
+  }
+
+  @for $i from 1 through 8 {
+    $number: $i * 50;
+
+    &.height-#{$number} {
+      height: 100%;
+      padding-bottom: #{$number}px;
+    }
+  }
+}
+
+// 31. Containers
+// ---------
+
+.activity-container {
+  background-color: $color-bg-1;
+  border-radius: $card-border-radius;
+}
+
+.textwidget {
+  .activity-container {
+    margin-top: 1rem;
+  }
+}
+
+// 30. Shadows
+
+.no-box-shadow {
+  box-shadow: none !important;
+}

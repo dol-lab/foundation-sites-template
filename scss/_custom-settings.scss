@@ -2,14 +2,45 @@
 @use "sass:map";
 
 $button-height: 2.4rem;
-$padding-sizes: (
-  none: 0,
-  small: 0.3125rem,
-  medium: 0.75rem 0.9rem,
-  /* same as accordionmenu-submenu-padding */ large: 1rem 1.25rem,
+// Unified spacing scale (Tailwind-like system)
+// Used for both padding and margin utilities
+// Properly ordered from smallest to largest
+//
+$spacing-scale: (
+  0: 0,
+  // 0px
+  1: 0.3125rem,
+  // 5px - was padding-small
+  2: 0.5rem,
+  // 8px - compact spacing (button vertical padding)
+  3: 0.75rem,
+  // 12px - was padding-medium (simplified)
+  4: 1rem,
+  // 16px - was padding-large and padding-1 (base size)
+  5: 1.25rem,
+  // 20px - was xlarge base
+  6: 1.5rem,
+  // 24px - was xxlarge base
+  7: 2rem,
+  // 32px - was padding-2
+  8: 2.5rem,
+  // 40px - extra large spacing
+  9: 3rem,
+  // 48px - was padding-3
+);
+
+// Legacy special sizes (kept for backward compatibility during migration)
+// Migration guide:
+// - padding-button (0.5rem 0.75rem) → p-3 (0.5rem vertical, 0.75rem horizontal)
+// - padding-xlarge (1.25rem 2rem 1.5rem) → pt-5 px-7 pb-6 (or simplify to p-5)
+// - padding-xxlarge (1.5rem 2.5rem 1.75rem) → pt-6 px-8 pb-6 (or simplify to p-6)
+$padding-special: (
+  button: 0.5rem 0.75rem,
+  // Complex: vertical 0.5rem, horizontal 0.75rem
   xlarge: 1.25rem 2rem 1.5rem,
+  // Complex: top 1.25rem, horizontal 2rem, bottom 1.5rem
   xxlarge: 1.5rem 2.5rem 1.75rem,
-  button: 0.5rem 0.75rem, // matches button-padding
+  // Complex: top 1.5rem, horizontal 2.5rem, bottom 1.75rem
 );
 $user-card-sizes: (
   xsmall: 24px,
@@ -20,15 +51,20 @@ $user-card-sizes: (
   xxlarge: 240px,
 );
 $user-card-default-size: map-get($user-card-sizes, medium);
+// Dynamic spacing that changes based on breakpoint
+// Maps breakpoint names to spacing scale numbers
 $dynamic-relation: (
-  small: medium,
-  medium: large,
-  large: xlarge,
+  small: 3,
+  // At small breakpoint, use p-3 (0.75rem / 12px)
+  medium: 4,
+  // At medium breakpoint, use p-4 (1rem / 16px)
+  large: 7,
+  // At large breakpoint, use p-7 (2rem / 32px)
 );
 
 // Info Chip
 // ---------
-$info-chip-padding: 0.35em 0.5em 0.20em;
+$info-chip-padding: 0.35em 0.5em 0.2em;
 $info-chip-padding-round: 0.37em 0.8em;
 $info-border-shadow: 0 0 0 0.7px color-mix-opacity(#{$color-text-0}, 10%, 90%);
 
@@ -47,9 +83,12 @@ $icon-line-weight: 2;
 // ---------
 
 $spinner-sizes: (
-  tiny: 0.625rem, // matches switch-height-tiny
-  small: 0.75rem, // matches switch-height-small
-  medium: 1rem, // matches switch-height
-  large: 1.5rem, // matches switch-height-large
+  tiny: 0.625rem,
+  // matches switch-height-tiny
+  small: 0.75rem,
+  // matches switch-height-small
+  medium: 1rem,
+  // matches switch-height
+  large: 1.5rem,
+  // matches switch-height-large
 );
-

@@ -1,0 +1,156 @@
+// 0. Root Variables & Theming
+// ---------
+
+:root {
+  interpolate-size: allow-keywords;
+  scrollbar-color: $color-text-2 $color-bg-0;
+
+  --f-radius: 0.5rem;
+  --f-radius-small: 0.25rem;
+  --f-gutter-small: 10px;
+  --f-gutter-large: 16px;
+  --f-transition-short: 100ms;
+  --f-transition-medium: 250ms;
+  --f-transition-long: 500ms;
+  --f-transition-timing: ease-in-out;
+  --f-transition-timing-cubic-bezier: cubic-bezier(0.8, 0, 0.2, 1.2);
+  --f-drop-shadow: 0 5px 20px color-mix(in srgb, var(--f-color-text-1) 5%, transparent),
+    0 2px 5px color-mix(in srgb, var(--f-color-text-1) 15%, transparent);
+  --f-drop-shadow-large: 0 14px 28px color-mix(in srgb, var(--f-color-text-1) 25%, transparent),
+    0 10px 10px color-mix(in srgb, var(--f-color-text-1) 22%, transparent);
+  --f-margin: 1rem;
+  --f-padding: 1rem;
+  --f-menu-padding: 0.75rem 0.9rem;
+  --f-menu-nested-margin: 1rem;
+
+  @each $size, $value in $spacing-scale {
+    --f-spacing-#{$size}: #{$value};
+  }
+
+  @each $size, $value in $user-card-sizes {
+    --user-card-#{$size}: #{$value};
+  }
+
+  @each $breakpoint, $edge-size in $dynamic-relation {
+    @each $breakpoint, $edge-size in $dynamic-relation {
+      @include breakpoint($breakpoint) {
+        $spacing-value: map-get($spacing-scale, $edge-size);
+
+        --f-dynamic-box: #{$spacing-value};
+        --f-dynamic-box-y: #{$spacing-value};
+        --f-dynamic-box-x: #{$spacing-value};
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   Theming - should come after root variables.
+   ========================================================================== */
+
+:host(:not([data-theme="dark"])),
+:root:not([data-theme="dark"]),
+[data-theme="light"] {
+  @include foundation-apply-theme("light");
+}
+
+@media only screen and (prefers-color-scheme: dark) {
+  :host(:not([data-theme])),
+  :root:not([data-theme]) {
+    @include foundation-apply-theme("dark");
+  }
+}
+
+[data-theme="dark"] {
+  @include foundation-apply-theme("dark");
+}
+
+// 33. Theming
+// ---------
+
+@mixin themed-variables($mode) {
+}
+
+/* ==========================================================================
+   Page-wide theming scope
+   ========================================================================== */
+
+html {
+  &[themed][style*="--f-color-theme"] {
+    --f-color-theme: var(--f-color-theme);
+    body {
+      background-image: radial-gradient(var(--f-bg-gradient-color), transparent 50vw);
+      background-size: 100vw 100vw;
+      background-position: center -70vw;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
+/* Page-wide theming forced modes */
+html[data-theme="light"][themed][style*="--f-color-theme"] {
+  --_f-lightness-bg-0: 0.96;
+  --_f-color-theme-light: oklch(from var(--f-color-theme) 0.95 calc(c / 1.65) h);
+
+  --f-color-bg-0: oklch(from var(--f-color-theme) var(--_f-lightness-bg-0) min(c, 0.009) h);
+  --f-color-bg-1: oklch(from var(--f-color-theme) 0.995 calc(c / 15) h);
+  --f-color-bg-2: oklch(from var(--f-color-theme) 0.97 calc(c / 25) h);
+
+  --f-color-text-0: oklch(from var(--f-color-theme) 0.4 calc(c / 3) h);
+  --f-color-text-1: oklch(from var(--f-color-theme) 0.45 calc(c / 6) h);
+  --f-color-text-2: oklch(from var(--f-color-theme) 0.5 calc(c / 9) h);
+
+  --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
+  --f-bg-gradient-color: oklch(from var(--f-color-theme) min(1, max(l, 0.9)) min(c, 0.07) h);
+}
+
+html[data-theme="dark"][themed][style*="--f-color-theme"] {
+  --_f-color-theme-dark: oklch(from var(--f-color-theme) 0.455 c h);
+
+  --f-color-bg-0: oklch(from var(--f-color-theme) 0.19 min(c, 0.026) h);
+  --f-color-bg-1: oklch(from var(--f-color-theme) 0.23 min(c, 0.015) h);
+  --f-color-bg-2: oklch(from var(--f-color-theme) 0.32 min(c, 0.02) h);
+
+  --f-color-text-0: color-mix(in oklab, var(--_f-color-theme-dark) 12%, var(--f-color-neutral-700));
+  --f-color-text-1: color-mix(in oklab, var(--_f-color-theme-dark) 18%, var(--f-color-neutral-700));
+  --f-color-text-2: color-mix(in oklab, var(--_f-color-theme-dark) 20%, var(--f-color-neutral-600));
+
+  --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
+  --f-bg-gradient-color: oklch(from var(--f-color-theme) min(l, 0.2) min(c, 1) h);
+}
+
+.info-chip-taxonomy {
+  .value {
+    display: none;
+  }
+}
+
+.highlight-on-load {
+  --_f-color-brand-soft: color-mix(in oklab, var(--f-color-brand) 38%, var(--f-color-bg-1) 62%);
+  --_f-color-brand-bg: color-mix(in oklab, var(--f-color-brand) 6%, var(--f-color-bg-1) 94%);
+
+  animation-name: highlight-wave;
+  animation-duration: 1.25s;
+  animation-delay: 0.3s;
+  animation-iteration-count: 2;
+  animation-timing-function: cubic-bezier(0.226, 0.579, 0, 1);
+  border-radius: 3px;
+  background-image: linear-gradient(
+    45deg,
+    var(--_f-color-brand-bg) 33.33%,
+    var(--_f-color-brand-soft),
+    var(--_f-color-brand-bg) 66.66%
+  );
+  background-size: 300%;
+  background-position: center right;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--f-color-brand);
+  text-underline-offset: 0.175em;
+
+  @keyframes highlight-wave {
+    to {
+      background-position: center left;
+    }
+  }
+}

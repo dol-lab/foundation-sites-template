@@ -1,0 +1,621 @@
+// 13. Excerpt
+// ---------
+
+.description-excerpt {
+  @include excerpt($lines-to-show: 3);
+}
+
+.description-excerpt-checkbox {
+  position: absolute;
+  margin: 0;
+  opacity: 0;
+
+  &:checked ~ .description-excerpt {
+    @include excerpt($expand: true);
+  }
+
+  & + label {
+    vertical-align: initial;
+    margin: initial;
+  }
+}
+
+// 16. Tabs
+// ---------
+
+.tabs {
+  display: flex;
+  overflow: hidden;
+  font-size: $paragraph-font-size;
+  border: 0;
+
+  &::before,
+  &::after {
+    width: 0;
+  }
+
+  &.small {
+    font-size: $small-font-size;
+  }
+
+  &.large {
+    font-size: $global-font-size;
+  }
+
+  .tabs-title {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    float: initial;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    & > a {
+      overflow: hidden;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: inherit;
+      min-height: 36px;
+      line-height: initial !important;
+
+      & > *:last-child:not(:first-child) {
+        margin-left: 0.5em;
+      }
+
+      span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    &.is-active-tab,
+    &.is-active {
+      & > a {
+        background: $color-bg-2;
+        color: $color-text-0;
+      }
+    }
+  }
+
+  &.expanded {
+    .tabs-title {
+      width: 100%;
+    }
+  }
+
+  &.label-is-active {
+    .tabs-title {
+      min-width: auto;
+      overflow: initial;
+
+      span {
+        max-width: 150px;
+        transition: max-width $global-transition-long;
+        line-height: $header-lineheight;
+        overflow: hidden;
+      }
+
+      &:not(.is-active) {
+        span {
+          transition: all $global-transition-medium;
+          margin-left: 0;
+          max-width: 0;
+        }
+      }
+    }
+  }
+
+  &.line {
+    .tabs-title {
+      & > a {
+        &:hover {
+          background: none;
+          box-shadow: inset 0 -2px $color-border-2;
+        }
+
+        &:focus {
+          background: none;
+        }
+
+        &.is-active-tab,
+        &.is-active {
+          background: none;
+          box-shadow: inset 0 -2px $color-border-0;
+        }
+      }
+
+      &.is-active-tab,
+      &.is-active {
+        & > a {
+          background: none;
+          box-shadow: inset 0 -2px $color-text-1;
+        }
+      }
+    }
+
+    & + .tabs-content .tabs-panel {
+      border-top: #{nth($hr-border, 1)} solid $color-border-2;
+    }
+  }
+
+  &.bar {
+    border-bottom: none;
+
+    .tabs-title {
+      border-right: $hr-border;
+
+      &:last-child {
+        border-right: none;
+      }
+
+      & > a {
+        &:hover {
+          background: $color-bg-2;
+        }
+
+        &:focus,
+        &[aria-selected="true"] {
+          background: $color-bg-2;
+        }
+      }
+    }
+  }
+
+  &.image {
+    .tabs-title {
+      text-align: left;
+
+      .title {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+        padding: $global-padding;
+        font-weight: $global-weight-bold;
+        line-height: $header-lineheight;
+        z-index: 10;
+        pointer-events: none;
+
+        & > * {
+          pointer-events: all;
+        }
+
+        & > span {
+          margin-bottom: $header-margin-bottom;
+          white-space: initial;
+
+          &:last-child {
+            margin-bottom: initial;
+          }
+        }
+
+        @include header-style("h3", "font-size");
+      }
+    }
+  }
+}
+
+.tabs-content {
+  border: none;
+
+  &[data-transition] .tabs-panel {
+    display: none;
+  }
+}
+
+.tabs-panel.is-active-tab {
+  display: block;
+}
+
+// 20. Orbit
+// ---------
+// (No custom orbit styles in the original file)
+
+// 22. Typeahead
+// ---------
+
+.tt-menu {
+  width: 100%;
+  background-color: $dropdown-background;
+  border-radius: 0 0 $global-radius $global-radius;
+  overflow: hidden;
+}
+
+.twitter-typeahead,
+.global-search-modal,
+.tt-input,
+.tt-hint {
+  width: 100%;
+  font-size: $paragraph-font-size;
+  margin-bottom: 0;
+
+  .menu & {
+    height: 40px;
+  }
+}
+
+.tt-suggestion,
+.global-search-suggestion {
+  display: flex;
+  align-items: baseline;
+
+  span,
+  small {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  small {
+    font-size: $small-font-size;
+  }
+
+  &.tt-cursor {
+    background-color: var(--f-palette--primary);
+
+    span,
+    small,
+    &::after {
+      color: $color-bg-1;
+    }
+  }
+
+  .card {
+    width: 100%;
+  }
+}
+
+.menu .twitter-typeahead,
+.global-search-modal {
+  .tt-dataset-blogs:not(:empty) {
+    padding: map-get($spacing-scale, 2);
+
+    .tt-suggestion,
+    .global-search-suggestion {
+      padding: map-get($spacing-scale, 2);
+    }
+  }
+
+  .tt-suggestion,
+  .global-search-suggestion {
+    padding: 0;
+
+    .card {
+      @extend .m-2;
+    }
+
+    &.user {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .v-center {
+      padding: 0;
+
+      .sf-user-image {
+        min-width: 48px;
+        width: 48px;
+        height: 48px;
+        margin-left: 0;
+        margin-right: 0.875rem;
+
+        img {
+          min-width: 48px;
+          width: 48px;
+          height: 48px;
+        }
+      }
+    }
+  }
+}
+
+.no-found {
+  padding: $button-padding;
+  font-size: $small-font-size;
+  color: $color-text-2;
+}
+
+.add-user-typeahead {
+  position: relative;
+  width: 100%;
+  z-index: 99;
+
+  &::before {
+    content: "\f002";
+    font-family: "Font Awesome 7 Free";
+    font-weight: bold;
+    font-size: 0.75rem;
+    position: absolute;
+    z-index: 1;
+    padding: $button-padding;
+    color: $color-text-1;
+  }
+
+  input {
+    width: 100%;
+    padding-left: 2rem;
+
+    &,
+    &:focus {
+      transition: 0ms;
+    }
+
+    &:focus:not(:placeholder-shown) {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      box-shadow: 0 0 0 100vw color-mix-opacity(#{$color-text-0}, 5%, 95%);
+    }
+  }
+
+  .tt-menu {
+    border-top: $hr-border;
+  }
+
+  .tt-suggestion {
+    padding: $button-padding;
+    line-height: $header-lineheight;
+    border-bottom: $hr-border;
+    cursor: pointer;
+
+    &:last-child {
+      padding-bottom: 10px;
+      border: none;
+    }
+
+    &.tt-cursor {
+      background-color: var(--f-color-success);
+
+      &::after {
+        content: "\f055";
+        font-family: "Font Awesome 7 Free";
+        font-weight: bold;
+        margin-left: auto;
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .spinner-container {
+    position: absolute;
+    top: 0;
+    right: nth($button-padding, 1);
+    display: none;
+    align-items: center;
+    height: 100%;
+  }
+}
+
+.shake {
+  animation: shake 0.4s 1 linear;
+}
+
+@keyframes shake {
+  8%,
+  41% {
+    transform: translateX(-0.25em);
+  }
+
+  25%,
+  58% {
+    transform: translateX(0.25em);
+  }
+
+  75% {
+    transform: translateX(-0.1em);
+  }
+
+  92% {
+    transform: translateX(0.1em);
+  }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+}
+
+// 23. Accordion
+// ---------
+
+.accordion {
+  .accordion-item {
+    position: relative;
+
+    &:first-child:last-child > :first-child {
+      word-break: break-word;
+
+      @include cross-browser(hyphens, auto);
+
+      &[aria-expanded="false"] {
+        border-radius: $card-border-radius;
+      }
+    }
+
+    .expand-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: $user-card-default-size / 1.5;
+      height: $user-card-default-size / 1.5;
+      display: flex;
+      opacity: 0;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+
+      &::after {
+        @extend .caret;
+
+        margin-left: 0.5em;
+        opacity: 0.5;
+      }
+
+      &:hover {
+        &::after {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    .expand-button {
+      opacity: 1;
+    }
+  }
+}
+
+.create-space-container,
+.card > .accordion {
+  .accordion-content {
+    border: none;
+  }
+}
+
+// 24. Paginate
+// ---------
+
+.pagination {
+  display: flex;
+  justify-content: left;
+
+  .page-numbers {
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $pagination-radius;
+    margin: 0 $pagination-item-spacing;
+
+    &.dots {
+      cursor: default;
+      font-weight: $global-weight-bold;
+      font-size: 1.25rem;
+      color: $pagination-item-color;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    &.prev,
+    &.next {
+      i {
+        font-size: 0.625em;
+      }
+    }
+  }
+}
+
+// 25. Callout
+// ---------
+
+.callout {
+  &:not(.cell):last-child {
+    margin-bottom: 0;
+  }
+
+  p {
+    line-height: $global-lineheight;
+  }
+}
+
+// 32. Details
+// ---------
+
+details {
+  border-left: 1px solid transparent;
+  transition: all var(--f-transition-medium);
+  border-bottom-left-radius: 0;
+  margin-bottom: $paragraph-margin-bottom;
+
+  &:has(+ details) {
+    border-bottom: 1px solid var(--f-color-border-1);
+    margin-bottom: 0;
+  }
+
+  &:not(:has(+ details)) {
+    border-left: 1px solid var(--f-color-border-1);
+  }
+
+  & ~ details {
+    border-left: 1px solid transparent;
+  }
+
+  > summary {
+    position: relative;
+    cursor: pointer;
+    align-items: center;
+    gap: 1rem;
+    width: calc(100% - 0.7rem);
+
+    &::marker {
+      content: none;
+    }
+
+    @extend .py-2;
+
+    &::after {
+      content: "\f107";
+      position: absolute;
+      right: -0.7rem;
+      top: 0.9rem;
+      font-family: "Font Awesome 7 Free";
+      font-weight: bold;
+      margin-left: auto;
+      font-size: 0.85em;
+      display: inline-block;
+      transition: all var(--f-transition-medium) ease-out;
+    }
+
+    &.small {
+      font-size: $small-font-size;
+    }
+  }
+
+  &[open] {
+    & > summary::after {
+      transform: rotate(-180deg);
+    }
+  }
+
+  & > :last-child {
+    margin-bottom: $paragraph-margin-bottom;
+  }
+
+  &:hover {
+    summary {
+      filter: brightness(120%);
+    }
+
+    border-left-color: var(--f-color-border-2);
+  }
+
+  body & {
+    @extend .px-2;
+  }
+}
+
+.details::details-content {
+  display: block;
+  block-size: 0;
+  overflow: hidden;
+  transition-property: block-size, content-visibility;
+  transition-duration: var(--f-transition-medium);
+  transition-behavior: allow-discrete;
+  transition-timing-function: ease-out;
+}
+
+.details[open]::details-content {
+  block-size: auto;
+  block-size: calc-size(auto, size);
+}
