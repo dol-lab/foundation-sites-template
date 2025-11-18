@@ -25,7 +25,7 @@ $button-sizes: (
   tiny: 0.625rem,
   small: 0.8rem,
   default: 0.9rem,
-  large: 1rem
+  large: 1rem,
 ) !default;
 
 /// Margin around buttons.
@@ -58,7 +58,7 @@ $button-border: 1px solid transparent !default;
 
 /// Border width for hollow outline buttons
 /// @type Number
-$button-hollow-border-width: 0 !default;
+$button-hollow-border-width: 1px !default;
 
 /// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, and so on.
 /// @type Map
@@ -109,7 +109,7 @@ $button-responsive-expanded: false !default;
   text-align: center;
   cursor: pointer;
 
-  @if type-of($button-padding) == 'map' {
+  @if type-of($button-padding) == "map" {
     @each $size, $padding in $button-padding {
       @include breakpoint($size) {
         padding: $padding;
@@ -140,9 +140,7 @@ $button-responsive-expanded: false !default;
 /// Sets the base styles of a hollow or clear button filling according to `$fill`.
 /// See mixin `button-fill-style` for the filling styles.
 /// @param {Keyword} $fill [$button-fill] - Type of filling between `hollow` and `clear`. `solid` has no effects.
-@mixin button-fill(
-  $fill: $button-fill
-) {
+@mixin button-fill($fill: $button-fill) {
   @if $fill == hollow {
     @include button-hollow;
   } @else if $fill == clear {
@@ -182,14 +180,18 @@ $button-responsive-expanded: false !default;
 ) {
   // Default and disabled states
   &,
-  &.disabled, &[disabled],
-  &.disabled:hover, &[disabled]:hover,
-  &.disabled:focus, &[disabled]:focus {
+  &.disabled,
+  &[disabled],
+  &.disabled:hover,
+  &[disabled]:hover,
+  &.disabled:focus,
+  &[disabled]:focus {
     background-color: $background;
     color: $color;
   }
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-color: $background-hover;
     color: $color;
   }
@@ -198,8 +200,12 @@ $button-responsive-expanded: false !default;
 /// Sets the base styles of a hollow button.
 /// See mixin `button-hollow-style` for the filling styles.
 @mixin button-hollow {
-  &, &.disabled, &[disabled] {
-    &, &:hover, &:focus {
+  &,
+  &.disabled,
+  &[disabled] {
+    &,
+    &:hover,
+    &:focus {
       background-color: transparent;
     }
   }
@@ -208,20 +214,21 @@ $button-responsive-expanded: false !default;
 /// Sets the visual style of a hollow button.
 /// @param {Color} $color [$button-background] - Text and border color of the button.
 /// @param {Color} $border-width [$button-hollow-border-width] - Border width of the button.
-@mixin button-hollow-style(
-  $color: $button-background,
-  $border-width: $button-hollow-border-width
-) {
+@mixin button-hollow-style($color: $button-background, $border-width: $button-hollow-border-width) {
   // Default and disabled states
   &,
-  &.disabled, &[disabled],
-  &.disabled:hover, &[disabled]:hover,
-  &.disabled:focus, &[disabled]:focus {
+  &.disabled,
+  &[disabled],
+  &.disabled:hover,
+  &[disabled]:hover,
+  &.disabled:focus,
+  &[disabled]:focus {
     border: $border-width solid $color;
     color: $color;
   }
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     border-color: $color;
     color: $color;
   }
@@ -230,8 +237,12 @@ $button-responsive-expanded: false !default;
 /// Sets the base styles of a clear button.
 /// See mixin `button-clear-style` for the filling styles.
 @mixin button-clear {
-  &, &.disabled, &[disabled] {
-    &, &:hover, &:focus {
+  &,
+  &.disabled,
+  &[disabled] {
+    &,
+    &:hover,
+    &:focus {
       border-color: transparent;
       background-color: transparent;
     }
@@ -240,18 +251,20 @@ $button-responsive-expanded: false !default;
 
 /// Sets the visual style of a clear button.
 /// @param {Color} $color [$button-background] - Text color of the button.
-@mixin button-clear-style(
-  $color: $button-background
-) {
+@mixin button-clear-style($color: $button-background) {
   // Default and disabled states
   &,
-  &.disabled, &[disabled],
-  &.disabled:hover, &[disabled]:hover,
-  &.disabled:focus, &[disabled]:focus {
+  &.disabled,
+  &[disabled],
+  &.disabled:hover,
+  &[disabled]:hover,
+  &.disabled:focus,
+  &[disabled]:focus {
     color: $color;
   }
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     color: $color;
   }
 }
@@ -261,10 +274,7 @@ $button-responsive-expanded: false !default;
 /// `--f-color-bg-contrast`, and `--f-color-text`.
 /// @param {Keyword} $fill [$button-fill] - Type of filling between `hollow` and `clear`.
 /// @param {Keyword} $name - Palette key name that maps to your CSS variables (e.g. `primary`, `secondary`).
-@mixin button-fill-style-from-css-vars(
-  $fill: $button-fill,
-  $name
-) {
+@mixin button-fill-style-from-css-vars($fill: $button-fill, $name) {
   @if $fill == solid {
     background-color: var(--f-color-#{$name});
 
@@ -274,7 +284,7 @@ $button-responsive-expanded: false !default;
     &:hover,
     &:focus {
       background-color: var(--f-color-#{$name}-darker);
-			color: var(--f-color-#{$name}-contrast);
+      color: var(--f-color-#{$name}-contrast);
 
       // color: color-mix(in oklab, var(--f-color-#{$name}-contrast) 90%, var(--f-color-#{$name}) 10%);
       // @include color-mix(color, var(--f-color-#{$name}-contrast), 90%, var(--f-color-#{$name}), 10%);
@@ -293,10 +303,10 @@ $button-responsive-expanded: false !default;
 
       // color: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
       // background-color: color-mix(in oklab, var(--f-color-#{$name}) 20%, var(--f-color-bg-contrast) 80%);
-			// @include color-mix(color, var(--f-color-#{$name}), 75%, var(--f-color-text-0), 25%);
+      // @include color-mix(color, var(--f-color-#{$name}), 75%, var(--f-color-text-0), 25%);
       color: var(--f-color-#{$name});
 
-			@include color-mix(background-color, var(--f-color-#{$name}), 25%, var(--f-color-bg-1), 75%);
+      @include color-mix(background-color, var(--f-color-#{$name}), 25%, var(--f-color-bg-1), 75%);
     }
   } @else if $fill == clear {
     border-color: transparent;
@@ -312,9 +322,7 @@ $button-responsive-expanded: false !default;
 
 /// Adds disabled styles to a button by fading the element and reseting the cursor.
 /// @param {Number} $opacity [$button-opacity-disabled] - Opacity of the disabled button.
-@mixin button-disabled(
-  $opacity: $button-opacity-disabled
-) {
+@mixin button-disabled($opacity: $button-opacity-disabled) {
   opacity: $button-opacity-disabled;
   cursor: not-allowed;
 }
@@ -323,11 +331,7 @@ $button-responsive-expanded: false !default;
 /// @param {Number} $size [0.4em] - Size of the arrow. We recommend using an `em` value so the triangle scales when used inside different sizes of buttons.
 /// @param {Color} $color [white] - Color of the arrow.
 /// @param {Number} $offset [$button-padding] - Distance between the arrow and the text of the button. Defaults to whatever the right padding of a button is.
-@mixin button-dropdown(
-  $size: 0.4em,
-  $color: inherit,
-  $offset: get-side($button-padding, right)
-) {
+@mixin button-dropdown($size: 0.4em, $color: inherit, $offset: get-side($button-padding, right)) {
   &::after {
     @include css-triangle($size, $color, down);
 
@@ -372,7 +376,9 @@ $button-responsive-expanded: false !default;
       }
     }
 
-    &.expanded { @include button-expand; }
+    &.expanded {
+      @include button-expand;
+    }
 
     @if $button-responsive-expanded {
       @each $size in $breakpoint-classes {
@@ -400,7 +406,7 @@ $button-responsive-expanded: false !default;
 
     // Solid, hollow & clear styles
     @each $filling in (solid hollow clear) {
-      $selector: if($button-fill == $filling, null, '.#{$filling}');
+      $selector: if($button-fill == $filling, null, ".#{$filling}");
 
       &#{$selector} {
         @include button-fill($filling);
@@ -416,7 +422,8 @@ $button-responsive-expanded: false !default;
     }
 
     // Disabled state
-    &.disabled, &[disabled] {
+    &.disabled,
+    &[disabled] {
       @include button-disabled;
     }
 
@@ -430,7 +437,8 @@ $button-responsive-expanded: false !default;
         }
       }
 
-      &.hollow, &.clear {
+      &.hollow,
+      &.clear {
         &::after {
           border-top-color: $button-background;
         }
@@ -454,7 +462,8 @@ $button-responsive-expanded: false !default;
     }
   }
 
-  a.button { // sass-lint:disable-line no-qualifying-elements
+  a.button {
+    // sass-lint:disable-line no-qualifying-elements
     &:hover,
     &:focus {
       text-decoration: none;

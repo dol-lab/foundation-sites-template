@@ -70,15 +70,15 @@ $menu-icons-back-compat: true !default;
   }
 
   &:not(.dropdown, .accordion-menu) {
-  li {
-    @include disable-mouse-outline;
+    li {
+      @include disable-mouse-outline;
 
-    &:not(.menu-text):hover > a:not([role="tab"]),
-    &:not(.menu-text):active > a:not([role="tab"]) {
-      background-color: $menu-item-background-hover;
+      &:not(.menu-text):hover > a:not([role="tab"]),
+      &:not(.menu-text):active > a:not([role="tab"]) {
+        background-color: $menu-item-background-hover;
+      }
     }
   }
-}
 
   a,
   .button {
@@ -86,6 +86,10 @@ $menu-icons-back-compat: true !default;
     text-decoration: none;
     display: block;
     padding: $menu-items-padding;
+
+    &.small {
+      padding-block: 0.5rem;
+    }
   }
 
   // Reset styles of inner elements

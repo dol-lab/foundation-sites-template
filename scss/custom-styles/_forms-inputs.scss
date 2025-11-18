@@ -6,8 +6,11 @@
   max-width: 100%;
   box-shadow: $global-drop-shadow;
   background-color: $color-bg-1;
-  font-size: $small-font-size;
   min-width: 200px;
+  &,
+  & li {
+    font-size: $form-label-font-size; //$small-font-size;
+  }
 
   &[id^="user-"][id$="-dropdown"].is-open {
     display: flex;
@@ -17,7 +20,8 @@
     }
 
     .change-role > a {
-      @extend .padding-button;
+      padding: $accordionmenu-padding;
+      /* @extend .padding-button; */
     }
   }
 

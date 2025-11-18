@@ -28,7 +28,7 @@ $tab-active-color: $color-text-0 !default;
 
 /// Font size of tab items.
 /// @type Number
-$tab-item-font-size: inherit !default;
+$tab-item-font-size: rem-calc(14); // inherit !default;
 
 /// Default background color on hover for items in a Menu.
 $tab-item-background-hover: $color-bg-2 !default;

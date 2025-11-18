@@ -6,6 +6,7 @@
   cursor: pointer;
   z-index: 50;
   width: $button-height;
+  justify-items: center;
 
   &::after {
     position: relative;
@@ -394,7 +395,9 @@
 }
 
 .accordion-menu .nested.is-accordion-submenu {
-  margin-top: 0.75rem;
+  /* removed because user-role change in defaultspace
+	margin-top: 0.75rem;
+	*/
 
   .is-submenu-item {
     border: none;
@@ -449,7 +452,7 @@
 
     ul {
       button.submenu-toggle {
-        height: $paragraph-font-size + map-get($spacing-scale, 2) + map-get($spacing-scale, 2);
+        height: $paragraph-font-size + map-get($spacing-scale, 3) + map-get($spacing-scale, 3);
 
         &:hover {
           background-color: $color-bg-2;
@@ -460,7 +463,7 @@
     button.submenu-toggle {
       text-decoration: none;
       border-radius: 0 $global-radius 0 0;
-      height: $paragraph-font-size + map-get($spacing-scale, 2) + map-get($spacing-scale, 2);
+      height: $paragraph-font-size + map-get($spacing-scale, 3) + map-get($spacing-scale, 3);
 
       &:hover {
         background-color: $color-bg-2;
@@ -468,8 +471,8 @@
 
       &::after {
         position: absolute;
-        top: map-get($spacing-scale, 2);
-        left: map-get($spacing-scale, 2);
+        top: map-get($spacing-scale, 3);
+        left: map-get($spacing-scale, 3);
 
         @extend .caret;
       }
@@ -486,7 +489,7 @@
           transform: rotate(-180deg);
           transition: $global-transition-medium;
           left: auto;
-          right: map-get($spacing-scale, 2);
+          right: map-get($spacing-scale, 3);
         }
       }
     }

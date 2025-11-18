@@ -275,11 +275,11 @@
 .menu .twitter-typeahead,
 .global-search-modal {
   .tt-dataset-blogs:not(:empty) {
-    padding: map-get($spacing-scale, 2);
+    padding: map-get($spacing-scale, 3);
 
     .tt-suggestion,
     .global-search-suggestion {
-      padding: map-get($spacing-scale, 2);
+      padding: map-get($spacing-scale, 3);
     }
   }
 
