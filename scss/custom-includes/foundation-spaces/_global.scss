@@ -130,15 +130,15 @@ $global-transition-timing-cubic-bezier: cubic-bezier(0.4, 0, 0.2, 1) !default;
 
 /// Custom: Global drop shadow value (references CSS variable).
 /// @type String
-$global-drop-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !default;
+$global-drop-shadow: var(--f-drop-shadow);
 
 /// Custom: Large drop shadow value (references CSS variable).
 /// @type String
-$global-drop-shadow-large: 0 4px 8px rgba(0, 0, 0, 0.15) !default;
+$global-drop-shadow-large: var(--f-drop-shadow-large);
 
 /// Custom: Focus outline color.
 /// @type Color
-$global-focus-color: #005fcc !default;
+$global-focus-color: Highlight !default;
 
 /// Custom: Focus outline style.
 /// @type String
