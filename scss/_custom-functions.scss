@@ -452,7 +452,7 @@
 ///
 /// @requires $global-focus
 ///
-@mixin a11y-focus {
+/* @mixin a11y-focus {
   &:active,
   &:focus {
     // Set color to transparent to ensure compatibility with high contrast mode
@@ -463,6 +463,21 @@
   &:focus-visible {
     box-shadow: $global-focus;
   }
+} */
+
+@mixin a11y-focus {
+  // 1. Reset default browser styles for mouse clicks
+  &:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+
+  // 2. Apply styles ONLY for keyboard/assistive technology navigation
+  &:focus-visible {
+    // Visual style (The glow/shadow you want)
+    box-shadow: $global-focus;	
+  }
 }
 
 ////
@@ -471,6 +486,8 @@
 /// @requires $global-focus
 ///
 @mixin a11y-focus-inset {
+  outline: 2px solid transparent;
+  outline-offset: 0px;
   box-shadow: inset $global-focus;
 }
 

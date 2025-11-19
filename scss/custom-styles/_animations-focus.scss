@@ -50,6 +50,12 @@ textarea {
   @include a11y-focus;
 }
 
+:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  @include a11y-focus-inset;
+}
+
 // Main menu
 .dropdown.menu > li > a {
   // Fix cut off shadows
