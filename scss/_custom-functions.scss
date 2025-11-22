@@ -9,7 +9,6 @@
   04. Mixin:    cross-browser
   05. Mixin:    foundation-palette
   06. Mixin:    button-sizes
-  07. Mixin:    dynamic-box
   08. Mixin:    header-style
   09. Mixin:    header-list
   10. Function: strip-unit
@@ -185,39 +184,6 @@
   @each $size-name, $size in $button-sizes {
     &.#{$size-name} {
       font-size: $size;
-    }
-  }
-}
-
-/* ==============================================================================
-  07 - dynamic-box Mixin
-============================================================================== */
-
-////
-/// Computes a responsive padding/margin box based on `$dynamic-relation` and `$padding-sizes`.
-///
-/// @param {String}  $edge      [padding] - "padding" or "margin"
-/// @param {Boolean} $negative  [false]   - If true, outputs negative values (for gutters/bleeds)
-/// @param {String}  $axis      [both]    - "both" | "vertical" | "horizontal"
-///
-/// @requires $dynamic-relation
-/// @requires $padding-sizes
-/// @requires breakpoint()
-///
-
-@mixin dynamic-box($edge: padding, $negative: false, $axis: both) {
-  $mult: if($negative, -1, 1);
-
-  @if $axis == both {
-    #{$edge}: if($negative, multiply-list(var(--f-dynamic-box), $mult), var(--f-dynamic-box));
-  } @else if $axis == vertical {
-    #{$edge}: calc(var(--f-dynamic-box-y) * #{$mult}) 0;
-  } @else {
-    #{$edge}: 0 calc(var(--f-dynamic-box-x) * #{$mult});
-
-    @if $negative {
-      max-width: calc(100% + var(--f-dynamic-box-x) * 2);
-      width: calc(100% + var(--f-dynamic-box-x) * 2);
     }
   }
 }
@@ -476,7 +442,7 @@
   // 2. Apply styles ONLY for keyboard/assistive technology navigation
   &:focus-visible {
     // Visual style (The glow/shadow you want)
-    box-shadow: $global-focus;	
+    box-shadow: $global-focus;
   }
 }
 

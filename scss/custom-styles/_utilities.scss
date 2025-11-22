@@ -29,10 +29,6 @@
   }
 }
 
-.dynamic-padding {
-  @include dynamic-box;
-}
-
 .disabled {
   opacity: 0.5;
   pointer-events: none;

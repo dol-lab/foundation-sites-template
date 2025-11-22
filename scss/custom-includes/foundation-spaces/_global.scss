@@ -146,7 +146,7 @@ $global-focus: 0 0 0 2px $global-focus-color !default;
 
 /// Custom: Paragraph font size.
 /// @type Number
-$paragraph-font-size: 1rem !default;
+$paragraph-font-size: rem-calc(15px);
 
 /// Global value used for all menu styles. Can be overwritten at individual menu component level.
 /// @type Number

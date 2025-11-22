@@ -110,14 +110,14 @@
     box-shadow:
       $info-border-shadow,
       0 1px 1px 0 color-mix-opacity(#{$color-text-0}, 6%, 94%);
-    border: 1px solid $color-border-0;
+    /* border: 1px solid $color-border-0; */
   }
 
   &[href]:hover {
     box-shadow:
       $info-border-shadow,
       0 1px 1px 0 color-mix-opacity(#{$color-text-0}, 25%, 75%);
-    border: 1px solid $color-border-0;
+    /* border: 1px solid $color-border-0; */
   }
 
   &.round {

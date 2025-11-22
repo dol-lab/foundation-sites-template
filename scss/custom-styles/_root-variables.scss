@@ -30,18 +30,6 @@
   @each $size, $value in $user-card-sizes {
     --user-card-#{$size}: #{$value};
   }
-
-  @each $breakpoint, $edge-size in $dynamic-relation {
-    @each $breakpoint, $edge-size in $dynamic-relation {
-      @include breakpoint($breakpoint) {
-        $spacing-value: map-get($spacing-scale, $edge-size);
-
-        --f-dynamic-box: #{$spacing-value};
-        --f-dynamic-box-y: #{$spacing-value};
-        --f-dynamic-box-x: #{$spacing-value};
-      }
-    }
-  }
 }
 
 /* ==========================================================================

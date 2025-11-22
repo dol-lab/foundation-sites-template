@@ -116,6 +116,22 @@
   display: flex;
   flex-direction: column;
 
+  &.nested {
+    border-top: none;
+    margin-top: -1rem;
+
+    .card-section.no-padding.flex-dir-row {
+      border-top: $hr-border;
+      margin-top: -1.375rem;
+      padding-top: 0.75rem;
+
+      .page-title {
+        font-size: 1rem;
+        font-weight: 400;
+      }
+    }
+  }
+
   &-negative {
     margin-inline: -#{map-get($spacing-scale, 3)};
   }
@@ -210,25 +226,6 @@
 
 .page-content {
   padding: 1rem 0;
-}
-
-.card-divider,
-.card-section {
-  &.nested {
-    border-top: none;
-    margin-top: -1rem;
-
-    .card-section.no-padding.flex-dir-row {
-      border-top: $hr-border;
-      margin-top: -1.375rem;
-      padding-top: 0.75rem;
-
-      .page-title {
-        font-size: 1rem;
-        font-weight: 400;
-      }
-    }
-  }
 }
 
 // 5. Spaces Card
@@ -765,41 +762,75 @@
 
 .report-card .report-header,
 .page-section .page-header {
-  @include dynamic-box;
+  //@include dynamic-box;
 }
 
-.user-generated {
-  align-items: flex-start;
-  overflow-wrap: break-word;
-  & > * {
-    width: 100%;
-  }
+$gb-variants: (
+  l: linear-gradient(to right, var(--f-color-border-0) 0%, var(--_c2) 100%),
+  r: linear-gradient(to left, var(--f-color-border-0) 0%, var(--_c2) 100%),
+  c: radial-gradient(circle at center, var(--f-color-border-0) 0%, var(--_c2) 100%),
+  ci: radial-gradient(circle at center, var(--_c2) 0%, var(--f-color-border-0) 80%),
+);
 
-  ul {
-    padding-#{$global-right}: $list-side-margin;
+@each $key, $val in $gb-variants {
+  .gb-#{$key} {
+    --_c2: color-mix(in oklab, var(--f-color-border-0) 10%, transparent);
+    background: $val no-repeat;
+    background-size: 100% 1px;
+  }
+}
+
+// Aligns content for best readability (max 70ch).
+// You can specify a targeted left-padding.
+// NOTE: This can not contain naked text (text in no container).
+.prose-layout,
+.post-excerpt > .fe-read-more,
+.ck-editor__main {
+  display: grid;
+  --target-offset-left: var(--min-offset-x); // overwrite this.
+  --min-offset-x: clamp(0.75rem, 2vw, 2rem);
+  padding-left: 0;
+  padding-right: 0;
+
+  // Grid Layout:
+  // 1. Left: Fluid offset (min-offset-x to target-offset).
+  // 2. Center: Hard-set to 70ch to prevent the Right column's 1fr from crushing it.
+  //	  It uses min() to remain responsive on screens narrower than 70ch + padding.
+  // 3. Right: Consumes whatever space is left.
+  //
+  grid-template-columns:
+    minmax(var(--min-offset-x), var(--target-offset-left))
+    minmax(min(100% - calc(var(--min-offset-x) * 2), 70ch), 70ch)
+    minmax(var(--min-offset-x), 1fr);
+
+  // Force all direct children into the center column
+  > * {
+    grid-column: 2;
   }
 
   .alignfull,
   .alignwide {
-    @include dynamic-box($edge: margin, $negative: true, $axis: horizontal);
+    grid-column: 1 / -1; // Alignfull spans from the very first line to the very last
+    width: 100%;
+  }
 
-    &:not(.no-margin) {
-      @each $breakpoint, $width in $breakpoints {
-        @include breakpoint($breakpoint) {
-          margin-block: 1rem;
-        }
-      }
+  .alignwide {
+    width: calc(100% - var(--f-spacing-3) * 2);
+    /*horizontally center */
+    margin-inline: auto;
+    /* padding: var(--f-spacing-3); */
+  }
+
+  .alignfull {
+    border-radius: 0;
+    figure,
+    img {
+      border-radius: 0;
     }
   }
 }
 
-.post-card .post-content,
-.post-card .comment-content,
-.report-card .report-content,
-.page-section .page-content,
-.dynamic-padding {
-  padding: var(--f-dynamic-box);
-
+.user-generated {
   figure,
   img {
     border-radius: $card-border-radius;
@@ -809,10 +840,9 @@
       margin-bottom: 1em;
     }
   }
-}
-
-.dynamic-margin {
-  margin: var(--f-dynamic-box);
+  overflow-wrap: break-word;
+  color: var(--f-color-text-1);
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 // 8. Clipping
