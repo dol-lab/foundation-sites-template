@@ -562,13 +562,13 @@ details {
       content: none;
     }
 
-    @extend .py-2;
+    @extend .py-3;
 
     &::after {
       content: "\f107";
       position: absolute;
       right: -0.7rem;
-      top: 0.9rem;
+      top: 1.1em;
       font-family: "Font Awesome 7 Free";
       font-weight: bold;
       margin-left: auto;
@@ -605,6 +605,7 @@ details {
   }
 }
 
+.wp-block-details::details-content,
 .details::details-content {
   display: block;
   block-size: 0;
@@ -615,6 +616,7 @@ details {
   transition-timing-function: ease-out;
 }
 
+.wp-block-details[open]::details-content,
 .details[open]::details-content {
   block-size: auto;
   block-size: calc-size(auto, size);
