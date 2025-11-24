@@ -294,7 +294,7 @@ $button-responsive-expanded: false !default;
 
     // color: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
     // background-color: color-mix(in oklab, var(--f-color-#{$name}) 12%, var(--f-color-bg-contrast) 88%);
-    @include color-mix(color, var(--f-color-#{$name}), 90%, var(--f-color-text-0), 10%);
+    @include color-mix(color, var(--f-color-#{$name}), 10%, var(--f-color-text-0), 80%);
     @include color-mix(background-color, var(--f-color-#{$name}), 10%, var(--f-color-bg-1), 90%);
 
     &:hover,
@@ -304,18 +304,17 @@ $button-responsive-expanded: false !default;
       // color: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
       // background-color: color-mix(in oklab, var(--f-color-#{$name}) 20%, var(--f-color-bg-contrast) 80%);
       // @include color-mix(color, var(--f-color-#{$name}), 75%, var(--f-color-text-0), 25%);
-      color: var(--f-color-#{$name});
-
+      @include color-mix(color, var(--f-color-#{$name}), 10%, var(--f-color-text-0), 80%);
       @include color-mix(background-color, var(--f-color-#{$name}), 25%, var(--f-color-bg-1), 75%);
     }
   } @else if $fill == clear {
     border-color: transparent;
     background-color: transparent;
-    color: var(--f-color-#{$name});
+    @include color-mix(color, var(--f-color-#{$name}), 10%, var(--f-color-text-0), 90%);
 
     &:hover,
     &:focus {
-      color: var(--f-color-#{$name}-darker);
+      @include color-mix(color, var(--f-color-#{$name}), 5%, var(--f-color-text-0), 95%);
     }
   }
 }
