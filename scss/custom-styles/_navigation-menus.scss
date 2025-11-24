@@ -301,6 +301,7 @@
     }
 
     &[data-multi-open="false"] .is-accordion-submenu-parent[aria-expanded="true"] {
+      position: relative;
       box-shadow: none;
       width: 100%;
       margin: initial;
@@ -566,7 +567,7 @@
 
     .submenu {
       position: absolute;
-      left: 0;
+      right: 0;
       top: 3rem;
       background: $color-bg-1;
     }
