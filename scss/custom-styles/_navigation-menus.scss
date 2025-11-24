@@ -301,7 +301,6 @@
     }
 
     &[data-multi-open="false"] .is-accordion-submenu-parent[aria-expanded="true"] {
-      position: relative;
       box-shadow: none;
       width: 100%;
       margin: initial;
