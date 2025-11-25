@@ -634,8 +634,7 @@
     }
   }
 
-  .card-divider:last-child .comment-avatar-list,
-  .card-divider:last-child * .comment-avatar-list {
+  .comment-avatar-list {
     --avatar-overlap: 0.6rem;
 
     flex-flow: row-reverse wrap;
