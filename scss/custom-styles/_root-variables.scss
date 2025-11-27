@@ -83,8 +83,14 @@ html {
 html[data-theme="light"][themed][style*="--f-color-theme"] {
   --_f-color-theme-light: oklch(from var(--f-color-theme) 0.95 calc(c / 1.65) h);
 
-  --f-color-bg-0: oklch(from var(--f-color-theme) 0.96 min(c / 10, 0.01) h);
-  --f-color-bg-1: oklch(from var(--f-color-theme) 0.995 min(c / 7, 0.015) h);
+  /*
+	* Generate a static, near-white background (96% Lightness).
+	* It inherits the Hue from the theme color but drastically reduces the Chroma.
+	* The Chroma is calculated as 1/7th of the original, capped at 0.01
+	* to ensure the background never becomes too saturated.
+	*/
+  --f-color-bg-0: oklch(from var(--f-color-theme) 0.96 min(c / 6, 0.01) h);
+  --f-color-bg-1: oklch(from var(--f-color-theme) 0.995 min(c / 6, 0.01) h);
   --f-color-bg-2: oklch(from var(--f-color-theme) 0.97 min(c / 5, 0.025) h);
 
   --f-color-text-0: oklch(from var(--f-color-theme) 0.4 calc(c / 3) h);
@@ -100,9 +106,9 @@ html[data-theme="light"][themed][style*="--f-color-theme"] {
 html[data-theme="dark"][themed][style*="--f-color-theme"] {
   --_f-color-theme-dark: oklch(from var(--f-color-theme) 0.455 calc(c * 0.6) h);
 
-  --f-color-bg-0: oklch(from var(--f-color-theme) 0.19 min(c * 0.6, 0.02) h);
-  --f-color-bg-1: oklch(from var(--f-color-theme) 0.23 min(c * 0.6, 0.012) h);
-  --f-color-bg-2: oklch(from var(--f-color-theme) 0.32 min(c * 0.6, 0.018) h);
+  --f-color-bg-0: oklch(from var(--f-color-theme) 0.19 min(c * 0.6, 0.035) h);
+  --f-color-bg-1: oklch(from var(--f-color-theme) 0.23 min(c * 0.6, 0.018) h);
+  --f-color-bg-2: oklch(from var(--f-color-theme) 0.32 min(c * 0.6, 0.02) h);
 
   --f-color-text-0: color-mix(in oklab, var(--_f-color-theme-dark) 12%, var(--f-color-neutral-700));
   --f-color-text-1: color-mix(in oklab, var(--_f-color-theme-dark) 18%, var(--f-color-neutral-700));
