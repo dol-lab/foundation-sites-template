@@ -35,6 +35,23 @@
   cursor: not-allowed;
 }
 
+.show-on-focus-within {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.show-on-focus-within:focus-within {
+  position: relative;
+  left: auto;
+  width: auto;
+  height: auto;
+  overflow: visible;
+}
+
 // Modern spacing utilities (Tailwind-like)
 // Organized by property specificity (least to most specific)
 // This ensures more specific utilities override less specific ones
