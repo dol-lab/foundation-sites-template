@@ -103,6 +103,7 @@
 
   color: $color-text-1;
   background-color: $color-bg-1;
+  background: linear-gradient(to bottom, var(--f-color-bg-1-base), var(--f-color-bg-1) 120%);
   position: relative;
   z-index: 1000;
 

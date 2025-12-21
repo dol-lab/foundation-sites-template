@@ -489,6 +489,7 @@
     --f-color-brand-contrast: var(--f-color-brand-base-contrast, #{map.get($foundation-palette-contrast, "brand")});
     --f-color-bg-0: var(--f-color-neutral-300); // body background
     --f-color-bg-1: var(--f-color-neutral-100); // card and widget background
+    --f-color-bg-1-base: var(--f-color-neutral-100); // not affected by color-theming
     --f-color-bg-2: var(--f-color-neutral-200);
   } @else {
     // dark mode
@@ -506,6 +507,7 @@
     );
     --f-color-bg-0: var(--f-color-neutral-100); // body background
     --f-color-bg-1: var(--f-color-neutral-200); // card and widget background (lighter than body bg, also in dark)
+    --f-color-bg-1-base: var(--f-color-neutral-200); // not affected by color-theming
     --f-color-bg-2: var(--f-color-neutral-300);
 
     // other borders are the same.
