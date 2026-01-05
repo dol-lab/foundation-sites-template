@@ -187,7 +187,7 @@ $switch-cursor-disabled: not-allowed !default;
   $paddle-height: $switch-height - ($paddle-offset * 2);
   $paddle-active-offest: $switch-width - $paddle-width - $paddle-offset;
 
-  height: $switch-height;
+  height: auto;
 
   .switch-paddle {
     width: $switch-width;
