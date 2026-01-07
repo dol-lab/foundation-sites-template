@@ -27,7 +27,7 @@ $callout-margin: 0 0 1rem 0 !default;
 $callout-sizes: (
   small: 0.5rem,
   default: 1rem,
-  large: 3rem
+  large: 3rem,
 ) !default;
 
 /// Default font color for callouts.
@@ -74,7 +74,7 @@ $callout-default-token: primary !default;
   $color-weight: (100% - $bg-fade);
 
   background-color: color-mix(in oklab, var(--f-color-#{$name}) #{$color-weight}, $color-bg-1 #{$bg-fade});
-  border-color: color-mix(in oklab, var(--f-color-#{$name}) 80%, currentColor 20%);
+  border-color: color-mix(in oklab, var(--f-color-#{$name}) 40%, $color-bg-1);
   color: color-mix(in oklab, var(--f-color-#{$name}) 50%, currentColor 90%);
 
   > p,
@@ -88,10 +88,10 @@ $callout-default-token: primary !default;
     color: color-mix(in oklab, var(--f-color-#{$name}) 50%, currentColor 90%);
   }
 
-	> .close-button {
-		color: inherit;
-		opacity: 0.9;
-	}
+  > .close-button {
+    color: inherit;
+    opacity: 0.9;
+  }
 
   // Optional: tint links inside colored callouts (keeps Foundation’s intent)
   @if $callout-link-tint != false {
@@ -119,7 +119,6 @@ $callout-default-token: primary !default;
 @mixin callout-size($padding) {
   padding: $padding $padding $padding $padding;
 }
-
 
 @mixin spaces-callout {
   .callout {

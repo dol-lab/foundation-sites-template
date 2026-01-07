@@ -622,16 +622,13 @@
     box-shadow: inset 3px 0 0 var(--f-color-brand, $primary-color);
   }
 
-  & > .card-section:first-child {
-    & > .avatar-container:first-child {
-      overflow: hidden;
-      border-radius: $card-border-radius 0 0 0;
-    }
+  & .avatar-container > .clipped {
+    border-radius: var(--f-radius);
+    overflow: hidden;
+  }
 
-    & > .avatar-container:last-child {
-      overflow: hidden;
-      border-radius: 0 $card-border-radius 0 0;
-    }
+  &:not(.activity-card) > .card-section:first-child > .avatar-container > .clipped {
+    border-radius: $card-border-radius 0 0 0;
   }
 
   .comment-avatar-list {
