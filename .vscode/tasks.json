@@ -1,0 +1,18 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Foundation",
+			"command": "if command -v bun >/dev/null; then (ls -lah && bun install && bun start); else echo \"⚠️  Bun is missing. Please install it from https://bun.sh\"; fi",
+			"type": "shell",
+			"args": [],
+			"presentation": {
+				"reveal": "always"
+			},
+			"group": "none",
+			"runOptions": {
+				"runOn": "folderOpen"
+			}
+		}
+	]
+}
