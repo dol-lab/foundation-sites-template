@@ -32,6 +32,7 @@
   .card-divider,
   .card-section {
     & > a,
+		& >* > a,
     button {
       cursor: pointer;
       line-height: 1rem;
