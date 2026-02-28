@@ -155,6 +155,13 @@
   }
 }
 
+// Gap utilities
+@each $size-number, $size in $spacing-scale {
+  .gap-#{$size-number} {
+    gap: $size;
+  }
+}
+
 // Margin auto utilities
 .m-auto {
   margin: auto;
