@@ -787,6 +787,7 @@ $gb-variants: (
   --min-offset-x: clamp(0.75rem, 2vw, 2rem);
   padding-left: 0;
   padding-right: 0;
+  --max-prose-width: calc(70ch * var(--font-ch-factor, 1)); // with is measured via 0-char, some fonts have wide chars.
 
   // Grid Layout:
   // 1. Left: Fluid offset (min-offset-x to target-offset).
@@ -796,7 +797,7 @@ $gb-variants: (
   //
   grid-template-columns:
     minmax(var(--min-offset-x), var(--target-offset-left))
-    minmax(min(100% - calc(var(--min-offset-x) * 2), 70ch), 70ch)
+    minmax(min(100% - calc(var(--min-offset-x) * 2), var(--max-prose-width)), var(--max-prose-width))
     minmax(var(--min-offset-x), 1fr);
 
   // Force all direct children into the center column
