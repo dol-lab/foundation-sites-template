@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"label": "Foundation",
-			"command": "if command -v bun >/dev/null; then (ls -lah && bun install && bun start); else echo \"⚠️  Bun is missing. Please install it from https://bun.sh\"; fi",
+			"command": "if command -v bun >/dev/null; then (bun install && bun start); else echo \"⚠️  Bun is missing. Please install it from https://bun.sh\"; fi",
 			"type": "shell",
 			"args": [],
 			"presentation": {

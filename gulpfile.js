@@ -61,13 +61,12 @@ function gulpInlinePartials() {
 }
 
 // Compile SCSS to CSS with sourcemaps and deprecation-warning filtering
-function sassBuild(pathGlobs) {
-  return gulp.src(pathGlobs)
+function sassBuild(pathGlobs, done) {
+  const stream = gulp.src(pathGlobs)
     .pipe(sourcemaps.init())
     .pipe(sass({
       includePaths,
       outputStyle: 'compressed',
-      // Filter out specific deprecation warnings from Dart Sass
       logger: {
         warn: (warning) => {
           const text = warning && warning.message ? warning.message : String(warning);
@@ -83,32 +82,65 @@ function sassBuild(pathGlobs) {
           console.debug(text);
         }
       }
-    }).on('error', sass.logError))
+    }))
+    .on('error', (err) => {
+      sass.logError(err);
+      if (done) done(err);
+    })
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('css'))
-    .pipe(browserSync.stream());
+    .pipe(gulp.dest('css'));
+
+  if (browserSync.active) {
+    stream.pipe(browserSync.stream());
+  }
+
+  stream.on('end', () => {
+    if (done) done();
+  });
+  
+  stream.on('error', (err) => {
+    if (done) done(err);
+  });
 }
 
 // Build HTML pages from *.src.html sources with partial includes
-function html() {
-  return gulp.src(['*.src.html'], { base: './' })
+function html(done) {
+  const stream = gulp.src(['*.src.html'], { base: './' })
     .pipe(gulpInlinePartials())
-    .pipe(gulp.dest('./'))
-    .on('end', () => browserSync.reload());
+    .pipe(gulp.dest('./'));
+    
+  stream.on('end', () => {
+    if (browserSync.active) browserSync.reload();
+    if (done) done();
+  });
+  
+  stream.on('error', (err) => {
+    if (done) done(err);
+  });
 }
 
 // Development server with live reload and file watching
-function serve() {
-  browserSync.init({ server: "./" });
-  gulp.watch("scss/**/*.scss", gulp.series('sassFrontend', 'sassBackend'));
-  gulp.watch(["*.src.html", "html-partials/**/*.html"], gulp.series('html'));
-  gulp.watch(["*.html", "!*.src.html"]).on('change', browserSync.reload);
+function serve(done) {
+  browserSync.init({ 
+    server: "./",
+    open: false,
+    notify: false
+  }, (err) => {
+    if (err) {
+      done(err);
+      return;
+    }
+    gulp.watch("scss/**/*.scss", gulp.series('sassFrontend', 'sassBackend'));
+    gulp.watch(["*.src.html", "html-partials/**/*.html"], gulp.series('html'));
+    gulp.watch(["*.html", "!*.src.html"]).on('change', browserSync.reload);
+    done();
+  });
 }
 
 // Gulp tasks
 gulp.task('html', html);
-gulp.task('sassFrontend', () => sassBuild(['scss/app.scss']));
-gulp.task('sassBackend', () => sassBuild(['scss/app-backend.scss']));
+gulp.task('sassFrontend', (done) => { sassBuild(['scss/app.scss'], done); });
+gulp.task('sassBackend', (done) => { sassBuild(['scss/app-backend.scss'], done); });
 gulp.task('sass', gulp.series('sassFrontend', 'sassBackend'));
 gulp.task('serve', gulp.series('sassFrontend', 'sassBackend', 'html', serve));
 gulp.task('default', gulp.series('sassFrontend', 'sassBackend', 'html', serve));
