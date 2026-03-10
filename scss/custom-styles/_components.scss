@@ -267,6 +267,14 @@
     }
   }
 
+  &.selected {
+    // :has(#global-search-input:focus)
+    .global-search-modal & {
+      background-color: color-mix(in oklab, Highlight 10%, var(--f-color-bg-2));
+      box-shadow: inset 0 0 25px -20px color-mix(in oklab, Highlight 15%, var(--f-color-text-1));
+    }
+  }
+
   .card {
     width: 100%;
   }
