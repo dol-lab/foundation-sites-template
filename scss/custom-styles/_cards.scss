@@ -513,6 +513,13 @@
     transform: scale(0.8);
   }
 
+  &:focus-visible img[data-toggle],
+  &:focus-visible img[data-move],
+  &:focus-visible img[role="button"] {
+    border-radius: $global-radius;
+    transform: scale(0.9);
+  }
+
   @each $size-label, $size in $user-card-sizes {
     .#{$size-label} & {
       width: $size;
