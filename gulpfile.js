@@ -87,8 +87,12 @@ function sassBuild(pathGlobs, done) {
       sass.logError(err);
       if (done) done(err);
     })
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('css'));
+    .pipe(sourcemaps.write('.', {
+      // Explicitly tell the browser to look up one directory 
+      // and into the 'scss' folder for the source files.
+      sourceRoot: '../scss/' 
+    }))
+    .pipe(gulp.dest('css')); 
 
   if (browserSync.active) {
     stream.pipe(browserSync.stream());
