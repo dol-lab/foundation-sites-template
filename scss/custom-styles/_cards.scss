@@ -648,7 +648,7 @@
     max-width: 40%;
     overflow: hidden;
     border-radius: 0 0 0 $card-border-radius;
-    padding-left: calc(var(--avatar-overlap) + #{map-get($spacing-scale, 1)});
+    padding-left: calc(var(--avatar-overlap) + #{map-get($spacing-scale, 2)});
     margin-right: calc(-0.7 * var(--avatar-overlap));
 
     .avatar-container {
@@ -676,6 +676,10 @@
     line-height: 1.4;
     word-break: break-word;
     overflow-wrap: break-word;
+  }
+  &.has-post-thumbnail .avatar-container > .clipped {
+    border-radius: 0;
+    border-bottom-right-radius: var(--f-radius);
   }
 }
 
