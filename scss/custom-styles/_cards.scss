@@ -829,7 +829,7 @@ $gb-variants: (
     /* padding: var(--f-spacing-3); */
   }
 
-  .alignfull {
+  .alignfull:not(.is-style-rounded) {
     border-radius: 0;
     figure,
     img {
@@ -838,19 +838,72 @@ $gb-variants: (
   }
 }
 
-.user-generated {
-  figure,
-  img {
-    border-radius: $card-border-radius;
-    overflow: clip;
-
-    &:has(+ p) {
-      margin-bottom: 1em;
-    }
-  }
+/* this lives here, because the wordpress inliner which prefixes everything 
+   with ":where(.editor-styles-wrapper)" for gutenberg does not understand css nesting,
+   otherwise this would be in defaultspace.css.
+*/
+.user-generated,
+.editor-styles-wrapper {
   overflow-wrap: break-word;
   color: var(--f-color-text-1);
   -webkit-font-smoothing: subpixel-antialiased;
+  &.post-content,
+  &.post-content > .fe-read-more {
+    --target-offset-left: 66px;
+  }
+
+  & .wp-block-image {
+    margin-top: 0 !important;
+  }
+
+  & a:not([class^="wp-block"]):not(.button) {
+    text-decoration: underline;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    &:not(:hover) {
+      text-decoration-color: color-mix(in oklab, var(--f-color-brand) 50%, transparent 50%);
+    }
+  }
+
+  & .image + :not(.image) {
+    padding-top: 1em;
+  }
+  & .wp-block-group {
+    padding-bottom: 0.5em;
+  }
+
+  & iframe {
+    max-width: 100%;
+  }
+  & a.external-link.has-text::after,
+  & a[target="_blank"]::after {
+    font-family: "Font Awesome 7 Free";
+    font-weight: 900;
+    content: "\00a0\f08e";
+  }
+
+  :where(:not(.is-style-rounded) > img) {
+    border-radius: var(--f-radius);
+    overflow: clip;
+  }
+
+  .wp-block-image:has(+ p),
+  :where(figure, img):has(+ p),
+  /* following is for gutenberg */
+  .wp-block:has(> .wp-block-image):has(+ p) {
+    margin-bottom: 1em;
+  }
+
+  .is-style-default {
+    border-radius: 0;
+    &figure,
+    & > figure,
+    & > img,
+    & > figure > img {
+      border-radius: 0;
+    }
+  }
 }
 
 // 8. Clipping
