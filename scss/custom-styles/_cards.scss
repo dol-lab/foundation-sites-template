@@ -238,14 +238,14 @@
 
   display: flex;
   margin: auto 0;
-  padding: 0.35rem 0.5rem;
+  padding: 0.25rem 0.5rem;
   z-index: 1;
   color: $color-text-0;
   background: color-mix-opacity(#{$color-bg-0}, 55%, 45%);
   -webkit-box-orient: vertical;
   backdrop-filter: blur(20px) saturate(200%);
   max-width: 80% !important;
-  margin-top: 5%;
+  margin-top: 7%;
   position: absolute;
   border-radius: 0 $global-radius-small $global-radius-small 0;
 
