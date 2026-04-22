@@ -10,17 +10,17 @@
 /// @type Number
 $form-spacing: rem-calc(16) !default;
 
-@import 'text';
-@import 'checkbox';
-@import 'label';
-@import 'help-text';
-@import 'input-group';
-@import 'fieldset';
-@import 'select';
-@import 'range';
-@import 'progress';
-@import 'meter';
-@import 'error';
+@import "text";
+@import "checkbox";
+@import "label";
+@import "help-text";
+@import "input-group";
+@import "fieldset";
+@import "select";
+@import "range";
+@import "progress";
+@import "meter";
+@import "error";
 
 @mixin spaces-forms {
   @include foundation-form-text;

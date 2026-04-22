@@ -247,6 +247,15 @@ $switch-cursor-disabled: not-allowed !default;
     @include switch-text-inactive;
   }
 
+  // Rounded variant
+  .rounded .switch-paddle {
+    border-radius: 5000px !important;
+
+    &::after {
+      border-radius: 50%;
+    }
+  }
+
   // Switch sizes
   .switch.tiny {
     @include switch-size(rem-calc(10), $switch-height-tiny, $switch-paddle-offset);

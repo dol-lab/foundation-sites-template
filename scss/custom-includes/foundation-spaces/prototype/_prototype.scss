@@ -30,9 +30,6 @@
 // List Style type
 @import 'list-style-type';
 
-// Rounded Utility
-@import 'rounded';
-
 // Bordered Utility
 @import 'bordered';
 
@@ -72,7 +69,6 @@
   @include foundation-prototype-text-decoration;
   @include foundation-prototype-font-styling;
   @include foundation-prototype-list-style-type;
-  @include foundation-prototype-rounded;
   @include foundation-prototype-bordered;
   @include foundation-prototype-shadow;
   @include foundation-prototype-arrow;
