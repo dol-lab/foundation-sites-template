@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass-embedded'));
 const browserSync = require('browser-sync').create();
 const sourcemaps = require('gulp-sourcemaps');
+const { marked } = require('marked');
 
 const fs = require('node:fs');
 const path = require('node:path');
@@ -14,7 +15,35 @@ const includePaths = [
 
 const INCLUDE_RE = /@@include\((['"])([^'"]+)\1\)/g;
 
-// Recursively inlines partial HTML files referenced with @@include()
+// Render markdown to HTML, then decorate <code> values that look like colors
+// (hex literals or --f-color-* custom properties) with an inline swatch so the
+// docs visually reflect the color they reference. The sourceName is appended
+// as a "rendered from …" caption so readers know where to edit.
+function renderMarkdown(src, sourceName) {
+  const html = marked.parse(src);
+  const withFoundationClasses = html
+    // Wrap tables so wide ones scroll horizontally instead of overflowing.
+    .replace(/<table>/g, '<div class="table-scroll"><table>')
+    .replace(/<\/table>/g, '</table></div>')
+    // Foundation: .code-block for fenced code
+    .replace(/<pre>/g, '<pre class="code-block">');
+  const swatched = withFoundationClasses
+    .replace(
+      /<code>(#[0-9a-fA-F]{3,8})<\/code>/g,
+      (_m, hex) => `<code class="has-swatch"><span class="swatch" style="--swatch:${hex}"></span>${hex}</code>`
+    )
+    .replace(
+      /<code>(--f-color-[a-z0-9-]+)<\/code>/g,
+      (_m, name) => `<code class="has-swatch"><span class="swatch" style="--swatch:var(${name})"></span>${name}</code>`
+    );
+  const caption = sourceName
+    ? `<p class="docs-source"><small>rendered from <code>${sourceName}</code></small></p>`
+    : '';
+  return swatched + caption;
+}
+
+// Recursively inlines partial HTML files referenced with @@include().
+// Files with a .md extension are rendered as markdown to HTML.
 function inlineFile(absPath, stack = []) {
   const filePath = path.resolve(absPath);
   if (stack.includes(filePath)) {
@@ -22,7 +51,10 @@ function inlineFile(absPath, stack = []) {
     throw new Error(`Circular include: ${cycle}`);
   }
   const baseDir = path.dirname(filePath);
-  let html = fs.readFileSync(filePath, 'utf8');
+  const raw = fs.readFileSync(filePath, 'utf8');
+  let html = filePath.endsWith('.md')
+    ? renderMarkdown(raw, path.basename(filePath))
+    : raw;
   html = html.replace(INCLUDE_RE, (_m, _q, rel) => {
     const child = path.resolve(baseDir, rel);
     return inlineFile(child, [...stack, filePath]);

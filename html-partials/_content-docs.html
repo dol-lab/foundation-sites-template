@@ -1,0 +1,90 @@
+<div class="cell">
+    <div class="card static overflow-initial docs-card">
+        <ul class="accordion" data-accordion data-allow-all-closed="true" data-multi-expand="true">
+            <li class="accordion-item" data-accordion-item>
+                <a href="#" class="accordion-title">
+                    <span class="docs-icon" aria-hidden="true">📐</span>
+                    Helper Classes
+                </a>
+                <div class="accordion-content docs-content user-generated" data-tab-content>
+                    @@include('../HELPER_CLASSES.md')
+                </div>
+            </li>
+            <li class="accordion-item" data-accordion-item>
+                <a href="#" class="accordion-title">
+                    <span class="docs-icon" aria-hidden="true">🎨</span>
+                    CSS Variables &amp; Theming
+                </a>
+                <div class="accordion-content docs-content user-generated" data-tab-content>
+                    @@include('../VARIABLES.md')
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .docs-card .docs-icon { margin-right: 0.5rem; }
+    .docs-content { padding: 1rem 1.25rem; }
+    .docs-content > h1:first-child { display: none; }
+    .docs-content h2:not(:first-of-type) {
+        padding-top: 1rem;
+        border-top: 1px solid var(--f-color-border-0);
+    }
+    /* marked outputs <pre><code class="language-…">; the inner <code> inherits the
+       global inline-pill styles (border, background, padding) which, when wrapped
+       inside a <pre>, mark every line. Reset them so only .code-block styles apply. */
+    .docs-content .code-block > code {
+        padding: 0;
+        top: 0;
+        border: 0;
+        background: transparent;
+        border-radius: 0;
+        font-size: 1em;
+    }
+
+    /* Foundation's table-scroll isn't compiled (foundation-table is excluded to
+       protect Gutenberg). Tiny scoped substitute — no bundle bloat. */
+    .docs-content .table-scroll {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+    .docs-content .table-scroll table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .docs-content .table-scroll th,
+    .docs-content .table-scroll td {
+        padding: 0.4rem 0.6rem;
+        border-bottom: 1px solid var(--f-color-border-0);
+        text-align: left;
+        vertical-align: top;
+    }
+    .docs-content .table-scroll thead { background: var(--f-color-bg-2); }
+    .docs-content .table-scroll th { font-weight: 600; }
+
+    .docs-content .docs-source {
+        margin-top: 1.25rem;
+        padding-top: 0.5rem;
+        border-top: 1px dashed var(--f-color-border-0);
+        color: var(--f-color-text-2);
+        text-align: right;
+    }
+
+    /* Color swatch (inserted by gulp markdown post-process) */
+    .docs-content code.has-swatch {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35em;
+    }
+    .docs-content code.has-swatch .swatch {
+        display: inline-block;
+        width: 0.9em;
+        height: 0.9em;
+        border-radius: 3px;
+        background: var(--swatch);
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+        flex-shrink: 0;
+    }
+</style>
