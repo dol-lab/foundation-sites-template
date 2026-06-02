@@ -72,7 +72,7 @@
 
 /* We check if the browser understands 'from' inside oklch */
 @supports (color: oklch(from red l c h)) {
-  html {
+  :root {
     &[themed][style*="--f-color-theme"] {
       body {
         background-image: radial-gradient(var(--f-bg-gradient-color), transparent 50vw);
@@ -83,7 +83,7 @@
     }
   }
 
-  html[data-theme="light"][themed][style*="--f-color-theme"] {
+  :root[data-theme="light"][themed][style*="--f-color-theme"] {
     --_f-color-theme-light: oklch(from var(--f-color-theme) 0.95 calc(c / 1.65) h);
 
     --f-color-bg-0: oklch(from var(--f-color-theme) 0.96 min(c / 6, 0.01) h);
@@ -99,7 +99,7 @@
     --f-bg-gradient-color: oklch(from var(--f-color-theme) max(l, 0.83) min(c, 0.12) h);
   }
 
-  html[data-theme="dark"][themed][style*="--f-color-theme"] {
+  :root[data-theme="dark"][themed][style*="--f-color-theme"] {
     --_f-color-theme-dark: oklch(from var(--f-color-theme) 0.455 calc(c * 0.6) h);
 
     --f-color-bg-0: oklch(from var(--f-color-theme) 0.19 min(c * 0.6, 0.035) h);
