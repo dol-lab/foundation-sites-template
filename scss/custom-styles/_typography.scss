@@ -62,20 +62,27 @@ a {
   @include button-sizes;
 }
 
-body .s-fg-a-c1-parent a {
-  &:not(
-      [class^="wp-block"],
-      .primary,
-      .secondary,
-      .alert,
-      .success,
-      .warning,
-      .accordion-title,
-      .button,
-      [role="tab"],
-      [role="menuitem"]
-    ) {
-    @extend .brand;
+body .s-fg-a-c1-parent *:not([data-dropdown]) a {
+  // should not have a [data-dropdown] anywhere between
+  &:not([data-dropdown] a) {
+    &:not(
+        [class^="wp-block"],
+        .primary,
+        .secondary,
+        .alert,
+        .success,
+        .warning,
+        .accordion-title,
+        .button,
+        [role="tab"],
+        [role="menuitem"]
+      ) {
+      @extend .brand;
+
+      &:visited {
+        color: var(--f-color-brand-darker);
+      }
+    }
   }
 }
 

@@ -838,7 +838,7 @@ $gb-variants: (
   }
 }
 
-/* this lives here, because the wordpress inliner which prefixes everything 
+/* this lives here, because the wordpress inliner which prefixes everything
    with ":where(.editor-styles-wrapper)" for gutenberg does not understand css nesting,
    otherwise this would be in defaultspace.css.
 */
