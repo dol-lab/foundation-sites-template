@@ -218,20 +218,8 @@
 // ---------
 // (No custom orbit styles in the original file)
 
-// 22. Typeahead
-// ---------
 
-.tt-menu {
-  width: 100%;
-  background-color: $dropdown-background;
-  border-radius: 0 0 $global-radius $global-radius;
-  overflow: hidden;
-}
-
-.twitter-typeahead,
-.global-search-modal,
-.tt-input,
-.tt-hint {
+.global-search-modal {
   width: 100%;
   font-size: $paragraph-font-size;
   margin-bottom: 0;
@@ -241,7 +229,6 @@
   }
 }
 
-.tt-suggestion,
 .global-search-suggestion {
   display: flex;
   align-items: baseline;
@@ -257,16 +244,6 @@
     font-size: $small-font-size;
   }
 
-  &.tt-cursor {
-    background-color: var(--f-palette--primary);
-
-    span,
-    small,
-    &::after {
-      color: $color-bg-1;
-    }
-  }
-
   &.selected {
     // :has(#global-search-input:focus)
     .global-search-modal & {
@@ -280,18 +257,7 @@
   }
 }
 
-.menu .twitter-typeahead,
 .global-search-modal {
-  .tt-dataset-blogs:not(:empty) {
-    padding: map-get($spacing-scale, 3);
-
-    .tt-suggestion,
-    .global-search-suggestion {
-      padding: map-get($spacing-scale, 3);
-    }
-  }
-
-  .tt-suggestion,
   .global-search-suggestion {
     padding: 0;
 
@@ -331,75 +297,6 @@
   color: $color-text-2;
 }
 
-.add-user-typeahead {
-  position: relative;
-  width: 100%;
-  z-index: 99;
-
-  &::before {
-    content: "\f002";
-    font-family: "Font Awesome 7 Free";
-    font-weight: bold;
-    font-size: 0.75rem;
-    position: absolute;
-    z-index: 1;
-    padding: $button-padding;
-    color: $color-text-1;
-  }
-
-  input {
-    width: 100%;
-    padding-left: 2rem;
-
-    &,
-    &:focus {
-      transition: 0ms;
-    }
-
-    &:focus:not(:placeholder-shown) {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-      box-shadow: 0 0 0 100vw color-mix-opacity(#{$color-text-0}, 5%, 95%);
-    }
-  }
-
-  .tt-menu {
-    border-top: $hr-border;
-  }
-
-  .tt-suggestion {
-    padding: $button-padding;
-    line-height: $header-lineheight;
-    border-bottom: $hr-border;
-    cursor: pointer;
-
-    &:last-child {
-      padding-bottom: 10px;
-      border: none;
-    }
-
-    &.tt-cursor {
-      background-color: var(--f-color-success);
-
-      &::after {
-        content: "\f055";
-        font-family: "Font Awesome 7 Free";
-        font-weight: bold;
-        margin-left: auto;
-        font-size: 0.75rem;
-      }
-    }
-  }
-
-  .spinner-container {
-    position: absolute;
-    top: 0;
-    right: nth($button-padding, 1);
-    display: none;
-    align-items: center;
-    height: 100%;
-  }
-}
 
 .shake {
   animation: shake 0.4s 1 linear;

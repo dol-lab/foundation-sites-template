@@ -809,31 +809,6 @@ i.fa {
     transition: $global-transition-medium;
   }
 
-  span.twitter-typeahead {
-    opacity: 0;
-    pointer-events: none;
-    z-index: 100;
-    box-shadow: $global-drop-shadow;
-    height: initial !important;
-    transform: scale(0.97);
-    transition: $global-transition-medium;
-    width: auto;
-    max-width: calc(min(480px, 95vw));
-  }
-
-  input.twitter-typeahead {
-    height: $user-card-default-size;
-    border: none;
-    padding: $global-padding;
-    width: map-get($breakpoints, "medium");
-    max-width: 100%;
-
-    &.is-active {
-      border-radius: $global-radius-small $global-radius-small 0 0;
-      border-bottom: $hr-border;
-    }
-  }
-
   &.is-active {
     pointer-events: all;
 
@@ -842,37 +817,12 @@ i.fa {
       will-change: opacity;
       transition: $global-transition-medium;
     }
-
-    span.twitter-typeahead {
-      opacity: 1;
-      pointer-events: all;
-      transform: scale(1);
-      transition: $global-transition-medium;
-      box-shadow: $global-drop-shadow-large;
-    }
-  }
-
-  .tt-menu {
-    position: relative !important;
-    top: 0 !important;
-    max-height: 82vh;
-    overflow-y: auto;
   }
 }
 
-.user.tt-suggestion.cursor,
-.user.tt-suggestion:hover,
 .user.global-search-suggestion:hover {
   background-color: $color-bg-2;
   cursor: pointer;
-}
-
-.twitter-typeahead.tt-hint {
-  display: none;
-
-  .search-container.is-active & {
-    display: block;
-  }
 }
 
 #menu-state {
