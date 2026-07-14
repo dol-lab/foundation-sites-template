@@ -57,6 +57,24 @@
     font-size: rem-calc($global-font-size);
   }
 
+  // Opt-in: chips shrink + ellipsize (the label span already truncates) and expand on hover/focus.
+  // Lives on the container so the whole set shares the behavior and .info-chip stays a dumb unit.
+  &.chips-collapsible {
+    .info-chip {
+      max-width: 8rem;
+      transition: max-width 0.2s ease;
+
+      &:hover,
+      &:focus-within {
+        max-width: 20rem;
+      }
+
+      & > span {
+        min-width: 0; // allow the label to shrink so text-overflow: ellipsis applies
+      }
+    }
+  }
+
   .flex-nowrap & {
     flex-wrap: nowrap;
     overflow: hidden;
