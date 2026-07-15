@@ -44,8 +44,8 @@
 
 @media only screen and (prefers-color-scheme: dark) {
   :host(:not([data-theme])),
-	/* don't apply to gutenberg iframe (.editor-styles-wrapper)*/
-  :root:not([data-theme]) body:not(.editor-styles-wrapper) {
+	/* don't apply to gutenberg iframe (.editor-styles-wrapper) and tinymce (.wp-editor)*/
+  :root:not([data-theme]) body:not(.editor-styles-wrapper):not(.wp-editor):not(.wp-admin) {
     @include foundation-apply-theme("dark");
   }
 }
