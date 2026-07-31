@@ -124,7 +124,8 @@ code {
   position: relative;
   top: -0.08em;
   padding: 0.15em 0.4em;
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 pre {
