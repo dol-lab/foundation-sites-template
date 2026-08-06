@@ -84,6 +84,9 @@ The base palette values live in `scss/_colors.scss` (`$foundation-palette` and `
 - Default: follows `prefers-color-scheme` (dark theme is applied when the OS prefers dark and you did not force a mode).
 - Force: set `data-theme="light"` or `data-theme="dark"` on `html`.
 
+If something looks wrong in dark mode, see [DARK_THEME.md](DARK_THEME.md) — a symptom-first
+troubleshooting checklist (hard-coded colors, specificity traps, admin/editor exclusions).
+
 #### Optional Page-Wide Tinting
 
 If you add the `themed` attribute and set `--f-color-theme` on `html`, some role colors are derived from that color
