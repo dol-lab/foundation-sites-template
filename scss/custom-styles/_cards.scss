@@ -38,7 +38,10 @@
     opacity: 0.5;
   }
 
-  &:not(.static) {
+  // A card offers a click only where it says so. Opt-in, not opt-out: a card that shows a pointer
+  // and then does nothing promises the reader something it cannot keep, and forgetting to opt out
+  // is the easy mistake. Set `clickable` where the whole card is a link (or opens something).
+  &.clickable {
     &:hover {
       cursor: pointer;
       box-shadow: $global-drop-shadow;
