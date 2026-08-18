@@ -14,10 +14,11 @@
   --f-transition-long: 500ms;
   --f-transition-timing: ease-in-out;
   --f-transition-timing-cubic-bezier: cubic-bezier(0.8, 0, 0.2, 1.2);
-  --f-drop-shadow: 0 5px 20px color-mix(in srgb, var(--f-color-text-1) 5%, transparent),
-    0 2px 5px color-mix(in srgb, var(--f-color-text-1) 15%, transparent);
-  --f-drop-shadow-large: 0 14px 28px color-mix(in srgb, var(--f-color-text-1) 25%, transparent),
-    0 10px 10px color-mix(in srgb, var(--f-color-text-1) 22%, transparent);
+	--f-color-shadow: rgba(0, 0, 0, 0.13);
+  --f-drop-shadow: 0 5px 20px var(--f-color-shadow),
+    0 2px 5px color-mix(in srgb, var(--f-color-shadow) 50%, transparent);
+  --f-drop-shadow-large: 0 14px 28px var(--f-color-shadow),
+    0 10px 10px color-mix(in srgb, var(--f-color-shadow) 22%, transparent);
   --f-margin: 1rem;
   --f-padding: 1rem;
   --f-menu-padding: 0.75rem 0.9rem;
@@ -97,6 +98,9 @@
     --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
 
     --f-bg-gradient-color: oklch(from var(--f-color-theme) max(l, 0.83) min(c, 0.12) h);
+
+		--f-color-shadow: color-mix(in oklab, oklch(from var(--f-color-theme) 0.3 min(c, 0.12) h), transparent 80%);
+
   }
 
   :root[data-theme="dark"][themed][style*="--f-color-theme"] {
@@ -113,7 +117,15 @@
     --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
 
     --f-bg-gradient-color: oklch(from var(--f-color-theme) min(l, 0.3) min(c, 0.15) h);
+
+		--f-color-shadow: color-mix(in oklab, oklch(from var(--f-color-theme) 0.06 min(c, 1) h), transparent 45%);
+
   }
+
+	:root[themed][style*="--f-color-theme"]{
+		--f-drop-shadow: 0 5px 20px var(--f-color-shadow), 0 2px 5px color-mix(in srgb, var(--f-color-shadow) 50%, transparent);
+  	--f-drop-shadow-large: 0 14px 28px var(--f-color-shadow), 0 10px 10px color-mix(in srgb, var(--f-color-shadow) 22%, transparent);
+	}
 }
 
 .info-chip-taxonomy {
