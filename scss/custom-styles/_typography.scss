@@ -62,10 +62,19 @@ a {
   @include button-sizes;
 }
 
-body .s-fg-a-c1-parent *:not([data-dropdown]) a {
-  // should not have a [data-dropdown] anywhere between
-  &:not([data-dropdown] a) {
-    &:not(
+/*
+ * Prose links take the Space's brand colour.
+ *
+ * This is a *default*: it says what a link looks like when nothing else has an opinion, so it
+ * is written at the weight of one. `:where()` contributes no specificity, which leaves the
+ * whole thing at (0,0,1) — the `a` and nothing more — and any component with a class of its
+ * own now overrides it by simply existing.
+ *
+ */
+:where(body .s-fg-a-c1-parent *:not([data-dropdown]))
+  a:not(
+    :where(
+        [data-dropdown] a,
         [class^="wp-block"],
         .primary,
         .secondary,
@@ -76,13 +85,20 @@ body .s-fg-a-c1-parent *:not([data-dropdown]) a {
         .button,
         [role="tab"],
         [role="menuitem"]
-      ) {
-      @extend .brand;
+      )
+  ) {
+  color: var(--f-color-brand);
 
-      &:visited {
-        color: var(--f-color-brand-darker);
-      }
-    }
+  // Spelled out rather than left to inherit from the line above: at this weight the reset's
+  // own `a:focus { color: inherit }` would otherwise take the colour off a focused link, which
+  // is a thing the old (0,4,3) rule simply sat on top of without anyone noticing.
+  &:focus {
+    color: var(--f-color-brand);
+  }
+
+  &:hover,
+  &:visited {
+    color: var(--f-color-brand-darker);
   }
 }
 
