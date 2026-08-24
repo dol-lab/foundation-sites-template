@@ -16,6 +16,47 @@
 <div class="cell">
     <div class="card static post-card">
         <div class="post-content">
+            <h2>Info Chips</h2>
+            <p>A static chip has no surface of its own: a hairline border, no fill, no shadow. A
+                chip that can be clicked gets a surface, a firmer border and a drop shadow, and its
+                own markup has to say so: an <code>[href]</code>, a <code>&lt;button&gt;</code>, or
+                <code>.clickable</code> where the handler is in JS. A chip that only sits inside a
+                link stays flat &mdash; the row around it is the click target.</p>
+        </div>
+        <div class="post-content">
+            <div class="info-chips">
+                <span class="info-chip">
+                    <span class="tag-icon"><i class="fas fa-tag"></i></span>
+                    <span class="key">Static</span>
+                    <span class="value">12</span>
+                </span>
+                <a class="info-chip" href="#">
+                    <span class="tag-icon"><i class="fas fa-tag"></i></span>
+                    <span class="key">Clickable</span>
+                    <span class="value">12</span>
+                </a>
+                <span class="info-chip clickable">
+                    <span class="tag-icon"><i class="fas fa-tag"></i></span>
+                    <span class="key">Clickable (JS)</span>
+                    <span class="value">12</span>
+                </span>
+            </div>
+            <div class="info-chips">
+                <span class="info-chip round"><span class="key">Static</span><span class="value">round</span></span>
+                <a class="info-chip round" href="#"><span class="key">Clickable</span><span class="value">round</span></a>
+                <span class="info-chip hollow round"><span class="value">Static hollow</span></span>
+                <a class="info-chip hollow round" href="#"><span class="value">Clickable hollow</span></a>
+            </div>
+            <div class="info-chips success">
+                <span class="info-chip"><span class="key">Static</span><span class="value">success</span></span>
+                <a class="info-chip" href="#"><span class="key">Clickable</span><span class="value">success</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cell">
+    <div class="card static post-card">
+        <div class="post-content">
             <h2>Inputs and Forms</h2>
         </div>
         <div class="grid-x grid-padding-x post-content">

@@ -35,6 +35,18 @@
   cursor: not-allowed;
 }
 
+// The element itself is transparent to the mouse, its children are not: a wrapper
+// that lies over something clickable without swallowing its own buttons.
+.click-through {
+  pointer-events: none;
+  user-drag: none;
+  -webkit-user-drag: none;
+
+  & > * {
+    pointer-events: auto;
+  }
+}
+
 .show-on-focus-within {
   position: absolute;
   left: -9999px;

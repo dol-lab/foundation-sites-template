@@ -13,7 +13,8 @@
 //   5. Navigation & Menus (Dot Menu, Main Menu, Icons, Breadcrumbs)
 //   6. Components (Excerpt, Tabs, Typeahead, Accordion, Pagination, Callout, Details)
 //   7. Utilities (Spacing, Flex, Gutters)
-//   8. Animations & Focus (Spinner, Keyboard Focus)
+//   8. Loading states (Loading target, Card skeleton, Deleting)
+//   9. Animations & Focus (Spinner, Keyboard Focus)
 
 // Import all modular SCSS files
 @import "custom-styles/root-variables";
@@ -24,4 +25,5 @@
 @import "custom-styles/navigation-menus";
 @import "custom-styles/components";
 @import "custom-styles/utilities";
+@import "custom-styles/loading";
 @import "custom-styles/animations-focus";

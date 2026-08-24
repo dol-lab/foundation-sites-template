@@ -35,6 +35,26 @@
   }
 }
 
+// Draws the eye to something that just changed or wants an answer.
+.pulse {
+  animation: pulse-animation 1.2s infinite ease-in-out;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes pulse-animation {
+  0% {
+    opacity: 1;
+    scale: 1;
+    box-shadow: 0 0 0 0 color-mix-opacity(#{$color-text-0}, 10%, 90%);
+  }
+
+  100% {
+    opacity: 0.75;
+    scale: 0.95;
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
 // 28. Swiper
 // ---------
 // (No custom swiper styles in the original file)

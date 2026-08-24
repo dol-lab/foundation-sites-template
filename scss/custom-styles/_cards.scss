@@ -489,6 +489,17 @@
   width: $user-card-default-size;
   min-width: $user-card-default-size;
 
+  // The corner of an avatar is one property, set by whoever has an opinion about it:
+  // round in comments, squared off where the avatar sits in a corner of a card. Everything
+  // inside the container follows it, so nobody has to name the inner elements again.
+  border-radius: var(--f-avatar-radius, 0);
+
+  & > .clipped,
+  & > .avatar-trigger,
+  & img {
+    border-radius: inherit;
+  }
+
   @each $user-card-size, $size in $user-card-sizes {
     &.#{$user-card-size} {
       width: $size;
@@ -633,16 +644,17 @@
   }
 
   & .avatar-container > .clipped {
-    border-radius: var(--f-radius);
+    border-radius: var(--f-avatar-radius, var(--f-radius));
     overflow: hidden;
   }
 
   &:not(.activity-card) > .card-section:first-child > .avatar-container > .clipped {
-    border-radius: $card-border-radius 0 0 0;
+    border-radius: var(--f-avatar-radius, #{$card-border-radius} 0 0 0);
   }
 
   .comment-avatar-list {
     --avatar-overlap: 0.6rem;
+    --f-avatar-radius: 50%;
 
     flex-flow: row-reverse wrap;
     justify-content: flex-end;
@@ -655,7 +667,6 @@
     margin-right: calc(-0.7 * var(--avatar-overlap));
 
     .avatar-container {
-      border-radius: 50%;
       overflow: hidden;
       border: 3px solid $color-bg-1;
       box-sizing: border-box;
@@ -681,8 +692,7 @@
     overflow-wrap: break-word;
   }
   &.has-post-thumbnail .avatar-container > .clipped {
-    border-radius: 0;
-    border-bottom-right-radius: var(--f-radius);
+    border-radius: var(--f-avatar-radius, 0 0 var(--f-radius) 0);
   }
 }
 

@@ -110,9 +110,19 @@
 }
 
 .info-chip {
+  // Fills and the border color live in custom properties so the states below can
+  // swap them on the chip itself, without having to out-specify the `> span`
+  // rules. Default is the static chip: no fill of its own, a hairline border,
+  // and a tint on the key segment light enough to stay a seam rather than a
+  // grey block. The tint is anatomy (icon | key | value), not a state.
+  --_chip-bg: transparent;
+  --_chip-key-bg: #{color-mix-blend($color-bg-2, 55%, $color-bg-1, 45%)};
+  --_chip-separator: #{$color-bg-2};
+  --_chip-ring: #{$info-chip-ring};
+
   text-decoration: none !important;
   display: flex;
-  background: $color-bg-1;
+  background: var(--_chip-bg);
   color: $color-text-0;
   margin: 0.25em;
   padding: 0 !important;
@@ -124,19 +134,34 @@
   cursor: default;
   box-shadow: $info-border-shadow;
 
-  &[href] {
-    cursor: pointer;
-    box-shadow:
-      $info-border-shadow,
-      0 1px 1px 0 color-mix-opacity(#{$color-text-0}, 6%, 94%);
-    /* border: 1px solid $color-border-0; */
-  }
+  // A clickable chip is raised: a surface of its own (`bg-1`), a firmer border,
+  // and a drop shadow that deepens on hover. The chip stays put -- chips sit in
+  // dense rows, where a moving one shifts the reader's eye off the row it
+  // belongs to. A static chip has none of the three, which is the whole
+  // difference: nothing about it suggests pressing.
+  // The chip's own markup has to say so: an `[href]`, a <button>, or
+  // `.clickable` where the handler is in JS (same opt-in as `.card.clickable`).
+  // A chip that only sits inside a link stays flat: the row around it is the
+  // click target, and lighting up the chip promises one it does not have.
+  // `:where()` keeps this at .info-chip specificity, so .hollow / .clear win.
+  &:where([href], button, .clickable) {
+    --_chip-bg: #{$color-bg-1};
+    --_chip-ring: #{$info-chip-ring-clickable};
 
-  &[href]:hover {
-    box-shadow:
-      $info-border-shadow,
-      0 1px 1px 0 color-mix-opacity(#{$color-text-0}, 25%, 75%);
-    /* border: 1px solid $color-border-0; */
+    cursor: pointer;
+    box-shadow: $info-chip-shadow;
+    transition: box-shadow $global-transition-short $global-transition-timing;
+
+    &:hover,
+    &:focus-visible {
+      --_chip-ring: #{$info-chip-ring-hover};
+
+      box-shadow: $info-chip-shadow-hover;
+    }
+
+    &:active {
+      box-shadow: $info-chip-shadow;
+    }
   }
 
   &.round {
@@ -148,6 +173,9 @@
   }
 
   &.hollow {
+    --_chip-bg: transparent;
+    --_chip-key-bg: transparent;
+
     &,
     span,
     span:last-child {
@@ -189,7 +217,7 @@
     display: inline-block;
     padding: $info-chip-padding;
     align-self: center;
-    border-right: 1px solid $color-bg-2;
+    border-right: 1px solid var(--_chip-separator);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -207,7 +235,7 @@
     }
 
     &:nth-child(2) {
-      background: $color-bg-2;
+      background: var(--_chip-key-bg);
     }
   }
 
@@ -221,12 +249,6 @@
     background: $color-bg-2;
     color: inherit;
     text-decoration: none;
-  }
-
-  a:hover > & {
-    box-shadow:
-      $info-border-shadow,
-      0 1px 1px 0 color-mix-opacity($color-text-0, 25%, 75%);
   }
 }
 

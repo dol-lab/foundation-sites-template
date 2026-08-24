@@ -146,6 +146,49 @@ code {
 
 pre {
   tab-size: 2ch;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid $color-border-1;
+  border-radius: $global-radius-small;
+  background-color: $color-bg-2;
+  color: $color-text-0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  white-space: pre;
+
+  // Inside a block the inline `code` look (padding, border, offset) only gets in the way.
+  & > code {
+    display: block;
+    position: static;
+    max-width: none;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    overflow-wrap: normal;
+    white-space: inherit;
+    word-break: normal;
+  }
+}
+
+// A key on a keyboard: foundation-typography gives it font and padding, this adds the relief.
+// Deliberately not themed, it looks the same light and dark.
+kbd {
+  margin: 0 0.1em;
+  padding: 0.2em 0.4em 0.15em;
+  font-size: 0.875em;
+  line-height: 1.2;
+  color: #24292e;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-bottom: 2px solid #bbb;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 rgb(0 0 0 / 10%), inset 0 1px 0 #fff;
+  text-shadow: 0 1px 0 #fff;
+  white-space: nowrap;
 }
 
 input,

@@ -904,4 +904,14 @@ i.fa {
 
 .tooltip {
   overflow-wrap: break-word;
+
+  // Keep line breaks the author typed, and stay narrow enough to read.
+  white-space: pre-wrap;
+  max-width: min(35ch, 80vw);
+}
+
+// A word carrying a tooltip is marked as such, the way an abbreviation is.
+.has-tip.text {
+  border-bottom: 1px dotted $color-border-2;
+  margin-bottom: -1px;
 }

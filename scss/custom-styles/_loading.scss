@@ -1,0 +1,69 @@
+// 20. Loading states
+// ---------
+//
+// Three ways to say "this is busy", from whole element to single control:
+//   .loading                on a container, marks every .loading-target inside it
+//   .card.loading           a card with no content yet (skeleton shimmer)
+//   .is-deleting            an element on its way out
+
+// A pulsing inner glow around whatever part of a loading element is the one being waited for.
+.loading {
+  --loading-target-color: #{$color-bg-2};
+  --loading-target-blend: multiply;
+}
+
+.loading .loading-target {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    border-radius: inherit;
+    z-index: 2;
+    box-shadow: inset 0 0 2px 1.2px var(--loading-target-color);
+    mix-blend-mode: var(--loading-target-blend);
+    animation: loading-mask 0.8s linear infinite;
+    @include cross-browser(mask-image, radial-gradient(ellipse 100% 100% at center, #{$color-bg-2} 0%, transparent 40%));
+    @include cross-browser(mask-size, 200% 200%);
+  }
+}
+
+@keyframes loading-mask {
+  0%,
+  100% {
+    @include cross-browser(mask-position, 0% 0%);
+  }
+
+  25% {
+    @include cross-browser(mask-position, 100% 0%);
+  }
+
+  50% {
+    @include cross-browser(mask-position, 100% 100%);
+  }
+
+  75% {
+    @include cross-browser(mask-position, 0% 100%);
+  }
+}
+
+// A card whose content has not arrived yet.
+.card.loading {
+  background: linear-gradient(253deg, #{$color-bg-1} 0% 10%, #{$color-bg-2} 22%, #{$color-bg-1} 48%);
+  background-size: 200% 100%;
+  animation: 1.4s shine ease-out infinite 0.25s;
+}
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+// Gone, as far as the reader is concerned: the request confirming it is still on its way.
+.is-deleting {
+  opacity: 0.45;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}

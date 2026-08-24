@@ -101,3 +101,33 @@ See `scss/custom-styles/_root-variables.scss` for the exact derived values.
 #### Helper Classes
 
 Utility classes for palette colors exist (background and text). See `HELPER_CLASSES.md` "Colors" for the list.
+
+### Info Chips
+
+`.info-chip` has two states, and elevation is what separates them:
+
+- **Static** (default): no fill and no shadow, only a hairline border, `cursor: default`. The
+  segment after the icon keeps a light tint (`bg-2` mixed halfway into `bg-1`) — that is the chip's
+  anatomy (icon | key | value), not a state, and it stays a seam rather than a grey block.
+  Full-contrast `--f-color-text-0` label: it is information, and information has to be readable.
+- **Clickable**: its own `bg-1` surface, a firmer border, and a drop shadow; hover and focus deepen
+  both. The chip does not move: chips sit in dense rows, where a moving one pulls the eye off the
+  row it belongs to. Applied to `[href]` and `<button>` chips, plus `.clickable` for a chip whose
+  handler is in JS. A chip merely sitting inside a link stays flat: the row around it is the click
+  target.
+
+The border is a `0 0 0 1px` ring shadow rather than a real border, so it costs no layout; its color
+is `--_chip-ring`, which each state sets (8% of the text color static, 12% clickable, 24% hovered).
+The drop shadow uses `--f-color-shadow` (the theme's own shadow color: black at 13% on light, 50% on
+dark), never a text-derived color — a text-derived shadow is too heavy on light and inverts to a glow
+on dark. On a dark card black-on-near-black barely registers, which is why hover also strengthens the
+ring.
+
+The fills are custom properties (`--_chip-bg`, `--_chip-key-bg`, `--_chip-separator`) set on the
+chip itself, so a state (or `.hollow`) swaps them in one place instead of out-specifying the
+`> span` rules. Both state selectors are wrapped in `:where()` to stay at `.info-chip`
+specificity, which is what keeps `.hollow` and `.clear` winning over them.
+
+Chips are `<a>` elements even when there is nothing to link to (see the `info-chip` Handlebars
+template in spaces-markup), so `[href]` — not the tag — is the honest signal. A chip that shows a
+pointer and then does nothing is the mistake this split is meant to prevent.

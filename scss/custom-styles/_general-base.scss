@@ -135,6 +135,7 @@ textarea {
 // 35. Accessibility helpers
 .fa-sr-only,
 .fa-sr-only-focusable:not(:focus),
+.reader-only,
 .sr-only,
 .sr-only-focusable:not(:focus) {
   /* This has been living in fontawesome 6 lost in 7 */
@@ -147,4 +148,10 @@ textarea {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+// Selection uses the system highlight, softened so text stays readable.
+*::selection {
+  background-color: color-mix(in srgb, Highlight 90%, transparent);
+  color: HighlightText;
 }

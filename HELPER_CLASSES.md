@@ -80,6 +80,8 @@ Format: `{breakpoint}-{columns}` (Total columns: 12)
 
 - **Hover:** `.hover-shadow`, `.hover-lift`
 - **Cursor:** `.cursor-pointer`, `.cursor-not-allowed`, `.disabled`
+- **Clickable:** `.clickable` on `.card` / `.info-chip` — opt in where the whole element is
+  interactive but nothing in the markup says so (a JS handler instead of an `[href]`).
 
 ## 6. Responsive Breakpoints
 
