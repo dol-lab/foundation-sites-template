@@ -1,0 +1,49 @@
+// 0a. Design tokens
+// ---------
+//
+// Custom properties only, and deliberately in a file of their own: they are
+// inherited, so they have to sit on :root. app-backend.scss wraps our styles
+// in `.f`, where a nested `:root` would compile to `.f :root` and never match,
+// leaving every var(--f-…) inside the wrapper undefined. Declaring properties
+// costs nothing until something uses them, so :root is safe in both builds.
+
+:root {
+  --f-radius: 0.5rem;
+  --f-radius-small: 0.25rem;
+  --f-gutter-small: 10px;
+  --f-gutter-large: 16px;
+  --f-transition-short: 100ms;
+  --f-transition-medium: 250ms;
+  --f-transition-long: 500ms;
+  --f-transition-timing: ease-in-out;
+  --f-transition-timing-cubic-bezier: cubic-bezier(0.8, 0, 0.2, 1.2);
+	--f-color-shadow: rgba(0, 0, 0, 0.13);
+  --f-drop-shadow: 0 5px 20px var(--f-color-shadow),
+    0 2px 5px color-mix(in srgb, var(--f-color-shadow) 50%, transparent);
+  --f-drop-shadow-large: 0 14px 28px var(--f-color-shadow),
+    0 10px 10px color-mix(in srgb, var(--f-color-shadow) 22%, transparent);
+  --f-margin: 1rem;
+  --f-padding: 1rem;
+  --f-menu-padding: 0.75rem 0.9rem;
+  --f-menu-nested-margin: 1rem;
+
+  // Grid container size. The SCSS variables stay the source of truth; these
+  // mirror them so a site (or a single wrapper) can resize the container
+  // without a rebuild. --f-grid-container-padding is the padding actually
+  // applied per side, i.e. half of $grid-container-padding.
+  --f-grid-container-max: #{$grid-container};
+
+  @each $breakpoint, $padding in $grid-container-padding {
+    @include breakpoint($breakpoint) {
+      --f-grid-container-padding: #{rem-calc($padding) * 0.5};
+    }
+  }
+
+  @each $size, $value in $spacing-scale {
+    --f-spacing-#{$size}: #{$value};
+  }
+
+  @each $size, $value in $user-card-sizes {
+    --user-card-#{$size}: #{$value};
+  }
+}

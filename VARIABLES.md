@@ -107,12 +107,31 @@ Exposed at `:root` as `--f-spacing-0` … `--f-spacing-9`. Source map:
 | ------------------------------------- | -------------------------------- |
 | `--f-radius`, `--f-radius-small`      | Border-radius defaults           |
 | `--f-gutter-small`, `--f-gutter-large`| Grid / inline gutters            |
+| `--f-grid-container-max`              | `.grid-container` max-width (70rem) |
+| `--f-grid-container-padding`          | `.grid-container` padding per side, responsive |
 | `--f-padding`, `--f-margin`           | Default component spacing        |
 | `--f-menu-padding`                    | Menu item padding                |
 | `--f-transition-short/medium/long`    | 100ms / 250ms / 500ms            |
 | `--f-transition-timing`               | `ease-in-out` (or cubic-bezier)  |
 | `--f-drop-shadow`, `--f-drop-shadow-large` | Standard elevation shadows  |
 | `--user-card-{xsmall…xxlarge}`        | Avatar sizes (24px … 240px)      |
+
+### Grid container
+
+`.grid-container` reads its `max-width` and side padding from
+`--f-grid-container-max` / `--f-grid-container-padding`, so a narrower or wider
+container needs no rebuild:
+
+```css
+.narrow-page .grid-container { --f-grid-container-max: 48rem; }
+```
+
+The SCSS variables (`$grid-container`, `$grid-container-padding` in
+`scss/custom-includes/foundation-spaces/xy-grid/_xy-grid.scss`) remain the
+source of truth and seed the tokens. `.grid-container.full` still hardcodes
+`padding: 0`, and cell gutters (`$grid-margin-gutters`) are still compiled
+values: code doing Sass math on them (`_s-scroll-snap.scss`,
+`_navigation-menus.scss`) will not follow a runtime override of the tokens.
 
 ## 6. Overriding in Practice
 

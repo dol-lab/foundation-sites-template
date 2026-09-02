@@ -233,13 +233,13 @@ label[for] {
 .section-wrap {
   margin: 2rem auto;
   width: 100%;
-  max-width: $global-width;
+  max-width: var(--f-grid-container-max);
 
   &.small {
-    max-width: calc(#{$global-width} / 3 * 2);
+    max-width: calc(var(--f-grid-container-max) / 3 * 2);
   }
 
   @include breakpoint(medium) {
-    width: $global-width;
+    width: var(--f-grid-container-max);
   }
 }

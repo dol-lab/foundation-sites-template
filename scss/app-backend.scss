@@ -30,7 +30,19 @@
 ///
 ///  Basically foundation's 'normalize' with a few extra knobs.
 ///  Previously called custom-foundation-global-styles-not-prefixed
+$box-sizing-root: ".f";
+$box-sizing-all: ".f *";
 @import "custom-normalize";
+
+///
+///  Design tokens and the palette. They stay outside `.f`: they are inherited
+///  and belong on :root, which nested would become `.f :root` and never match.
+///  The back end is always light, so no dark-theme variants here.
+@import "custom-styles/root-tokens";
+
+:root {
+  @include foundation-apply-theme("light");
+}
 
 ///
 ///  Some foundation styles are used to make back-end editing of posts, etc.
@@ -51,4 +63,26 @@
   @import "motion-ui";
   @include motion-ui-transitions;
   @include motion-ui-animations;
+}
+
+///
+///  The back end is always light, but a handful of rules key off :root, which
+///  here is the host page's <html> and outside our control. Turn their dark
+///  variants back.
+@media screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .f select {
+    background-image: var(--_f-chevron-for-light);
+  }
+
+  .f .show-for-dark-mode {
+    display: none !important;
+  }
+
+  .f .hide-for-dark-mode {
+    display: block !important;
+  }
+}
+
+:root[data-theme="dark"] .f select {
+  background-image: var(--_f-chevron-for-light);
 }

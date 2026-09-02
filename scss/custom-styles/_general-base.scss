@@ -103,11 +103,7 @@ textarea {
 
 .grid-container {
   &.space {
-    @each $breakpoint, $width in $breakpoints {
-      @include breakpoint(#{$breakpoint} only) {
-        margin-top: map-get($grid-container-padding, #{$breakpoint});
-      }
-    }
+    margin-top: calc(var(--f-grid-container-padding) * 2);
   }
 
   &.no-padding {

@@ -5,7 +5,6 @@
 //  -----------------------------
 //
 //  Table of Contents:
-//   0. Root Variables & Theming
 //   1. General & Grid
 //   2. Typography
 //   3. Cards (Card, Space Card, User Card, Post Card, Clipping)
@@ -17,7 +16,6 @@
 //   9. Animations & Focus (Spinner, Keyboard Focus)
 
 // Import all modular SCSS files
-@import "custom-styles/root-variables";
 @import "custom-styles/general-base";
 @import "custom-styles/typography";
 @import "custom-styles/cards";

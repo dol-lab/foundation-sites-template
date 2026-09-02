@@ -102,6 +102,30 @@ See `scss/custom-styles/_root-variables.scss` for the exact derived values.
 
 Utility classes for palette colors exist (background and text). See `HELPER_CLASSES.md` "Colors" for the list.
 
+### The two builds: `app.css` and `app-backend.css`
+
+`app.scss` styles a page we own. `app-backend.scss` is loaded into pages we do **not** own (wp-admin
+screens, and the KISDarchiv theme `ark`, which prints the Spaces header itself), so it wraps every
+component rule in `.f` and only the markup carrying that class is styled.
+
+Three things must stay **outside** that wrapper, and the entry files are the only place that is
+decided:
+
+- **Design tokens** (`custom-styles/_root-tokens.scss`). Custom properties are inherited, so they
+  belong on `:root`; nested they compile to `.f :root`, which can never match, and every
+  `var(--f-…)` inside the wrapper resolves to nothing. Declaring properties costs nothing until
+  something uses them, so `:root` is safe in a foreign page.
+- **The palette.** `app.scss` pulls in `custom-styles/_root-variables.scss` (tokens, plus the
+  light/dark theming selectors). `app-backend.scss` does not: it applies
+  `foundation-apply-theme("light")` to `:root` directly, because the back-end build is always light,
+  and neutralises the few rules that key off `:root[data-theme]` at the end of the file.
+- **normalize**, which the components assume. It is loaded before the host page's own stylesheets,
+  so its element rules lose to theirs on source order.
+
+The one part of normalize that is *not* safe unscoped is `box-sizing`: flipping a foreign page to
+`border-box` resizes its layout. `_custom-normalize.scss` therefore takes `$box-sizing-root` /
+`$box-sizing-all` (`html` / `*` by default), and `app-backend.scss` sets them to `.f` / `.f *`.
+
 ### Info Chips
 
 `.info-chip` has two states, and elevation is what separates them:

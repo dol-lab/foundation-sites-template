@@ -1,36 +1,11 @@
 // 0. Root Variables & Theming
 // ---------
 
+@import "root-tokens";
+
 :root {
   interpolate-size: allow-keywords;
   scrollbar-color: $color-text-2 $color-bg-0;
-
-  --f-radius: 0.5rem;
-  --f-radius-small: 0.25rem;
-  --f-gutter-small: 10px;
-  --f-gutter-large: 16px;
-  --f-transition-short: 100ms;
-  --f-transition-medium: 250ms;
-  --f-transition-long: 500ms;
-  --f-transition-timing: ease-in-out;
-  --f-transition-timing-cubic-bezier: cubic-bezier(0.8, 0, 0.2, 1.2);
-	--f-color-shadow: rgba(0, 0, 0, 0.13);
-  --f-drop-shadow: 0 5px 20px var(--f-color-shadow),
-    0 2px 5px color-mix(in srgb, var(--f-color-shadow) 50%, transparent);
-  --f-drop-shadow-large: 0 14px 28px var(--f-color-shadow),
-    0 10px 10px color-mix(in srgb, var(--f-color-shadow) 22%, transparent);
-  --f-margin: 1rem;
-  --f-padding: 1rem;
-  --f-menu-padding: 0.75rem 0.9rem;
-  --f-menu-nested-margin: 1rem;
-
-  @each $size, $value in $spacing-scale {
-    --f-spacing-#{$size}: #{$value};
-  }
-
-  @each $size, $value in $user-card-sizes {
-    --user-card-#{$size}: #{$value};
-  }
 }
 
 /* ==========================================================================

@@ -38,6 +38,11 @@
 @import "custom-foundation-includes";
 
 ///
+///  Design tokens and the light/dark palettes. Outside "custom-styles" because
+///  they belong on :root, which cannot be nested (see app-backend.scss).
+@import "custom-styles/root-variables";
+
+///
 ///  Our styling, comes late to overwrite foundation styles.
 @import "custom-styles";
 
