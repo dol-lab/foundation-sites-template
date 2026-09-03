@@ -2,6 +2,8 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:meta";
+
 ////
 /// @group off-canvas
 ////
@@ -72,13 +74,13 @@ $maincontent-class: 'off-canvas-content' !default;
 /// Adds baseline styles for off-canvas. This CSS is required to make the other pieces work.
 @mixin off-canvas-basics {
   /// Transform deprecated size settings into map & show warning
-  @if variable-exists(offcanvas-size) {
+  @if meta.variable-exists(offcanvas-size) {
     $offcanvas-sizes: (small: $offcanvas-size, medium: $offcanvas-size) !global;
 
     @warn '$offcanvas-size is deprecated and not used anymore! Please update your settings and use the map $offcanvas-sizes instead';
   }
 
-  @if variable-exists(offcanvas-vertical-size) {
+  @if meta.variable-exists(offcanvas-vertical-size) {
     $offcanvas-vertical-sizes: (small: $offcanvas-vertical-size, medium: $offcanvas-vertical-size) !global;
 
     @warn '$offcanvas-vertical-size is deprecated and not used anymore! Please update your settings and use the map $offcanvas-vertical-sizes instead';

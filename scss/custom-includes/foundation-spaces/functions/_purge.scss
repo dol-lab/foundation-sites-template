@@ -1,3 +1,5 @@
+@use "sass:list";
+
 /// Removes all false and null values from `$list`.
 ///
 /// @ignore Documentation: http://at-import.github.io/SassyLists/documentation/#function-sl-purge
@@ -21,7 +23,7 @@
 
   @each $item in $list {
     @if sl-is-true($item) {
-      $result: append($result, $item, list-separator($list));
+      $result: list.append($result, $item, list.separator($list));
     }
   }
 

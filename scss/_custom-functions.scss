@@ -22,6 +22,8 @@
 @use "sass:map";
 @use "sass:math";
 @use "sass:color";
+@use "sass:list";
+@use "sass:meta";
 
 /* ==============================================================================
   01 - Function to replace SCSS rgba() with CSS Variable support
@@ -244,12 +246,12 @@
 ) {
   @each $breakpoint in ("small", "medium", "large") {
     @include breakpoint($breakpoint) {
-      @each $header-size, $properties in map-get($header-styles, $breakpoint) {
-        $h: map-get($scale, $header-size); // h1 -> h3
-        $size: map-get(map-get($header-styles, $breakpoint), $h); // small -> ()
+      @each $header-size, $properties in map.get($header-styles, $breakpoint) {
+        $h: map.get($scale, $header-size); // h1 -> h3
+        $size: map.get(map.get($header-styles, $breakpoint), $h); // small -> ()
         #{$header-size} {
           @each $label, $value in $size {
-            @if $property-list == null or index($property-list, $label) {
+            @if $property-list == null or list.index($property-list, $label) {
               @if $label == "font-size" {
                 $value: rem-calc($value);
               }
@@ -275,7 +277,7 @@
 ///
 
 @function strip-unit($number) {
-  @if type-of($number) == "number" and not unitless($number) {
+  @if meta.type-of($number) == "number" and not math.is-unitless($number) {
     @return $number / ($number * 0 + 1);
   }
 
@@ -298,7 +300,7 @@
   $new-list: ();
 
   @each $item in $list {
-    $new-list: join($new-list, ($item * $multiplier));
+    $new-list: list.join($new-list, ($item * $multiplier));
   }
 
   @return $new-list;
@@ -321,12 +323,12 @@
   $index: 1;
 
   // Top values are always at index 1. The same for when the list has only one item
-  @if $side == top or length($value) == 1 {
+  @if $side == top or list.length($value) == 1 {
     $index: 1;
   }
 
   // Covers "vertical horizontal" style
-  @else if length($value) == 2 {
+  @else if list.length($value) == 2 {
     @if $side == left or $side == right {
       $index: 2;
     }
@@ -337,7 +339,7 @@
   }
 
   // Covers "top horizontal bottom" style
-  @else if length($value) == 3 {
+  @else if list.length($value) == 3 {
     @if $side == left or $side == right {
       $index: 2;
     }
@@ -348,7 +350,7 @@
   }
 
   // Covers "top right bottom left" style
-  @else if length($value) == 4 {
+  @else if list.length($value) == 4 {
     @if $side == right {
       $index: 2;
     }
@@ -362,7 +364,7 @@
     }
   }
 
-  @return nth($value, $index);
+  @return list.nth($value, $index);
 }
 
 /* ==============================================================================
@@ -471,7 +473,7 @@
 
   // Apply neutral color scale.
   @each $step, $pair in $neutral-palette {
-    --f-color-neutral-#{$step}: #{nth($pair, $neutral-index)};
+    --f-color-neutral-#{$step}: #{list.nth($pair, $neutral-index)};
   }
 
   // Apply foundation and contrast colors.

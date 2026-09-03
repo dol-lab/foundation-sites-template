@@ -2,6 +2,10 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+
 ////
 /// @group close-button
 ////
@@ -63,23 +67,23 @@ $closebutton-color-hover: $color-text-0 !default;
 /// @return {Number} The given number or the value found in the map.
 @function -zf-get-size-val($value, $size) {
   // Check if the value is a number
-  @if type-of($value) == 'number' {
+  @if meta.type-of($value) == 'number' {
     // If it is, just return the number
     @return $value;
   }
 
   // Check if the size name exists in the value map
-  @else if map-has-key($value, $size) {
+  @else if map.has-key($value, $size) {
     // If it does, return the value
-    @return map-get($value, $size);
+    @return map.get($value, $size);
   }
 }
 
 /// Sets the size and position of a close button.
 /// @param {Keyword} $size [medium] - The size to use. Set to `small` to create a small close button. The 'medium' values defined in `$closebutton-*` variables will be used as the default size and position of the close button.
 @mixin close-button-size($size) {
-  $x: nth($closebutton-position, 1);
-  $y: nth($closebutton-position, 2);
+  $x: list.nth($closebutton-position, 1);
+  $y: list.nth($closebutton-position, 2);
 
   #{$x}: -zf-get-size-val($closebutton-offset-horizontal, $size);
   #{$y}: -zf-get-size-val($closebutton-offset-vertical, $size);
@@ -89,8 +93,8 @@ $closebutton-color-hover: $color-text-0 !default;
 
 /// Adds styles for a close button, using the styles in the settings variables.
 @mixin close-button {
-  $x: nth($closebutton-position, 1);
-  $y: nth($closebutton-position, 2);
+  $x: list.nth($closebutton-position, 1);
+  $y: list.nth($closebutton-position, 2);
 
   position: absolute;
   z-index: $closebutton-z-index;

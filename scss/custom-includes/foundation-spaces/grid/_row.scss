@@ -2,6 +2,8 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:list";
+
 ////
 /// @group grid
 ////
@@ -49,10 +51,10 @@
 ) {
   $margin: auto;
 
-  @if index($behavior, nest) != null {
+  @if list.index($behavior, nest) != null {
     @include grid-row-nest($gutters);
 
-    @if index($behavior, collapse) != null {
+    @if list.index($behavior, collapse) != null {
       margin-right: 0;
       margin-left: 0;
     }

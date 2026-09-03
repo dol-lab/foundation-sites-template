@@ -2,6 +2,9 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:map";
+@use "sass:meta";
+
 ////
 /// @group responsive-embed
 ////
@@ -20,8 +23,8 @@ $responsive-embed-ratios: (
 /// Creates a responsive embed container.
 /// @param {String|List} $ratio [default] - Ratio of the container. Can be a key from the `$responsive-embed-ratios` map or a list formatted as `x by y`.
 @mixin responsive-embed($ratio: default) {
-  @if type-of($ratio) == 'string' {
-    $ratio: map-get($responsive-embed-ratios, $ratio);
+  @if meta.type-of($ratio) == 'string' {
+    $ratio: map.get($responsive-embed-ratios, $ratio);
   }
 
   position: relative;
@@ -47,7 +50,7 @@ $responsive-embed-ratios: (
   .flex-video {
     @include responsive-embed($ratio: default);
 
-    $ratios: map-remove($responsive-embed-ratios, default);
+    $ratios: map.remove($responsive-embed-ratios, default);
 
     @each $name, $ratio in $ratios {
       &.#{$name} {

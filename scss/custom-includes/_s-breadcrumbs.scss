@@ -2,6 +2,8 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:meta";
+
 ////
 /// @group breadcrumbs
 ////
@@ -43,7 +45,7 @@ $breadcrumbs-item-uppercase: false !default;
 $breadcrumbs-item-separator: true !default;
 
 // If it exists $breadcrumbs-item-slash is used to build $breadcrumbs-item-separator. See the documentation.
-@if variable-exists(breadcrumbs-item-slash) {
+@if meta.variable-exists(breadcrumbs-item-slash) {
   $breadcrumbs-item-separator: $breadcrumbs-item-slash;
 }
 
@@ -65,7 +67,7 @@ $breadcrumbs-item-separator-opacity: 60% !default;
 
 
 // If it exists $breadcrumbs-item-slash-color is used to build $breadcrumbs-item-separator-color. See the documentation.
-@if variable-exists(breadcrumbs-item-slash-color) {
+@if meta.variable-exists(breadcrumbs-item-slash-color) {
   $breadcrumbs-item-separator-color: $breadcrumbs-item-slash-color;
 }
 

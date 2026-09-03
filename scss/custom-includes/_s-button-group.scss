@@ -2,6 +2,9 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:map";
+@use "sass:math";
+
 ////
 //// @group button-group
 ////
@@ -55,7 +58,7 @@ $buttongroup-radius-on-each: false !default;
     margin: 0;
     margin-#{$global-right}: $spacing;
     margin-bottom: $spacing;
-    font-size: map-get($button-sizes, default);
+    font-size: map.get($button-sizes, default);
 
     @if $global-flexbox {
       flex: 0 0 auto;
@@ -129,7 +132,7 @@ $buttongroup-radius-on-each: false !default;
         &:first-child:nth-last-child(#{$i}) {
           &, &:first-child:nth-last-child(#{$i}) ~ #{$selector} {
             display: inline-block;
-            width: calc(#{percentage(divide(1, $i))} - #{$spacing});
+            width: calc(#{math.percentage(divide(1, $i))} - #{$spacing});
             margin-#{$global-right}: $spacing;
 
             &:last-child {
@@ -214,7 +217,7 @@ $buttongroup-radius-on-each: false !default;
     @include button-group;
 
     // Sizes
-    @each $size, $value in map-remove($button-sizes, default) {
+    @each $size, $value in map.remove($button-sizes, default) {
       &.#{$size} #{$buttongroup-child-selector} {
         font-size: $value;
       }

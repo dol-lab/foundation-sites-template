@@ -17,8 +17,8 @@ wrap those two partials' bodies in mixins and `@include` them under `.f`.
 | 1 | Dart Sass 2.0 blockers: `/` division, `!global` | XS (10 sites) | build survives Sass 2 | done |
 | 2 | Switch off unused xy-grid class groups | XS (1 line) | -51 KB, 15% of the stylesheet | done |
 | 3 | `gulp-sass` off the legacy JS API | S (one gulp task) | build survives Sass 2 | done |
-| 4 | Global built-ins to `sass:map` / `sass:math` / `sass:list` | M (271 sites, automated) | build survives Sass 3 | next |
-| 5 | `@import` to `@use` / `@forward` | L (159 sites) | build survives Sass 3 | |
+| 4 | Global built-ins to `sass:map` / `sass:math` / `sass:list` | M (271 sites, automated) | build survives Sass 3 | done |
+| 5 | `@import` to `@use` / `@forward` | L (159 sites) | build survives Sass 3 | next |
 | 6 | Drop unused components from the include list | S | ~15 KB, less to maintain | |
 | 7 | Sass `mix()` to CSS `color-mix()` | S | consistency with the 633 existing calls | |
 | 8 | Heading sizes to `clamp()` | M | deletes 3 breakpoint blocks of h1-h6 | |
@@ -80,11 +80,32 @@ appended by hand; Dart Sass never emits it.
 Left alone: `bun.lock` still lists the two removed packages. `npm install
 --package-lock-only` syncs `package-lock.json` and `yarn.lock`, not bun's.
 
-### 4. Global built-ins
+### 4. Global built-ins (done)
 
-271 sites, mostly `map-get`, `nth`, `mix`, `type-of`. `sass-migrator module`
-rewrites them. Cheapest done together with step 5, since the migrator wants to do
-both at once, but it can run alone.
+325 call sites across 45 files, rewritten to `map.get`, `list.nth`,
+`meta.type-of`, `math.unit` and friends, with the matching `@use "sass:x"` added
+to each file. `sass-migrator module` was not used: it insists on doing step 5 in
+the same pass. A scripted rewrite kept the two steps apart.
+
+Compiled CSS is byte-identical in both entry points (the sourcemaps change, since
+the sources themselves moved). `global-builtin` warnings from `scss/` are at 0;
+what is left comes from `node_modules/motion-ui`, which is not ours.
+
+Two traps if this has to be repeated:
+
+- Match `name(` with no space before the paren, and skip comments. A
+  space-tolerant match rewrites prose, e.g. "Removes the unit (e.g. px, em)".
+- `@use` goes below a `//` file header but never below a `///` SassDoc block,
+  which documents whatever follows it.
+
+Deliberately left global: `if()`, which is not deprecated, and `min()`, `max()`,
+`rgba()` and `saturate()`, whose uses here are all CSS calculations and filters,
+not Sass calls. `round()` on the other hand had to move to `math.round()`: it is
+becoming the CSS `round()` calculation, which needs an explicit modulus.
+
+Only 6 of the 137 files under `scss/` are never loaded by either entry point, so
+almost everything is at least parse-checked by a build. The only one of the 6
+the rewrite touched is `helpers/_missing-dependencies.scss`.
 
 ### 5. `@import` to `@use` / `@forward`
 

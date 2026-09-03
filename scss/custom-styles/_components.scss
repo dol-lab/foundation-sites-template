@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:list";
 
 // 13. Excerpt
 // ---------
@@ -141,7 +142,7 @@
     }
 
     & + .tabs-content .tabs-panel {
-      border-top: #{nth($hr-border, 1)} solid $color-border-2;
+      border-top: #{list.nth($hr-border, 1)} solid $color-border-2;
     }
   }
 

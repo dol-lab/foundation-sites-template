@@ -2,6 +2,8 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:meta";
+
 ////
 /// @group grid
 ////
@@ -59,7 +61,7 @@
       @include grid-row-size(expand);
     }
 
-    @if type-of($grid-column-gutter) == 'map' {
+    @if meta.type-of($grid-column-gutter) == 'map' {
       // Static (unresponsive) row gutters
       //
       @each $breakpoint, $value in $grid-column-gutter {

@@ -2,6 +2,11 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+@use "sass:string";
+
 ////
 /// @group functions
 ////
@@ -16,11 +21,11 @@
     @return false;
   }
 
-  @if type-of($val) == 'number' and strip-unit($val) == 0 {
+  @if meta.type-of($val) == 'number' and strip-unit($val) == 0 {
     @return false;
   }
 
-  @if type-of($val) == 'list' and length($val) == 0 {
+  @if meta.type-of($val) == 'list' and list.length($val) == 0 {
     @return false;
   }
 
@@ -34,22 +39,22 @@
 ///
 /// @returns {Number} A single value based on `$val` and `$side`.
 @function get-side($val, $side) {
-  $length: length($val);
+  $length: list.length($val);
 
   @if $length == 1 {
     @return $val;
   }
 
   @if $length == 2 {
-    @return map-get((top: nth($val, 1), bottom: nth($val, 1), left: nth($val, 2), right: nth($val, 2), ), $side);
+    @return map.get((top: list.nth($val, 1), bottom: list.nth($val, 1), left: list.nth($val, 2), right: list.nth($val, 2), ), $side);
   }
 
   @if $length == 3 {
-    @return map-get((top: nth($val, 1), left: nth($val, 2), right: nth($val, 2), bottom: nth($val, 3), ), $side);
+    @return map.get((top: list.nth($val, 1), left: list.nth($val, 2), right: list.nth($val, 2), bottom: list.nth($val, 3), ), $side);
   }
 
   @if $length == 4 {
-    @return map-get((top: nth($val, 1), right: nth($val, 2), bottom: nth($val, 3), left: nth($val, 4), ), $side);
+    @return map.get((top: list.nth($val, 1), right: list.nth($val, 2), bottom: list.nth($val, 3), left: list.nth($val, 4), ), $side);
   }
 }
 
@@ -62,7 +67,7 @@
 @function get-border-value($val, $elem) {
   // Find the width, style, or color and return it
   @each $v in $val {
-    $type: type-of($v);
+    $type: meta.type-of($v);
 
     @if $elem == width and $type == 'number' {
       @return $v;
@@ -84,7 +89,7 @@
     color: #000,
   );
 
-  @return map-get($defaults, $elem);
+  @return map.get($defaults, $elem);
 }
 
 /// Finds a value in a nested map.
@@ -95,7 +100,7 @@
 /// @returns {Mixed} The value found in the map.
 @function map-deep-get($map, $keys...) {
   @each $key in $keys {
-    $map: map-get($map, $key);
+    $map: map.get($map, $key);
   }
 
   @return $map;
@@ -108,15 +113,15 @@
 ///
 /// @returns {List} Depending on the flag, returns either $keys or $values or both.
 @function map-to-list($map, $keep: 'both') {
-  $keep: if(index('keys' 'values', $keep), $keep, 'both');
+  $keep: if(list.index('keys' 'values', $keep), $keep, 'both');
 
-  @if type-of($map) == 'map' {
+  @if meta.type-of($map) == 'map' {
     $keys: ();
     $values: ();
 
     @each $key, $val in $map {
-      $keys: append($keys, $key);
-      $values: append($values, $val);
+      $keys: list.append($keys, $key);
+      $values: list.append($values, $val);
     }
 
     @if $keep == 'keys' {
@@ -124,11 +129,11 @@
     } @else if $keep == 'values' {
       @return $values;
     } @else {
-      @return zip($keys, $values);
+      @return list.zip($keys, $values);
     }
   }
 
-  @return if(type-of($map) != 'list', ($value,), $map);
+  @return if(meta.type-of($map) != 'list', ($value,), $map);
 
 }
 
@@ -147,15 +152,15 @@
 ) {
   $ret: '';
 
-  @if $str1 and str-length($str1) > 0 {
+  @if $str1 and string.length($str1) > 0 {
     $ret: $ret + $str1;
 
-    @if $delimiter and str-length($delimiter) > 0 and $str2 and str-length($str2) > 0 {
+    @if $delimiter and string.length($delimiter) > 0 and $str2 and string.length($str2) > 0 {
       $ret: $ret + $delimiter;
     }
   }
 
-  @if $str2 and str-length($str2) > 0 {
+  @if $str2 and string.length($str2) > 0 {
     $ret: $ret + $str2;
   }
 
@@ -169,9 +174,9 @@
 ///
 /// @returns {List} Found value.
 @function map-safe-get($map, $key) {
-  @if type-of($map) == 'map' or (type-of($map) == 'list' and length($map) == 0) {
-    @if map-has-key($map, $key) {
-      @return map-get($map, $key);
+  @if meta.type-of($map) == 'map' or (meta.type-of($map) == 'list' and list.length($map) == 0) {
+    @if map.has-key($map, $key) {
+      @return map.get($map, $key);
     } @else {
       @error 'Key: `#{$key}` is not available in `#{$map}`';
     }

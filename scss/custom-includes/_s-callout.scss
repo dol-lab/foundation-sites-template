@@ -2,6 +2,8 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:map";
+
 ////
 /// @group callout
 ////
@@ -55,7 +57,7 @@ $callout-default-token: primary !default;
 @mixin callout-base() {
   position: relative;
   margin: $callout-margin;
-  padding: map-get($callout-sizes, default);
+  padding: map.get($callout-sizes, default);
   border: $callout-border;
   border-radius: $callout-radius;
 
@@ -135,7 +137,7 @@ $callout-default-token: primary !default;
     }
 
     // Sizes (unchanged)
-    @each $size, $padding in map-remove($callout-sizes, default) {
+    @each $size, $padding in map.remove($callout-sizes, default) {
       &.#{$size} {
         @include callout-size($padding);
       }

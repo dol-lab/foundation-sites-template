@@ -2,6 +2,9 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:list";
+@use "sass:meta";
+
 ////
 /// @group dropdown-menu
 ////
@@ -53,7 +56,7 @@ $dropdownmenu-border: 1px solid $color-border-0 !default;
 // Border width for dropdown sub-menus.
 // Used to adjust top margin of a sub-menu if a border is used.
 // @type Length
-$dropdownmenu-border-width: nth($dropdownmenu-border, 1);
+$dropdownmenu-border-width: list.nth($dropdownmenu-border, 1);
 
 /// Text color of an active dropdown menu item. Explicit override for menu defaults
 /// @type Color
@@ -257,7 +260,7 @@ $dropdown-menu-item-background-active: $color-bg-2 !default;
       }
     }
 
-    @if type-of($dropdownmenu-border-width) == 'number' {
+    @if meta.type-of($dropdownmenu-border-width) == 'number' {
       .is-dropdown-submenu {
         margin-top: (-$dropdownmenu-border-width);
       }

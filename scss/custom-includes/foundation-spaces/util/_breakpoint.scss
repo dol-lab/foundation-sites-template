@@ -2,6 +2,11 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+@use "sass:string";
+
 ////
 /// @group breakpoints
 ////
@@ -36,10 +41,10 @@ $print-breakpoint: large !default;
 $-zf-zero-breakpoint: small !default;
 $-zf-breakpoints-keys: map-to-list($breakpoints, 'keys');
 
-@if nth(map-values($breakpoints), 1) != 0 {
+@if list.nth(map.values($breakpoints), 1) != 0 {
   @error 'The first key in the $breakpoints map must have a value of "0".';
 } @else {
-  $-zf-zero-breakpoint: nth(map-keys($breakpoints), 1);
+  $-zf-zero-breakpoint: list.nth(map.keys($breakpoints), 1);
 }
 
 /// All of the names in this list will be output as classes in your CSS, like `.small-12`, `.medium-6`, and so on. Each value in this list must also be in the `$breakpoints` map.
@@ -55,7 +60,7 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
   $std-web-dpi: 96;
 
   // Size or keyword
-  $bp: nth($val, 1);
+  $bp: list.nth($val, 1);
 
   // Value of the following breakpoint
   $bp-next: null;
@@ -67,7 +72,7 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
   $bp-max: null;
 
   // Direction of media query (up, down, or only)
-  $dir: if(length($val) > 1, nth($val, 2), up);
+  $dir: if(list.length($val) > 1, list.nth($val, 2), up);
 
   // If named, name of the breakpoint
   $name: null;
@@ -81,14 +86,14 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
   }
 
   // If a breakpoint name is given, get its value from the $breakpoints/$breakpoints-hidpi map.
-  @if type-of($bp) == 'string' {
-    @if map-has-key($breakpoints, $bp) {
+  @if meta.type-of($bp) == 'string' {
+    @if map.has-key($breakpoints, $bp) {
       $name: $bp;
-      $bp: map-get($breakpoints, $name);
+      $bp: map.get($breakpoints, $name);
       $bp-next: -zf-map-next($breakpoints, $name);
-    } @else if map-has-key($breakpoints-hidpi, $bp) {
+    } @else if map.has-key($breakpoints-hidpi, $bp) {
       $name: $bp;
-      $bp: map-get($breakpoints-hidpi, $name);
+      $bp: map.get($breakpoints-hidpi, $name);
       $bp-next: -zf-map-next-number($breakpoints-hidpi, $bp);
       $hidpi: true;
     } @else {
@@ -154,22 +159,22 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
 ///
 /// @output If the breakpoint is "0px and larger", outputs the content as-is. Otherwise, outputs the content wrapped in a media query.
 @mixin breakpoint($values...) {
-  @for $i from 1 through length($values) {
-    $value: nth($values, $i);
+  @for $i from 1 through list.length($values) {
+    $value: list.nth($values, $i);
     $str: breakpoint($value);
-    $bp: index($-zf-breakpoints-keys, nth($value, 1));
-    $pbp: index($-zf-breakpoints-keys, $print-breakpoint);
+    $bp: list.index($-zf-breakpoints-keys, list.nth($value, 1));
+    $pbp: list.index($-zf-breakpoints-keys, $print-breakpoint);
 
     // Direction of media query (up, down, or only)
-    $dir: if(length($value) > 1, nth($value, 2), up);
+    $dir: if(list.length($value) > 1, list.nth($value, 2), up);
     $old-zf-size: null;
 
     // Make breakpoint size available as a variable
-    @if global-variable-exists(-zf-size) {
+    @if meta.global-variable-exists(-zf-size) {
       $old-zf-size: $-zf-size;
     }
 
-    $-zf-size: nth($value, 1) !global; // get the first value to account for `only` and `down` keywords
+    $-zf-size: list.nth($value, 1) !global; // get the first value to account for `only` and `down` keywords
 
     // If $str is still an empty string, no media query is needed
     @if $str == '' {
@@ -209,7 +214,7 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
     $str: $str + $key + '=' + -zf-bp-to-em($value) + '&';
   }
 
-  $str: str-slice($str, 1, -2);
+  $str: string.slice($str, 1, -2);
 
   @return $str;
 }
@@ -223,22 +228,22 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
 /// @returns {Mixed} The value for the key after `$key`, if `$key` was found. If `$key` was not found, or `$key` was the last value in the map, returns `null`.
 @function -zf-map-next($map, $key) {
   // Store the keys of the map as a list
-  $values: map-keys($map);
+  $values: map.keys($map);
   $i: 0;
 
   // If the Key Exists, Get the index of the key within the map and add 1 to it for the next breakpoint in the map
-  @if map-has-key($map, $key) {
-    $i: index($values, $key) + 1;
+  @if map.has-key($map, $key) {
+    $i: list.index($values, $key) + 1;
   }
 
   // If the key doesn't exist, or it's the last key in the map, return null
-  @if $i > length($map) or $i == 0 {
+  @if $i > list.length($map) or $i == 0 {
     @return null;
   }
 
   // Otherwise, return the value
   @else {
-    @return map-get($map, nth($values, $i));
+    @return map.get($map, list.nth($values, $i));
   }
 
 }
@@ -254,7 +259,7 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
   $next-number: null;
 
   @each $k, $v in $map {
-    @if type-of($v) == 'number' and $v > $number and ($next-number == null or $v < $next-number) {
+    @if meta.type-of($v) == 'number' and $v > $number and ($next-number == null or $v < $next-number) {
       $next-number: $v;
     }
   }
@@ -279,7 +284,7 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
     }
 
     @if not $found-key {
-      $list: append($list, $name);
+      $list: list.append($list, $name);
     }
   }
 
@@ -323,14 +328,14 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
 /// @return {Mixed} The corresponding breakpoint value.
 @function -zf-get-bp-val($map, $value) {
   // If the given map is a single value, return it
-  @if type-of($map) == 'number' {
+  @if meta.type-of($map) == 'number' {
     @return $map;
   }
 
 
   // Check if the breakpoint name exists globally
-  @if not map-has-key($breakpoints, $value) {
-    @if type-of($value) == 'number' {
+  @if not map.has-key($breakpoints, $value) {
+    @if meta.type-of($value) == 'number' {
       $value: -zf-closest-named-breakpoint($value);
     } @else {
       @return null;
@@ -338,9 +343,9 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
   }
 
   // Check if the breakpoint name exists in the local config map
-  @else if map-has-key($map, $value) {
+  @else if map.has-key($map, $value) {
     // If it does, just return the value
-    @return map-get($map, $value);
+    @return map.get($map, $value);
   }
 
   // Otherwise, find the next lowest breakpoint and return that value
@@ -350,7 +355,7 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
 
     @each $key, $val in $breakpoints {
       @if not $found {
-        @if map-has-key($map, $key) {
+        @if map.has-key($map, $key) {
           $anchor: $key;
         }
 
@@ -360,7 +365,7 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
       }
     }
 
-    @return map-get($map, $anchor);
+    @return map.get($map, $anchor);
   }
 }
 
@@ -377,7 +382,7 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
 @function -zf-current-breakpoint($value: null, $default: null) {
   @if $value != null {
     @return $value;
-  } @else if (variable-exists(-zf-size) and type-of($-zf-size) != 'number') and $-zf-size != null {
+  } @else if (meta.variable-exists(-zf-size) and meta.type-of($-zf-size) != 'number') and $-zf-size != null {
     @return $-zf-size;
   } @else {
     @return $default;
@@ -409,37 +414,37 @@ $breakpoint-classes: (small medium large xlarge xxlarge) !default;
 $small-up: '';
 $small-only: '';
 
-@if map-has-key($breakpoints, small) {
+@if map.has-key($breakpoints, small) {
   $small-up: screen;
-  $small-only: unquote('screen and #{breakpoint(small only)}');
+  $small-only: string.unquote('screen and #{breakpoint(small only)}');
 }
 
 $medium-up: '';
 $medium-only: '';
 
-@if map-has-key($breakpoints, medium) {
-  $medium-up: unquote('screen and #{breakpoint(medium)}');
-  $medium-only: unquote('screen and #{breakpoint(medium only)}');
+@if map.has-key($breakpoints, medium) {
+  $medium-up: string.unquote('screen and #{breakpoint(medium)}');
+  $medium-only: string.unquote('screen and #{breakpoint(medium only)}');
 }
 
 $large-up: '';
 $large-only: '';
 
-@if map-has-key($breakpoints, large) {
-  $large-up: unquote('screen and #{breakpoint(large)}');
-  $large-only: unquote('screen and #{breakpoint(large only)}');
+@if map.has-key($breakpoints, large) {
+  $large-up: string.unquote('screen and #{breakpoint(large)}');
+  $large-only: string.unquote('screen and #{breakpoint(large only)}');
 }
 
 $xlarge-up: '';
 $xlarge-only: '';
 
-@if map-has-key($breakpoints, xlarge) {
-  $xlarge-up: unquote('screen and #{breakpoint(xlarge)}');
-  $xlarge-only: unquote('screen and #{breakpoint(xlarge only)}');
+@if map.has-key($breakpoints, xlarge) {
+  $xlarge-up: string.unquote('screen and #{breakpoint(xlarge)}');
+  $xlarge-only: string.unquote('screen and #{breakpoint(xlarge only)}');
 }
 
 $xxlarge-up: '';
 
-@if map-has-key($breakpoints, xxlarge) {
-  $xxlarge-up: unquote('screen and #{breakpoint(xxlarge)}');
+@if map.has-key($breakpoints, xxlarge) {
+  $xxlarge-up: string.unquote('screen and #{breakpoint(xxlarge)}');
 }

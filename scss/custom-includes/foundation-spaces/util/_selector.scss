@@ -2,6 +2,9 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:list";
+@use "sass:string";
+
 ////
 /// @group functions
 ////
@@ -19,7 +22,7 @@
   }
 
   @each $type in $types {
-    $return: append($return, unquote('[type=\'#{$type}\']#{$modifier}'), comma);
+    $return: list.append($return, string.unquote('[type=\'#{$type}\']#{$modifier}'), comma);
   }
 
   @return $return;

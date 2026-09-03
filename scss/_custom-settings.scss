@@ -50,7 +50,7 @@ $user-card-sizes: (
   xlarge: 144px,
   xxlarge: 240px,
 );
-$user-card-default-size: map-get($user-card-sizes, medium);
+$user-card-default-size: map.get($user-card-sizes, medium);
 // Dynamic spacing that changes based on breakpoint
 // Maps breakpoint names to spacing scale numbers
 $dynamic-relation: (

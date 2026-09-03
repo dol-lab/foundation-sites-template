@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:list";
 
 // 9. Dropdown
 // -----------
@@ -901,7 +902,7 @@ input,
 
   .list-dropdown {
     border: none;
-    margin-top: calc(#{nth($hr-border, 1)} * -1);
+    margin-top: calc(#{list.nth($hr-border, 1)} * -1);
     border-radius: 0 0 $global-radius $global-radius;
     background-color: $card-background;
 

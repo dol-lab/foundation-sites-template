@@ -3,6 +3,9 @@
 // Licensed under MIT Open Source
 
 @use "sass:color";
+@use "sass:list";
+@use "sass:map";
+@use "sass:math";
 @import 'math';
 
 $contrast-warnings: true !default;
@@ -26,20 +29,20 @@ $success-color: null !default;
 @function color-luminance($color) {
   // Adapted from: https://github.com/LeaVerou/contrast-ratio/blob/gh-pages/color.js
   // Formula: http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
-  $red: round(color.channel($color, "red", $space: rgb));
-  $green: round(color.channel($color, "green", $space: rgb));
-  $blue: round(color.channel($color, "blue", $space: rgb));
+  $red: math.round(color.channel($color, "red", $space: rgb));
+  $green: math.round(color.channel($color, "green", $space: rgb));
+  $blue: math.round(color.channel($color, "blue", $space: rgb));
   $rgba: $red, $green, $blue;
   $rgba2: ();
 
   @for $i from 1 through 3 {
-    $rgb: nth($rgba, $i);
+    $rgb: list.nth($rgba, $i);
     $rgb: divide($rgb, 255);
     $rgb: if($rgb < 0.03928, divide($rgb, 12.92), pow(divide($rgb + 0.055, 1.055), 2.4));
-    $rgba2: append($rgba2, $rgb);
+    $rgba2: list.append($rgba2, $rgb);
   }
 
-  @return 0.2126 * nth($rgba2, 1) + 0.7152 * nth($rgba2, 2) + 0.0722 * nth($rgba2, 3);
+  @return 0.2126 * list.nth($rgba2, 1) + 0.7152 * list.nth($rgba2, 2) + 0.0722 * list.nth($rgba2, 3);
 }
 
 /// Checks the contrast ratio of two colors.
@@ -59,7 +62,7 @@ $success-color: null !default;
     $ratio: divide(1, $ratio);
   }
 
-  $ratio: round($ratio * 10) * 0.1;
+  $ratio: math.round($ratio * 10) * 0.1;
 
   @return $ratio;
 }
@@ -72,15 +75,15 @@ $success-color: null !default;
 ///
 /// @returns {Color} the color from `$colors` (list of colors) that has the most contrast.
 @function color-pick-contrast($base, $colors: ($white, $black), $tolerance: $global-color-pick-contrast-tolerance) {
-  $contrast: color-contrast($base, nth($colors, 1));
-  $best: nth($colors, 1);
+  $contrast: color-contrast($base, list.nth($colors, 1));
+  $best: list.nth($colors, 1);
 
-  @for $i from 2 through length($colors) {
-    $current-contrast: color-contrast($base, nth($colors, $i));
+  @for $i from 2 through list.length($colors) {
+    $current-contrast: color-contrast($base, list.nth($colors, $i));
 
     @if $current-contrast - $contrast > $tolerance {
-      $contrast: color-contrast($base, nth($colors, $i));
-      $best: nth($colors, $i);
+      $contrast: color-contrast($base, list.nth($colors, $i));
+      $best: list.nth($colors, $i);
     }
   }
 
@@ -103,7 +106,7 @@ $success-color: null !default;
     $scale: -$scale;
   }
 
-  @return scale-color($color, $lightness: $scale);
+  @return color.scale($color, $lightness: $scale);
 }
 
 /// Get color from foundation-palette
@@ -112,8 +115,8 @@ $success-color: null !default;
 ///
 /// @returns {Color} color from foundation-palette
 @function get-color($key) {
-  @if map-has-key($foundation-palette, $key) {
-    @return map-get($foundation-palette, $key);
+  @if map.has-key($foundation-palette, $key) {
+    @return map.get($foundation-palette, $key);
   } @else {
     @error 'given $key is not available in $foundation-palette';
   }
@@ -121,32 +124,32 @@ $success-color: null !default;
 
 /// Transfers the colors in the `$foundation-palette` map into variables, such as `$primary-color` and `$secondary-color`. Call this mixin below the Global section of your settings file to properly migrate your codebase.
 @mixin add-foundation-colors() {
-  @if map-has-key($foundation-palette, primary) {
-    $primary-color: map-get($foundation-palette, primary) !global;
+  @if map.has-key($foundation-palette, primary) {
+    $primary-color: map.get($foundation-palette, primary) !global;
   } @else {
     $primary-color: #1779ba !global;
   }
 
-  @if map-has-key($foundation-palette, secondary) {
-    $secondary-color: map-get($foundation-palette, secondary) !global;
+  @if map.has-key($foundation-palette, secondary) {
+    $secondary-color: map.get($foundation-palette, secondary) !global;
   } @else {
     $secondary-color: #767676 !global;
   }
 
-  @if map-has-key($foundation-palette, success) {
-    $success-color: map-get($foundation-palette, success) !global;
+  @if map.has-key($foundation-palette, success) {
+    $success-color: map.get($foundation-palette, success) !global;
   } @else {
     $success-color: #3adb76 !global;
   }
 
-  @if map-has-key($foundation-palette, warning) {
-    $warning-color: map-get($foundation-palette, warning) !global;
+  @if map.has-key($foundation-palette, warning) {
+    $warning-color: map.get($foundation-palette, warning) !global;
   } @else {
     $warning-color: #ffae00 !global;
   }
 
-  @if map-has-key($foundation-palette, alert) {
-    $alert-color: map-get($foundation-palette, alert) !global;
+  @if map.has-key($foundation-palette, alert) {
+    $alert-color: map.get($foundation-palette, alert) !global;
   } @else {
     $alert-color: #cc4b37 !global;
   }

@@ -2,6 +2,9 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:list";
+@use "sass:math";
+
 ////
 /// @group flex-grid
 ////
@@ -26,10 +29,10 @@
   $margin: auto;
   $wrap: if($wrap, wrap, nowrap);
 
-  @if index($behavior, nest) != null {
+  @if list.index($behavior, nest) != null {
     @include grid-row-nest($gutters);
 
-    @if index($behavior, collapse) != null {
+    @if list.index($behavior, collapse) != null {
       margin-right: 0;
       margin-left: 0;
     }
@@ -102,7 +105,7 @@
   flex-wrap: wrap;
 
   > #{$selector} {
-    $pct: percentage(divide(1, $n));
+    $pct: math.percentage(divide(1, $n));
 
     flex: 0 0 $pct;
     max-width: $pct;

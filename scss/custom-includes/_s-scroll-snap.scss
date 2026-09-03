@@ -1,3 +1,6 @@
+@use "sass:list";
+@use "sass:map";
+
 /**
  * @name Scroll Snapping Component
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll_snap/Basic_concepts
@@ -212,10 +215,10 @@
 
     // loop through each breakpoint-list-item.
     @each $breakpoint, $width in $breakpoints {
-      $index: index(($breakpoints), ($breakpoint $width));
+      $index: list.index(($breakpoints), ($breakpoint $width));
 
       @if $index == 1 {
-        $breakpoint-fallback: append($breakpoint-fallback, $breakpoint);
+        $breakpoint-fallback: list.append($breakpoint-fallback, $breakpoint);
       }
 
       // set up media-query.
@@ -223,8 +226,8 @@
         // loop through all possible column counts.
         @for $i from 1 through $grid-column-count {
           // set gutter width
-          $grid-margin-gutter: map-get($grid-margin-gutters, #{$breakpoint});
-          $grid-container-gutter: map-get(
+          $grid-margin-gutter: map.get($grid-margin-gutters, #{$breakpoint});
+          $grid-container-gutter: map.get(
             $grid-container-padding,
             #{$breakpoint}
           );
@@ -257,14 +260,14 @@
         }
       }
 
-      $breakpoint-fallback: append($breakpoint-fallback, $breakpoint);
+      $breakpoint-fallback: list.append($breakpoint-fallback, $breakpoint);
     }
   }
 
   .grid-container & {
     @each $breakpoint, $width in $breakpoints {
       @include breakpoint($breakpoint) {
-        $gutter: map-get($grid-container-padding, #{$breakpoint});
+        $gutter: map.get($grid-container-padding, #{$breakpoint});
         $gutter-padding: calc(#{$gutter} / 4);
         $grid-padding: calc(
           50vw - (#{$grid-container} / 2) + #{$gutter-padding}

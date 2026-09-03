@@ -7,6 +7,9 @@
 ////
 
 @use "sass:color";
+@use "sass:list";
+@use "sass:math";
+@use "sass:meta";
 
 // Patch to fix issue #12080
 $-zf-bp-value: null;
@@ -21,7 +24,7 @@ $-zf-bp-value: null;
   $size: 20px,
   $color: rgba($black, 0.25)
 ) {
-  $helper: round($size * 0.65);
+  $helper: math.round($size * 0.65);
 
   @if $side == top {
     box-shadow: inset 0 $helper $size (-1)*$helper $color;
@@ -95,13 +98,13 @@ $-zf-bp-value: null;
   // Spacing between bars is calculated based on the total height of the icon and the weight of each bar
   $spacing: divide($height - ($weight * $bars), $bars - 1);
 
-  @if unit($spacing) == 'px' {
-    $spacing: floor($spacing);
+  @if math.unit($spacing) == 'px' {
+    $spacing: math.floor($spacing);
   }
 
   @for $i from 2 through $bars {
     $offset: ($weight + $spacing) * ($i - 1);
-    $shadow: append($shadow, 0 $offset 0 $color, comma);
+    $shadow: list.append($shadow, 0 $offset 0 $color, comma);
   }
 
   // Icon container
@@ -130,7 +133,7 @@ $-zf-bp-value: null;
     // Generate CSS
     @for $i from 2 through $bars {
       $offset: ($weight + $spacing) * ($i - 1);
-      $hover-shadow: append($hover-shadow, 0 $offset 0 $color-hover, comma);
+      $hover-shadow: list.append($hover-shadow, 0 $offset 0 $color-hover, comma);
     }
 
     &:hover::after {
@@ -145,9 +148,9 @@ $-zf-bp-value: null;
 ///
 /// @param {Color} $color [$black] - Color to use for the triangle.
 @mixin background-triangle($color: $black) {
-  $red: round(color.channel($color, "red", $space: rgb));
-  $green: round(color.channel($color, "green", $space: rgb));
-  $blue: round(color.channel($color, "blue", $space: rgb));
+  $red: math.round(color.channel($color, "red", $space: rgb));
+  $green: math.round(color.channel($color, "green", $space: rgb));
+  $blue: math.round(color.channel($color, "blue", $space: rgb));
   $rgb: 'rgb%28#{$red}, #{$green}, #{$blue}%29';
 
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="24" viewBox="0 0 32 24"><polygon points="0,0 32,0 16,24" style="fill: #{$rgb}"></polygon></svg>');
@@ -193,7 +196,7 @@ $-zf-bp-value: null;
   @for $i from 2 through $max {
     &:nth-last-child(#{$i}):first-child,
     &:nth-last-child(#{$i}):first-child ~ #{$elem} {
-      width: percentage(divide(1, $i));
+      width: math.percentage(divide(1, $i));
     }
   }
 }
@@ -296,18 +299,18 @@ $-zf-bp-value: null;
   // Retrieve the list of breakpoint(s) to iterate on.
   @if $breakpoints == auto {
     $-list: $breakpoint-classes;
-  } @else if type-of($breakpoints) == 'list' {
+  } @else if meta.type-of($breakpoints) == 'list' {
     $-list: $breakpoints;
-  } @else if type-of($breakpoints) == 'string' {
+  } @else if meta.type-of($breakpoints) == 'string' {
     $-list: ($breakpoints);
     $-breakpoints-is-a-list: false;
   } @else {
-    @error 'Wrong syntax for "$breakpoints" in "-zf-each-breakpoint-in()". Got "#{$breakpoints}" (#{type-of($breakpoints)}). Expected a breakpoint name, a list of breakpoints or "auto"';
+    @error 'Wrong syntax for "$breakpoints" in "-zf-each-breakpoint-in()". Got "#{$breakpoints}" (#{meta.type-of($breakpoints)}). Expected a breakpoint name, a list of breakpoints or "auto"';
   }
 
   // Add or remove the zero breakpoint according to `$zero-breakpoint`
   @if $zero-breakpoint == true {
-    $-list: join(($-zf-zero-breakpoint), sl-remove($-list, $-zf-zero-breakpoint));
+    $-list: list.join(($-zf-zero-breakpoint), sl-remove($-list, $-zf-zero-breakpoint));
   } @else if $zero-breakpoint == false {
     $-list: sl-remove($-list, $-zf-zero-breakpoint);
   }
@@ -316,7 +319,7 @@ $-zf-bp-value: null;
   @each $bp in $-list {
     $old-zf-size: null;
 
-    @if global-variable-exists(-zf-size) {
+    @if meta.global-variable-exists(-zf-size) {
       $old-zf-size: $-zf-size;
     }
 
@@ -344,7 +347,7 @@ $-zf-bp-value: null;
   $name: auto,
   $map: null
 ) {
-  @if $name == auto and type-of($map) == 'map' {
+  @if $name == auto and meta.type-of($map) == 'map' {
     // "auto"
     @each $k, $v in $map {
       @include breakpoint($k) {
@@ -355,7 +358,7 @@ $-zf-bp-value: null;
     }
   } @else {
     // breakpoint name
-    @if type-of($name) == 'string' {
+    @if meta.type-of($name) == 'string' {
       $bp-value: -zf-get-bp-val($map, $name);
 
       @if $bp-value != null {

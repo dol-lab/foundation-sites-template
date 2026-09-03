@@ -4,6 +4,8 @@
 
 // sass-lint:disable no-color-literals, no-qualifying-elements
 
+@use "sass:map";
+
 ////
 /// @group global
 ////
@@ -171,7 +173,7 @@ $global-prototype-breakpoints: false !default;
 /// @type Keyword
 $global-button-cursor: auto !default;
 
-@if not map-has-key($foundation-palette, primary) {
+@if not map.has-key($foundation-palette, primary) {
   @error 'In $foundation-palette, you must have a color named "primary".';
 }
 

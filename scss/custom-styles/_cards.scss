@@ -1,6 +1,9 @@
 // 4. Card
 // ---------
 
+@use "sass:list";
+@use "sass:map";
+
 .card {
   min-width: auto;
   flex-grow: 0;
@@ -87,7 +90,7 @@
 
   &.no-padding {
     padding: 0;
-    padding-left: nth($button-padding, 2);
+    padding-left: list.nth($button-padding, 2);
   }
 }
 
@@ -115,7 +118,7 @@
 
 .card-section,
 .card-divider {
-  padding: map-get($spacing-scale, 3);
+  padding: map.get($spacing-scale, 3);
   display: flex;
   flex-direction: column;
 
@@ -136,7 +139,7 @@
   }
 
   &-negative {
-    margin-inline: -#{map-get($spacing-scale, 3)};
+    margin-inline: -#{map.get($spacing-scale, 3)};
   }
 
   &.flex-dir-row {
@@ -354,7 +357,7 @@
       width: 100%;
 
       @include breakpoint(medium only) {
-        width: map-get($user-card-sizes, large);
+        width: map.get($user-card-sizes, large);
       }
 
       transition: $global-transition-medium;
@@ -364,8 +367,8 @@
       transition: $global-transition-medium;
 
       @include breakpoint(medium only) {
-        min-height: map-get($user-card-sizes, large);
-        height: map-get($user-card-sizes, large);
+        min-height: map.get($user-card-sizes, large);
+        height: map.get($user-card-sizes, large);
         padding-left: 1rem;
       }
     }
@@ -658,12 +661,12 @@
 
     flex-flow: row-reverse wrap;
     justify-content: flex-end;
-    height: map-get($user-card-sizes, small);
-    min-width: map-get($user-card-sizes, small);
+    height: map.get($user-card-sizes, small);
+    min-width: map.get($user-card-sizes, small);
     max-width: 40%;
     overflow: hidden;
     border-radius: 0 0 0 $card-border-radius;
-    padding-left: calc(var(--avatar-overlap) + #{map-get($spacing-scale, 2)});
+    padding-left: calc(var(--avatar-overlap) + #{map.get($spacing-scale, 2)});
     margin-right: calc(-0.7 * var(--avatar-overlap));
 
     .avatar-container {

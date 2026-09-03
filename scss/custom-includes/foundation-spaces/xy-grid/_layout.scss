@@ -2,6 +2,8 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:math";
+
 ////
 /// @group xy-grid
 ////
@@ -28,7 +30,7 @@
   $vertical: false,
   $output: (base size gutters)
 ) {
-  $size: percentage(divide(1, $n));
+  $size: math.percentage(divide(1, $n));
 
   & > #{$selector} {
     @include xy-cell($size, $gutter-output, $gutters, $gutter-type, $gutter-position, $breakpoint, $vertical, $output);

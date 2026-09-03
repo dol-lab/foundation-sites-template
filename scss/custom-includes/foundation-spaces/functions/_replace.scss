@@ -1,3 +1,5 @@
+@use "sass:list";
+
 ///
 /// Replaces `$old` by `$new` in `$list`.
 ///
@@ -27,12 +29,12 @@
   $running: true;
 
   @while $running {
-    $index: index($list, $old);
+    $index: list.index($list, $old);
 
     @if not $index {
       $running: false;
     } @else {
-      $list: set-nth($list, $index, $value);
+      $list: list.set-nth($list, $index, $value);
     }
 
   }

@@ -1,6 +1,8 @@
 // 19. Utilities
 // ---------
 
+@use "sass:map";
+
 .flex-spacer-left {
   margin-left: auto;
 }
@@ -213,7 +215,7 @@
 .gutter {
   @each $breakpoint, $width in $breakpoints {
     @include breakpoint(#{$breakpoint} only) {
-      $gutter: map-get($grid-margin-gutters, #{$breakpoint});
+      $gutter: map.get($grid-margin-gutters, #{$breakpoint});
 
       margin: $gutter !important;
 
