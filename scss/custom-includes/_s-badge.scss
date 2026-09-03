@@ -34,7 +34,7 @@ $badge-font-size: 0.7em !default;
 
 /// Default padding inside badges.
 /// @type Number
-$badge-padding: $badge-height / 4 !default;
+$badge-padding: math.div($badge-height, 4) !default;
 
 /// Roundness of badges. Values ≤ 2 mean rounded.
 /// @type Number
@@ -46,7 +46,7 @@ $badge-rounding: 2 !default;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  border-radius: $badge-height / $badge-rounding;
+  border-radius: math.div($badge-height, $badge-rounding);
   font-size: $badge-font-size;
   padding: $badge-padding;
   height: $badge-height;
@@ -59,9 +59,9 @@ $badge-rounding: 2 !default;
     height: $badge-height * 0.85;
     min-width: $badge-height * 0.85;
 
-    $height-sm: $badge-height * 0.85 / $badge-rounding * 100;
+    $height-sm: math.div($badge-height * 0.85, $badge-rounding) * 100;
 
-    border-radius: math.round($height-sm) / 100;
+    border-radius: math.div(math.round($height-sm), 100);
   }
 
 }

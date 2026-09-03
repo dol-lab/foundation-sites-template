@@ -1,3 +1,5 @@
+@use "sass:math";
+
 // 9. Dropdown
 // -----------
 
@@ -885,7 +887,7 @@ input,
   .input {
     border: $input-border;
     border-radius: $global-radius;
-    padding: $input-padding / 2;
+    padding: math.div($input-padding, 2);
     min-height: $button-height;
 
     input {
@@ -893,7 +895,7 @@ input,
       box-shadow: none;
       border: none;
       height: 1.25rem;
-      padding: $input-padding / 2;
+      padding: math.div($input-padding, 2);
     }
   }
 
@@ -915,7 +917,7 @@ input,
 
   .chips-list.multiple .chips-item {
     font-size: $small-font-size;
-    margin: $input-padding / 2;
+    margin: math.div($input-padding, 2);
     border: none;
     color: var(--f-color-success-contrast);
     background-color: var(--f-color-success);

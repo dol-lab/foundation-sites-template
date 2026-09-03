@@ -11,7 +11,14 @@
 
 @include spaces-forms;
 @include foundation-typography;
-@include foundation-xy-grid-classes;
+// Grid class groups nothing uses, neither the platform nor index.html.
+// Flip one back on if a project needs it.
+@include foundation-xy-grid-classes(
+  $collapse: false, // .small-margin-collapse, .small-padding-collapse
+  $frame-grid: false, // .grid-frame, .cell-block
+  $block-grid: false, // .small-up-3
+  $offset: false, // .small-offset-2
+);
 
 ///  Generic components
 ///

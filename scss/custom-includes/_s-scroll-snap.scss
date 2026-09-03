@@ -212,7 +212,7 @@
 
     // loop through each breakpoint-list-item.
     @each $breakpoint, $width in $breakpoints {
-      $index: index(($breakpoints), ($breakpoint $width)) !global;
+      $index: index(($breakpoints), ($breakpoint $width));
 
       @if $index == 1 {
         $breakpoint-fallback: append($breakpoint-fallback, $breakpoint);
