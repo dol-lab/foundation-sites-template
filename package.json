@@ -29,8 +29,6 @@
 		"browser-sync": "^3.0.4",
 		"gulp": "^5.0.1",
 		"gulp-plumber": "^1.2.1",
-		"gulp-sass": "^5.1.0",
-		"gulp-sourcemaps": "^2.6.5",
 		"marked": "^18.0.4",
 		"sass-embedded": "^1.92.1",
 		"stylelint": "^16.24.0",

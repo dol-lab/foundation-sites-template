@@ -1,11 +1,11 @@
 const gulp = require('gulp');
-const sass = require('gulp-sass')(require('sass-embedded'));
+const sass = require('sass-embedded');
 const browserSync = require('browser-sync').create();
-const sourcemaps = require('gulp-sourcemaps');
 const { marked } = require('marked');
 
 const fs = require('node:fs');
 const path = require('node:path');
+const { fileURLToPath } = require('node:url');
 const { Transform } = require('node:stream');
 
 const includePaths = [
@@ -92,51 +92,67 @@ function gulpInlinePartials() {
   });
 }
 
-// Compile SCSS to CSS with sourcemaps and deprecation-warning filtering
-function sassBuild(pathGlobs, done) {
-  const stream = gulp.src(pathGlobs)
-    .pipe(sourcemaps.init())
-    .pipe(sass({
-      includePaths,
-      outputStyle: 'compressed',
-      logger: {
-        warn: (warning) => {
-          const text = warning && warning.message ? warning.message : String(warning);
-          if (text.includes('Sass @import rules are deprecated')) return;
-          if (text.includes('Deprecation')) return;
-          if (text.includes('Recommendation')) return;
-          if (text.includes('Global built-in functions are deprecated')) return;
-          if (text.includes("Sass's behavior for declarations that appear after nested")) return;
-          console.warn(text);
-        },
-        debug: (message) => {
-          const text = message && message.message ? message.message : String(message);
-          console.debug(text);
-        }
-      }
-    }))
-    .on('error', (err) => {
-      sass.logError(err);
-      if (done) done(err);
-    })
-    .pipe(sourcemaps.write('.', {
-      // Explicitly tell the browser to look up one directory 
-      // and into the 'scss' folder for the source files.
-      sourceRoot: '../scss/' 
-    }))
-    .pipe(gulp.dest('css')); 
+// Deprecation noise from Foundation and the legacy @import tree. Steps 4 and 5
+// of plan.md remove the causes; until then the build would print thousands of
+// these.
+const MUTED_WARNINGS = [
+  'Sass @import rules are deprecated',
+  'Deprecation',
+  'Recommendation',
+  'Global built-in functions are deprecated',
+  "Sass's behavior for declarations that appear after nested"
+];
 
-  if (browserSync.active) {
-    stream.pipe(browserSync.stream());
+const sassLogger = {
+  warn: (warning) => {
+    const text = warning && warning.message ? warning.message : String(warning);
+    if (MUTED_WARNINGS.some((muted) => text.includes(muted))) return;
+    console.warn(text);
+  },
+  debug: (message) => {
+    const text = message && message.message ? message.message : String(message);
+    console.debug(text);
   }
+};
 
-  stream.on('end', () => {
-    if (done) done();
+const OUT_DIR = 'css';
+
+// Compile one SCSS entry point to css/, with an external sourcemap whose
+// sources are relative to the scss/ directory (hence the ../scss/ sourceRoot).
+async function sassBuild(entry) {
+  const srcDir = path.dirname(entry);
+  const cssName = `${path.basename(entry, '.scss')}.css`;
+  const mapName = `${cssName}.map`;
+
+  const result = await sass.compileAsync(entry, {
+    loadPaths: includePaths,
+    style: 'compressed',
+    sourceMap: true,
+    sourceMapIncludeSources: true,
+    logger: sassLogger
   });
-  
-  stream.on('error', (err) => {
-    if (done) done(err);
-  });
+
+  const map = {
+    version: 3,
+    sourceRoot: `${path.relative(OUT_DIR, srcDir)}/`,
+    sources: result.sourceMap.sources.map(
+      (source) => path.relative(srcDir, fileURLToPath(source))
+    ),
+    names: result.sourceMap.names,
+    mappings: result.sourceMap.mappings,
+    sourcesContent: result.sourceMap.sourcesContent,
+    file: cssName
+  };
+
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+  fs.writeFileSync(
+    path.join(OUT_DIR, cssName),
+    `${result.css}\n/*# sourceMappingURL=${mapName} */\n`
+  );
+  fs.writeFileSync(path.join(OUT_DIR, mapName), JSON.stringify(map));
+
+  // Inject the new CSS instead of reloading the page.
+  if (browserSync.active) browserSync.reload(path.join(OUT_DIR, cssName));
 }
 
 // Build HTML pages from *.src.html sources with partial includes
@@ -175,8 +191,8 @@ function serve(done) {
 
 // Gulp tasks
 gulp.task('html', html);
-gulp.task('sassFrontend', (done) => { sassBuild(['scss/app.scss'], done); });
-gulp.task('sassBackend', (done) => { sassBuild(['scss/app-backend.scss'], done); });
+gulp.task('sassFrontend', () => sassBuild('scss/app.scss'));
+gulp.task('sassBackend', () => sassBuild('scss/app-backend.scss'));
 gulp.task('sass', gulp.series('sassFrontend', 'sassBackend'));
 gulp.task('serve', gulp.series('sassFrontend', 'sassBackend', 'html', serve));
 gulp.task('default', gulp.series('sassFrontend', 'sassBackend', 'html', serve));

@@ -16,8 +16,8 @@ wrap those two partials' bodies in mixins and `@include` them under `.f`.
 | --- | --- | --- | --- | --- |
 | 1 | Dart Sass 2.0 blockers: `/` division, `!global` | XS (10 sites) | build survives Sass 2 | done |
 | 2 | Switch off unused xy-grid class groups | XS (1 line) | -51 KB, 15% of the stylesheet | done |
-| 3 | `gulp-sass` off the legacy JS API | S (one gulp task) | build survives Sass 2 | next |
-| 4 | Global built-ins to `sass:map` / `sass:math` / `sass:list` | M (271 sites, automated) | build survives Sass 3 | |
+| 3 | `gulp-sass` off the legacy JS API | S (one gulp task) | build survives Sass 2 | done |
+| 4 | Global built-ins to `sass:map` / `sass:math` / `sass:list` | M (271 sites, automated) | build survives Sass 3 | next |
 | 5 | `@import` to `@use` / `@forward` | L (159 sites) | build survives Sass 3 | |
 | 6 | Drop unused components from the include list | S | ~15 KB, less to maintain | |
 | 7 | Sass `mix()` to CSS `color-mix()` | S | consistency with the 633 existing calls | |
@@ -59,23 +59,31 @@ built `css/app.css` straight out of `vendor/`, so a consumer never runs this
 build. The flags have to live here, which is why each one carries a comment naming
 the classes it drops.
 
-### 3. `gulp-sass` off the legacy JS API
+### 3. `gulp-sass` off the legacy JS API (done)
 
-`gulpfile.js` uses `gulp-sass` over `sass-embedded`, which reaches Dart Sass
-through the legacy JS API. That API goes away in Dart Sass 2.0 as well, so it is
-the same deadline as step 1 and it is invisible in the `sass` CLI warnings: only
-`npx gulp sass` prints it.
+`gulp-sass` reached Dart Sass through the legacy JS API, which goes away in Dart
+Sass 2.0 (the same deadline as step 1) and was invisible in the `sass` CLI
+warnings: only `npx gulp sass` printed it.
 
-Replace the `gulp-sass` pipe in `sassBuild()` with a direct
-`sassEmbedded.compileAsync()` call, keeping the existing `includePaths`,
-`outputStyle` and sourcemap behaviour.
+`sassBuild()` now calls `sass.compileAsync()` and writes both files itself, so
+`gulp-sass` and `gulp-sourcemaps` are gone from the pipeline and from
+`package.json`. All four artefacts in `css/` are byte-identical, sourcemaps
+included, and the `legacy-js-api` warning is gone.
 
-Verify: rebuild and diff `css/`, output must be byte-identical.
+The sourcemap is the only fiddly part, and it is what `gulp-sourcemaps` used to
+do: Dart Sass returns `sources` as absolute `file://` URLs, so they are converted
+back to paths relative to `scss/` and paired with a `sourceRoot` of `../scss/`
+(relative to `css/`, where the map is written). `sourceMapIncludeSources: true`
+supplies `sourcesContent`. The `/*# sourceMappingURL= */` comment has to be
+appended by hand; Dart Sass never emits it.
+
+Left alone: `bun.lock` still lists the two removed packages. `npm install
+--package-lock-only` syncs `package-lock.json` and `yarn.lock`, not bun's.
 
 ### 4. Global built-ins
 
 271 sites, mostly `map-get`, `nth`, `mix`, `type-of`. `sass-migrator module`
-rewrites them. Cheapest done together with step 4, since the migrator wants to do
+rewrites them. Cheapest done together with step 5, since the migrator wants to do
 both at once, but it can run alone.
 
 ### 5. `@import` to `@use` / `@forward`
