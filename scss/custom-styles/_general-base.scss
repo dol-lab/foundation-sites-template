@@ -98,6 +98,15 @@ textarea {
   display: none !important;
 }
 
+// `hidden` is a state ("not relevant right now"), not a layout hint, so it has to
+// win against any component that sets `display`. normalize declares it too, but
+// ~100kB before `.button` and the rest, and on equal specificity the later rule
+// takes the element back: `el.hidden = true` then leaves a button on screen.
+// `until-found` is excluded, it needs `content-visibility` rather than `display`.
+[hidden]:not([hidden="until-found"]) {
+  display: none !important;
+}
+
 // 2. Grid
 // ---------
 
