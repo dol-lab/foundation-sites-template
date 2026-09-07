@@ -227,6 +227,7 @@ $button-responsive-expanded: false !default;
   &.disabled:focus,
   &[disabled]:focus {
     border: $border-width solid $color;
+    border: $border-width solid color-mix(in oklab, $color 50%, transparent);
     color: $color;
   }
 
