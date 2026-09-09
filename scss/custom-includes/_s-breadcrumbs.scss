@@ -18,15 +18,15 @@ $breadcrumbs-item-font-size: 0.875rem !default;
 
 /// Color of breadcrumb links.
 /// @type Color
-$breadcrumbs-item-color: $color-text-2 !default;
+$breadcrumbs-item-color: var(--f-color-text-2) !default;
 
 /// Color of the active breadcrumb link.
 /// @type Color
-$breadcrumbs-item-color-current: $color-text-1 !default;
+$breadcrumbs-item-color-current: var(--f-color-text-1) !default;
 
 /// Color of disabled breadcrumb links.
 /// @type Color
-$breadcrumbs-item-color-disabled: $color-text-2 !default;
+$breadcrumbs-item-color-disabled: var(--f-color-text-2) !default;
 
 /// Opacity of disabled breadcrumb links.
 /// @type Number

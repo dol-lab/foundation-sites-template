@@ -79,8 +79,8 @@
     &.is-active-tab,
     &.is-active {
       & > a {
-        background: $color-bg-2;
-        color: $color-text-0;
+        background: var(--f-color-bg-2);
+        color: var(--f-color-text-0);
       }
     }
   }
@@ -118,7 +118,7 @@
       & > a {
         &:hover {
           background: none;
-          box-shadow: inset 0 -2px $color-border-2;
+          box-shadow: inset 0 -2px var(--f-color-border-2);
         }
 
         &:focus {
@@ -128,7 +128,7 @@
         &.is-active-tab,
         &.is-active {
           background: none;
-          box-shadow: inset 0 -2px $color-border-0;
+          box-shadow: inset 0 -2px var(--f-color-border-0);
         }
       }
 
@@ -136,13 +136,13 @@
       &.is-active {
         & > a {
           background: none;
-          box-shadow: inset 0 -2px $color-text-1;
+          box-shadow: inset 0 -2px var(--f-color-text-1);
         }
       }
     }
 
     & + .tabs-content .tabs-panel {
-      border-top: #{list.nth($hr-border, 1)} solid $color-border-2;
+      border-top: #{list.nth($hr-border, 1)} solid var(--f-color-border-2);
     }
   }
 
@@ -158,12 +158,12 @@
 
       & > a {
         &:hover {
-          background: $color-bg-2;
+          background: var(--f-color-bg-2);
         }
 
         &:focus,
         &[aria-selected="true"] {
-          background: $color-bg-2;
+          background: var(--f-color-bg-2);
         }
       }
     }
@@ -297,7 +297,7 @@
 .no-found {
   padding: $button-padding;
   font-size: $small-font-size;
-  color: $color-text-2;
+  color: var(--f-color-text-2);
 }
 
 

@@ -8,7 +8,7 @@
 
 /// Border around thumbnail images.
 /// @type Border
-$thumbnail-border: 4px solid $color-border-0 !default;
+$thumbnail-border: 4px solid var(--f-color-border-0) !default;
 
 /// Bottom margin for thumbnail images.
 /// @type Length

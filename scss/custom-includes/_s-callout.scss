@@ -10,7 +10,7 @@
 
 /// Default background color.
 /// @type Color
-$callout-background: $color-bg-1 !default;
+$callout-background: var(--f-color-bg-1) !default;
 
 /// Default fade value for callout backgrounds.
 /// @type Number
@@ -18,7 +18,7 @@ $callout-background-fade: 85% !default;
 
 /// Default border style for callouts.
 /// @type List
-$callout-border: 1px solid color-mix-opacity($color-text-0, 25%, 75%) !default;
+$callout-border: 1px solid color-mix-opacity(var(--f-color-text-0), 25%, 75%) !default;
 
 /// Default bottom margin for callouts.
 /// @type Number
@@ -75,8 +75,8 @@ $callout-default-token: primary !default;
   $bg-fade: $callout-background-fade;
   $color-weight: (100% - $bg-fade);
 
-  background-color: color-mix(in oklab, var(--f-color-#{$name}) #{$color-weight}, $color-bg-1 #{$bg-fade});
-  border-color: color-mix(in oklab, var(--f-color-#{$name}) 40%, $color-bg-1);
+  background-color: color-mix(in oklab, var(--f-color-#{$name}) #{$color-weight}, var(--f-color-bg-1) #{$bg-fade});
+  border-color: color-mix(in oklab, var(--f-color-#{$name}) 40%, var(--f-color-bg-1));
   color: color-mix(in oklab, var(--f-color-#{$name}) 50%, currentColor 90%);
 
   > p,

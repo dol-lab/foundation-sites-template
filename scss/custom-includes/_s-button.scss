@@ -41,15 +41,15 @@ $button-fill: solid !default;
 
 /// Default background color for buttons.
 /// @type Color
-$button-background: $color-text-0 !default;
+$button-background: var(--f-color-text-0) !default;
 
 /// Background color on hover for buttons.
 /// @type Color
-$button-background-hover: $color-text-1 !default;
+$button-background-hover: var(--f-color-text-1) !default;
 
 /// Default font color for buttons.
 /// @type List
-$button-color: $color-bg-0 !default;
+$button-color: var(--f-color-bg-0) !default;
 
 /// Border radius for buttons, defaulted to global-radius.
 /// @type Number
@@ -294,7 +294,9 @@ $button-responsive-expanded: false !default;
       // @include color-mix(color, var(--f-color-#{$name}-contrast), 90%, var(--f-color-#{$name}), 10%);
     }
   } @else if $fill == hollow {
-    border: $button-hollow-border-width solid var(--f-color-#{$name});
+		border: $button-hollow-border-width solid var(--f-color-#{$name});
+		border-color: color-mix(in oklab, var(--f-color-#{$name}) 15%, transparent);
+		border-width: $button-hollow-border-width;
 
     // color: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
     // background-color: color-mix(in oklab, var(--f-color-#{$name}) 12%, var(--f-color-bg-contrast) 88%);
@@ -304,6 +306,7 @@ $button-responsive-expanded: false !default;
     &:hover,
     &:focus {
       border-color: var(--f-color-#{$name}-darker);
+			border-color: color-mix(in oklab, var(--f-color-#{$name}-darker) 15%, transparent);
 
       // color: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
       // background-color: color-mix(in oklab, var(--f-color-#{$name}) 20%, var(--f-color-bg-contrast) 80%);

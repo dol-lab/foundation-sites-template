@@ -84,8 +84,8 @@ $-zf-bp-value: null;
 /// @param {Number} $weight [2px] - Height of individual bars in the icon.
 /// @param {Number} $bars [3] - Number of bars in the icon.
 @mixin hamburger(
-  $color: $color-text-0,
-  $color-hover: $color-text-1,
+  $color: var(--f-color-text-0),
+  $color-hover: var(--f-color-text-1),
   $width: 20px,
   $height: 16px,
   $weight: 2px,

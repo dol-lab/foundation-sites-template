@@ -20,7 +20,7 @@ $subheader-lineheight: 1.4 !default;
 
 /// Default font color for subheaders.
 /// @type Color
-$subheader-color: $color-text-2;
+$subheader-color: var(--f-color-text-2);
 
 /// Default font weight for subheaders.
 /// @type String
@@ -52,7 +52,7 @@ $cite-pseudo-content: "\2014 \0020" !default;
 
 /// Text color of `.code-inline` and `.code-block` components.
 /// @type Color
-$code-color: $color-text-0 !default;
+$code-color: var(--f-color-text-0) !default;
 
 /// Font family of `.code-inline` and `.code-block` components.
 /// @type String | List
@@ -64,11 +64,11 @@ $code-font-weight: $global-weight-normal !default;
 
 /// Background color of `.code-inline` and `.code-block` components.
 /// @type Color
-$code-background: $color-bg-2 !default;
+$code-background: var(--f-color-bg-2) !default;
 
 /// Border around `.code-inline` and `.code-block` components.
 /// @type List
-$code-border: 1px solid $color-border-1 !default;
+$code-border: 1px solid var(--f-color-border-1) !default;
 
 /// Padding around text of the `.code-inline` component.
 /// @type Number | List

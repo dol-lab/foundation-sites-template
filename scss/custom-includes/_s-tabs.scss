@@ -16,22 +16,22 @@ $tab-background: transparent !default;
 
 /// Font color of tab item.
 /// @type Color
-$tab-color: $color-text-1 !default;
+$tab-color: var(--f-color-text-1) !default;
 
 /// Active background color of a tab bar.
 /// @type Color
-$tab-background-active: $color-bg-2 !default;
+$tab-background-active: var(--f-color-bg-2) !default;
 
 /// Active font color of tab item.
 /// @type Color
-$tab-active-color: $color-text-0 !default;
+$tab-active-color: var(--f-color-text-0) !default;
 
 /// Font size of tab items.
 /// @type Number
 $tab-item-font-size: rem-calc(14); // inherit !default;
 
 /// Default background color on hover for items in a Menu.
-$tab-item-background-hover: $color-bg-2 !default;
+$tab-item-background-hover: var(--f-color-bg-2) !default;
 
 /// Default padding of a tab item.
 /// @type Number
@@ -43,11 +43,11 @@ $tab-content-background: transparent !default;
 
 /// Default border color of tab content.
 /// @type Color
-$tab-content-border: $color-border-0 !default;
+$tab-content-border: var(--f-color-border-0) !default;
 
 /// Default text color of tab content.
 /// @type Color
-$tab-content-color: $color-text-1 !default;
+$tab-content-color: var(--f-color-text-1) !default;
 
 /// Default padding for tab content.
 /// @type Number | List

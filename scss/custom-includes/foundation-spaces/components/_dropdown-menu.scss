@@ -31,7 +31,7 @@ $dropdownmenu-min-width: 200px !default;
 
 /// Background color for top level items.
 /// @type Color
-$dropdownmenu-background: $color-text-0 !default;
+$dropdownmenu-background: var(--f-color-text-0) !default;
 
 /// Background color for dropdowns.
 /// @type Color
@@ -51,7 +51,7 @@ $dropdownmenu-submenu-padding: 0.75rem 0.9rem !default;
 
 /// Border for dropdown sub-menus.
 /// @type List
-$dropdownmenu-border: 1px solid $color-border-0 !default;
+$dropdownmenu-border: 1px solid var(--f-color-border-0) !default;
 
 // Border width for dropdown sub-menus.
 // Used to adjust top margin of a sub-menu if a border is used.
@@ -64,7 +64,7 @@ $dropdown-menu-item-color-active: none !default;
 
 /// Background color of an active dropdown menu item. Explicit override for menu defaults
 /// @type Color
-$dropdown-menu-item-background-active: $color-bg-2 !default;
+$dropdown-menu-item-background-active: var(--f-color-bg-2) !default;
 
 @mixin zf-dropdown-left-right-arrows {
   > a::after {

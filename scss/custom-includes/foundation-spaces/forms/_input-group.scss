@@ -16,7 +16,7 @@ $input-prefix-background: inherit !default;
 
 /// Border around labels prefixed to an input.
 /// @type Border
-$input-prefix-border: 1px solid $color-border-0 !default;
+$input-prefix-border: 1px solid var(--f-color-border-0) !default;
 
 /// Left/right padding of an pre/postfixed input label
 $input-prefix-padding: 1rem !default;

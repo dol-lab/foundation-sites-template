@@ -1,8 +1,8 @@
 # CSS Variables Reference
 
-CSS custom properties are the **source of truth** for theming. Sass color
-variables intentionally point at them (e.g. `$color-bg-1: var(--f-color-bg-1)`)
-so components stay themeable at runtime.
+CSS custom properties are the **source of truth** for theming. There are no Sass
+aliases for the color roles — write `var(--f-color-bg-1)` directly, also in
+Foundation component settings, so components stay themeable at runtime.
 
 All custom properties are prefixed `--f-*`. Underscore-prefixed ones (`--_f-*`)
 are internal scratch variables — don't depend on them outside their scope.

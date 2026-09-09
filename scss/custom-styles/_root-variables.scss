@@ -5,7 +5,7 @@
 
 :root {
   interpolate-size: allow-keywords;
-  scrollbar-color: $color-text-2 $color-bg-0;
+  scrollbar-color: var(--f-color-text-2) var(--f-color-bg-0);
 }
 
 /* ==========================================================================

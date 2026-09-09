@@ -12,7 +12,7 @@ $dropdown-padding: 0 !default;
 
 /// Background for dropdown panes.
 /// @type Color
-$dropdown-background: $color-bg-1 !default;
+$dropdown-background: var(--f-color-bg-1) !default;
 
 /// Border for dropdown panes.
 /// @type List

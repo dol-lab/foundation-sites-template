@@ -10,15 +10,15 @@
 
 /// Default background color for badges.
 /// @type Color
-$badge-background: $color-text-0 !default;
+$badge-background: var(--f-color-text-0) !default;
 
 /// Default text color for badges.
 /// @type Color
-$badge-color: $color-bg-1 !default;
+$badge-color: var(--f-color-bg-1) !default;
 
 // Alternate text color for badges.
 // @type Color
-// $badge-color-alt: $color-text-0 !default;
+// $badge-color-alt: var(--f-color-text-0) !default;
 
 /// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, and so on.
 /// @type Map

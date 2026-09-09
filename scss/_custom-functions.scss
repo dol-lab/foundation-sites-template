@@ -495,7 +495,7 @@
     --f-color-bg-2: var(--f-color-neutral-200);
   } @else {
     // dark mode
-		--f-color-shadow: rgba(0, 0, 0, 0.5);
+    --f-color-shadow: rgba(0, 0, 0, 0.5);
     --f-drop-shadow: 0 5px 20px rgba(0, 0, 0, 0.4), 0 2px 5px rgba(0, 0, 0, 0.3);
     --f-drop-shadow-large: 0 14px 28px rgba(0, 0, 0, 0.3), 0 10px 10px rgba(0, 0, 0, 0.3);
     --f-color-brand: color-mix(
@@ -514,7 +514,7 @@
     --f-color-bg-2: var(--f-color-neutral-300);
 
     // other borders are the same.
-    @include color-mix(--f-color-border-0, #{$color-text-0}, 8%, transparent, 92%);
+    --f-color-border-0: rgb(from var(--f-color-text-0) r g b / 8%);
   }
 
   // Text colors are always derived from the same neutral steps.
@@ -530,7 +530,7 @@
   }
 
   // Borders
-  @include color-mix(--f-color-border-0, #{$color-text-0}, 6%, transparent, 94%);
-  @include color-mix(--f-color-border-1, #{$color-text-0}, 12%, transparent, 88%);
-  @include color-mix(--f-color-border-2, #{$color-text-0}, 16%, transparent, 84%);
+  --f-color-border-0: rgb(from var(--f-color-text-0) r g b / 7%);
+  --f-color-border-1: rgb(from var(--f-color-text-0) r g b / 12%);
+  --f-color-border-2: rgb(from var(--f-color-text-0) r g b / 16%);
 }

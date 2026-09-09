@@ -65,7 +65,7 @@ $print-hrefs: true !default;
     // Prevent page breaks in the middle of a blockquote or preformatted text block
     pre,
     blockquote {
-      border: 1px solid $color-border-0;
+      border: 1px solid var(--f-color-border-0);
       break-inside: avoid;
     }
 

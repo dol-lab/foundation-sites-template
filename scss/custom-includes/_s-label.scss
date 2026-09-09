@@ -25,10 +25,10 @@ $label-radius: $global-radius !default;
 $label-palette: $foundation-palette !default;
 
 /// Base value for label background
-$label-background-default: $color-text-1 !default;
+$label-background-default: var(--f-color-text-1) !default;
 
 /// Base value for label color
-$label-color-default: $color-bg-1 !default;
+$label-color-default: var(--f-color-bg-1) !default;
 
 ///
 /// Label style token

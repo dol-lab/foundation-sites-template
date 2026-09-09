@@ -2,26 +2,17 @@
 @use "sass:color";
 @use "sass:map";
 
-/* Background
-stacking - $color-bg-0 (page background), $color-bg-1 (card and widget background), $color-bg-2 (highlighted element background)
-*/
-$color-bg-0: var(--f-color-bg-0);
-$color-bg-1: var(--f-color-bg-1);
-$color-bg-2: var(--f-color-bg-2);
-
-/* Borders
- * $color-border-0 (minimal, just about visible), $color-border-1 (increased in visibility)
+/* Color roles live as CSS custom properties so they flip at runtime; use them
+ * directly (`var(--f-color-bg-1)`), there are no Sass aliases.
+ *
+ * Background stacking: --f-color-bg-0 (page), -bg-1 (card/widget), -bg-2 (highlighted).
+ * Borders, increasing in visibility: --f-color-border-0 (just about visible) .. -border-2.
+ * Text, decreasing in dominance: --f-color-text-0 (headlines, links), -text-1 (p, card
+ * content), -text-2 (small).
+ *
+ * They are assigned in foundation-apply-theme() (scss/_custom-functions.scss) from the
+ * palettes below; see VARIABLES.md.
  */
-$color-border-0: var(--f-color-border-0);
-$color-border-1: var(--f-color-border-1);
-$color-border-2: var(--f-color-border-2);
-
-/* Text
- * decreasing in dominance: $color-text-0 (headlines, links), $color-text-1 (p, card content), $color-text-2 (small)
-*/
-$color-text-0: var(--f-color-text-0);
-$color-text-1: var(--f-color-text-1);
-$color-text-2: var(--f-color-text-2);
 
 /* Palette colors
  Each palette color is assigned a base value (no suffix), alongside a darker version (e.g. used for hover states, -darker),

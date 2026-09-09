@@ -16,7 +16,7 @@ $meter-radius: $global-radius !default;
 
 /// Background color of a `<meter>` element.
 /// @type Color
-$meter-background: $color-bg-1 !default;
+$meter-background: var(--f-color-bg-1) !default;
 
 /// Meter fill for an optimal value in a `<meter>` element.
 /// @type Color

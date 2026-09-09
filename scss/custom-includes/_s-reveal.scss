@@ -10,7 +10,7 @@
 
 /// Default background color of a modal.
 /// @type String
-$reveal-background: $color-bg-1 !default;
+$reveal-background: var(--f-color-bg-1) !default;
 
 /// Default width of a modal, with no class applied.
 /// @type String
@@ -38,7 +38,7 @@ $reveal-zindex: 1005 !default;
 
 /// Background color of modal overlays.
 /// @type Color
-$reveal-overlay-background: color-mix-opacity($color-text-0, 14%, 86%) !default;
+$reveal-overlay-background: color-mix-opacity(var(--f-color-text-0), 14%, 86%) !default;
 
 
 // Placeholder selector for medium-and-up modals

@@ -8,11 +8,11 @@
 
 /// Default color for Orbit's bullets.
 /// @type Color
-$orbit-bullet-background: color-mix-opacity($color-text-0, 10%, 90%) !default;
+$orbit-bullet-background: color-mix-opacity(var(--f-color-text-0), 10%, 90%) !default;
 
 /// Default active color for Orbit's bullets.
 /// @type Color
-$orbit-bullet-background-active: $color-text-0 !default;
+$orbit-bullet-background-active: var(--f-color-text-0) !default;
 
 /// Default diameter for Orbit's bullets.
 /// @type Number
@@ -32,7 +32,7 @@ $orbit-bullet-margin-bottom: 0.5rem !default;
 
 /// Default background color for Orbit's caption.
 /// @type String
-$orbit-caption-background: color-mix-opacity($color-bg-1, 75%, 35%) !default;
+$orbit-caption-background: color-mix-opacity(var(--f-color-bg-1), 75%, 35%) !default;
 
 /// Default padding for Orbit's caption.
 /// @type Number
@@ -40,7 +40,7 @@ $orbit-caption-padding: 0.25rem !default;
 
 /// Default background color for Orbit's controls when hovered.
 /// @type String
-$orbit-control-background: $color-bg-0 !default;
+$orbit-control-background: var(--f-color-bg-0) !default;
 
 /// Default border settings for Orbit's controls.
 /// @type String
@@ -102,7 +102,7 @@ $orbit-control-zindex: 10 !default;
   padding: $orbit-caption-padding;
   background-color: $orbit-caption-background;
   backdrop-filter: blur(15px);
-  color: $color-text-0;
+  color: var(--f-color-text-0);
 }
 
 /// Adds base styles for the next/previous buttons in an Orbit slider. These styles are shared between the `.orbit-next` and `.orbit-previous` classes in the default CSS.
@@ -112,7 +112,7 @@ $orbit-control-zindex: 10 !default;
   @include cross-browser(border-radius, 50px);
 
   z-index: $orbit-control-zindex;
-  color: $color-text-0;
+  color: var(--f-color-text-0);
   background-color: $orbit-control-background;
   border: $orbit-control-border;
   opacity: 0.4;

@@ -24,7 +24,7 @@ $drilldown-nested-margin: 0 !default;
 
 /// Background color for drilldown top level items.
 /// @type Color
-$drilldown-background: $color-bg-1 !default;
+$drilldown-background: var(--f-color-bg-1) !default;
 
 /// Sets drilldown menu item padding in the submenu.
 /// @type Number
@@ -32,7 +32,7 @@ $drilldown-submenu-padding: $drilldown-padding !default;
 
 /// Background color for drilldown submenus.
 /// @type Color
-$drilldown-submenu-background: $color-bg-1 !default;
+$drilldown-submenu-background: var(--f-color-bg-1) !default;
 
 /// Sets drilldown arrow color if arrow is used.
 /// @type Color

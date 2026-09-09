@@ -28,8 +28,10 @@ Finally, run `npm run start` to run the Sass compiler. It will re-run every time
 ### Colors
 
 This template treats **CSS custom properties** as the source of truth for colors.
-Most Sass "color variables" intentionally point at CSS variables (example: `$color-bg-1: var(--f-color-bg-1)` in `scss/_colors.scss`)
-so components remain themeable at runtime.
+The color roles have no Sass aliases: use `var(--f-color-bg-1)` directly, also when overriding a
+Foundation component setting (`$card-background: var(--f-color-bg-1) !default;`), so components
+remain themeable at runtime. Sass only holds the palettes in `scss/_colors.scss` that generate the
+custom properties.
 
 ```css
 /* Background "layers" (page, cards, raised/highlighted surfaces) */

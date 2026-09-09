@@ -31,8 +31,9 @@ neither and let the component's own theme rules do it.
 
 ## 1. Consume roles, not colors
 
-Colors live in CSS custom properties so they can flip at runtime. Sass color
-variables deliberately point at them (`$color-bg-1: var(--f-color-bg-1)`).
+Colors live in CSS custom properties so they can flip at runtime, and there are
+no Sass aliases for them — use `var(--f-color-bg-1)` everywhere, Foundation
+component settings included.
 
 ```css
 /* ✗ breaks in dark mode */

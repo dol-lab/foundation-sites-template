@@ -24,15 +24,15 @@ $menu-simple-margin: 1rem !default;
 
 /// Text color of an active menu item.
 /// @type String
-$menu-item-color-active: $color-text-0 !default;
+$menu-item-color-active: var(--f-color-text-0) !default;
 
 /// Alternative text color of an active menu item..
 // @type Color
-// $menu-item-color-alt-active: $color-text-0 !default;
+// $menu-item-color-alt-active: var(--f-color-text-0) !default;
 
 /// Background color of an active menu item.
 /// @type String
-$menu-item-background-active: $color-bg-2 !default;
+$menu-item-background-active: var(--f-color-bg-2) !default;
 
 /// Spacing between an icon and text in a menu item.
 /// @type Number
@@ -40,7 +40,7 @@ $menu-icon-spacing: 0.5rem !default;
 
 /// Background color on hover for menu items.
 /// @type String
-$menu-item-background-hover: $color-bg-2 !default;
+$menu-item-background-hover: var(--f-color-bg-2) !default;
 
 /// Backward compatibility for menu state. If true, this duplicate `active` with `is-active`.
 /// But please note that `active` will be removed in upcoming versions.

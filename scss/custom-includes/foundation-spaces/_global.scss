@@ -56,11 +56,11 @@ $white: #fefefe !default;
 
 /// Background color of the body.
 /// @type Color
-$body-background: $color-bg-2 !default;
+$body-background: var(--f-color-bg-2) !default;
 
 /// Text color of the body.
 /// @type Color
-$body-font-color: $color-text-0 !default;
+$body-font-color: var(--f-color-text-0) !default;
 
 /// Font stack of the body.
 /// @type List

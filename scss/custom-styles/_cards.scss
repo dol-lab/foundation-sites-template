@@ -11,9 +11,9 @@
 
   border: $hr-border;
   transition: box-shadow $global-transition-short $global-transition-timing;
-  background-color: $color-bg-1;
+  background-color: var(--f-color-bg-1);
   overflow: clip;
-  color: $color-text-1;
+  color: var(--f-color-text-1);
 
   .card-anchor {
     color: inherit;
@@ -162,7 +162,7 @@
     text-decoration: none;
 
     &::only-child:hover {
-      background: $color-bg-2;
+      background: var(--f-color-bg-2);
     }
   }
 
@@ -246,8 +246,8 @@
   margin: auto 0;
   padding: 0.25rem 0.5rem;
   z-index: 1;
-  color: $color-text-0;
-  background: color-mix-opacity(#{$color-bg-0}, 55%, 45%);
+  color: var(--f-color-text-0);
+  background: color-mix-opacity(var(--f-color-bg-0), 55%, 45%);
   -webkit-box-orient: vertical;
   backdrop-filter: blur(20px) saturate(200%);
   max-width: 80% !important;
@@ -376,13 +376,13 @@
     .expand-button {
       border-radius: 50%;
       opacity: 1;
-      background-color: $color-bg-0;
+      background-color: var(--f-color-bg-0);
       top: 0.5em;
       right: 0.5em;
 
       &::after {
         content: "\f106";
-        color: $color-text-1;
+        color: var(--f-color-text-1);
         font-size: 0.75rem;
         opacity: 1;
         transform-origin: 0.25em 0.75em;
@@ -552,7 +552,7 @@
 
   .fa {
     margin-left: 1em;
-    color: $color-text-2;
+    color: var(--f-color-text-2);
   }
 
   .small & {
@@ -619,7 +619,7 @@
   img {
     width: 28px;
     height: 28px;
-    box-shadow: 0 0 0 1px $color-bg-2;
+    box-shadow: 0 0 0 1px var(--f-color-bg-2);
     margin: 0 auto;
     border-radius: 50%;
   }
@@ -671,7 +671,7 @@
 
     .avatar-container {
       overflow: hidden;
-      border: 3px solid $color-bg-1;
+      border: 3px solid var(--f-color-bg-1);
       box-sizing: border-box;
       margin-left: calc(-1 * var(--avatar-overlap));
     }
@@ -686,7 +686,7 @@
   }
 
   .activity-blog {
-    text-decoration-color: color-mix-opacity(#{$color-text-0}, 70%, 30%) !important;
+    text-decoration-color: color-mix-opacity(var(--f-color-text-0), 70%, 30%) !important;
   }
 
   .activity-description {
@@ -741,8 +741,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $color-bg-2;
-  color: $color-text-1;
+  background: var(--f-color-bg-2);
+  color: var(--f-color-text-1);
   font-weight: $global-weight-bold;
   font-size: $small-font-size;
 }
@@ -947,7 +947,7 @@ $gb-variants: (
     width: 100%;
     height: 100%;
     object-fit: cover;
-    background: $color-bg-2;
+    background: var(--f-color-bg-2);
 
     @media screen and (width >= 0\0) and (resolution >= +72dpi) {
       height: auto;
@@ -956,8 +956,8 @@ $gb-variants: (
   }
 
   &.tint {
-    color: $color-bg-0;
-    background-color: $color-text-0;
+    color: var(--f-color-bg-0);
+    background-color: var(--f-color-text-0);
 
     &::after {
       content: "";
@@ -966,7 +966,7 @@ $gb-variants: (
       width: 100%;
       height: 100%;
       pointer-events: none;
-      background-color: $color-text-0;
+      background-color: var(--f-color-text-0);
       opacity: 0.375;
       transition: opacity $global-transition-medium $global-transition-timing;
     }
@@ -981,11 +981,11 @@ $gb-variants: (
     }
 
     &.tint-negativ {
-      color: $color-text-0;
-      background-color: $color-bg-0;
+      color: var(--f-color-text-0);
+      background-color: var(--f-color-bg-0);
 
       &::after {
-        background-color: $color-bg-0;
+        background-color: var(--f-color-bg-0);
       }
     }
   }
@@ -1009,7 +1009,7 @@ $gb-variants: (
   }
 
   &.space-header {
-    background: $color-bg-2;
+    background: var(--f-color-bg-2);
 
     --_s: 75px;
     --_c1: var(--f-color-bg-2);
@@ -1037,7 +1037,7 @@ $gb-variants: (
   }
 
   &.line {
-    background: $color-bg-2;
+    background: var(--f-color-bg-2);
     height: 10px;
 
     &::after {
@@ -1053,7 +1053,7 @@ $gb-variants: (
   }
 
   &.feature-image {
-    background: $color-bg-1;
+    background: var(--f-color-bg-1);
     height: 100px;
 
     &.large {
@@ -1081,8 +1081,8 @@ $gb-variants: (
     justify-content: center;
     height: 80px;
     width: 100%;
-    background: $color-bg-1;
-    color: $color-text-1;
+    background: var(--f-color-bg-1);
+    color: var(--f-color-text-1);
     font-size: 1.25rem;
 
     &::after {
@@ -1106,7 +1106,7 @@ $gb-variants: (
 // ---------
 
 .activity-container {
-  background-color: $color-bg-1;
+  background-color: var(--f-color-bg-1);
   border-radius: $card-border-radius;
 }
 

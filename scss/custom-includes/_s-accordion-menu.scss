@@ -97,14 +97,14 @@ $accordionmenu-arrow-size: 4px !default;
 
         &:hover,
         &:focus {
-          /* background-color: $color-bg-2; */
+          /* background-color: var(--f-color-bg-2); */
           &[aria-expanded="true"] {
             box-shadow:
               0 0 1px var(--f-color-neutral-500),
               var(--f-drop-shadow);
           }
           > a {
-            color: $color-text-0;
+            color: var(--f-color-text-0);
           }
         }
       }

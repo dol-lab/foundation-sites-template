@@ -12,11 +12,11 @@ $slider-height: 0.25rem !default;
 
 /// Default background color of the slider's track.
 /// @type Color
-$slider-background: color-mix-opacity(#{$color-text-0}, 14%, 86%) !default;
+$slider-background: color-mix-opacity(var(--f-color-text-0), 14%, 86%) !default;
 
 /// Default color of the active fill color of the slider.
 /// @type Color
-$slider-fill-background: color-mix-opacity(#{$color-text-0}, 30%, 70%) !default;
+$slider-fill-background: color-mix-opacity(var(--f-color-text-0), 30%, 70%) !default;
 
 /// Default height of the handle of the slider.
 /// @type Number
@@ -28,7 +28,7 @@ $slider-handle-width: 1rem !default;
 
 /// Default color of the handle for the slider.
 /// @type Color
-$slider-handle-background: $color-text-0 !default;
+$slider-handle-background: var(--f-color-text-0) !default;
 
 /// Default fade amount of a disabled slider.
 /// @type Number

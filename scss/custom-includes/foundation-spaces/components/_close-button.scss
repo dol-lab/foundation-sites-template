@@ -52,11 +52,11 @@ $closebutton-lineheight: 1 !default;
 
 /// Default color of the close button.
 /// @type Color
-$closebutton-color: $color-text-1 !default;
+$closebutton-color: var(--f-color-text-1) !default;
 
 /// Default color of the close button when being hovered on.
 /// @type Color
-$closebutton-color-hover: $color-text-0 !default;
+$closebutton-color-hover: var(--f-color-text-0) !default;
 
 
 /// Get the size and position for a close button. If the input value is a number, the number is returned. If the input value is a config map and the map has the key `$size`, the value is returned.

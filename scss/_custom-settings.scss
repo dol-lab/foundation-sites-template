@@ -64,15 +64,15 @@ $dynamic-relation: (
 
 // Info Chip
 // ---------
-$info-chip-padding: 0.2em 0.5em;
-$info-chip-padding-round: 0.37em 0.8em;
+$info-chip-padding: 0.3em 0.6em;
+/* $info-chip-padding-round: 0.37em 0.8em; */
 // Every chip has a 1px border, drawn as a ring shadow so it costs no layout.
 // Its color is `--_chip-ring`, which each state sets (see .info-chip): a
 // hairline on a static chip, a firm line on a clickable one. Deriving it from
 // the text color is what makes it hold up in both themes.
-$info-chip-ring: color-mix-opacity(#{$color-text-0}, 8%, 92%);
-$info-chip-ring-clickable: color-mix-opacity(#{$color-text-0}, 12%, 88%);
-$info-chip-ring-hover: color-mix-opacity(#{$color-text-0}, 24%, 76%);
+$info-chip-ring: color-mix-opacity(var(--f-color-text-0), 8%, 92%);
+$info-chip-ring-clickable: color-mix-opacity(var(--f-color-text-0), 12%, 88%);
+$info-chip-ring-hover: color-mix-opacity(var(--f-color-text-0), 24%, 76%);
 $info-border-shadow: 0 0 0 1px var(--_chip-ring);
 
 // On top of the ring, a clickable chip gets a drop shadow. `--f-color-shadow` is
@@ -80,8 +80,12 @@ $info-border-shadow: 0 0 0 1px var(--_chip-ring);
 // it subtle on light and readable on dark. Hover deepens the shadow *and* the
 // ring, because black on a near-black card is barely a change -- there the ring
 // is the whole cue.
-$info-chip-shadow: $info-border-shadow, 0 1px 2px 0 var(--f-color-shadow);
-$info-chip-shadow-hover: $info-border-shadow, 0 2px 6px -1px var(--f-color-shadow),
+$info-chip-shadow:
+  $info-border-shadow,
+  0 1px 2px 0 var(--f-color-shadow);
+$info-chip-shadow-hover:
+  $info-border-shadow,
+  0 2px 6px -1px var(--f-color-shadow),
   0 1px 2px -1px var(--f-color-shadow);
 
 // Button & Input
@@ -90,7 +94,7 @@ $input-height: $button-height;
 
 // Menu
 // ---------
-$border: 1px solid $color-bg-2;
+$border: 1px solid var(--f-color-bg-2);
 
 // Icons
 $icon-line-weight: 2;

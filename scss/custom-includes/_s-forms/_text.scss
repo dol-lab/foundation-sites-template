@@ -8,11 +8,11 @@
 
 /// Font color of text inputs.
 /// @type Color
-$input-color: $color-text-0 !default;
+$input-color: var(--f-color-text-0) !default;
 
 /// Font color of placeholder text within text inputs.
 /// @type Color
-$input-placeholder-color: $color-text-2 !default;
+$input-placeholder-color: var(--f-color-text-2) !default;
 
 /// Font family of text inputs.
 /// @type Font
@@ -32,31 +32,31 @@ $input-line-height: $global-lineheight !default;
 
 /// Background color of text inputs.
 /// @type Color
-$input-background: $color-bg-1 !default;
+$input-background: var(--f-color-bg-1) !default;
 
 /// Background color of focused of text inputs.
 /// @type Color
-$input-background-focus: $color-bg-1 !default;
+$input-background-focus: var(--f-color-bg-1) !default;
 
 /// Background color of disabled text inputs.
 /// @type Color
-$input-background-disabled: $color-bg-2 !default;
+$input-background-disabled: var(--f-color-bg-2) !default;
 
 /// Border color of disabled text inputs.
 /// @type Color
-$input-border-disabled: $color-text-2 !default;
+$input-border-disabled: var(--f-color-text-2) !default;
 
 /// Color of disabled text inputs.
 /// @type Color
-$input-color-disabled: $color-text-2 !default;
+$input-color-disabled: var(--f-color-text-2) !default;
 
 /// Border around text inputs.
 /// @type Border
-$input-border: 1px solid $color-border-1 !default;
+$input-border: 1px solid var(--f-color-border-1) !default;
 
 /// Border around focused text inputs.
 /// @type Color
-$input-border-focus: 1px solid $color-text-1 !default;
+$input-border-focus: 1px solid var(--f-color-text-1) !default;
 
 /// Padding of text inputs.
 /// @type Color
@@ -64,7 +64,7 @@ $input-padding: $form-spacing * 0.5 !default;
 
 /// Box shadow inside text inputs when not focused.
 /// @type Shadow
-$input-shadow: inset 0 1px 2px color-mix-opacity($color-text-0, 10%, 90%) !default;
+$input-shadow: inset 0 1px 2px color-mix-opacity(var(--f-color-text-0), 10%, 90%) !default;
 
 /// Box shadow outside text inputs when focused.
 /// @type Shadow

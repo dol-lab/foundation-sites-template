@@ -12,7 +12,7 @@ $switch-background: inherit !default;
 
 /// Background active color of a switch.
 /// @type Color
-$switch-background-active: $color-text-1 !default;
+$switch-background-active: var(--f-color-text-1) !default;
 
 /// Height of a switch, with no class applied.
 /// @type Number
@@ -40,7 +40,7 @@ $switch-margin: 0 !default;
 
 /// Background color for the switch container and paddle.
 /// @type Color
-$switch-paddle-background: $color-bg-1 !default;
+$switch-paddle-background: var(--f-color-bg-1) !default;
 
 /// Spacing between a switch paddle and the edge of the body.
 /// @type Number

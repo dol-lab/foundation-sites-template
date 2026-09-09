@@ -2,7 +2,7 @@
 // ---------
 
 .spinner {
-  border: 2px solid color-mix-opacity(#{$color-text-0}, 83%, 17%);
+  border: 2px solid color-mix-opacity(var(--f-color-text-0), 83%, 17%);
   border-radius: 50%;
   border-top: 2px solid var(--f-palette--primary);
   animation: spin 0.875s infinite cubic-bezier(0.9, 0.3, 0.3, 0.7);
@@ -45,7 +45,7 @@
   0% {
     opacity: 1;
     scale: 1;
-    box-shadow: 0 0 0 0 color-mix-opacity(#{$color-text-0}, 10%, 90%);
+    box-shadow: 0 0 0 0 color-mix-opacity(var(--f-color-text-0), 10%, 90%);
   }
 
   100% {

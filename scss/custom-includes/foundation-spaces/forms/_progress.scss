@@ -12,7 +12,7 @@ $progress-height: 1rem !default;
 
 /// Background color of a progress bar.
 /// @type Color
-$progress-background: color-mix-blend(#{$color-text-1}, 7%, #{$color-bg-1}, 93%) !default;
+$progress-background: color-mix-blend(var(--f-color-text-1), 7%, var(--f-color-bg-1), 93%) !default;
 
 /// Bottom margin of a progress bar.
 /// @type Number

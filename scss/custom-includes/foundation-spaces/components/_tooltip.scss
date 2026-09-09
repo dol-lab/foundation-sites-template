@@ -20,11 +20,11 @@ $has-tip-border-bottom: none !default;
 
 /// Default color of the tooltip background.
 /// @type Color
-$tooltip-background-color: $color-text-0 !default;
+$tooltip-background-color: var(--f-color-text-0) !default;
 
 /// Default color of the tooltip font.
 /// @type Color
-$tooltip-color: $color-bg-1 !default;
+$tooltip-color: var(--f-color-bg-1) !default;
 
 /// Default padding of the tooltip background.
 /// @type Number

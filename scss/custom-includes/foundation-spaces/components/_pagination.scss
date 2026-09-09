@@ -16,7 +16,7 @@ $pagination-margin-bottom: 0 !default;
 
 /// Text color of pagination items.
 /// @type Color
-$pagination-item-color: $color-text-1 !default;
+$pagination-item-color: var(--f-color-text-1) !default;
 
 /// Padding inside of pagination items.
 /// @type Number
@@ -32,23 +32,23 @@ $pagination-radius: $global-radius !default;
 
 /// Background color of pagination items on hover.
 /// @type Color
-$pagination-item-background-hover: $color-bg-1 !default;
+$pagination-item-background-hover: var(--f-color-bg-1) !default;
 
 /// Background color of pagination item for the current page.
 /// @type Color
-$pagination-item-background-current: $color-bg-1 !default;
+$pagination-item-background-current: var(--f-color-bg-1) !default;
 
 /// Text color of the pagination item for the current page.
 /// @type Color
-$pagination-item-color-current: $color-text-0 !default;
+$pagination-item-color-current: var(--f-color-text-0) !default;
 
 /// Text color of a disabled pagination item.
 /// @type Color
-$pagination-item-color-disabled: color-mix-opacity(#{$color-text-1}, 50%, 50%) !default;
+$pagination-item-color-disabled: color-mix-opacity(var(--f-color-text-1), 50%, 50%) !default;
 
 /// Color of the ellipsis in a pagination menu.
 /// @type Color
-$pagination-ellipsis-color: $color-text-0 !default;
+$pagination-ellipsis-color: var(--f-color-text-0) !default;
 
 /// If `false`, don't display page number links on mobile, only next/previous links
 /// and optionally current page number.

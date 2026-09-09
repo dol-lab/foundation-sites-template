@@ -60,25 +60,25 @@ $header-styles: (
     'h1': ('font-size': 23 * 0.8, 'font-weight': 400),
     'h2': ('font-size': 21 * 0.8, 'font-weight': 500),
     'h3': ('font-size': 19 * 0.8, 'font-weight': 500),
-    'h4': ('font-size': 19 * 0.8, 'color': $color-text-0, 'font-weight': 400),
-    'h5': ('font-size': 17 * 0.8, 'color': $color-text-0, 'font-weight': 400),
-    'h6': ('font-size': 17 * 0.8, 'color': $color-text-0, 'font-style': italic, 'font-weight': 400),
+    'h4': ('font-size': 19 * 0.8, 'color': var(--f-color-text-0), 'font-weight': 400),
+    'h5': ('font-size': 17 * 0.8, 'color': var(--f-color-text-0), 'font-weight': 400),
+    'h6': ('font-size': 17 * 0.8, 'color': var(--f-color-text-0), 'font-style': italic, 'font-weight': 400),
   ),
   medium: (
     'h1': ('font-size': 23 * 0.9, 'font-weight': 400),
     'h2': ('font-size': 21 * 0.9, 'font-weight': 500),
     'h3': ('font-size': 19 * 0.9, 'font-weight': 500),
-    'h4': ('font-size': 19 * 0.9, 'color': $color-text-0, 'font-weight': 400),
-    'h5': ('font-size': 17 * 0.9, 'color': $color-text-0, 'font-weight': 400),
-    'h6': ('font-size': 17 * 0.9, 'color': $color-text-0, 'font-style': italic, 'font-weight': 400),
+    'h4': ('font-size': 19 * 0.9, 'color': var(--f-color-text-0), 'font-weight': 400),
+    'h5': ('font-size': 17 * 0.9, 'color': var(--f-color-text-0), 'font-weight': 400),
+    'h6': ('font-size': 17 * 0.9, 'color': var(--f-color-text-0), 'font-style': italic, 'font-weight': 400),
   ),
   large: (
     'h1': ('font-size': 23, 'font-weight': 400),
     'h2': ('font-size': 21, 'font-weight': 500),
     'h3': ('font-size': 19, 'font-weight': 500),
-    'h4': ('font-size': 19, 'color': $color-text-0, 'font-weight': 400),
-    'h5': ('font-size': 17, 'color': $color-text-0, 'font-weight': 400),
-    'h6': ('font-size': 17, 'color': $color-text-0, 'font-style': italic, 'font-weight': 400),
+    'h4': ('font-size': 19, 'color': var(--f-color-text-0), 'font-weight': 400),
+    'h5': ('font-size': 17, 'color': var(--f-color-text-0), 'font-weight': 400),
+    'h6': ('font-size': 17, 'color': var(--f-color-text-0), 'font-style': italic, 'font-weight': 400),
   ),
 ) !default;
 
@@ -117,7 +117,7 @@ $small-font-size: 0.8rem !default;
 
 /// Color of `<small>` elements when placed inside headers.
 /// @type Color
-$header-small-font-color: $color-text-0 !default;
+$header-small-font-color: var(--f-color-text-0) !default;
 
 /// Line height of text inside `<p>` elements.
 /// @type Number
@@ -157,7 +157,7 @@ $hr-width: $global-width !default;
 
 /// Border color for dividers.
 /// @type Color
-$hr-border-color: $color-border-0 !default;
+$hr-border-color: var(--f-color-border-0) !default;
 
 /// Default border for a divider.
 /// @type List
@@ -205,7 +205,7 @@ $defnlist-term-margin-bottom: 0.3rem !default;
 
 /// Text color of `<blockquote>` elements.
 /// @type Color
-$blockquote-color: $color-text-1 !default;
+$blockquote-color: var(--f-color-text-1) !default;
 
 /// Padding inside a `<blockquote>` element.
 /// @type Number | List
@@ -213,7 +213,7 @@ $blockquote-padding: rem-calc(0 20 0 19) !default;
 
 /// Side border for `<blockquote>` elements.
 /// @type List
-$blockquote-border: 1px solid $color-border-2 !default;
+$blockquote-border: 1px solid var(--f-color-border-2) !default;
 
 /// Use the `.cite-block` component as default for `<cite>` elements.
 /// @type Boolean
@@ -225,11 +225,11 @@ $keystroke-font: $font-family-monospace !default;
 
 /// Text color for `<kbd>` elements.
 /// @type Color
-$keystroke-color: $color-text-0 !default;
+$keystroke-color: var(--f-color-text-0) !default;
 
 /// Background color for `<kbd>` elements.
 /// @type Color
-$keystroke-background: $color-bg-2 !default;
+$keystroke-background: var(--f-color-bg-2) !default;
 
 /// Padding for `<kbd>` elements.
 /// @type Number | List
@@ -241,7 +241,7 @@ $keystroke-radius: $global-radius-small !default;
 
 /// Bottom border style for `<abbr>` elements.
 /// @type List
-$abbr-underline: 1px dotted $color-text-0 !default;
+$abbr-underline: 1px dotted var(--f-color-text-0) !default;
 
 @mixin foundation-typography-base {
   // Typography resets

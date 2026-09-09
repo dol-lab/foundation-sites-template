@@ -3,7 +3,7 @@
 
 p {
   font-size: $paragraph-font-size;
-  color: $color-text-1;
+  color: var(--f-color-text-1);
 
   &.small {
     font-size: $small-font-size;
@@ -123,13 +123,13 @@ ul {
 }
 
 small {
-  color: $color-text-2;
+  color: var(--f-color-text-2);
   display: inline-block;
   line-height: $header-lineheight;
 
   & > a {
     &:hover {
-      color: $color-text-0;
+      color: var(--f-color-text-0);
     }
   }
 }
@@ -149,10 +149,10 @@ pre {
   margin-bottom: 1.5rem;
   padding: 1rem;
   overflow-x: auto;
-  border: 1px solid $color-border-1;
+  border: 1px solid var(--f-color-border-1);
   border-radius: $global-radius-small;
-  background-color: $color-bg-2;
-  color: $color-text-0;
+  background-color: var(--f-color-bg-2);
+  color: var(--f-color-text-0);
   font-size: 0.875rem;
   line-height: 1.5;
   white-space: pre;

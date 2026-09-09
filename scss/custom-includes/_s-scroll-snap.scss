@@ -83,7 +83,7 @@
     @include cross-browser(transform, translateY(-50%));
 
     padding: $global-padding;
-    background: $color-text-0;
+    background: var(--f-color-text-0);
     border-radius: $global-radius-small;
     box-shadow: $global-drop-shadow;
     font-family: "Font Awesome 7 Free";
