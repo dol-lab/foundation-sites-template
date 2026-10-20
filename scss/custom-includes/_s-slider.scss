@@ -29,6 +29,7 @@ $slider-transition: all global.$global-transition-medium global.$global-transiti
   margin-bottom: 2.25rem;
   background-color: range.$slider-background;
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
   touch-action: none;
 }

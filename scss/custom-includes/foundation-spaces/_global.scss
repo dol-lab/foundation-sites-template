@@ -85,13 +85,14 @@ $global-weight-normal: 400 !default;
 /// @type Keyword | Number
 $global-weight-bold: 500 !default;
 
-/// Global value used for all elements that have a border radius.
-/// @type Number
-$global-radius: 0.5rem !default;
+/// Global value used for all elements that have a border radius. Set the size
+/// with the `--f-radius` token (_root-tokens.scss), not here.
+/// @type String
+$global-radius: var(--f-radius) !default;
 
 /// Custom: Smaller border radius for compact components.
-/// @type Number
-$global-radius-small: 0.2rem !default;
+/// @type String
+$global-radius-small: var(--f-radius-xsmall) !default;
 
 /// Custom: Small gutter size for compact layouts.
 /// @type Number

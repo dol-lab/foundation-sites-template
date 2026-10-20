@@ -23,7 +23,6 @@
 
       &::before {
         content: "";
-        background: var(--f-color-text-1);
         background: color-mix(in oklab, var(--f-color-text-0) 22%, var(--f-color-bg-1) 78%);
         height: 2px;
         width: 100%;

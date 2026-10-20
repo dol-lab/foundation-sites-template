@@ -14,8 +14,11 @@
 
 @mixin styles {
   :root {
+    // Radius scale: --f-radius is the one knob, the steps follow it.
     --f-radius: 0.5rem;
-    --f-radius-small: 0.25rem;
+    --f-radius-small: calc(var(--f-radius) / 2);
+    --f-radius-xsmall: calc(var(--f-radius) * 0.4);
+    --f-radius-full: 9999px;
     --f-gutter-small: 10px;
     --f-gutter-large: 16px;
     --f-transition-short: 100ms;

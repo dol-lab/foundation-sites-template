@@ -38,11 +38,7 @@ Defined in `scss/_colors.scss` (`$foundation-palette`), assigned to roles by
 
 ## 2. Theming: Light / Dark
 
-Selection cascade (first match wins):
-
-1. **Forced:** `<html data-theme="light">` or `data-theme="dark"`.
-2. **OS preference:** `prefers-color-scheme: dark` when no `data-theme` is set.
-3. **Default:** light.
+The palette uses `light-dark()` on `:root` (`color-scheme: light dark`), so it follows the OS. `data-theme="light|dark"` forces a mode on any element and its subtree.
 
 ```html
 <!-- follow OS -->
@@ -84,10 +80,6 @@ Same `--f-color-theme` input, two derivations (see
 In short: **light theme pulls lightness up + chroma way down**, **dark theme
 pulls lightness down + dampens chroma**. Hue is preserved either way.
 
-The whole block is guarded by
-`@supports (color: oklch(from red l c h))` — browsers without `oklch(from …)`
-fall back to the un-tinted theme palette.
-
 ### Background gradient
 
 When `--f-color-theme` is set, the body gets a radial gradient using
@@ -105,7 +97,7 @@ Exposed at `:root` as `--f-spacing-0` … `--f-spacing-9`. Source map:
 
 | Variable                              | Purpose                          |
 | ------------------------------------- | -------------------------------- |
-| `--f-radius`, `--f-radius-small`      | Border-radius defaults           |
+| `--f-radius` (0.5rem)                 | The one radius knob; `-small` (/2), `-xsmall` (x0.4), `-full` (9999px) follow it |
 | `--f-gutter-small`, `--f-gutter-large`| Grid / inline gutters            |
 | `--f-grid-container-max`              | `.grid-container` max-width (70rem) |
 | `--f-grid-container-padding`          | `.grid-container` padding per side, responsive |

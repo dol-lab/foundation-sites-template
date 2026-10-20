@@ -333,6 +333,6 @@
     border-radius: 0;
   }
   .rounded-full {
-    border-radius: 9999px;
+    border-radius: var(--f-radius-full);
   }
 }

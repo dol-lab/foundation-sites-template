@@ -4,12 +4,6 @@
 @use "root-tokens";
 @use "../custom-functions";
 
-// 33. Theming
-// ---------
-
-@mixin themed-variables($mode) {
-}
-
 @mixin styles {
   @include root-tokens.styles;
 
@@ -19,25 +13,22 @@
   }
 
   /* ==========================================================================
-     Theming - should come after root variables.
+     Theming: the palette follows `color-scheme`. Without data-theme it follows
+     the OS; data-theme="light|dark" forces a mode on any element and its subtree.
      ========================================================================== */
 
-  :host(:not([data-theme="dark"])),
-  :root:not([data-theme="dark"]),
-  [data-theme="light"] {
-    @include custom-functions.foundation-apply-theme("light");
+  :root,
+  :host {
+    color-scheme: light dark;
+    @include custom-functions.foundation-apply-theme("auto");
   }
 
-  @media only screen and (prefers-color-scheme: dark) {
-    :host(:not([data-theme])),
-  	/* don't apply to gutenberg iframe (.editor-styles-wrapper) and tinymce (.wp-editor)*/
-    :root:not([data-theme]) body:not(.editor-styles-wrapper):not(.wp-editor):not(.wp-admin) {
-      @include custom-functions.foundation-apply-theme("dark");
-    }
+  [data-theme="light"] {
+    color-scheme: light;
   }
 
   [data-theme="dark"] {
-    @include custom-functions.foundation-apply-theme("dark");
+    color-scheme: dark;
   }
 
   /* ==========================================================================
@@ -50,61 +41,36 @@
   	 - with very light/dark images
      ========================================================================== */
 
-  /* We check if the browser understands 'from' inside oklch */
-  @supports (color: oklch(from red l c h)) {
-    :root {
-      &[themed][style*="--f-color-theme"] {
-        body {
-          background-image: radial-gradient(var(--f-bg-gradient-color), transparent 50vw);
-          background-size: 100vw 100vw;
-          background-position: center -70vw;
-          background-repeat: no-repeat;
-        }
+  :root {
+    &[themed][style*="--f-color-theme"] {
+      body {
+        background-image: radial-gradient(var(--f-bg-gradient-color), transparent 50vw);
+        background-size: 100vw 100vw;
+        background-position: center -70vw;
+        background-repeat: no-repeat;
       }
     }
+  }
 
-    :root[data-theme="light"][themed][style*="--f-color-theme"] {
-      --_f-color-theme-light: oklch(from var(--f-color-theme) 0.95 calc(c / 1.65) h);
+  :root[themed][style*="--f-color-theme"] {
+    --_f-color-theme-light: oklch(from var(--f-color-theme) 0.95 calc(c / 1.65) h);
+    --_f-color-theme-dark: oklch(from var(--f-color-theme) 0.455 calc(c * 0.6) h);
 
-      --f-color-bg-0: oklch(from var(--f-color-theme) 0.96 min(c / 6, 0.01) h);
-      --f-color-bg-1: oklch(from var(--f-color-theme) 0.995 min(c / 6, 0.01) h);
-      --f-color-bg-2: oklch(from var(--f-color-theme) 0.97 min(c / 5, 0.025) h);
+    --f-color-bg-0: light-dark(oklch(from var(--f-color-theme) 0.96 min(c / 6, 0.01) h), oklch(from var(--f-color-theme) 0.19 min(c * 0.6, 0.035) h));
+    --f-color-bg-1: light-dark(oklch(from var(--f-color-theme) 0.995 min(c / 6, 0.01) h), oklch(from var(--f-color-theme) 0.23 min(c * 0.6, 0.019) h));
+    --f-color-bg-2: light-dark(oklch(from var(--f-color-theme) 0.97 min(c / 5, 0.025) h), oklch(from var(--f-color-theme) 0.32 min(c * 0.6, 0.02) h));
 
-      --f-color-text-0: oklch(from var(--f-color-theme) 0.4 calc(c / 3) h);
-      --f-color-text-1: oklch(from var(--f-color-theme) 0.45 calc(c / 6) h);
-      --f-color-text-2: oklch(from var(--f-color-theme) 0.5 calc(c / 9) h);
+    --f-color-text-0: light-dark(oklch(from var(--f-color-theme) 0.4 calc(c / 3) h), color-mix(in oklab, var(--_f-color-theme-dark) 12%, var(--f-color-neutral-700)));
+    --f-color-text-1: light-dark(oklch(from var(--f-color-theme) 0.45 calc(c / 6) h), color-mix(in oklab, var(--_f-color-theme-dark) 18%, var(--f-color-neutral-700)));
+    --f-color-text-2: light-dark(oklch(from var(--f-color-theme) 0.5 calc(c / 9) h), color-mix(in oklab, var(--_f-color-theme-dark) 20%, var(--f-color-neutral-600)));
 
-      --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
+    --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
 
-      --f-bg-gradient-color: oklch(from var(--f-color-theme) max(l, 0.83) min(c, 0.12) h);
+    --f-bg-gradient-color: light-dark(oklch(from var(--f-color-theme) max(l, 0.83) min(c, 0.12) h), oklch(from var(--f-color-theme) min(l, 0.3) min(c, 0.15) h));
 
-  		--f-color-shadow: color-mix(in oklab, oklch(from var(--f-color-theme) 0.3 min(c, 0.12) h), transparent 80%);
-
-    }
-
-    :root[data-theme="dark"][themed][style*="--f-color-theme"] {
-      --_f-color-theme-dark: oklch(from var(--f-color-theme) 0.455 calc(c * 0.6) h);
-
-      --f-color-bg-0: oklch(from var(--f-color-theme) 0.19 min(c * 0.6, 0.035) h);
-      --f-color-bg-1: oklch(from var(--f-color-theme) 0.23 min(c * 0.6, 0.019) h);
-      --f-color-bg-2: oklch(from var(--f-color-theme) 0.32 min(c * 0.6, 0.02) h);
-
-      --f-color-text-0: color-mix(in oklab, var(--_f-color-theme-dark) 12%, var(--f-color-neutral-700));
-      --f-color-text-1: color-mix(in oklab, var(--_f-color-theme-dark) 18%, var(--f-color-neutral-700));
-      --f-color-text-2: color-mix(in oklab, var(--_f-color-theme-dark) 20%, var(--f-color-neutral-600));
-
-      --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
-
-      --f-bg-gradient-color: oklch(from var(--f-color-theme) min(l, 0.3) min(c, 0.15) h);
-
-  		--f-color-shadow: color-mix(in oklab, oklch(from var(--f-color-theme) 0.06 min(c, 1) h), transparent 45%);
-
-    }
-
-  	:root[themed][style*="--f-color-theme"]{
-  		--f-drop-shadow: 0 5px 20px var(--f-color-shadow), 0 2px 5px color-mix(in srgb, var(--f-color-shadow) 50%, transparent);
-    	--f-drop-shadow-large: 0 14px 28px var(--f-color-shadow), 0 10px 10px color-mix(in srgb, var(--f-color-shadow) 22%, transparent);
-  	}
+    --f-color-shadow: light-dark(color-mix(in oklab, oklch(from var(--f-color-theme) 0.3 min(c, 0.12) h), transparent 80%), color-mix(in oklab, oklch(from var(--f-color-theme) 0.06 min(c, 1) h), transparent 45%));
+    --f-drop-shadow: 0 5px 20px var(--f-color-shadow), 0 2px 5px color-mix(in srgb, var(--f-color-shadow) 50%, transparent);
+    --f-drop-shadow-large: 0 14px 28px var(--f-color-shadow), 0 10px 10px color-mix(in srgb, var(--f-color-shadow) 22%, transparent);
   }
 
   .highlight-on-load {

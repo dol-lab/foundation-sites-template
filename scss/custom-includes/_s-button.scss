@@ -233,7 +233,6 @@ $button-responsive-expanded: false !default;
   &[disabled]:hover,
   &.disabled:focus,
   &[disabled]:focus {
-    border: $border-width solid $color;
     border: $border-width solid color-mix(in oklab, $color 50%, transparent);
     color: $color;
   }
@@ -312,8 +311,7 @@ $button-responsive-expanded: false !default;
 
     &:hover,
     &:focus {
-      border-color: var(--f-color-#{$name}-darker);
-			border-color: color-mix(in oklab, var(--f-color-#{$name}-darker) 15%, transparent);
+      border-color: color-mix(in oklab, var(--f-color-#{$name}-darker) 15%, transparent);
 
       // color: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
       // background-color: color-mix(in oklab, var(--f-color-#{$name}) 20%, var(--f-color-bg-contrast) 80%);

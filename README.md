@@ -1,159 +1,71 @@
-# Foundation for Sites Template
+# foundation-sites-template
 
-This originally was built using [Foundation for Sites 6](http://foundation.zurb.com/sites). It includes a Sass compiler and a starter HTML file for you.
+A themeable fork of [Foundation for Sites 6](https://get.foundation/sites/docs/): Sass source plus the built `css/app.css` and `css/app-backend.css`. Consumers (spaces-markup, via composer) load the built files from `css/`; they never run this build.
 
-## Installation
+## Build
 
-To use this template, your computer needs:
-
-- [NodeJS](https://nodejs.org/en/) (0.12 or greater)
-- [Git](https://git-scm.com/)
-
-
-```bash
-cd projectname
-npm install
+```sh
+bun install
+bunx gulp sass   # builds both css files (about 2 s)
+bun start        # watch, plus the demo page index.html (built from index.src.html + html-partials/)
+bun run lint     # stylelint on scss/
 ```
 
-Finally, run `npm run start` to run the Sass compiler. It will re-run every time you save a Sass file.
+## Files
 
+- `scss/app.scss`, `scss/app-backend.scss`: the two entry points (see below).
+- `scss/components/`: one partial per component, named after its class (`_info-chip.scss` is `.info-chip`).
+- `scss/custom-styles/`: tokens and palette (`_root-tokens`, `_root-variables`), base elements, type, utilities.
+- `scss/custom-includes/`: Foundation's own components with our settings (`_s-*.scss`); `foundation-spaces/` is the Foundation source fork.
+- `scss/_custom-styles.scss`: the include list for `components/` and `custom-styles/`, in cascade order.
+- `scss/_custom-foundation-includes.scss`: which Foundation components are emitted, with opt-in flags.
+- `scss/_colors.scss`: the palettes. `_custom-settings.scss`: our Sass settings. `_custom-functions.scss`: mixins, including `foundation-apply-theme()`.
+- `VARIABLES.md`: every `--f-*` custom property. `HELPER_CLASSES.md`: utility classes. `DARK_THEME.md`: dark-mode troubleshooting.
+
+## Adding a component
+
+Create `scss/components/_name.scss`, wrap its rules in `@mixin styles { … }`, `@use` it in `scss/_custom-styles.scss` and add `@include name.styles;` at the matching place in the cascade. A partial that is not included prints nothing. Settings go at the top of the partial as `!default` variables or custom properties.
+
+## Configuring
+
+Pass settings with `@use … with (…)` to the partial that owns them, before the entry loads it:
+
+```scss
+@use "custom-foundation-includes" with ($include-top-bar: true);
+@use "app";
+```
+
+Unused Foundation components (off-canvas, top-bar, title-bar, drilldown, media-object, float classes) are off by default; each flag in `_custom-foundation-includes.scss` names the classes it drops.
+
+## Colors and theming
+
+CSS custom properties are the source of truth; Sass only holds the palettes that generate them. Use the roles directly, also in Foundation settings (`$card-background: var(--f-color-bg-1)`), so components stay themeable at runtime:
+
+- Surfaces: `--f-color-bg-0` (page), `-1` (cards), `-2` (raised).
+- Text: `--f-color-text-0` (headings), `-1` (body), `-2` (muted). Borders: `--f-color-border-0..2`.
+- Palette: `--f-color-{brand,primary,secondary,success,warning,alert}`, plus `-contrast` (text on it) and `-darker` (hover). The brand can be overridden at runtime with `--f-color-brand-base` / `--f-color-brand-base-contrast`.
+- Radius: `--f-radius` is the one knob; `-small`, `-xsmall` and `-full` follow it.
+
+Light/dark: the palette is written with `light-dark()` on `:root`, which sets `color-scheme: light dark`, so it follows the OS. `data-theme="light"` or `"dark"` forces a mode on any element and its subtree. `themed` plus `--f-color-theme` tints the surfaces toward a hue (`oklch(from …)`). Details in `VARIABLES.md`.
+
+## The two builds
+
+`app.css` styles pages we own. `app-backend.css` is loaded into pages we do not own (wp-admin screens, and the KISDarchiv theme `ark`, which prints the Spaces header), so every component rule is wrapped in `.f` and only markup carrying that class is styled. The entries do this by including each partial's `styles` mixin inside `.f`.
 
 ## To Do
 
-* Revisit color-mix declarations. Most of them have fallbacks, some do not, especially when declared through scss variables.
-* Revisit text sizing.
-* Increase global border-radius settings.
+- Delete the stale tracked builds in `scss/` (`app*.css*`), `yarn.lock`, `package-lock.json`, `.github/`, `migrations/`; then `bun install` to resync `bun.lock`.
+- Demo markup: drop `.badge-space` and the top-bar and drilldown demos (now unstyled).
+- Move `.sms-*` (`custom-styles/_animations-focus.scss`) to the Milestones plugin.
+- Drop the aliases `.s-fg-a-c1-parent` (for `.brand-links`) and `.main-menu` (for `.app-header`) once no markup uses them.
+- Verify `rgb(from light-dark(…))` in Firefox and Safari; fix the existing `bun run lint` errors.
 
+## Notes
 
-### Colors
-
-This template treats **CSS custom properties** as the source of truth for colors.
-The color roles have no Sass aliases: use `var(--f-color-bg-1)` directly, also when overriding a
-Foundation component setting (`$card-background: var(--f-color-bg-1) !default;`), so components
-remain themeable at runtime. Sass only holds the palettes in `scss/_colors.scss` that generate the
-custom properties.
-
-```css
-/* Background "layers" (page, cards, raised/highlighted surfaces) */
-
-/* Light */
---f-color-bg-0: var(--f-color-neutral-300); /* page background */
---f-color-bg-1: var(--f-color-neutral-100); /* cards/widgets */
---f-color-bg-2: var(--f-color-neutral-200); /* raised/highlight */
-
-/* Dark */
---f-color-bg-0: var(--f-color-neutral-100); /* page background */
---f-color-bg-1: var(--f-color-neutral-200); /* cards/widgets */
---f-color-bg-2: var(--f-color-neutral-300); /* raised/highlight */
-
-/* Text roles (both themes) */
---f-color-text-0: var(--f-color-neutral-700); /* headings/strong */
---f-color-text-1: var(--f-color-neutral-600); /* body */
---f-color-text-2: var(--f-color-neutral-500); /* muted */
-```
-
-Color roles are assigned by `@include foundation-apply-theme("light"|"dark")` in `scss/custom-styles/_root-variables.scss`
-(the mixin definition is in `scss/_custom-functions.scss`).
-
-Border roles are `--f-color-border-0`, `--f-color-border-1`, `--f-color-border-2` (subtle -> stronger) and are derived from the
-current theme's text color via `color-mix()`.
-
-#### Palette Tokens
-
-Foundation-like palette tokens are exposed as CSS variables and used by components/utilities:
-
-- Base: `--f-color-brand`, `--f-color-primary`, `--f-color-secondary`, `--f-color-success`, `--f-color-warning`, `--f-color-alert`
-- Contrast: `--f-color-<name>-contrast` (intended text/icon color on top of the base color)
-- Hover: `--f-color-<name>-darker` (computed via CSS `color-mix()`; see the "To Do" note above)
-
-The base palette values live in `scss/_colors.scss` (`$foundation-palette` and `$foundation-palette-contrast`).
-`--f-color-brand` can also be overridden at runtime via `--f-color-brand-base` / `--f-color-brand-base-contrast` (see `scss/_custom-functions.scss`).
-
-```css
-.my-card {
-  background: var(--f-color-bg-1);
-  border: 1px solid var(--f-color-border-1);
-  color: var(--f-color-text-1);
-}
-
-.my-card a {
-  color: var(--f-color-brand);
-}
-```
-
-#### Light/Dark Selection
-
-- Default: follows `prefers-color-scheme` (dark theme is applied when the OS prefers dark and you did not force a mode).
-- Force: set `data-theme="light"` or `data-theme="dark"` on `html`.
-
-If something looks wrong in dark mode, see [DARK_THEME.md](DARK_THEME.md) — a symptom-first
-troubleshooting checklist (hard-coded colors, specificity traps, admin/editor exclusions).
-
-#### Optional Page-Wide Tinting
-
-If you add the `themed` attribute and set `--f-color-theme` on `html`, some role colors are derived from that color
-using `oklch(from ...)`, guarded by `@supports (color: oklch(from ...))`:
-
-```html
-<html themed style="--f-color-theme: #975938">
-```
-
-See `scss/custom-styles/_root-variables.scss` for the exact derived values.
-
-#### Helper Classes
-
-Utility classes for palette colors exist (background and text). See `HELPER_CLASSES.md` "Colors" for the list.
-
-### The two builds: `app.css` and `app-backend.css`
-
-`app.scss` styles a page we own. `app-backend.scss` is loaded into pages we do **not** own (wp-admin
-screens, and the KISDarchiv theme `ark`, which prints the Spaces header itself), so it wraps every
-component rule in `.f` and only the markup carrying that class is styled.
-
-Three things must stay **outside** that wrapper, and the entry files are the only place that is
-decided:
-
-- **Design tokens** (`custom-styles/_root-tokens.scss`). Custom properties are inherited, so they
-  belong on `:root`; nested they compile to `.f :root`, which can never match, and every
-  `var(--f-…)` inside the wrapper resolves to nothing. Declaring properties costs nothing until
-  something uses them, so `:root` is safe in a foreign page.
-- **The palette.** `app.scss` pulls in `custom-styles/_root-variables.scss` (tokens, plus the
-  light/dark theming selectors). `app-backend.scss` does not: it applies
-  `foundation-apply-theme("light")` to `:root` directly, because the back-end build is always light,
-  and neutralises the few rules that key off `:root[data-theme]` at the end of the file.
-- **normalize**, which the components assume. It is loaded before the host page's own stylesheets,
-  so its element rules lose to theirs on source order.
-
-The one part of normalize that is *not* safe unscoped is `box-sizing`: flipping a foreign page to
-`border-box` resizes its layout. `_custom-normalize.scss` therefore takes `$box-sizing-root` /
-`$box-sizing-all` (`html` / `*` by default), and `app-backend.scss` sets them to `.f` / `.f *`.
-
-### Info Chips
-
-`.info-chip` has two states, and elevation is what separates them:
-
-- **Static** (default): no fill and no shadow, only a hairline border, `cursor: default`. The
-  segment after the icon keeps a light tint (`bg-2` mixed halfway into `bg-1`) — that is the chip's
-  anatomy (icon | key | value), not a state, and it stays a seam rather than a grey block.
-  Full-contrast `--f-color-text-0` label: it is information, and information has to be readable.
-- **Clickable**: its own `bg-1` surface, a firmer border, and a drop shadow; hover and focus deepen
-  both. The chip does not move: chips sit in dense rows, where a moving one pulls the eye off the
-  row it belongs to. Applied to `[href]` and `<button>` chips, plus `.clickable` for a chip whose
-  handler is in JS. A chip merely sitting inside a link stays flat: the row around it is the click
-  target.
-
-The border is a `0 0 0 1px` ring shadow rather than a real border, so it costs no layout; its color
-is `--_chip-ring`, which each state sets (8% of the text color static, 12% clickable, 24% hovered).
-The drop shadow uses `--f-color-shadow` (the theme's own shadow color: black at 13% on light, 50% on
-dark), never a text-derived color — a text-derived shadow is too heavy on light and inverts to a glow
-on dark. On a dark card black-on-near-black barely registers, which is why hover also strengthens the
-ring.
-
-The fills are custom properties (`--_chip-bg`, `--_chip-key-bg`, `--_chip-separator`) set on the
-chip itself, so a state (or `.hollow`) swaps them in one place instead of out-specifying the
-`> span` rules. Both state selectors are wrapped in `:where()` to stay at `.info-chip`
-specificity, which is what keeps `.hollow` and `.clear` winning over them.
-
-Chips are `<a>` elements even when there is nothing to link to (see the `info-chip` Handlebars
-template in spaces-markup), so `[href]` — not the tag — is the honest signal. A chip that shows a
-pointer and then does nothing is the mistake this split is meant to prevent.
+- Outside `.f` in the backend build: tokens (custom properties belong on `:root`; nested they become `.f :root` and never match), the palette (always light, applied to `:root` directly, no `color-scheme` set on the host page), and normalize (it loads before the host's stylesheets, so their element rules win on order). The exception is `box-sizing`: `_custom-normalize.scss` takes `$box-sizing-root` / `$box-sizing-all`, and the backend sets them to `.f` / `.f *` so a foreign page's layout is not resized.
+- The backend build ends with a block that turns off the dark variants of `select` and `.show-/.hide-for-dark-mode`, which still key off `prefers-color-scheme` on the host's `:root`.
+- `.f`-scoped rules are one class stronger than the host's own: a consumer stylesheet that must win in `ark` or wp-admin needs a matching selector (e.g. `.f div` beats a bare `.space-title`).
+- Vendor prefixes are hand-written; there is no autoprefixer. The ones current Safari still needs: `-webkit-user-select`, `-webkit-text-size-adjust`, `-webkit-text-decoration` (shorthand).
+- motion-ui is loaded with `@use` but still uses `@import` internally; its deprecation warnings are muted in `gulpfile.js`.
+- `.ignore` keeps built and binary files out of ripgrep-based search (editors, coding agents). Never commit a second copy of a build output.
+- Info chips: a static chip is flat (hairline ring, no fill, full-contrast label); a clickable one (`[href]`, `<button>`, `.clickable`) gets a surface and a shadow, and does not move on hover. `[href]` is the signal because chips are `<a>` even without a link. The ring is a `0 0 0 1px` shadow (no layout cost), the shadow uses `--f-color-shadow` (never a text-derived color, which glows on dark), and the state selectors sit in `:where()` so `.hollow` and `.clear` still win.

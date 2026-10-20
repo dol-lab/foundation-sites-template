@@ -24,7 +24,6 @@
 		"what-input": "^5.2.12"
 	},
 	"devDependencies": {
-		"autoprefixer": "^10.4.21",
 		"browser-sync": "^3.0.4",
 		"gulp": "^5.0.1",
 		"gulp-plumber": "^1.2.1",
@@ -38,8 +37,5 @@
 		"type": "git",
 		"url": "https://github.com/dol-lab/foundation-sites-template.git"
 	},
-	"private": true,
-	"browserslist": [
-		"last 2 versions"
-	]
+	"private": true
 }

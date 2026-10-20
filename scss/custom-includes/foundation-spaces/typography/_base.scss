@@ -7,7 +7,9 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:list";
 @use "sass:map";
+@use "sass:math";
 @use "sass:meta";
 
 ////
@@ -110,6 +112,47 @@ $header-styles: (
 // If it exists $headers-sizes is used to build $header-styles. See the documentation.
 @if meta.variable-exists(header-sizes) {
   $header-styles: build-from-header-sizes($header-sizes);
+}
+
+/// Font size of a heading level in `$header-styles` (px number or rem).
+/// @access private
+@function -header-size-at($breakpoint, $header) {
+  $defs: map.get($header-styles, $breakpoint, $header);
+  @if $defs == null {
+    @return null;
+  }
+  @return map.get($defs, font-size) or map.get($defs, fs);
+}
+
+/// Font size of a heading level as one value: a clamp() that runs through the
+/// sizes of the last two breakpoints in `$header-styles` at their widths, and
+/// is floored by the first breakpoint's size and capped by the last one's.
+/// @param {String} $header - Heading level, e.g. `h1`.
+/// @return {Number|String} rem size, or a clamp() when the sizes differ.
+@function header-font-size($header) {
+  $sizes: ();
+  $widths: ();
+  @each $breakpoint, $headers in $header-styles {
+    $size: -header-size-at($breakpoint, $header);
+    @if $size != null {
+      $sizes: list.append($sizes, math.div(unit.rem-calc($size), 1rem) * 16px);
+      $widths: list.append($widths, math.div(unit.zf-bp-to-em(map.get(breakpoint.$breakpoints, $breakpoint)), 1em) * 16px);
+    }
+  }
+  $count: list.length($sizes);
+  @if $count == 0 {
+    @return 1rem;
+  }
+  $min: list.nth($sizes, 1);
+  $max: list.nth($sizes, $count);
+  @if $count == 1 or $min == $max {
+    @return unit.rem-calc($max);
+  }
+  $w1: list.nth($widths, $count - 1);
+  $w2: list.nth($widths, $count);
+  $slope: math.div($max - list.nth($sizes, $count - 1), $w2 - $w1);
+  $intercept: $max - $slope * $w2;
+  @return clamp(#{unit.rem-calc($min)}, #{unit.rem-calc($intercept)} + #{$slope * 100}vw, #{unit.rem-calc($max)});
 }
 
 /// Text rendering method of headers.
@@ -326,16 +369,13 @@ $abbr-underline: 1px dotted var(--f-color-text-0) !default;
       @each $header, $header-defs in $headers {
         $font-size-temp: 1rem;
         #{$header}, .#{$header} {
-          @if map.has-key($header-defs, font-size) {
-            $font-size-temp: unit.rem-calc(map.get($header-defs, font-size));
+          @if map.has-key($header-defs, font-size) or map.has-key($header-defs, fs) {
+            $font-size-temp: unit.rem-calc(-header-size-at($size, $header));
+          }
 
-            font-size: $font-size-temp;
-          } @else if map.has-key($header-defs, fs) {
-            $font-size-temp: unit.rem-calc(map.get($header-defs, fs));
-
-            font-size: $font-size-temp;
-          } @else if $size == breakpoint.$zf-zero-breakpoint {
-            font-size: $font-size-temp;
+          // One fluid value instead of one per breakpoint.
+          @if $size == breakpoint.$zf-zero-breakpoint {
+            font-size: header-font-size($header);
           }
 
           @if map.has-key($header-defs, line-height) {

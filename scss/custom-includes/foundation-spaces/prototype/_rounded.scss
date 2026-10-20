@@ -24,7 +24,7 @@ $prototype-border-radius: rem-calc(3) !default;
 
 /// Rounded square utility or rectangle utility (all corners): Rounds all corners to an element by default to make a pill shape.
 @mixin border-rounded {
-  border-radius: 5000px !important;
+  border-radius: var(--f-radius-full) !important;
 }
 
 @mixin foundation-prototype-rounded {

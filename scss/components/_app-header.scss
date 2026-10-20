@@ -34,7 +34,7 @@
       padding-bottom: 0;
       margin-top: 0.25rem;
       margin-bottom: 0.25rem;
-      border-radius: 0.5rem;
+      border-radius: var(--f-radius);
       color: inherit;
     }
 
@@ -174,7 +174,7 @@
     & > * > :is(.dropdown, .accordion-menu) {
       & .submenu {
         border-top: 1px solid var(--f-color-border-0);
-        border-radius: 0 0 0.5rem 0.5rem;
+        border-radius: 0 0 var(--f-radius) var(--f-radius);
         box-shadow: var(--f-drop-shadow);
         z-index: 1;
       }
@@ -193,7 +193,7 @@
       }
 
       & .submenu .is-submenu-item:last-child {
-        border-radius: 0 0 0.5rem 0.5rem;
+        border-radius: 0 0 var(--f-radius) var(--f-radius);
       }
 
       & .submenu .is-submenu-item:last-child a.submenu-element {
@@ -202,7 +202,7 @@
 
       & .submenu .is-submenu-item:last-child > *,
       & .submenu .is-submenu-item:last-child .submenu-element > * {
-        border-radius: 0 0 0.5rem 0.5rem;
+        border-radius: 0 0 var(--f-radius) var(--f-radius);
       }
 
       & .main-menu-burger > a {
