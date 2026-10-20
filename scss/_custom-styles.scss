@@ -1,27 +1,98 @@
 @use "sass:color";
 @use "sass:map";
 
-//  Spaces Custom Settings for Foundation
-//  -----------------------------
-//
-//  Table of Contents:
-//   1. General & Grid
-//   2. Typography
-//   3. Cards (Card, Space Card, User Card, Post Card, Clipping)
-//   4. Forms & Inputs (Dropdown, Chips, Switch, Checkbox, Button)
-//   5. Navigation & Menus (Dot Menu, Main Menu, Icons, Breadcrumbs)
-//   6. Components (Excerpt, Tabs, Typeahead, Accordion, Pagination, Callout, Details)
-//   7. Utilities (Spacing, Flex, Gutters)
-//   8. Loading states (Loading target, Card skeleton, Deleting)
-//   9. Animations & Focus (Spinner, Keyboard Focus)
+//  Custom styles on top of Foundation, in cascade order: a later include wins at equal specificity,
+//  so reorder only rules that cannot match the same element.
+//  - custom-styles/general-base, typography: base elements and type
+//  - components/: one partial per component, named after its class (`_info-chip.scss` is `.info-chip`)
+//  - custom-styles/utilities, loading, animations-focus: helpers that override components
 
-// Import all modular SCSS files
-@import "custom-styles/general-base";
-@import "custom-styles/typography";
-@import "custom-styles/cards";
-@import "custom-styles/forms-inputs";
-@import "custom-styles/navigation-menus";
-@import "custom-styles/components";
-@import "custom-styles/utilities";
-@import "custom-styles/loading";
-@import "custom-styles/animations-focus";
+@use "custom-styles/general-base";
+@use "custom-styles/typography";
+@use "components/card";
+@use "components/page-title";
+@use "components/avatar";
+@use "components/dot-list";
+@use "components/gb";
+@use "components/prose-layout";
+@use "components/clipped";
+@use "components/box-shadow";
+@use "components/card-item";
+@use "components/avatar-stack";
+@use "components/dropdown-pane";
+@use "components/info-chip";
+@use "components/label-wrapper";
+@use "components/switch";
+@use "components/checkbox";
+@use "components/radio-accordion";
+@use "components/input";
+@use "components/input-group";
+@use "components/button-group";
+@use "components/button";
+@use "components/grow-wrap";
+@use "components/dots";
+@use "components/edit-bar";
+@use "components/menu";
+@use "components/caret";
+@use "components/accordion-menu";
+@use "components/dropdown-menu";
+@use "components/icons";
+@use "components/sandwich-icon";
+@use "components/breadcrumbs";
+@use "components/tooltip";
+@use "components/tabs";
+@use "components/shake";
+@use "components/accordion";
+@use "components/pagination";
+@use "components/callout";
+@use "components/details";
+@use "components/app-header";
+@use "custom-styles/utilities";
+@use "custom-styles/loading";
+@use "custom-styles/animations-focus";
+
+@mixin styles {
+  @include general-base.styles;
+  @include typography.styles;
+  @include card.styles;
+  @include page-title.styles;
+  @include avatar.styles;
+  @include dot-list.styles;
+  @include gb.styles;
+  @include prose-layout.styles;
+  @include clipped.styles;
+  @include box-shadow.styles;
+  @include card-item.styles;
+  @include avatar-stack.styles;
+  @include dropdown-pane.styles;
+  @include info-chip.styles;
+  @include label-wrapper.styles;
+  @include switch.styles;
+  @include checkbox.styles;
+  @include radio-accordion.styles;
+  @include input.styles;
+  @include input-group.styles;
+  @include button-group.styles;
+  @include button.styles;
+  @include grow-wrap.styles;
+  @include dots.styles;
+  @include edit-bar.styles;
+  @include menu.styles;
+  @include caret.styles;
+  @include accordion-menu.styles;
+  @include dropdown-menu.styles;
+  @include icons.styles;
+  @include sandwich-icon.styles;
+  @include breadcrumbs.styles;
+  @include tooltip.styles;
+  @include tabs.styles;
+  @include shake.styles;
+  @include accordion.styles;
+  @include pagination.styles;
+  @include callout.styles;
+  @include details.styles;
+  @include app-header.styles;
+  @include utilities.styles;
+  @include loading.styles;
+  @include animations-focus.styles;
+}

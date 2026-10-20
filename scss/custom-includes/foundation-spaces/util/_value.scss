@@ -1,3 +1,5 @@
+@use "math";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -21,7 +23,7 @@
     @return false;
   }
 
-  @if meta.type-of($val) == 'number' and strip-unit($val) == 0 {
+  @if meta.type-of($val) == 'number' and math.strip-unit($val) == 0 {
     @return false;
   }
 
@@ -192,6 +194,6 @@
 /// @param {*} $val - Value to convert.
 ///
 /// @returns {Boolean} Converted Boolean value.
-@function -zf-bool($val) {
+@function zf-bool($val) {
   @return $val != false and has-value($val);
 }

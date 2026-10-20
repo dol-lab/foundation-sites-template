@@ -1,3 +1,6 @@
+@use "../helpers/true" as truthy;
+@use "to-list";
+
 @use "sass:list";
 
 /// Removes all false and null values from `$list`.
@@ -22,12 +25,12 @@
   $result: ();
 
   @each $item in $list {
-    @if sl-is-true($item) {
+    @if truthy.sl-is-true($item) {
       $result: list.append($result, $item, list.separator($list));
     }
   }
 
-  @return sl-to-list($result);
+  @return to-list.sl-to-list($result);
 }
 
 ///

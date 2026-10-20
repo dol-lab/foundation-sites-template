@@ -1,3 +1,7 @@
+@use "foundation-spaces/forms/range";
+@use "foundation-spaces/global";
+@use "foundation-spaces/util/mixins";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -15,15 +19,15 @@ $slider-width-vertical: 0.5rem !default;
 
 /// Transition properties to apply to the slider handle and fill. (Doesn't apply to the native slider.)
 /// @type Transition
-$slider-transition: all $global-transition-medium $global-transition-timing !default;
+$slider-transition: all global.$global-transition-medium global.$global-transition-timing !default;
 
 /// Adds the general styles for sliders.
 @mixin slider-container {
   position: relative;
-  height: $slider-height;
+  height: range.$slider-height;
   margin-top: 1.25rem;
   margin-bottom: 2.25rem;
-  background-color: $slider-background;
+  background-color: range.$slider-background;
   cursor: pointer;
   user-select: none;
   touch-action: none;
@@ -36,8 +40,8 @@ $slider-transition: all $global-transition-medium $global-transition-timing !def
   left: 0;
   display: inline-block;
   max-width: 100%;
-  height: $slider-height;
-  background-color: $slider-fill-background;
+  height: range.$slider-height;
+  background-color: range.$slider-fill-background;
   transition: $slider-transition;
 
   &.is-dragging {
@@ -47,17 +51,17 @@ $slider-transition: all $global-transition-medium $global-transition-timing !def
 
 /// Adds the general styles for the slider handles.
 @mixin slider-handle {
-  @include disable-mouse-outline;
-  @include vertical-center;
+  @include mixins.disable-mouse-outline;
+  @include mixins.vertical-center;
 
   left: 0;
   z-index: 1;
   cursor: grab;
   display: inline-block;
-  width: $slider-handle-width;
-  height: $slider-handle-height;
-  border-radius: $slider-radius;
-  background-color: $slider-handle-background;
+  width: range.$slider-handle-width;
+  height: range.$slider-handle-height;
+  border-radius: range.$slider-radius;
+  background-color: range.$slider-handle-background;
   transition: $slider-transition;
   touch-action: manipulation;
 
@@ -72,7 +76,7 @@ $slider-transition: all $global-transition-medium $global-transition-timing !def
 }
 
 @mixin slider-disabled {
-  opacity: $slider-opacity-disabled;
+  opacity: range.$slider-opacity-disabled;
   cursor: not-allowed;
 }
 
@@ -93,8 +97,8 @@ $slider-transition: all $global-transition-medium $global-transition-timing !def
     position: absolute;
     top: 0;
     left: 50%;
-    width: $slider-handle-height;
-    height: $slider-handle-width;
+    width: range.$slider-handle-height;
+    height: range.$slider-handle-width;
     transform: translateX(-50%);
   }
 }
@@ -127,7 +131,7 @@ $slider-transition: all $global-transition-medium $global-transition-timing !def
   }
 
   // RTL support
-  @if $global-text-direction == rtl {
+  @if global.$global-text-direction == rtl {
     .slider:not(.vertical) {
       transform: scale(-1, 1);
     }

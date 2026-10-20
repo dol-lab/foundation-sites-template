@@ -1,3 +1,6 @@
+@use "../util/unit";
+@use "text";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -12,7 +15,7 @@ $helptext-color: currentcolor !default;
 
 /// Default font size for help text.
 /// @type Number
-$helptext-font-size: rem-calc(13) !default;
+$helptext-font-size: unit.rem-calc(13) !default;
 
 /// Default font style for help text.
 /// @type Keyword
@@ -20,7 +23,7 @@ $helptext-font-style: italic !default;
 
 @mixin foundation-form-helptext {
   .help-text {
-    $margin-top: ($form-spacing * 0.5) * -1;
+    $margin-top: (text.$form-spacing * 0.5) * -1;
 
     margin-top: $margin-top;
     font-size: $helptext-font-size;

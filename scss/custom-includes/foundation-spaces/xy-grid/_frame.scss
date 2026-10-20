@@ -1,3 +1,7 @@
+@use "../util/breakpoint";
+@use "../util/mixins";
+@use "../util/unit";
+
 // sass-lint:disable no-vendor-prefixes
 
 @use "sass:meta";
@@ -24,18 +28,18 @@
   }
 
   @if $breakpoint == null and meta.type-of($gutters) == 'map' {
-    @include -zf-each-breakpoint {
-      @include xy-grid-frame($vertical, $nested, $gutters, $-zf-size, false);
+    @include mixins.zf-each-breakpoint {
+      @include xy-grid-frame($vertical, $nested, $gutters, breakpoint.$zf-size, false);
     }
   } @else {
     // Get our gutters if applicable
-    $gutter: -zf-get-bp-val($gutters, $breakpoint);
+    $gutter: breakpoint.zf-get-bp-val($gutters, $breakpoint);
 
     // If we have a gutter, add it to the width/height
     @if $gutter {
       @if $vertical == true {
         $unit: if($nested == true, 100%, 100vh);
-        $gutter: rem-calc($gutter);
+        $gutter: unit.rem-calc($gutter);
 
         // Make sure that 0 is translated in 0rem for calc()
         @if $gutter == 0 {
@@ -46,7 +50,7 @@
         height: calc(#{$unit} + #{$gutter});
       } @else {
         $unit: if($nested == true, 100%, 100vw);
-        $gutter: rem-calc($gutter);
+        $gutter: unit.rem-calc($gutter);
 
         // Make sure that 0 is translated in 0rem for calc()
         @if $gutter == 0 {

@@ -1,0 +1,32 @@
+@use "../custom-settings";
+
+// Avatar stack
+// ---------
+// Overlapping avatars in one row. `row-reverse` draws the list right to left, so the markup
+// lists the newest last; what does not fit wraps onto a second row that `overflow` hides.
+// Each avatar wears a ring in the card color, so the one below reads as cut out.
+
+@use "sass:map";
+
+@mixin styles {
+  .avatar-stack {
+    --avatar-overlap: 0.6rem;
+    --f-avatar-radius: 50%;
+
+    display: flex;
+    flex-flow: row-reverse wrap;
+    justify-content: flex-end;
+    height: map.get(custom-settings.$avatar-sizes, small);
+    min-width: map.get(custom-settings.$avatar-sizes, small);
+    overflow: hidden;
+    padding-left: calc(var(--avatar-overlap) + #{map.get(custom-settings.$spacing-scale, 2)});
+    margin-right: calc(-0.7 * var(--avatar-overlap));
+
+    .avatar-container {
+      overflow: hidden;
+      border: 3px solid var(--f-color-bg-1);
+      box-sizing: border-box;
+      margin-left: calc(-1 * var(--avatar-overlap));
+    }
+  }
+}

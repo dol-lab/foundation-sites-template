@@ -69,6 +69,7 @@ Format: `{breakpoint}-{columns}` (Total columns: 12)
 
 - **Backgrounds:** `.bg-primary`, `.bg-secondary`, `.bg-success`, `.bg-warning`, `.bg-alert`
 - **Text:** `.color-primary`, `.color-secondary`, `.color-success`, `.color-warning`, `.color-alert`
+- **Links:** `.brand-links` on a container gives the prose links inside it the brand colour (`.s-fg-a-c1-parent` is the old name, kept as an alias)
 
 ### Borders & Shadows
 

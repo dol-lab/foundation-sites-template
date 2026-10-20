@@ -1,0 +1,13 @@
+// .breadcrumbs.
+
+@mixin styles {
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &.no-padding {
+      padding: 0;
+    }
+  }
+}

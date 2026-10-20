@@ -1,0 +1,91 @@
+@use "../custom-includes/foundation-spaces/global";
+
+// .button-group.
+
+@mixin styles {
+  .button-group {
+    border-radius: global.$global-radius;
+    overflow: hidden;
+
+    &:not(.no-gaps) {
+      gap: 1px;
+    }
+
+    input {
+      width: initial;
+    }
+
+    button,
+    .button,
+    select,
+    input {
+      margin-bottom: 0;
+
+      &:hover {
+        z-index: 1;
+      }
+
+      &:not(:first-child, :last-child) {
+        border-radius: 0;
+      }
+
+      &:first-child:not(:last-child) {
+        border-radius: global.$global-radius 0 0 global.$global-radius;
+      }
+
+      &:last-child:not(:first-child) {
+        margin-right: 0;
+        border-radius: 0 global.$global-radius global.$global-radius 0;
+      }
+
+      &.hollow {
+        &:not(:last-child) {
+          margin-right: -1px;
+        }
+      }
+
+      &.expanded {
+        flex: 1;
+        width: initial;
+      }
+    }
+
+    button,
+    .button {
+      &:not(.hollow) + .hollow {
+        margin-left: -2px;
+      }
+    }
+
+    &.hollow {
+      button,
+      .button,
+      select,
+      input {
+        &:first-child {
+          border-radius: global.$global-radius 0 0 global.$global-radius;
+        }
+
+        &:last-child {
+          border-radius: 0 global.$global-radius global.$global-radius 0;
+        }
+
+        &:not(:last-child) {
+          margin-right: -1px;
+        }
+      }
+    }
+
+    &.expanded {
+      width: 100%;
+
+      button,
+      .button,
+      select {
+        &:not(:last-child) {
+          margin-right: 1px;
+        }
+      }
+    }
+  }
+}

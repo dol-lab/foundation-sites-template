@@ -1,0 +1,8 @@
+// .pagination.
+
+@mixin styles {
+  .pagination {
+    display: flex;
+    justify-content: left;
+  }
+}

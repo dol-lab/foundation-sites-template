@@ -1,0 +1,227 @@
+@use "../custom-functions";
+@use "../custom-includes/foundation-spaces/components/card";
+@use "../custom-includes/foundation-spaces/forms/text";
+@use "../custom-includes/foundation-spaces/global";
+@use "../custom-includes/foundation-spaces/typography/base";
+@use "../custom-includes/s-button";
+@use "../custom-settings";
+
+// .card and its parts: .card-header, .card-title, .card-section, .card-divider.
+
+@use "sass:list";
+@use "sass:map";
+
+@mixin styles {
+  .card {
+    min-width: auto;
+    flex-grow: 0;
+    font-size: global.$paragraph-font-size;
+
+    border: base.$hr-border;
+    transition: box-shadow global.$global-transition-short global.$global-transition-timing;
+    background-color: var(--f-color-bg-1);
+    overflow: clip;
+    color: var(--f-color-text-1);
+
+    .card-anchor {
+      color: inherit;
+      text-decoration: none !important;
+      display: flex;
+      flex-direction: column;
+      padding: 0 !important;
+
+      @include custom-functions.foundation-palette;
+    }
+
+    // Media as a card's first child follows the card's top corners. The card clips them itself
+    // unless it lets its children out (`.overflow-initial`, so menus can leave it).
+    & > :is(.clipped, img, picture, video, figure):first-child {
+      overflow: hidden;
+      border-radius: card.$card-border-radius card.$card-border-radius 0 0;
+    }
+
+    &.overflow-auto {
+      overflow: auto;
+    }
+
+    &.overflow-hidden {
+      overflow: hidden;
+    }
+
+    &.overflow-initial {
+      overflow: initial;
+    }
+
+    &.muted {
+      opacity: 0.5;
+    }
+
+    // A card offers a click only where it says so. Opt-in, not opt-out: a card that shows a pointer
+    // and then does nothing promises the reader something it cannot keep, and forgetting to opt out
+    // is the easy mistake. Set `clickable` where the whole card is a link (or opens something).
+    &.clickable {
+      &:hover {
+        cursor: pointer;
+        box-shadow: global.$global-drop-shadow;
+        transition: box-shadow global.$global-transition-short global.$global-transition-timing;
+      }
+    }
+
+    input,
+    textarea,
+    select {
+      font-size: text.$input-font-size;
+    }
+
+    &.accordion {
+      background: card.$card-background;
+    }
+  }
+
+  .card-header {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    padding: s-button.$button-padding;
+    line-height: base.$paragraph-lineheight;
+
+    h1 {
+      margin-bottom: 0;
+      word-break: break-word;
+    }
+
+    :not(.align-justify):not(.align-center) {
+      justify-content: flex-start;
+    }
+
+    &:is(.flex-dir-row) {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &.no-padding {
+      padding: 0;
+      padding-left: list.nth(s-button.$button-padding, 2);
+    }
+  }
+
+  .card-title {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    line-height: base.$header-lineheight;
+    font-weight: global.$global-weight-normal;
+    margin: 0;
+
+    &.small {
+      font-size: 0.875rem;
+    }
+
+    .fa {
+      font-size: 0.75em;
+      margin-right: 0.5em;
+    }
+  }
+
+  .card-section,
+  .card-divider {
+    padding: map.get(custom-settings.$spacing-scale, 3);
+    display: flex;
+    flex-direction: column;
+
+    &.nested {
+      border-top: none;
+      margin-top: -1rem;
+
+      .card-section.no-padding.flex-dir-row {
+        border-top: base.$hr-border;
+        margin-top: -1.375rem;
+        padding-top: 0.75rem;
+
+        .page-title {
+          font-size: 1rem;
+          font-weight: 400;
+        }
+      }
+    }
+
+    &-negative {
+      margin-inline: -#{map.get(custom-settings.$spacing-scale, 3)};
+    }
+
+    &.flex-dir-row {
+      flex-direction: row;
+    }
+
+    &.flex-dir-row-reverse {
+      flex-direction: row-reverse;
+    }
+
+    &.flex-dir-column {
+      flex-direction: column;
+    }
+
+    &.small {
+      line-height: 1.25rem;
+    }
+
+    & > a {
+      text-decoration: none;
+
+      &::only-child:hover {
+        background: var(--f-color-bg-2);
+      }
+    }
+
+    &.no-padding {
+      & > [type="text"],
+      & > [type="password"],
+      & > [type="date"],
+      & > [type="datetime"],
+      & > [type="datetime-local"],
+      & > [type="month"],
+      & > [type="week"],
+      & > [type="email"],
+      & > [type="number"],
+      & > [type="search"],
+      & > [type="tel"],
+      & > [type="time"],
+      & > [type="url"],
+      & > [type="color"],
+      & > textarea,
+      & > select,
+      & > .input {
+        border: none;
+        resize: none;
+      }
+
+      & > a {
+        box-sizing: border-box;
+      }
+    }
+
+    @each $size-label, $size in custom-settings.$avatar-sizes {
+      &.#{$size-label} {
+        &:last-child {
+          height: $size;
+        }
+      }
+    }
+  }
+
+  .card-divider {
+    border-top: base.$hr-border;
+
+    &.accordion-content {
+      border-top: base.$hr-border !important;
+    }
+
+    &:first-child {
+      border: none;
+    }
+  }
+}

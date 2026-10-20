@@ -1,3 +1,7 @@
+@use "../global";
+@use "../util/unit";
+@use "text";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -12,15 +16,15 @@ $fieldset-border: 1px solid var(--f-color-border-0) !default;
 
 /// Default padding inside custom fieldsets.
 /// @type Number
-$fieldset-padding: rem-calc(20) !default;
+$fieldset-padding: unit.rem-calc(20) !default;
 
 /// Default margin around custom fieldsets.
 /// @type Number
-$fieldset-margin: rem-calc(18 0) !default;
+$fieldset-margin: unit.rem-calc(18 0) !default;
 
 /// Default padding between the legend text and fieldset border.
 /// @type Number
-$legend-padding: rem-calc(0 3) !default;
+$legend-padding: unit.rem-calc(0 3) !default;
 
 @mixin fieldset {
   margin: $fieldset-margin;
@@ -30,7 +34,7 @@ $legend-padding: rem-calc(0 3) !default;
   legend {
     // Covers up the fieldset's border to create artificial padding
     margin: 0;
-    margin-#{$global-left}: rem-calc(-3);
+    margin-#{global.$global-left}: unit.rem-calc(-3);
     padding: $legend-padding;
   }
 }
@@ -44,7 +48,7 @@ $legend-padding: rem-calc(0 3) !default;
 
   legend {
     max-width: 100%;
-    margin-bottom: $form-spacing * 0.5;
+    margin-bottom: text.$form-spacing * 0.5;
   }
 
   .fieldset {

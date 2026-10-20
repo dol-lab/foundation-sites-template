@@ -1,3 +1,5 @@
+@use "../util/mixins";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -65,7 +67,7 @@ $closebutton-color-hover: var(--f-color-text-0) !default;
 /// @param {Keyword} $size - The size of the close button to use.
 ///
 /// @return {Number} The given number or the value found in the map.
-@function -zf-get-size-val($value, $size) {
+@function zf-get-size-val($value, $size) {
   // Check if the value is a number
   @if meta.type-of($value) == 'number' {
     // If it is, just return the number
@@ -85,10 +87,10 @@ $closebutton-color-hover: var(--f-color-text-0) !default;
   $x: list.nth($closebutton-position, 1);
   $y: list.nth($closebutton-position, 2);
 
-  #{$x}: -zf-get-size-val($closebutton-offset-horizontal, $size);
-  #{$y}: -zf-get-size-val($closebutton-offset-vertical, $size);
-  font-size: -zf-get-size-val($closebutton-size, $size);
-  line-height: -zf-get-size-val($closebutton-lineheight, $size);
+  #{$x}: zf-get-size-val($closebutton-offset-horizontal, $size);
+  #{$y}: zf-get-size-val($closebutton-offset-vertical, $size);
+  font-size: zf-get-size-val($closebutton-size, $size);
+  line-height: zf-get-size-val($closebutton-lineheight, $size);
 }
 
 /// Adds styles for a close button, using the styles in the settings variables.
@@ -101,7 +103,7 @@ $closebutton-color-hover: var(--f-color-text-0) !default;
   color: $closebutton-color;
   cursor: pointer;
 
-  @include disable-mouse-outline;
+  @include mixins.disable-mouse-outline;
 
   &:hover,
   &:focus {

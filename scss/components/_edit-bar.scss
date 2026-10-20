@@ -1,0 +1,9 @@
+// .edit-bar.
+
+@mixin styles {
+  .edit-bar {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+}

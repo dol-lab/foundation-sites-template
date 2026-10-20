@@ -1,3 +1,6 @@
+@use "../util/math";
+@use "grid";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -6,11 +9,24 @@
 /// @group grid
 ////
 
+/// Calculates the width of a column based on a number of factors.
+///
+/// @param {Number|List} $columns
+///   Width of the column. Accepts multiple values:
+///   - A percentage value will make the column that exact size.
+///   - A single digit will make the column span that number of columns wide, taking into account the column count of the parent row.
+///   - A list of the format "x of y" (without quotes) will make a column that is *x* columns wide, assuming *y* total columns for the parent.
+///
+/// @returns {Number} A calculated percentage value.
+@function grid-column($columns) {
+  @return math.fraction-to-percentage($columns, $denominator: grid.$grid-column-count);
+}
+
 /// Set the width of a grid column.
 ///
 /// @param {Number|List} $width [$grid-column-count] - Width to make the column. You can pass in any value accepted by the `grid-column()` function, such as `6`, `50%`, or `1 of 2`.
 @mixin grid-column-size(
-  $columns: $grid-column-count
+  $columns: grid.$grid-column-count
 ) {
   width: grid-column($columns);
 }
@@ -18,7 +34,7 @@
 /// Shorthand for `grid-column-size()`.
 /// @alias grid-column-size
 @mixin grid-col-size(
-  $columns: $grid-column-count
+  $columns: grid.$grid-column-count
 ) {
   @include grid-column-size($columns);
 }

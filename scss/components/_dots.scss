@@ -1,0 +1,61 @@
+@use "../custom-includes/foundation-spaces/global";
+@use "../custom-settings";
+
+// .dots and .add: icon buttons drawn with a pseudo-element.
+
+@mixin styles {
+  .dots,
+  .add {
+    cursor: pointer;
+    z-index: 50;
+    width: custom-settings.$button-height;
+    justify-items: center;
+
+    &::after {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: custom-settings.$button-height;
+      line-height: 0;
+      font-weight: global.$global-weight-bold;
+      font-size: 1.25rem;
+      white-space: nowrap;
+    }
+
+    &.button {
+      &::after {
+        height: 0.5rem;
+      }
+    }
+
+    .button & {
+      margin: -0.5em -0.75em;
+    }
+
+    &.hidden {
+      display: none;
+    }
+
+    &.visible {
+      display: block !important;
+    }
+  }
+
+  .dots {
+    padding-bottom: 0.675rem;
+
+    &::after {
+      content: "...";
+      letter-spacing: 0.03125rem;
+      margin-top: -0.65rem;
+    }
+  }
+
+  .add {
+    &::after {
+      content: "+";
+      height: custom-settings.$button-height;
+    }
+  }
+}

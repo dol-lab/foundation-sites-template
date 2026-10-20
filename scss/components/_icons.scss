@@ -1,0 +1,65 @@
+@use "../custom-includes/s-menu";
+
+// .icons (icon spacing in menus), i.fa, .fa.slash.
+
+@mixin styles {
+  .icons {
+    &.icon-left {
+      i {
+        margin-left: 0;
+        margin-right: 0.5rem;
+      }
+    }
+
+    &.icon-right {
+      i {
+        margin-left: 0.5rem;
+        margin-right: 0;
+      }
+    }
+  }
+
+  i,
+  svg {
+    .icons & {
+      font-size: 0.75rem;
+      width: 1.5em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .icons.icon-left > & {
+      margin-right: s-menu.$menu-icon-spacing;
+    }
+
+    .icons.icon-right > & {
+      margin-left: s-menu.$menu-icon-spacing;
+    }
+  }
+
+  i.fa {
+    font-style: normal;
+  }
+
+  .fa.slash::after,
+  .fas.slash::after {
+    position: absolute;
+    transform: translateX(-90%);
+    content: "\f715";
+    text-shadow: 0 2px var(--f-color-bg-1);
+    animation-duration: 0.3s;
+    animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+    animation-name: clip-top-left-to-bottom-right;
+  }
+
+  @keyframes clip-top-left-to-bottom-right {
+    from {
+      clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+    }
+
+    to {
+      clip-path: polygon(100% 100%, 100% 0%, 0 0, 0% 100%);
+    }
+  }
+}

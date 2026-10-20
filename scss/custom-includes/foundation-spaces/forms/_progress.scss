@@ -1,3 +1,8 @@
+@use "../../../colors";
+@use "../../../custom-functions";
+@use "../global";
+@use "../util/value";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -12,11 +17,11 @@ $progress-height: 1rem !default;
 
 /// Background color of a progress bar.
 /// @type Color
-$progress-background: color-mix-blend(var(--f-color-text-1), 7%, var(--f-color-bg-1), 93%) !default;
+$progress-background: custom-functions.color-mix-blend(var(--f-color-text-1), 7%, var(--f-color-bg-1), 93%) !default;
 
 /// Bottom margin of a progress bar.
 /// @type Number
-$progress-margin-bottom: $global-margin !default;
+$progress-margin-bottom: global.$global-margin !default;
 
 /// Default color of a progress bar's meter.
 /// @type Color
@@ -24,7 +29,7 @@ $progress-meter-background: var(--f-color-brand) !default;
 
 /// Default radius of a progress bar.
 /// @type Number
-$progress-radius: $global-radius !default;
+$progress-radius: global.$global-radius !default;
 
 @mixin foundation-progress-element {
   progress {
@@ -34,7 +39,7 @@ $progress-radius: $global-radius !default;
     margin-bottom: $progress-margin-bottom;
     appearance: none;
 
-    @if has-value($progress-radius) {
+    @if value.has-value($progress-radius) {
       border-radius: $progress-radius;
     }
 
@@ -45,7 +50,7 @@ $progress-radius: $global-radius !default;
     &::-webkit-progress-bar {
       background: $progress-background;
 
-      @if has-value($progress-radius) {
+      @if value.has-value($progress-radius) {
         border-radius: $progress-radius;
       }
     }
@@ -53,7 +58,7 @@ $progress-radius: $global-radius !default;
     &::-webkit-progress-value {
       background: $progress-meter-background;
 
-      @if has-value($progress-radius) {
+      @if value.has-value($progress-radius) {
         border-radius: $progress-radius;
       }
     }
@@ -61,12 +66,12 @@ $progress-radius: $global-radius !default;
     &::-moz-progress-bar {
       background: $progress-meter-background;
 
-      @if has-value($progress-radius) {
+      @if value.has-value($progress-radius) {
         border-radius: $progress-radius;
       }
     }
 
-    @each $name, $color in $foundation-palette {
+    @each $name, $color in colors.$foundation-palette {
       &.#{$name} {
         // Internet Explorer sets the fill with color
         color: $color;
@@ -83,7 +88,7 @@ $progress-radius: $global-radius !default;
 
     // For IE and Edge
     &::-ms-fill { // sass-lint:disable-line no-vendor-prefixes
-      @if has-value($progress-radius) {
+      @if value.has-value($progress-radius) {
         border-radius: $progress-radius;
       }
 

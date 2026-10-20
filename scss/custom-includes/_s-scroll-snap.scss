@@ -1,3 +1,13 @@
+@use "../custom-functions";
+@use "foundation-spaces/global";
+@use "foundation-spaces/grid/grid" as float-grid;
+@use "foundation-spaces/util/breakpoint";
+@use "foundation-spaces/util/math";
+@use "foundation-spaces/util/unit";
+@use "foundation-spaces/xy-grid/cell";
+@use "foundation-spaces/xy-grid/grid";
+@use "foundation-spaces/xy-grid/xy-grid";
+
 @use "sass:list";
 @use "sass:map";
 
@@ -68,49 +78,49 @@
     &::before,
     &::after {
       opacity: 1;
-      transition: opacity $global-transition-medium;
+      transition: opacity global.$global-transition-medium;
     }
   }
 
   &::before,
   &::after {
     opacity: 0;
-    transition: opacity $global-transition-medium;
+    transition: opacity global.$global-transition-medium;
     display: flex;
     position: absolute;
     top: 50%;
 
-    @include cross-browser(transform, translateY(-50%));
+    @include custom-functions.cross-browser(transform, translateY(-50%));
 
-    padding: $global-padding;
+    padding: global.$global-padding;
     background: var(--f-color-text-0);
-    border-radius: $global-radius-small;
-    box-shadow: $global-drop-shadow;
+    border-radius: global.$global-radius-small;
+    box-shadow: global.$global-drop-shadow;
     font-family: "Font Awesome 7 Free";
     font-size: 1rem;
-    font-weight: $global-weight-bold;
+    font-weight: global.$global-weight-bold;
     z-index: 10;
   }
 
   &::before {
     content: "\f104";
-    left: $global-gutter-small;
+    left: global.$global-gutter-small;
   }
 
   &::after {
     content: "\f105";
-    right: $global-gutter-small;
+    right: global.$global-gutter-small;
   }
 }
 
 .scroll-snap-container-x {
-  @include xy-grid($direction: horizontal, $wrap: false);
+  @include grid.xy-grid($direction: horizontal, $wrap: false);
 
   position: relative;
   overflow: auto hidden;
   -webkit-overflow-scrolling: touch;
 
-  @include cross-browser(scroll-snap-type, x mandatory);
+  @include custom-functions.cross-browser(scroll-snap-type, x mandatory);
 
   .scroll-snap-element {
     max-width: 100%;
@@ -131,15 +141,15 @@
   }
 
   &.snap-align-start .scroll-snap-element {
-    @include cross-browser(scroll-snap-align, start);
+    @include custom-functions.cross-browser(scroll-snap-align, start);
   }
 
   &.snap-align-center .scroll-snap-element {
-    @include cross-browser(scroll-snap-align, center);
+    @include custom-functions.cross-browser(scroll-snap-align, center);
   }
 
   &.snap-align-end .scroll-snap-element {
-    @include cross-browser(scroll-snap-align, end);
+    @include custom-functions.cross-browser(scroll-snap-align, end);
   }
 
   &.width-small .scroll-snap-element {
@@ -171,12 +181,12 @@
   }
 }
 
-@each $breakpoint, $width in $breakpoints {
+@each $breakpoint, $width in breakpoint.$breakpoints {
   .#{$breakpoint}-scroll-snap.scroll-snap-container-x {
     display: block;
   }
 
-  @include breakpoint(#{$breakpoint} up) {
+  @include breakpoint.breakpoint(#{$breakpoint} up) {
     .scroll-snap-container-x {
       &.#{$breakpoint}-scroll-snap {
         display: flex;
@@ -191,9 +201,9 @@
     }
   }
 
-  @include breakpoint(#{$breakpoint}) {
+  @include breakpoint.breakpoint(#{$breakpoint}) {
     .scroll-snap-element {
-      @include xy-cell-gutters(
+      @include cell.xy-cell-gutters(
         $gutter-type: padding,
         $gutter-position: top right bottom left,
         $breakpoint: #{$breakpoint}
@@ -214,21 +224,21 @@
     $breakpoint-fallback: ();
 
     // loop through each breakpoint-list-item.
-    @each $breakpoint, $width in $breakpoints {
-      $index: list.index(($breakpoints), ($breakpoint $width));
+    @each $breakpoint, $width in breakpoint.$breakpoints {
+      $index: list.index((breakpoint.$breakpoints), ($breakpoint $width));
 
       @if $index == 1 {
         $breakpoint-fallback: list.append($breakpoint-fallback, $breakpoint);
       }
 
       // set up media-query.
-      @include breakpoint($breakpoint) {
+      @include breakpoint.breakpoint($breakpoint) {
         // loop through all possible column counts.
-        @for $i from 1 through $grid-column-count {
+        @for $i from 1 through float-grid.$grid-column-count {
           // set gutter width
-          $grid-margin-gutter: map.get($grid-margin-gutters, #{$breakpoint});
+          $grid-margin-gutter: map.get(xy-grid.$grid-margin-gutters, #{$breakpoint});
           $grid-container-gutter: map.get(
-            $grid-container-padding,
+            xy-grid.$grid-container-padding,
             #{$breakpoint}
           );
 
@@ -241,19 +251,19 @@
 						* reference width from 100vw to the grid-container.
 						*/
             @if (
-              strip-unit(rem-calc(strip-unit($width))) >= strip-unit($grid-container)
+              math.strip-unit(unit.rem-calc(math.strip-unit($width))) >= math.strip-unit(xy-grid.$grid-container)
             ) {
               @if $widescreen-breakpoint == "" {
                 $widescreen-breakpoint: $breakpoint;
               }
 
-              $container-width: $grid-container;
+              $container-width: xy-grid.$grid-container;
             }
 
             // This is where the magic happens.
             width: calc(
               (#{$container-width} - #{$grid-container-gutter}) /
-                (#{$grid-column-count} / #{$i}) -
+                (#{float-grid.$grid-column-count} / #{$i}) -
                 #{$grid-margin-gutter}
             );
           }
@@ -265,12 +275,12 @@
   }
 
   .grid-container & {
-    @each $breakpoint, $width in $breakpoints {
-      @include breakpoint($breakpoint) {
-        $gutter: map.get($grid-container-padding, #{$breakpoint});
+    @each $breakpoint, $width in breakpoint.$breakpoints {
+      @include breakpoint.breakpoint($breakpoint) {
+        $gutter: map.get(xy-grid.$grid-container-padding, #{$breakpoint});
         $gutter-padding: calc(#{$gutter} / 4);
         $grid-padding: calc(
-          50vw - (#{$grid-container} / 2) + #{$gutter-padding}
+          50vw - (#{xy-grid.$grid-container} / 2) + #{$gutter-padding}
         );
 
         width: calc(100% + #{$gutter});
@@ -288,7 +298,7 @@
             height: 10px;
           }
 
-          @media screen and (max-width: #{$grid-container}) {
+          @media screen and (max-width: #{xy-grid.$grid-container}) {
             padding-left: $gutter-padding;
 
             &::after {

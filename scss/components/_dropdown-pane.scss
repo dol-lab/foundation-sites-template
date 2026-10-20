@@ -1,0 +1,33 @@
+@use "../custom-includes/foundation-spaces/forms/label";
+@use "../custom-includes/foundation-spaces/global";
+
+// .dropdown-pane and .popover.
+
+@mixin styles {
+  .dropdown-pane,
+  .popover {
+    max-width: 100%;
+    box-shadow: global.$global-drop-shadow;
+    background-color: var(--f-color-bg-1);
+    min-width: 200px;
+    &,
+    & li {
+      font-size: label.$form-label-font-size; //$small-font-size;
+    }
+
+    &.is-open {
+      z-index: 2000;
+    }
+
+    .card-divider,
+    .card-section {
+      & > a,
+      & > * > a,
+      button {
+        cursor: pointer;
+        line-height: 1rem;
+        box-sizing: content-box;
+      }
+    }
+  }
+}

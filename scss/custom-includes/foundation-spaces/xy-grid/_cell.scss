@@ -1,3 +1,11 @@
+@use "../functions/remove";
+@use "../util/breakpoint";
+@use "../util/math";
+@use "../util/mixins";
+@use "../util/unit";
+@use "gutters";
+@use "xy-grid";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -20,7 +28,7 @@
     @return 1 1 0;
   } @else if $size == 'grow' {
     @return 1 0 auto;
-  } @else if $size == 'shrink' or $size == 'full' or zf-is-fraction($size, $allow-no-denominator: true) {
+  } @else if $size == 'shrink' or $size == 'full' or math.zf-is-fraction($size, $allow-no-denominator: true) {
     @return 0 0 auto;
   }
 
@@ -34,7 +42,7 @@
 ///
 /// @returns {Number|Map} The cell gutter size or the responsive gutters map.
 @function xy-cell-gutters(
-  $gutters: $grid-margin-gutters,
+  $gutters: xy-grid.$grid-margin-gutters,
   $breakpoint: null
 ) {
   // For `auto`, returns the responsive map `$gutters`.
@@ -43,12 +51,12 @@
   }
 
   // Use the contextual breakpoint by default.
-  $breakpoint: -zf-current-breakpoint($breakpoint);
+  $breakpoint: breakpoint.zf-current-breakpoint($breakpoint);
 
   @if $breakpoint {
-    @return -zf-get-bp-val($gutters, $breakpoint);
+    @return breakpoint.zf-get-bp-val($gutters, $breakpoint);
   } @else {
-    @return -zf-get-bp-val($gutters, $-zf-zero-breakpoint) or 0;
+    @return breakpoint.zf-get-bp-val($gutters, breakpoint.$zf-zero-breakpoint) or 0;
   }
 }
 
@@ -58,9 +66,9 @@
 ///
 /// @returns {Number} Size of the cell (in percent).
 @function xy-cell-size(
-  $size: $grid-columns
+  $size: xy-grid.$grid-columns
 ) {
-  @return fraction-to-percentage($size, $denominator: $grid-columns);
+  @return math.fraction-to-percentage($size, $denominator: xy-grid.$grid-columns);
 }
 
 /// Returns the appropriate CSS value for a cell size.
@@ -75,7 +83,7 @@
 /// @returns {Number|String|Map} The cell sizing property value, or a responsive map of them.
 @function xy-cell-size-css(
   $size: full,
-  $gutters: $grid-margin-gutters,
+  $gutters: xy-grid.$grid-margin-gutters,
   $gutter-type: margin,
   $breakpoint: null
 ) {
@@ -103,7 +111,7 @@
     $responsive-css-sizes: ();
 
     @each $bp, $mg in $margin-gutter {
-      $mgc: rem-calc($mg);
+      $mgc: unit.rem-calc($mg);
 
       @if $mgc == 0 {
         // sass-lint:disable zero-unit
@@ -120,7 +128,7 @@
   // Otherwise, return a single CSS size.
   @else {
     // Make sure that 0 is translated in 0rem for calc()
-    $mgc: rem-calc($margin-gutter);
+    $mgc: unit.rem-calc($margin-gutter);
 
     @if $mgc == 0 {
       // sass-lint:disable zero-unit
@@ -169,7 +177,7 @@
 /// @param {Boolean} $vertical [false] - Set to true to output vertical (height) styles rather than widths.
 @mixin xy-cell-size(
   $size: full,
-  $gutters: $grid-margin-gutters,
+  $gutters: xy-grid.$grid-margin-gutters,
   $gutter-type: margin,
   $breakpoint: null,
   $vertical: false
@@ -178,8 +186,8 @@
   $direction: if($vertical == true, height, width);
 
   @if meta.type-of($sizes) == 'map' {
-    @include -zf-breakpoint-value(auto, $sizes) {
-      #{$direction}: $-zf-bp-value;
+    @include mixins.zf-breakpoint-value(auto, $sizes) {
+      #{$direction}: mixins.$zf-bp-value;
     }
   } @else {
     #{$direction}: $sizes;
@@ -194,7 +202,7 @@
 /// @param {String} $breakpoint [null] - The name of the breakpoint size in your gutters map to get the size from. If `auto`, generates responsive gutters. If using with the `breakpoint()` mixin this will be set automatically unless manually entered.
 /// @param {Boolean} $vertical [false] - Direction of the gutters to output. See `$gutter-position`.
 @mixin xy-cell-gutters(
-  $gutters: $grid-margin-gutters,
+  $gutters: xy-grid.$grid-margin-gutters,
   $gutter-type: margin,
   $gutter-position: null,
   $breakpoint: null,
@@ -213,7 +221,7 @@
   }
 
   @if $gutter-type and $gutter-type != none {
-    @include xy-gutters($gutter-width, $gutter-type, $gutter-position);
+    @include gutters.xy-gutters($gutter-width, $gutter-type, $gutter-position);
   }
 }
 
@@ -230,7 +238,7 @@
 @mixin xy-cell(
   $size: full,
   $gutter-output: null,
-  $gutters: $grid-margin-gutters,
+  $gutters: xy-grid.$grid-margin-gutters,
   $gutter-type: margin,
   $gutter-position: null,
   $breakpoint: null,
@@ -242,7 +250,7 @@
     @warn 'xy-cell: $gutter-output is deprecated and will be removed. See migration notes at https://git.io/foundation-6-6-0';
 
     @if $gutter-output == false {
-      $output: sl-remove($output, gutters);
+      $output: remove.sl-remove($output, gutters);
     }
   }
 
@@ -276,21 +284,21 @@
 @mixin xy-cell-static(
   $size: full,
   $gutter-output: true,
-  $gutters: $grid-margin-gutters,
+  $gutters: xy-grid.$grid-margin-gutters,
   $gutter-type: margin,
-  $breakpoint: $-zf-zero-breakpoint,
+  $breakpoint: breakpoint.$zf-zero-breakpoint,
   $vertical: false
 ) {
   @warn 'xy-cell-static() mixin is deprecated and will be removed. Use "xy-cell()" instead. See migration notes at https://git.io/foundation-6-6-0';
 
-  $gutter: -zf-get-bp-val($gutters, $breakpoint);
+  $gutter: breakpoint.zf-get-bp-val($gutters, $breakpoint);
   $gutter-position: if($vertical == true, top bottom, left right);
   $-gutter-output: if($gutter-type == 'margin', true, $gutter-output);
   $-gutter-margin: if($gutter-type == 'margin', $gutter, 0);
 
-  @include -xy-cell-properties($size, $-gutter-margin, $vertical);
+  @include xy-cell-properties($size, $-gutter-margin, $vertical);
 
   @if $-gutter-output {
-    @include xy-gutters($gutter, $gutter-type, $gutter-position);
+    @include gutters.xy-gutters($gutter, $gutter-type, $gutter-position);
   }
 }

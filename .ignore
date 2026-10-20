@@ -1,0 +1,7 @@
+# Kept out of ripgrep-based searches (editors, coding agents). Tracked or not, these are generated or binary.
+css/
+*.map
+index.html
+bun.lock
+assets/
+fonts/

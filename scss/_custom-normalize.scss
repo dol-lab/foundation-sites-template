@@ -1,11 +1,14 @@
 /// Custom CSS Reset
 
-@import "custom-includes/foundation-spaces/normalize/normalize";
-@include foundation-normalize;
+@use "custom-includes/foundation-spaces/normalize/normalize";
+@use "custom-includes/foundation-spaces/global";
+@use "custom-includes/foundation-spaces/util/breakpoint";
+
+@include normalize.foundation-normalize;
 
 // These styles are applied to a <meta> tag, which is read by the Foundation JavaScript
 .foundation-mq {
-  font-family: "#{-zf-bp-serialize($breakpoints)}";
+  font-family: "#{breakpoint.zf-bp-serialize(breakpoint.$breakpoints)}";
 }
 
 // Who owns the box model, and who inherits it. app-backend.scss narrows both
@@ -16,7 +19,7 @@ $box-sizing-all: "*" !default;
 
 #{$box-sizing-root} {
   box-sizing: border-box;
-  font-size: $global-font-size;
+  font-size: global.$global-font-size;
 }
 
 #{$box-sizing-all},

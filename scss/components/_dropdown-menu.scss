@@ -1,0 +1,54 @@
+@use "../custom-includes/foundation-spaces/util/breakpoint";
+
+// .dropdown.menu.
+
+@mixin styles {
+  .dropdown {
+    & > li > a {
+      display: flex;
+      align-items: center;
+      height: 48px;
+      box-sizing: border-box;
+    }
+
+    &.menu {
+      & > li {
+        img.avatar {
+          padding: 0;
+        }
+
+        &.no-padding > a,
+        & > a.no-padding {
+          padding: 0 !important;
+        }
+
+        & > a {
+          @include breakpoint.breakpoint(medium down) {
+            padding: 0.5rem;
+          }
+        }
+
+        &.is-dropdown-submenu-parent {
+          .is-dropdown-submenu {
+            background-color: var(--f-color-bg-1);
+          }
+        }
+
+        &.is-dropdown-submenu-parent > a {
+          &::after {
+            @extend .caret;
+
+            margin-right: 0.75rem;
+            line-height: 0.75;
+          }
+        }
+
+        &.is-dropdown-submenu-parent:not(.no-arrow) > a {
+          @include breakpoint.breakpoint(medium down) {
+            padding-right: 1.25rem;
+          }
+        }
+      }
+    }
+  }
+}

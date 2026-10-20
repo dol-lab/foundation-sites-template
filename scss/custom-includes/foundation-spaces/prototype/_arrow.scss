@@ -1,3 +1,5 @@
+@use "../util/mixins";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -26,7 +28,7 @@ $prototype-arrow-color: var(--f-color-text-0) !default;
 @mixin foundation-prototype-arrow {
   @each $prototype-arrow-direction in $prototype-arrow-directions {
     .arrow-#{$prototype-arrow-direction} {
-      @include css-triangle(
+      @include mixins.css-triangle(
         $prototype-arrow-size, 
         $prototype-arrow-color, 
         $prototype-arrow-direction

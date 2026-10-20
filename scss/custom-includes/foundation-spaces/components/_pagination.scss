@@ -1,3 +1,9 @@
+@use "../../../custom-functions";
+@use "../global";
+@use "../util/breakpoint";
+@use "../util/mixins";
+@use "../util/unit";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -8,7 +14,7 @@
 
 /// Font size of pagination items.
 /// @type Number
-$pagination-font-size: rem-calc(14) !default;
+$pagination-font-size: unit.rem-calc(14) !default;
 
 /// Default bottom margin of the pagination object.
 /// @type Number
@@ -20,7 +26,7 @@ $pagination-item-color: var(--f-color-text-1) !default;
 
 /// Padding inside of pagination items.
 /// @type Number
-$pagination-item-padding: rem-calc(3 10) !default;
+$pagination-item-padding: unit.rem-calc(3 10) !default;
 
 /// Right margin to separate pagination items.
 /// @type Number
@@ -28,7 +34,7 @@ $pagination-item-spacing: 0.125rem !default;
 
 /// Default radius for pagination items.
 /// @type Number
-$pagination-radius: $global-radius !default;
+$pagination-radius: global.$global-radius !default;
 
 /// Background color of pagination items on hover.
 /// @type Color
@@ -44,7 +50,7 @@ $pagination-item-color-current: var(--f-color-text-0) !default;
 
 /// Text color of a disabled pagination item.
 /// @type Color
-$pagination-item-color-disabled: color-mix-opacity(var(--f-color-text-1), 50%, 50%) !default;
+$pagination-item-color-disabled: custom-functions.color-mix-opacity(var(--f-color-text-1), 50%, 50%) !default;
 
 /// Color of the ellipsis in a pagination menu.
 /// @type Color
@@ -83,14 +89,14 @@ $pagination-arrow-next: '\00BB' !default;
   $padding: $pagination-item-padding,
   $background-hover: $pagination-item-background-hover
 ) {
-  margin-#{$global-left}: 0;
+  margin-#{global.$global-left}: 0;
   margin-bottom: $margin-bottom;
 
-  @include clearfix;
+  @include mixins.clearfix;
 
   // List item
   li {
-    margin-#{$global-right}: $spacing;
+    margin-#{global.$global-right}: $spacing;
     border-radius: $radius;
     font-size: $font-size;
 
@@ -110,7 +116,7 @@ $pagination-arrow-next: '\00BB' !default;
         }
       }
 
-      @include breakpoint(medium) {
+      @include breakpoint.breakpoint(medium) {
         display: inline-block;
       }
     }
@@ -187,14 +193,14 @@ $pagination-arrow-next: '\00BB' !default;
     .pagination-previous a::before,
     .pagination-previous.disabled::before {
       display: inline-block;
-      margin-#{$global-right}: 0.5rem;
+      margin-#{global.$global-right}: 0.5rem;
       content: $pagination-arrow-previous;
     }
 
     .pagination-next a::after,
     .pagination-next.disabled::after {
       display: inline-block;
-      margin-#{$global-left}: 0.5rem;
+      margin-#{global.$global-left}: 0.5rem;
       content: $pagination-arrow-next;
     }
   }

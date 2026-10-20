@@ -1,186 +1,123 @@
+@use "../custom-functions";
+@use "../custom-includes/foundation-spaces/global";
+@use "../custom-settings";
+
 // 21. Spinner
 // ---------
 
-.spinner {
-  border: 2px solid color-mix-opacity(var(--f-color-text-0), 83%, 17%);
-  border-radius: 50%;
-  border-top: 2px solid var(--f-palette--primary);
-  animation: spin 0.875s infinite cubic-bezier(0.9, 0.3, 0.3, 0.7);
-  width: 1.5rem;
-  height: 1.5rem;
+@mixin styles {
+  .spinner {
+    border: 2px solid custom-functions.color-mix-opacity(var(--f-color-text-0), 83%, 17%);
+    border-radius: 50%;
+    border-top: 2px solid var(--f-palette--primary);
+    animation: spin 0.875s infinite cubic-bezier(0.9, 0.3, 0.3, 0.7);
+    width: 1.5rem;
+    height: 1.5rem;
 
-  @each $size-name, $size in $spinner-sizes {
-    &.#{$size-name} {
-      width: $size;
-      height: $size;
+    @each $size-name, $size in custom-settings.$spinner-sizes {
+      &.#{$size-name} {
+        width: $size;
+        height: $size;
+      }
+    }
+
+    &.quick {
+      animation-duration: 0.5s;
+    }
+
+    &.slow {
+      animation-duration: 1.5s;
     }
   }
 
-  &.quick {
-    animation-duration: 0.5s;
+  @keyframes spin {
+    0% {
+      transform: rotate(-20deg);
+    }
+
+    100% {
+      transform: rotate(340deg);
+    }
   }
 
-  &.slow {
-    animation-duration: 1.5s;
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(-20deg);
+  // Draws the eye to something that just changed or wants an answer.
+  .pulse {
+    animation: pulse-animation 1.2s infinite ease-in-out;
+    animation-direction: alternate-reverse;
   }
 
-  100% {
-    transform: rotate(340deg);
-  }
-}
+  @keyframes pulse-animation {
+    0% {
+      opacity: 1;
+      scale: 1;
+      box-shadow: 0 0 0 0 custom-functions.color-mix-opacity(var(--f-color-text-0), 10%, 90%);
+    }
 
-// Draws the eye to something that just changed or wants an answer.
-.pulse {
-  animation: pulse-animation 1.2s infinite ease-in-out;
-  animation-direction: alternate-reverse;
-}
-
-@keyframes pulse-animation {
-  0% {
-    opacity: 1;
-    scale: 1;
-    box-shadow: 0 0 0 0 color-mix-opacity(var(--f-color-text-0), 10%, 90%);
+    100% {
+      opacity: 0.75;
+      scale: 0.95;
+      box-shadow: 0 0 0 6px transparent;
+    }
   }
 
-  100% {
-    opacity: 0.75;
-    scale: 0.95;
-    box-shadow: 0 0 0 6px transparent;
+  // 28. Swiper
+  // ---------
+  // (No custom swiper styles in the original file)
+
+  // 29. Keyboard focus
+  // ---------
+
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    @include custom-functions.a11y-focus;
   }
-}
 
-// 28. Swiper
-// ---------
-// (No custom swiper styles in the original file)
-
-// 29. Keyboard focus
-// ---------
-
-a,
-button,
-input,
-select,
-textarea {
-  @include a11y-focus;
-}
-
-:focus-visible {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-  @include a11y-focus-inset;
-}
-
-// Main menu
-.dropdown.menu > li > a {
-  // Fix cut off shadows
-  background-color: inherit;
-}
-
-.menu-main-expand .create-space-button,
-.menu-main-expand .tabs-title a {
-  [data-whatintent="keyboard"] &:active,
-  [data-whatintent="keyboard"] &:focus {
-    @include a11y-focus-inset;
+  :focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    @include custom-functions.a11y-focus-inset;
   }
-}
 
-.space-card:has(:focus-visible) {
-  box-shadow: $global-focus;
-}
-
-// Tabs
-.tabs-title:has(:focus-visible) {
-  @include a11y-focus-inset;
-}
-
-// Spaces editor
-.spaces-editor-post-title,
-.spaces-editor-container .ck-editor__editable,
-.spaces-editor-dots-dropdown a {
-  [data-whatintent="keyboard"] &:active,
-  [data-whatintent="keyboard"] &:focus {
-    @include a11y-focus-inset;
+  // Main menu
+  .dropdown.menu > li > a {
+    // Fix cut off shadows
+    background-color: inherit;
   }
-}
 
-[data-whatintent="keyboard"] .spaces-editor-dots-dropdown .card-divider:has(:focus-visible) {
-  @include a11y-focus-inset;
-}
-
-// Spaces editor: Community tags
-.spaces-editor-terms .tagify.tagify--focus {
-  [data-whatintent="keyboard"] & {
-    border: 1px solid $global-focus-color;
-
-    @include a11y-focus-inset;
+  // Tabs
+  .tabs-title:has(:focus-visible) {
+    @include custom-functions.a11y-focus-inset;
   }
-}
 
-// Post cards
-.card .post-card-anchor,
-.card .edit-button + button,
-.card .card-divider > a {
-  [data-whatintent="keyboard"] &:active,
-  [data-whatintent="keyboard"] &:focus {
-    @include a11y-focus-inset;
+  // Links that fill a card divider
+  .card .card-divider > a {
+    [data-whatintent="keyboard"] &:active,
+    [data-whatintent="keyboard"] &:focus {
+      @include custom-functions.a11y-focus-inset;
+    }
   }
-}
 
-// Profile page: Edit Profile
-.card .edit-profile {
-  [data-whatintent="keyboard"] &:active,
-  [data-whatintent="keyboard"] &:focus {
-    @include a11y-focus-inset;
+  // Meilensteine
+  .sms-single-toggle-size .caret-icon {
+    [data-whatintent="keyboard"] &:active,
+    [data-whatintent="keyboard"] &:focus {
+      box-shadow: global.$global-focus;
+    }
   }
-}
 
-.card .tagify.tagify--focus {
-  [data-whatintent="keyboard"] & {
-    border: 1px solid $global-focus-color;
-
-    @include a11y-focus-inset;
+  .sms-widget a {
+    box-shadow: unset !important;
   }
-}
 
-// Profile page: Masonary cards
-[data-whatintent="keyboard"] .masonry-item:has(:focus-visible) {
-  box-shadow: $global-focus;
-}
-
-.masonry-item .card-anchor {
-  box-shadow: none !important;
-}
-
-.masonry-item .card button {
-  [data-whatintent="keyboard"] &:active,
-  [data-whatintent="keyboard"] &:focus {
-    box-shadow: inset $global-focus;
+  .sms-options:has(:focus-visible),
+  .sms-single-bottom-container:has(:focus-visible) {
+    box-shadow: global.$global-focus;
   }
-}
 
-// Meilensteine
-.sms-single-toggle-size .caret-icon {
-  [data-whatintent="keyboard"] &:active,
-  [data-whatintent="keyboard"] &:focus {
-    box-shadow: $global-focus;
+  a.sms-single-option:focus {
+    box-shadow: inset global.$global-focus;
   }
-}
-
-.sms-widget a {
-  box-shadow: unset !important;
-}
-
-.sms-options:has(:focus-visible),
-.sms-single-bottom-container:has(:focus-visible) {
-  box-shadow: $global-focus;
-}
-
-a.sms-single-option:focus {
-  box-shadow: inset $global-focus;
 }

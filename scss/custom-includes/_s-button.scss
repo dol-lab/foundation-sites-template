@@ -1,3 +1,10 @@
+@use "../colors";
+@use "../custom-functions";
+@use "foundation-spaces/global";
+@use "foundation-spaces/util/breakpoint";
+@use "foundation-spaces/util/mixins";
+@use "foundation-spaces/util/value";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -53,7 +60,7 @@ $button-color: var(--f-color-bg-0) !default;
 
 /// Border radius for buttons, defaulted to global-radius.
 /// @type Number
-$button-radius: $global-radius !default;
+$button-radius: global.$global-radius !default;
 
 /// Border for buttons, transparent by default
 /// @type List
@@ -65,7 +72,7 @@ $button-hollow-border-width: 1px !default;
 
 /// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, and so on.
 /// @type Map
-$button-palette: $foundation-palette !default;
+$button-palette: colors.$foundation-palette !default;
 
 /// opacity for a disabled button.
 /// @type List
@@ -82,15 +89,15 @@ $button-opacity-disabled: 0.5 !default;
 // $button-hollow-hover-lightness: -50% !default;
 
 // Internal: flip from margin-right to margin-left for defaults
-@if $global-text-direction == "rtl" {
-  $button-margin: 0 0 $global-margin $global-margin !default;
+@if global.$global-text-direction == "rtl" {
+  $button-margin: 0 0 global.$global-margin global.$global-margin !default;
 }
 
 /// transitions for buttons.
 /// @type List
 $button-transition:
-  background-color $global-transition-short $global-transition-timing,
-  color $global-transition-short $global-transition-timing !default;
+  background-color global.$global-transition-short global.$global-transition-timing,
+  color global.$global-transition-short global.$global-transition-timing !default;
 
 /// Additional responsive classes for .expanded
 /// @type Boolean
@@ -114,7 +121,7 @@ $button-responsive-expanded: false !default;
 
   @if meta.type-of($button-padding) == "map" {
     @each $size, $padding in $button-padding {
-      @include breakpoint($size) {
+      @include breakpoint.breakpoint($size) {
         padding: $padding;
       }
     }
@@ -122,7 +129,7 @@ $button-responsive-expanded: false !default;
     padding: $button-padding;
   }
 
-  @include disable-mouse-outline;
+  @include mixins.disable-mouse-outline;
 }
 
 /// Expands a button to make it full-width.
@@ -283,7 +290,7 @@ $button-responsive-expanded: false !default;
     background-color: var(--f-color-#{$name});
 
     // color: color-mix(in oklab, var(--f-color-#{$name}-contrast) 90%, var(--f-color-#{$name}) 10%);
-    @include color-mix(color, var(--f-color-#{$name}-contrast), 90%, var(--f-color-#{$name}), 10%);
+    @include custom-functions.color-mix(color, var(--f-color-#{$name}-contrast), 90%, var(--f-color-#{$name}), 10%);
 
     &:hover,
     &:focus {
@@ -300,8 +307,8 @@ $button-responsive-expanded: false !default;
 
     // color: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
     // background-color: color-mix(in oklab, var(--f-color-#{$name}) 12%, var(--f-color-bg-contrast) 88%);
-    @include color-mix(color, var(--f-color-#{$name}), 10%, var(--f-color-text-0), 80%);
-    @include color-mix(background-color, var(--f-color-#{$name}), 10%, var(--f-color-bg-1), 90%);
+    @include custom-functions.color-mix(color, var(--f-color-#{$name}), 10%, var(--f-color-text-0), 80%);
+    @include custom-functions.color-mix(background-color, var(--f-color-#{$name}), 10%, var(--f-color-bg-1), 90%);
 
     &:hover,
     &:focus {
@@ -311,17 +318,17 @@ $button-responsive-expanded: false !default;
       // color: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
       // background-color: color-mix(in oklab, var(--f-color-#{$name}) 20%, var(--f-color-bg-contrast) 80%);
       // @include color-mix(color, var(--f-color-#{$name}), 75%, var(--f-color-text-0), 25%);
-      @include color-mix(color, var(--f-color-#{$name}), 10%, var(--f-color-text-0), 80%);
-      @include color-mix(background-color, var(--f-color-#{$name}), 25%, var(--f-color-bg-1), 75%);
+      @include custom-functions.color-mix(color, var(--f-color-#{$name}), 10%, var(--f-color-text-0), 80%);
+      @include custom-functions.color-mix(background-color, var(--f-color-#{$name}), 25%, var(--f-color-bg-1), 75%);
     }
   } @else if $fill == clear {
     border-color: transparent;
     background-color: transparent;
-    @include color-mix(color, var(--f-color-#{$name}), 10%, var(--f-color-text-0), 90%);
+    @include custom-functions.color-mix(color, var(--f-color-#{$name}), 10%, var(--f-color-text-0), 90%);
 
     &:hover,
     &:focus {
-      @include color-mix(color, var(--f-color-#{$name}), 5%, var(--f-color-text-0), 95%);
+      @include custom-functions.color-mix(color, var(--f-color-#{$name}), 5%, var(--f-color-text-0), 95%);
     }
   }
 }
@@ -337,15 +344,15 @@ $button-responsive-expanded: false !default;
 /// @param {Number} $size [0.4em] - Size of the arrow. We recommend using an `em` value so the triangle scales when used inside different sizes of buttons.
 /// @param {Color} $color [white] - Color of the arrow.
 /// @param {Number} $offset [$button-padding] - Distance between the arrow and the text of the button. Defaults to whatever the right padding of a button is.
-@mixin button-dropdown($size: 0.4em, $color: inherit, $offset: get-side($button-padding, right)) {
+@mixin button-dropdown($size: 0.4em, $color: inherit, $offset: value.get-side($button-padding, right)) {
   &::after {
-    @include css-triangle($size, $color, down);
+    @include mixins.css-triangle($size, $color, down);
 
     position: relative;
     top: 0.4em; // Aligns the arrow with the text of the button
     display: inline-block;
-    float: #{$global-right};
-    margin-#{$global-left}: $offset;
+    float: #{global.$global-right};
+    margin-#{global.$global-left}: $offset;
   }
 }
 
@@ -387,21 +394,21 @@ $button-responsive-expanded: false !default;
     }
 
     @if $button-responsive-expanded {
-      @each $size in $breakpoint-classes {
-        @include breakpoint(#{$size} only) {
+      @each $size in breakpoint.$breakpoint-classes {
+        @include breakpoint.breakpoint(#{$size} only) {
           &.#{$size}-only-expanded {
             @include button-expand;
           }
         }
 
-        @if $size != $-zf-zero-breakpoint {
-          @include breakpoint(#{$size} down) {
+        @if $size != breakpoint.$zf-zero-breakpoint {
+          @include breakpoint.breakpoint(#{$size} down) {
             &.#{$size}-down-expanded {
               @include button-expand;
             }
           }
 
-          @include breakpoint(#{$size}) {
+          @include breakpoint.breakpoint(#{$size}) {
             &.#{$size}-expanded {
               @include button-expand;
             }
@@ -464,7 +471,7 @@ $button-responsive-expanded: false !default;
     &.arrow-only::after {
       top: -0.1em;
       float: none;
-      margin-#{$global-left}: 0;
+      margin-#{global.$global-left}: 0;
     }
   }
 
@@ -473,6 +480,14 @@ $button-responsive-expanded: false !default;
     &:hover,
     &:focus {
       text-decoration: none;
+    }
+  }
+}
+
+@mixin button-sizes() {
+  @each $size-name, $size in $button-sizes {
+    &.#{$size-name} {
+      font-size: $size;
     }
   }
 }

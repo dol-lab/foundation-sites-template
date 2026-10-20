@@ -1,3 +1,6 @@
+@use "../global";
+@use "../util/mixins";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -40,21 +43,21 @@ $titlebar-icon-spacing: 0.25rem !default;
     background: $titlebar-background;
     color: $titlebar-color;
 
-    @if $global-flexbox {
+    @if global.$global-flexbox {
       display: flex;
       justify-content: flex-start;
       align-items: center;
     } @else {
-      @include clearfix;
+      @include mixins.clearfix;
     }
 
     .menu-icon {
-      margin-#{$global-left}: $titlebar-icon-spacing;
-      margin-#{$global-right}: $titlebar-icon-spacing;
+      margin-#{global.$global-left}: $titlebar-icon-spacing;
+      margin-#{global.$global-right}: $titlebar-icon-spacing;
     }
   }
 
-  @if $global-flexbox {
+  @if global.$global-flexbox {
     .title-bar-left,
     .title-bar-right {
       flex: 1 1 0px; // sass-lint:disable-line zero-unit

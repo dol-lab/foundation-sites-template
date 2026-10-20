@@ -1,0 +1,32 @@
+// .shake: a one-off horizontal shake.
+
+@mixin styles {
+  .shake {
+    animation: shake 0.4s 1 linear;
+  }
+
+  @keyframes shake {
+    8%,
+    41% {
+      transform: translateX(-0.25em);
+    }
+
+    25%,
+    58% {
+      transform: translateX(0.25em);
+    }
+
+    75% {
+      transform: translateX(-0.1em);
+    }
+
+    92% {
+      transform: translateX(0.1em);
+    }
+
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+  }
+}

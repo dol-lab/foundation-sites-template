@@ -1,0 +1,24 @@
+// Middle-dot separators: .dot-list, .dot-list-dot-before, .dot-after.
+
+@mixin styles {
+  .dot-list {
+    & > *:not(:last-child)::after {
+      content: "\00b7";
+      margin: 0 0.5em;
+    }
+  }
+
+  .dot-list-dot-before {
+    & > *:not(:first-child)::before {
+      content: "\00b7";
+      margin: 0 0.5em;
+    }
+  }
+
+  .dot-after {
+    &::after {
+      content: "\00b7";
+      margin: 0 0.5em;
+    }
+  }
+}

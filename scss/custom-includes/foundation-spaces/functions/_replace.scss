@@ -1,3 +1,7 @@
+@use "../helpers/true" as truthy;
+@use "purge";
+@use "to-list";
+
 @use "sass:list";
 
 ///
@@ -39,7 +43,7 @@
 
   }
 
-  $list: if(sl-is-true($value), $list, sl-purge($list));
+  $list: if(truthy.sl-is-true($value), $list, purge.sl-purge($list));
   
-  @return sl-to-list($list);
+  @return to-list.sl-to-list($list);
 }

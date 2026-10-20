@@ -208,3 +208,12 @@
 
   @return $result;
 }
+
+/// Removes the unit (e.g. px, em, rem) from a value, returning the number only.
+///
+/// @param {Number} $num - Number to strip unit from.
+///
+/// @returns {Number} The same number, sans unit.
+@function strip-unit($num) {
+  @return divide($num, $num * 0 + 1);
+}

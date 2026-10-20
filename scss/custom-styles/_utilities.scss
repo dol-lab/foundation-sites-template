@@ -1,332 +1,338 @@
+@use "../custom-includes/foundation-spaces/util/breakpoint";
+@use "../custom-includes/foundation-spaces/xy-grid/xy-grid";
+@use "../custom-settings";
+
 // 19. Utilities
 // ---------
 
 @use "sass:map";
 
-.flex-spacer-left {
-  margin-left: auto;
-}
-
-.flex-spacer-right {
-  margin-right: auto;
-}
-
-.flex-spacer-around {
-  margin-inline: auto;
-}
-
-.width-article {
-  width: 640px;
-}
-
-.no-border {
-  border: 0;
-}
-
-.no-padding {
-  padding: 0;
-
-  & > a {
-    display: flex;
+@mixin styles {
+  .flex-spacer-left {
+    margin-left: auto;
   }
-}
 
-.disabled {
-  opacity: 0.5;
-  pointer-events: none;
-  cursor: not-allowed;
-}
-
-// The element itself is transparent to the mouse, its children are not: a wrapper
-// that lies over something clickable without swallowing its own buttons.
-.click-through {
-  pointer-events: none;
-  user-drag: none;
-  -webkit-user-drag: none;
-
-  & > * {
-    pointer-events: auto;
+  .flex-spacer-right {
+    margin-right: auto;
   }
-}
 
-.show-on-focus-within {
-  position: absolute;
-  left: -9999px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-.show-on-focus-within:focus-within {
-  position: relative;
-  left: auto;
-  width: auto;
-  height: auto;
-  overflow: visible;
-}
-
-// Modern spacing utilities (Tailwind-like)
-// Organized by property specificity (least to most specific)
-// This ensures more specific utilities override less specific ones
-// e.g., pl-1 overrides p-2, pr-2 overrides px-9
-
-// Padding utilities - all sides
-@each $size-number, $size in $spacing-scale {
-  .p-#{$size-number} {
-    padding: $size;
+  .flex-spacer-around {
+    margin-inline: auto;
   }
-}
 
-// Padding utilities - horizontal
-@each $size-number, $size in $spacing-scale {
-  .px-#{$size-number} {
-    padding-inline: $size;
+  .width-article {
+    width: 640px;
   }
-}
 
-// Padding utilities - vertical
-@each $size-number, $size in $spacing-scale {
-  .py-#{$size-number} {
-    padding-block: $size;
+  .no-border {
+    border: 0;
   }
-}
 
-// Padding utilities - top
-@each $size-number, $size in $spacing-scale {
-  .pt-#{$size-number} {
-    padding-block-start: $size;
+  .no-padding {
+    padding: 0;
+
+    & > a {
+      display: flex;
+    }
   }
-}
 
-// Padding utilities - right
-@each $size-number, $size in $spacing-scale {
-  .pr-#{$size-number} {
-    padding-inline-end: $size;
+  .disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
   }
-}
 
-// Padding utilities - bottom
-@each $size-number, $size in $spacing-scale {
-  .pb-#{$size-number} {
-    padding-block-end: $size;
+  // The element itself is transparent to the mouse, its children are not: a wrapper
+  // that lies over something clickable without swallowing its own buttons.
+  .click-through {
+    pointer-events: none;
+    user-drag: none;
+    -webkit-user-drag: none;
+
+    & > * {
+      pointer-events: auto;
+    }
   }
-}
 
-// Padding utilities - left
-@each $size-number, $size in $spacing-scale {
-  .pl-#{$size-number} {
-    padding-inline-start: $size;
+  .show-on-focus-within {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
   }
-}
 
-// Margin utilities - all sides
-@each $size-number, $size in $spacing-scale {
-  .m-#{$size-number} {
-    margin: $size;
+  .show-on-focus-within:focus-within {
+    position: relative;
+    left: auto;
+    width: auto;
+    height: auto;
+    overflow: visible;
   }
-}
 
-// Margin utilities - horizontal
-@each $size-number, $size in $spacing-scale {
-  .mx-#{$size-number} {
-    margin-inline: $size;
+  // Modern spacing utilities (Tailwind-like)
+  // Organized by property specificity (least to most specific)
+  // This ensures more specific utilities override less specific ones
+  // e.g., pl-1 overrides p-2, pr-2 overrides px-9
+
+  // Padding utilities - all sides
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .p-#{$size-number} {
+      padding: $size;
+    }
   }
-}
 
-// Margin utilities - vertical
-@each $size-number, $size in $spacing-scale {
-  .my-#{$size-number} {
-    margin-block: $size;
+  // Padding utilities - horizontal
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .px-#{$size-number} {
+      padding-inline: $size;
+    }
   }
-}
 
-// Margin utilities - top
-@each $size-number, $size in $spacing-scale {
-  .mt-#{$size-number} {
-    margin-block-start: $size;
+  // Padding utilities - vertical
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .py-#{$size-number} {
+      padding-block: $size;
+    }
   }
-}
 
-// Margin utilities - right
-@each $size-number, $size in $spacing-scale {
-  .mr-#{$size-number} {
-    margin-inline-end: $size;
+  // Padding utilities - top
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .pt-#{$size-number} {
+      padding-block-start: $size;
+    }
   }
-}
 
-// Margin utilities - bottom
-@each $size-number, $size in $spacing-scale {
-  .mb-#{$size-number} {
-    margin-block-end: $size;
+  // Padding utilities - right
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .pr-#{$size-number} {
+      padding-inline-end: $size;
+    }
   }
-}
 
-// Margin utilities - left
-@each $size-number, $size in $spacing-scale {
-  .ml-#{$size-number} {
-    margin-inline-start: $size;
+  // Padding utilities - bottom
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .pb-#{$size-number} {
+      padding-block-end: $size;
+    }
   }
-}
 
-// Gap utilities
-@each $size-number, $size in $spacing-scale {
-  .gap-#{$size-number} {
-    gap: $size;
+  // Padding utilities - left
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .pl-#{$size-number} {
+      padding-inline-start: $size;
+    }
   }
-}
 
-// Margin auto utilities
-.m-auto {
-  margin: auto;
-}
-
-.mx-auto {
-  margin-inline: auto;
-}
-
-.my-auto {
-  margin-block: auto;
-}
-
-.mt-auto {
-  margin-block-start: auto;
-}
-
-.mr-auto {
-  margin-inline-end: auto;
-}
-
-.mb-auto {
-  margin-block-end: auto;
-}
-
-.ml-auto {
-  margin-inline-start: auto;
-}
-
-// Legacy special padding sizes
-@each $size-name, $size in $padding-special {
-  .padding-#{$size-name} {
-    padding: $size;
+  // Margin utilities - all sides
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .m-#{$size-number} {
+      margin: $size;
+    }
   }
-}
 
-.gutter {
-  @each $breakpoint, $width in $breakpoints {
-    @include breakpoint(#{$breakpoint} only) {
-      $gutter: map.get($grid-margin-gutters, #{$breakpoint});
+  // Margin utilities - horizontal
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .mx-#{$size-number} {
+      margin-inline: $size;
+    }
+  }
 
-      margin: $gutter !important;
+  // Margin utilities - vertical
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .my-#{$size-number} {
+      margin-block: $size;
+    }
+  }
 
-      &-vertical {
-        margin-block: $gutter !important;
-      }
+  // Margin utilities - top
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .mt-#{$size-number} {
+      margin-block-start: $size;
+    }
+  }
 
-      &-horizontal {
-        margin-inline: $gutter !important;
-      }
+  // Margin utilities - right
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .mr-#{$size-number} {
+      margin-inline-end: $size;
+    }
+  }
 
-      &-left {
-        margin-inline-start: $gutter !important;
-      }
+  // Margin utilities - bottom
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .mb-#{$size-number} {
+      margin-block-end: $size;
+    }
+  }
 
-      &-top {
-        margin-block-start: $gutter !important;
-      }
+  // Margin utilities - left
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .ml-#{$size-number} {
+      margin-inline-start: $size;
+    }
+  }
 
-      &-right {
-        margin-inline-end: $gutter !important;
-      }
+  // Gap utilities
+  @each $size-number, $size in custom-settings.$spacing-scale {
+    .gap-#{$size-number} {
+      gap: $size;
+    }
+  }
 
-      &-bottom {
-        margin-block-end: $gutter !important;
-      }
+  // Margin auto utilities
+  .m-auto {
+    margin: auto;
+  }
 
-      &-padding {
-        padding: $gutter !important;
+  .mx-auto {
+    margin-inline: auto;
+  }
+
+  .my-auto {
+    margin-block: auto;
+  }
+
+  .mt-auto {
+    margin-block-start: auto;
+  }
+
+  .mr-auto {
+    margin-inline-end: auto;
+  }
+
+  .mb-auto {
+    margin-block-end: auto;
+  }
+
+  .ml-auto {
+    margin-inline-start: auto;
+  }
+
+  // Legacy special padding sizes
+  @each $size-name, $size in custom-settings.$padding-special {
+    .padding-#{$size-name} {
+      padding: $size;
+    }
+  }
+
+  .gutter {
+    @each $breakpoint, $width in breakpoint.$breakpoints {
+      @include breakpoint.breakpoint(#{$breakpoint} only) {
+        $gutter: map.get(xy-grid.$grid-margin-gutters, #{$breakpoint});
+
+        margin: $gutter !important;
 
         &-vertical {
-          padding-block: $gutter !important;
+          margin-block: $gutter !important;
         }
 
         &-horizontal {
-          padding-inline: $gutter !important;
+          margin-inline: $gutter !important;
         }
 
         &-left {
-          padding-inline-start: $gutter !important;
+          margin-inline-start: $gutter !important;
         }
 
         &-top {
-          padding-block-start: $gutter !important;
+          margin-block-start: $gutter !important;
         }
 
         &-right {
-          padding-inline-end: $gutter !important;
+          margin-inline-end: $gutter !important;
         }
 
         &-bottom {
           margin-block-end: $gutter !important;
         }
+
+        &-padding {
+          padding: $gutter !important;
+
+          &-vertical {
+            padding-block: $gutter !important;
+          }
+
+          &-horizontal {
+            padding-inline: $gutter !important;
+          }
+
+          &-left {
+            padding-inline-start: $gutter !important;
+          }
+
+          &-top {
+            padding-block-start: $gutter !important;
+          }
+
+          &-right {
+            padding-inline-end: $gutter !important;
+          }
+
+          &-bottom {
+            margin-block-end: $gutter !important;
+          }
+        }
       }
     }
   }
-}
 
-.flex {
-  display: flex !important;
-}
+  .flex {
+    display: flex !important;
+  }
 
-.flex-justify-between {
-  justify-content: space-between;
-}
+  .flex-justify-between {
+    justify-content: space-between;
+  }
 
-.flex-align-center {
-  align-items: center;
-}
+  .flex-align-center {
+    align-items: center;
+  }
 
-.align-flex-start {
-  justify-content: flex-start;
-}
+  .align-flex-start {
+    justify-content: flex-start;
+  }
 
-.align-flex-end {
-  justify-content: flex-end;
-}
+  .align-flex-end {
+    justify-content: flex-end;
+  }
 
-.flex-wrap {
-  flex-wrap: wrap;
-}
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
 
-.flex-nowrap {
-  flex-wrap: nowrap;
-}
+  .flex-nowrap {
+    flex-wrap: nowrap;
+  }
 
-.flex-grow-1 {
-  flex-grow: 1;
-}
+  .flex-grow-1 {
+    flex-grow: 1;
+  }
 
-.flex-grow-0 {
-  flex-grow: 0;
-}
+  .flex-grow-0 {
+    flex-grow: 0;
+  }
 
-.flex-shrink-1 {
-  flex-shrink: 1;
-}
+  .flex-shrink-1 {
+    flex-shrink: 1;
+  }
 
-.flex-shrink-0 {
-  flex-shrink: 0;
-}
+  .flex-shrink-0 {
+    flex-shrink: 0;
+  }
 
-.rounded {
-  border-radius: var(--f-radius);
-}
-.rounded-small {
-  border-radius: var(--f-radius-small);
-}
-.rounded-none {
-  border-radius: 0;
-}
-.rounded-full {
-  border-radius: 9999px;
+  .rounded {
+    border-radius: var(--f-radius);
+  }
+  .rounded-small {
+    border-radius: var(--f-radius-small);
+  }
+  .rounded-none {
+    border-radius: 0;
+  }
+  .rounded-full {
+    border-radius: 9999px;
+  }
 }

@@ -1,0 +1,13 @@
+// .label-wrapper: a control and its label in one row.
+
+@mixin styles {
+  .label-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    & > *:first-child {
+      margin-right: 0.5rem;
+    }
+  }
+}

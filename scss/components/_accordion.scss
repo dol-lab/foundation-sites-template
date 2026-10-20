@@ -1,0 +1,29 @@
+@use "../custom-functions";
+@use "../custom-includes/foundation-spaces/components/card";
+
+// .accordion.
+
+@mixin styles {
+  .accordion {
+    .accordion-item {
+      position: relative;
+
+      &:first-child:last-child > :first-child {
+        word-break: break-word;
+
+        @include custom-functions.cross-browser(hyphens, auto);
+
+        &[aria-expanded="false"] {
+          border-radius: card.$card-border-radius;
+        }
+      }
+    }
+  }
+
+  .card > .accordion {
+
+    .accordion-content {
+      border: none;
+    }
+  }
+}

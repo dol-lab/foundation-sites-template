@@ -1,3 +1,6 @@
+@use "../colors";
+@use "foundation-spaces/global";
+
 // COPY & ADAPTATION OF _labels.scss by Foundation
 //
 // Foundation for Sites
@@ -10,7 +13,7 @@
 
 /// Default font size for labels.
 /// @type Number
-$label-font-size: $paragraph-font-size !default;
+$label-font-size: global.$paragraph-font-size !default;
 
 /// Default padding inside labels.
 /// @type Number
@@ -18,11 +21,11 @@ $label-padding: 0.5rem 0.75rem !default;
 
 /// Default radius of labels.
 /// @type Number
-$label-radius: $global-radius !default;
+$label-radius: global.$global-radius !default;
 
 /// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, etc.
 /// @type Map
-$label-palette: $foundation-palette !default;
+$label-palette: colors.$foundation-palette !default;
 
 /// Base value for label background
 $label-background-default: var(--f-color-text-1) !default;

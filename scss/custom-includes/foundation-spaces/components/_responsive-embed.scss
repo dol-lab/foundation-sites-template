@@ -1,3 +1,7 @@
+@use "../global";
+@use "../util/math";
+@use "../util/unit";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -11,7 +15,7 @@
 
 /// Margin below a responsive embed container.
 /// @type Number
-$responsive-embed-margin-bottom: rem-calc(16) !default;
+$responsive-embed-margin-bottom: unit.rem-calc(16) !default;
 
 /// Aspect ratios used to determine padding-bottom of responsive embed containers.
 /// @type Map
@@ -30,7 +34,7 @@ $responsive-embed-ratios: (
   position: relative;
   height: 0;
   margin-bottom: $responsive-embed-margin-bottom;
-  padding-bottom: ratio-to-percentage($ratio);
+  padding-bottom: math.ratio-to-percentage($ratio);
   overflow: hidden;
 
   iframe,
@@ -39,7 +43,7 @@ $responsive-embed-ratios: (
   video {
     position: absolute;
     top: 0;
-    #{$global-left}: 0;
+    #{global.$global-left}: 0;
     width: 100%;
     height: 100%;
   }
@@ -54,7 +58,7 @@ $responsive-embed-ratios: (
 
     @each $name, $ratio in $ratios {
       &.#{$name} {
-        padding-bottom: ratio-to-percentage($ratio);
+        padding-bottom: math.ratio-to-percentage($ratio);
       }
     }
   }

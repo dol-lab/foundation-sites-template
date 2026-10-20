@@ -1,3 +1,10 @@
+@use "colors";
+@use "custom-includes/foundation-spaces/global";
+@use "custom-includes/foundation-spaces/typography/base";
+@use "custom-includes/foundation-spaces/util/breakpoint";
+@use "custom-includes/foundation-spaces/util/unit";
+@use "custom-includes/foundation-spaces/util/value";
+
 /* ==============================================================================
   Custom Utilities — SCSS Helpers and Mixins
   ------------------------------------------------------------------------------
@@ -8,7 +15,6 @@
   03. Mixin:    color-mix
   04. Mixin:    cross-browser
   05. Mixin:    foundation-palette
-  06. Mixin:    button-sizes
   08. Mixin:    header-style
   09. Mixin:    header-list
   10. Function: strip-unit
@@ -155,7 +161,7 @@
 ///
 
 @mixin foundation-palette($selector: "&", $child: "", $property: "color", $hover: "true") {
-  @each $color-name, $color in $foundation-palette {
+  @each $color-name, $color in colors.$foundation-palette {
     #{$selector}.#{$color-name} #{$child} {
       #{$property}: var(--f-color-#{$color-name});
 
@@ -172,23 +178,12 @@
   }
 }
 
-/* ==============================================================================
-  06 - button-sizes Mixin
-============================================================================== */
-
 ////
 /// Emits size variants for buttons based on `$button-sizes`.
 ///
 /// @requires $button-sizes
 ///
 
-@mixin button-sizes() {
-  @each $size-name, $size in $button-sizes {
-    &.#{$size-name} {
-      font-size: $size;
-    }
-  }
-}
 
 /* ==============================================================================
   08 - header-style Mixin
@@ -207,9 +202,9 @@
 ///
 
 @mixin header-style($header-size, $property: ("font-size", "margin-bottom")) {
-  @each $breakpoint, $header-style in $header-styles {
-    @include breakpoint($breakpoint) {
-      $size: rem-calc(map-deep-get($header-styles, $breakpoint, $header-size, font-size));
+  @each $breakpoint, $header-style in base.$header-styles {
+    @include breakpoint.breakpoint($breakpoint) {
+      $size: unit.rem-calc(value.map-deep-get(base.$header-styles, $breakpoint, $header-size, font-size));
 
       @each $property, $value in $property {
         #{$property}: $size;
@@ -245,15 +240,15 @@
   $property-list: null
 ) {
   @each $breakpoint in ("small", "medium", "large") {
-    @include breakpoint($breakpoint) {
-      @each $header-size, $properties in map.get($header-styles, $breakpoint) {
+    @include breakpoint.breakpoint($breakpoint) {
+      @each $header-size, $properties in map.get(base.$header-styles, $breakpoint) {
         $h: map.get($scale, $header-size); // h1 -> h3
-        $size: map.get(map.get($header-styles, $breakpoint), $h); // small -> ()
+        $size: map.get(map.get(base.$header-styles, $breakpoint), $h); // small -> ()
         #{$header-size} {
           @each $label, $value in $size {
             @if $property-list == null or list.index($property-list, $label) {
               @if $label == "font-size" {
-                $value: rem-calc($value);
+                $value: unit.rem-calc($value);
               }
 
               #{$label}: $value;
@@ -444,7 +439,7 @@
   // 2. Apply styles ONLY for keyboard/assistive technology navigation
   &:focus-visible {
     // Visual style (The glow/shadow you want)
-    box-shadow: $global-focus;
+    box-shadow: global.$global-focus;
   }
 }
 
@@ -456,7 +451,7 @@
 @mixin a11y-focus-inset {
   outline: 2px solid transparent;
   outline-offset: 0px;
-  box-shadow: inset $global-focus;
+  box-shadow: inset global.$global-focus;
 }
 
 /**
@@ -468,11 +463,11 @@
 
   // Configure palettes based on the theme mode.
   $neutral-index: if($mode == "light", 1, 2);
-  $palette: if($mode == "light", $foundation-palette, $foundation-palette-darktheme);
-  $contrast-palette: if($mode == "light", $foundation-palette-contrast, $foundation-palette-darktheme-contrast);
+  $palette: if($mode == "light", colors.$foundation-palette, colors.$foundation-palette-darktheme);
+  $contrast-palette: if($mode == "light", colors.$foundation-palette-contrast, colors.$foundation-palette-darktheme-contrast);
 
   // Apply neutral color scale.
-  @each $step, $pair in $neutral-palette {
+  @each $step, $pair in colors.$neutral-palette {
     --f-color-neutral-#{$step}: #{list.nth($pair, $neutral-index)};
   }
 
@@ -487,8 +482,8 @@
 
   // Apply mode-specific variables.
   @if $mode == "light" {
-    --f-color-brand: var(--f-color-brand-base, #{map.get($foundation-palette, "brand")});
-    --f-color-brand-contrast: var(--f-color-brand-base-contrast, #{map.get($foundation-palette-contrast, "brand")});
+    --f-color-brand: var(--f-color-brand-base, #{map.get(colors.$foundation-palette, "brand")});
+    --f-color-brand-contrast: var(--f-color-brand-base-contrast, #{map.get(colors.$foundation-palette-contrast, "brand")});
     --f-color-bg-0: var(--f-color-neutral-300); // body background
     --f-color-bg-1: var(--f-color-neutral-100); // card and widget background
     --f-color-bg-1-base: var(--f-color-neutral-100); // not affected by color-theming
@@ -500,12 +495,12 @@
     --f-drop-shadow-large: 0 14px 28px rgba(0, 0, 0, 0.3), 0 10px 10px rgba(0, 0, 0, 0.3);
     --f-color-brand: color-mix(
       in oklab,
-      var(--f-color-brand-base, #{map.get($foundation-palette, "brand")}) 87%,
+      var(--f-color-brand-base, #{map.get(colors.$foundation-palette, "brand")}) 87%,
       white 13%
     );
     --f-color-brand-contrast: color-mix(
       in oklab,
-      var(--f-color-brand-contast, #{map.get($foundation-palette-contrast, "brand")}) 87%,
+      var(--f-color-brand-contast, #{map.get(colors.$foundation-palette-contrast, "brand")}) 87%,
       white 13%
     );
     --f-color-bg-0: var(--f-color-neutral-100); // body background
@@ -524,7 +519,7 @@
 
   // The 'darker' variant calculation is the same for all themes.
   // It loops through the base palette to generate a rule for each color name.
-  @each $color-name, $color in $foundation-palette {
+  @each $color-name, $color in colors.$foundation-palette {
     --f-color-#{$color-name}-darker: var(--f-color-#{$color-name});
     --f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
   }

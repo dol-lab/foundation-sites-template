@@ -1,3 +1,7 @@
+@use "foundation-spaces/global";
+@use "foundation-spaces/util/mixins";
+@use "foundation-spaces/util/unit";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -32,7 +36,7 @@ $switch-height-large: 1.5rem !default;
 
 /// Border radius of the switch
 /// @type Number
-$switch-radius: $global-radius !default;
+$switch-radius: global.$global-radius !default;
 
 /// border around a modal.
 /// @type Number
@@ -48,14 +52,14 @@ $switch-paddle-offset: 0 !default;
 
 /// border radius of the switch paddle
 /// @type Number
-$switch-paddle-radius: $global-radius !default;
+$switch-paddle-radius: global.$global-radius !default;
 
 /// switch transition.
 /// @type Number
 $switch-paddle-transition:
-  left $global-transition-short $global-transition-timing,
-  color $global-transition-short $global-transition-timing,
-  box-shadow $global-transition-medium $global-transition-timing !default;
+  left global.$global-transition-short global.$global-transition-timing,
+  color global.$global-transition-short global.$global-transition-timing,
+  box-shadow global.$global-transition-medium global.$global-transition-timing !default;
 
 /// Opacity of a disabled switch.
 /// @type Number
@@ -120,7 +124,7 @@ $switch-cursor-disabled: not-allowed !default;
   &::after {
     position: absolute;
     top: $switch-paddle-offset;
-    #{$global-left}: $switch-paddle-offset;
+    #{global.$global-left}: $switch-paddle-offset;
     display: block;
     width: $paddle-width;
     height: $paddle-height;
@@ -136,7 +140,7 @@ $switch-cursor-disabled: not-allowed !default;
     background: $switch-background-active;
 
     &::after {
-      #{$global-left}: $paddle-active-offest;
+      #{global.$global-left}: $paddle-active-offest;
     }
   }
 
@@ -147,7 +151,7 @@ $switch-cursor-disabled: not-allowed !default;
   }
 
   input:focus ~ & {
-    @include disable-mouse-outline;
+    @include mixins.disable-mouse-outline;
   }
 }
 
@@ -160,7 +164,7 @@ $switch-cursor-disabled: not-allowed !default;
 
 /// Adds styles for the active state text within a switch.
 @mixin switch-text-active {
-  #{$global-left}: 8%;
+  #{global.$global-left}: 8%;
   display: none;
 
   input:checked + label > & {
@@ -170,7 +174,7 @@ $switch-cursor-disabled: not-allowed !default;
 
 /// Adds styles for the inactive state text within a switch.
 @mixin switch-text-inactive {
-  #{$global-right}: 15%;
+  #{global.$global-right}: 15%;
 
   input:checked + label > & {
     display: none;
@@ -197,13 +201,13 @@ $switch-cursor-disabled: not-allowed !default;
 
   .switch-paddle::after {
     top: $paddle-offset;
-    #{$global-left}: $paddle-offset;
+    #{global.$global-left}: $paddle-offset;
     width: $paddle-width;
     height: $paddle-height;
   }
 
   input:checked ~ .switch-paddle::after {
-    #{$global-left}: $paddle-active-offest;
+    #{global.$global-left}: $paddle-active-offest;
   }
 }
 
@@ -258,14 +262,14 @@ $switch-cursor-disabled: not-allowed !default;
 
   // Switch sizes
   .switch.tiny {
-    @include switch-size(rem-calc(10), $switch-height-tiny, $switch-paddle-offset);
+    @include switch-size(unit.rem-calc(10), $switch-height-tiny, $switch-paddle-offset);
   }
 
   .switch.small {
-    @include switch-size(rem-calc(12), $switch-height-small, $switch-paddle-offset);
+    @include switch-size(unit.rem-calc(12), $switch-height-small, $switch-paddle-offset);
   }
 
   .switch.large {
-    @include switch-size(rem-calc(16), $switch-height-large, $switch-paddle-offset);
+    @include switch-size(unit.rem-calc(16), $switch-height-large, $switch-paddle-offset);
   }
 }

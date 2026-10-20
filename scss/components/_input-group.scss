@@ -1,0 +1,42 @@
+@use "../custom-includes/foundation-spaces/global";
+@use "../custom-includes/foundation-spaces/typography/base";
+@use "../custom-includes/s-label";
+
+// .input-group.
+
+@mixin styles {
+  .input-group {
+    margin: 0;
+
+    .input-group-label {
+      padding: s-label.$label-padding;
+    }
+
+    .input-group-field {
+      &:first-child {
+        border-radius: global.$global-radius 0 0 global.$global-radius;
+      }
+
+      &:last-child {
+        border-radius: 0 global.$global-radius global.$global-radius 0;
+      }
+    }
+  }
+
+  .input-group {
+    button,
+    .button,
+    input,
+    .input,
+    select,
+    textarea {
+      margin-bottom: 0;
+    }
+
+    input.clear:not(:focus) {
+      border-color: transparent;
+    }
+
+    margin-bottom: base.$paragraph-margin-bottom;
+  }
+}

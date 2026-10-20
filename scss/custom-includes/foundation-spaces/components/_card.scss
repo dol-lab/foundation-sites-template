@@ -1,3 +1,5 @@
+@use "../global";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -28,7 +30,7 @@ $card-shadow: none !default;
 
 /// Default border radius.
 /// @type List
-$card-border-radius: $global-radius !default;
+$card-border-radius: global.$global-radius !default;
 
 /// Default padding.
 /// @type Number
@@ -53,7 +55,7 @@ $card-margin-bottom: 0 !default;
   $radius: $card-border-radius,
   $shadow: $card-shadow
 ) {
-  @if $global-flexbox {
+  @if global.$global-flexbox {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -74,7 +76,7 @@ $card-margin-bottom: 0 !default;
 
 /// Adds styles for a card divider.
 @mixin card-divider($background: $card-divider-background, $padding: $card-padding) {
-  @if $global-flexbox {
+  @if global.$global-flexbox {
     display: flex;
     flex: 0 1 auto;
   }
@@ -89,7 +91,7 @@ $card-margin-bottom: 0 !default;
 
 /// Adds styles for a card section.
 @mixin card-section($padding: $card-padding) {
-  @if $global-flexbox {
+  @if global.$global-flexbox {
     flex: 1 0 auto;
   }
 

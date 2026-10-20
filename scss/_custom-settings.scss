@@ -1,3 +1,5 @@
+@use "custom-functions";
+
 @use "sass:color";
 @use "sass:map";
 
@@ -42,7 +44,7 @@ $padding-special: (
   xxlarge: 1.5rem 2.5rem 1.75rem,
   // Complex: top 1.5rem, horizontal 2.5rem, bottom 1.75rem
 );
-$user-card-sizes: (
+$avatar-sizes: (
   xsmall: 24px,
   small: 2.4rem,
   medium: 54px,
@@ -50,7 +52,7 @@ $user-card-sizes: (
   xlarge: 144px,
   xxlarge: 240px,
 );
-$user-card-default-size: map.get($user-card-sizes, medium);
+$avatar-default-size: map.get($avatar-sizes, medium);
 // Dynamic spacing that changes based on breakpoint
 // Maps breakpoint names to spacing scale numbers
 $dynamic-relation: (
@@ -70,9 +72,9 @@ $info-chip-padding: 0.3em 0.6em;
 // Its color is `--_chip-ring`, which each state sets (see .info-chip): a
 // hairline on a static chip, a firm line on a clickable one. Deriving it from
 // the text color is what makes it hold up in both themes.
-$info-chip-ring: color-mix-opacity(var(--f-color-text-0), 8%, 92%);
-$info-chip-ring-clickable: color-mix-opacity(var(--f-color-text-0), 12%, 88%);
-$info-chip-ring-hover: color-mix-opacity(var(--f-color-text-0), 24%, 76%);
+$info-chip-ring: custom-functions.color-mix-opacity(var(--f-color-text-0), 8%, 92%);
+$info-chip-ring-clickable: custom-functions.color-mix-opacity(var(--f-color-text-0), 12%, 88%);
+$info-chip-ring-hover: custom-functions.color-mix-opacity(var(--f-color-text-0), 24%, 76%);
 $info-border-shadow: 0 0 0 1px var(--_chip-ring);
 
 // On top of the ring, a clickable chip gets a drop shadow. `--f-color-shadow` is

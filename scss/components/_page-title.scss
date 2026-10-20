@@ -1,0 +1,16 @@
+// .page-title and .page-content.
+
+@mixin styles {
+  .page-title {
+    padding-top: 0.5rem;
+
+    a {
+      text-decoration: none !important;
+      font-weight: 400;
+    }
+  }
+
+  .page-content {
+    padding: 1rem 0;
+  }
+}

@@ -1,3 +1,8 @@
+@use "../custom-functions";
+@use "foundation-spaces/global";
+@use "foundation-spaces/util/breakpoint";
+@use "foundation-spaces/util/mixins";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -14,15 +19,15 @@ $reveal-background: var(--f-color-bg-1) !default;
 
 /// Default width of a modal, with no class applied.
 /// @type String
-$reveal-width: calc(100% - 2 * #{$global-gutter-large}) !default;
+$reveal-width: calc(100% - 2 * #{global.$global-gutter-large}) !default;
 
 /// Default maximum width of a modal.
 /// @type Number
-$reveal-max-width: map.get($breakpoints, large) !default;
+$reveal-max-width: map.get(breakpoint.$breakpoints, large) !default;
 
 /// Default padding inside a modal.
 /// @type Number
-$reveal-padding: $global-padding !default;
+$reveal-padding: global.$global-padding !default;
 
 /// Default border around a modal.
 /// @type Number
@@ -30,7 +35,7 @@ $reveal-border: none !default;
 
 /// Default radius for modal.
 /// @type Number
-$reveal-radius: $global-radius !default;
+$reveal-radius: global.$global-radius !default;
 
 /// z-index for modals. The overlay uses this value, while the modal itself uses this value plus one.
 /// @type Number
@@ -38,13 +43,13 @@ $reveal-zindex: 1005 !default;
 
 /// Background color of modal overlays.
 /// @type Color
-$reveal-overlay-background: color-mix-opacity(var(--f-color-text-0), 14%, 86%) !default;
+$reveal-overlay-background: custom-functions.color-mix-opacity(var(--f-color-text-0), 14%, 86%) !default;
 
 
 // Placeholder selector for medium-and-up modals
 // Prevents duplicate CSS when defining multiple Reveal sizes
 // This should be in the same breakpoint then `@mixin reveal-modal-width`
-@include breakpoint(medium) {
+@include breakpoint.breakpoint(medium) {
   %reveal-centered {
     right: auto;
     left: auto;
@@ -68,7 +73,7 @@ $reveal-overlay-background: color-mix-opacity(var(--f-color-text-0), 14%, 86%) !
 
 /// Adds base styles for a modal.
 @mixin reveal-modal-base {
-  @include disable-mouse-outline;
+  @include mixins.disable-mouse-outline;
 
   z-index: $reveal-zindex + 1;
 
@@ -80,7 +85,7 @@ $reveal-overlay-background: color-mix-opacity(var(--f-color-text-0), 14%, 86%) !
   border-radius: $reveal-radius;
   background-color: $reveal-background;
 
-  @include breakpoint(medium) {
+  @include breakpoint.breakpoint(medium) {
     min-height: 0;
   }
 
@@ -105,7 +110,7 @@ $reveal-overlay-background: color-mix-opacity(var(--f-color-text-0), 14%, 86%) !
   // Extends must be made outside of breakpoints for compatibility with newer Sass versions (libsass v3.5)
   @extend %reveal-centered;
 
-  @include breakpoint(medium) {
+  @include breakpoint.breakpoint(medium) {
     width: $width;
     max-width: $max-width;
   }
@@ -172,7 +177,7 @@ $reveal-overlay-background: color-mix-opacity(var(--f-color-text-0), 14%, 86%) !
       @include reveal-modal-fullscreen;
     }
 
-    @include breakpoint($-zf-zero-breakpoint only) {
+    @include breakpoint.breakpoint(breakpoint.$zf-zero-breakpoint only) {
       @include reveal-modal-fullscreen;
     }
 

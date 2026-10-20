@@ -1,0 +1,12 @@
+@use "../custom-includes/foundation-spaces/typography/base";
+
+// Card item
+// ---------
+// A row of a card. Every row but the first is set off by a hairline, whatever comes before it
+// (a header image, another row).
+
+@mixin styles {
+  .card .card-item:not(:first-child) {
+    border-top: base.$hr-border;
+  }
+}

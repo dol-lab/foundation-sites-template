@@ -1,0 +1,18 @@
+// .gb-l, .gb-r, .gb-c, .gb-ci: a 1px gradient hairline as background.
+
+$gb-variants: (
+  l: linear-gradient(to right, var(--f-color-border-0) 0%, var(--_c2) 100%),
+  r: linear-gradient(to left, var(--f-color-border-0) 0%, var(--_c2) 100%),
+  c: radial-gradient(circle at center, var(--f-color-border-0) 0%, var(--_c2) 100%),
+  ci: radial-gradient(circle at center, var(--_c2) 0%, var(--f-color-border-0) 80%),
+);
+
+@mixin styles {
+  @each $key, $val in $gb-variants {
+    .gb-#{$key} {
+      --_c2: color-mix(in oklab, var(--f-color-border-0) 10%, transparent);
+      background: $val no-repeat;
+      background-size: 100% 1px;
+    }
+  }
+}

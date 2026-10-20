@@ -114,7 +114,7 @@ Exposed at `:root` as `--f-spacing-0` … `--f-spacing-9`. Source map:
 | `--f-transition-short/medium/long`    | 100ms / 250ms / 500ms            |
 | `--f-transition-timing`               | `ease-in-out` (or cubic-bezier)  |
 | `--f-drop-shadow`, `--f-drop-shadow-large` | Standard elevation shadows  |
-| `--user-card-{xsmall…xxlarge}`        | Avatar sizes (24px … 240px)      |
+| `--f-avatar-{xsmall…xxlarge}`         | Avatar sizes (24px … 240px), from `$avatar-sizes` |
 
 ### Grid container
 
@@ -131,7 +131,7 @@ The SCSS variables (`$grid-container`, `$grid-container-padding` in
 source of truth and seed the tokens. `.grid-container.full` still hardcodes
 `padding: 0`, and cell gutters (`$grid-margin-gutters`) are still compiled
 values: code doing Sass math on them (`_s-scroll-snap.scss`,
-`_navigation-menus.scss`) will not follow a runtime override of the tokens.
+`custom-styles/_utilities.scss`) will not follow a runtime override of the tokens.
 
 ## 6. Overriding in Practice
 

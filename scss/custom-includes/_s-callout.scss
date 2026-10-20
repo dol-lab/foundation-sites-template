@@ -1,3 +1,7 @@
+@use "../colors";
+@use "../custom-functions";
+@use "foundation-spaces/global";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -18,7 +22,7 @@ $callout-background-fade: 85% !default;
 
 /// Default border style for callouts.
 /// @type List
-$callout-border: 1px solid color-mix-opacity(var(--f-color-text-0), 25%, 75%) !default;
+$callout-border: 1px solid custom-functions.color-mix-opacity(var(--f-color-text-0), 25%, 75%) !default;
 
 /// Default bottom margin for callouts.
 /// @type Number
@@ -34,15 +38,15 @@ $callout-sizes: (
 
 /// Default font color for callouts.
 /// @type Color
-$callout-font-color: $body-font-color !default;
+$callout-font-color: global.$body-font-color !default;
 
 /// Default font color for callouts, if the callout has a dark background.
 /// @type Color
-$callout-font-color-alt: $body-background !default;
+$callout-font-color-alt: global.$body-background !default;
 
 /// Default border radius for callouts.
 /// @type Color
-$callout-radius: $global-radius !default;
+$callout-radius: global.$global-radius !default;
 
 /// Amount to tint links used within colored panels. Set to `false` to disable this feature.
 /// @type Number | Boolean
@@ -130,7 +134,7 @@ $callout-default-token: primary !default;
     @include callout-style-token($callout-default-token);
 
     // Named variants from your palette keys
-    @each $name, $_ in $foundation-palette {
+    @each $name, $_ in colors.$foundation-palette {
       &.#{$name} {
         @include callout-style-token($name);
       }

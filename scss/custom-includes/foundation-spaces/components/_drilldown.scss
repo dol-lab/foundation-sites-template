@@ -1,3 +1,8 @@
+@use "../../s-menu";
+@use "../global";
+@use "../util/mixins";
+@use "dropdown-menu";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -8,7 +13,7 @@
 
 /// Transition property to use for animating menus.
 /// @type Transition
-$drilldown-transition: transform $global-transition-short $global-transition-timing !default;
+$drilldown-transition: transform global.$global-transition-short global.$global-transition-timing !default;
 
 /// Adds arrows to drilldown items with submenus, as well as the back button.
 /// @type Boolean
@@ -16,7 +21,7 @@ $drilldown-arrows: true !default;
 
 /// Sets drilldown menu item padding.
 /// @type Number
-$drilldown-padding: $global-menu-padding !default;
+$drilldown-padding: global.$global-menu-padding !default;
 
 /// Sets drilldown menu nested margin
 /// @type Number
@@ -47,24 +52,24 @@ $drilldown-arrow-size: 6px !default;
     position: relative;
 
     &::after {
-      @include css-triangle($drilldown-arrow-size, $drilldown-arrow-color, $global-right);
+      @include mixins.css-triangle($drilldown-arrow-size, $drilldown-arrow-color, global.$global-right);
 
       position: absolute;
       top: 50%;
       margin-top: -1 * $drilldown-arrow-size;
-      #{$global-right}: 1rem;
+      #{global.$global-right}: 1rem;
     }
   }
 
   &.align-left .is-drilldown-submenu-parent > a::after {
-    @include css-triangle($dropdownmenu-arrow-size, $dropdownmenu-arrow-color, right);
+    @include mixins.css-triangle(dropdown-menu.$dropdownmenu-arrow-size, dropdown-menu.$dropdownmenu-arrow-color, right);
 
     right: 1rem;
     left: auto;
   }
 
   &.align-right .is-drilldown-submenu-parent > a::after {
-    @include css-triangle($dropdownmenu-arrow-size, $dropdownmenu-arrow-color, left);
+    @include mixins.css-triangle(dropdown-menu.$dropdownmenu-arrow-size, dropdown-menu.$dropdownmenu-arrow-color, left);
 
     right: auto;
     left: 1rem;
@@ -98,7 +103,7 @@ $drilldown-arrow-size: 6px !default;
     .is-drilldown-submenu {
       position: absolute;
       top: 0;
-      #{$global-left}: 100%;
+      #{global.$global-left}: 100%;
       z-index: -1;
       width: 100%;
       background: $drilldown-submenu-background;
@@ -107,11 +112,11 @@ $drilldown-arrow-size: 6px !default;
       &.is-active {
         z-index: 1;
         display: block;
-        transform: translateX(if($global-text-direction == ltr, -100%, 100%));
+        transform: translateX(if(global.$global-text-direction == ltr, -100%, 100%));
       }
 
       &.is-closing {
-        transform: translateX(if($global-text-direction == ltr, 100%, -100%));
+        transform: translateX(if(global.$global-text-direction == ltr, 100%, -100%));
       }
 
       // Submenu item padding
@@ -121,7 +126,7 @@ $drilldown-arrow-size: 6px !default;
     }
 
     .nested.is-drilldown-submenu {
-      @include menu-nested($drilldown-nested-margin);
+      @include s-menu.menu-nested($drilldown-nested-margin);
     }
 
     .drilldown-submenu-cover-previous {
@@ -132,11 +137,11 @@ $drilldown-arrow-size: 6px !default;
       @include zf-drilldown-left-right-arrows;
 
       .js-drilldown-back > a::before {
-        @include css-triangle($drilldown-arrow-size, $drilldown-arrow-color, $global-left);
+        @include mixins.css-triangle($drilldown-arrow-size, $drilldown-arrow-color, global.$global-left);
 
         display: inline-block;
         vertical-align: middle;
-        margin-#{$global-right}: 0.75rem; // Creates space between the arrow and the text
+        margin-#{global.$global-right}: 0.75rem; // Creates space between the arrow and the text
       }
     }
   }

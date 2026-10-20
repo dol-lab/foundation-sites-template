@@ -1,0 +1,18 @@
+// .caret (extended by menus and accordions) and .caret-icon.
+
+@mixin styles {
+  .caret {
+    content: "\f078";
+    font-family: "Font Awesome 7 Free";
+    font-size: 0.625em;
+    font-weight: bold;
+    align-self: center;
+    border: none;
+  }
+
+  .caret-icon {
+    &::after {
+      @extend .caret;
+    }
+  }
+}

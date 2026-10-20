@@ -1,3 +1,5 @@
+@use "../colors";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -22,7 +24,7 @@ $badge-color: var(--f-color-bg-1) !default;
 
 /// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, and so on.
 /// @type Map
-$badge-palette: $foundation-palette !default;
+$badge-palette: colors.$foundation-palette !default;
 
 /// Maximum height of a badge.
 /// @type Number

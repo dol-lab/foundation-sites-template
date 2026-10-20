@@ -1,3 +1,6 @@
+@use "foundation-spaces/global";
+@use "foundation-spaces/util/mixins";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -73,14 +76,14 @@ $breadcrumbs-item-separator-opacity: 60% !default;
 
 /// Adds styles for a breadcrumbs container, along with the styles for the `<li>` and `<a>` elements inside of it.
 @mixin breadcrumbs-container {
-  @include clearfix;
+  @include mixins.clearfix;
 
   margin: $breadcrumbs-margin;
   list-style: none;
 
   // Item wrapper
   li {
-    float: #{$global-left};
+    float: #{global.$global-left};
     font-size: $breadcrumbs-item-font-size;
     color: $breadcrumbs-item-color-current;
     cursor: default;
@@ -91,7 +94,7 @@ $breadcrumbs-item-separator-opacity: 60% !default;
 
     @if $breadcrumbs-item-separator {
       // Need to escape the backslash
-      $separator: if($global-text-direction == 'ltr', $breadcrumbs-item-separator-item, $breadcrumbs-item-separator-item-rtl);
+      $separator: if(global.$global-text-direction == 'ltr', $breadcrumbs-item-separator-item, $breadcrumbs-item-separator-item-rtl);
 
       &:not(:last-child) {
         &::after {
@@ -103,7 +106,7 @@ $breadcrumbs-item-separator-opacity: 60% !default;
         }
       }
     } @else {
-      margin-#{$global-right}: $breadcrumbs-item-margin;
+      margin-#{global.$global-right}: $breadcrumbs-item-margin;
     }
   }
 

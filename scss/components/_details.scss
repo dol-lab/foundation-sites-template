@@ -1,0 +1,93 @@
+@use "../custom-includes/foundation-spaces/typography/base";
+
+// <details> and .details: disclosure with an animated open.
+
+@mixin styles {
+  details {
+    border-left: 1px solid transparent;
+    transition: all var(--f-transition-medium);
+    border-bottom-left-radius: 0;
+    margin-bottom: base.$paragraph-margin-bottom;
+
+    &:has(+ details) {
+      border-bottom: 1px solid var(--f-color-border-1);
+      margin-bottom: 0;
+    }
+
+    &:not(:has(+ details)) {
+      border-left: 1px solid var(--f-color-border-1);
+    }
+
+    & ~ details {
+      border-left: 1px solid transparent;
+    }
+
+    > summary {
+      position: relative;
+      cursor: pointer;
+      align-items: center;
+      gap: 1rem;
+      width: calc(100% - 0.7rem);
+
+      &::marker {
+        content: none;
+      }
+
+      @extend .py-3;
+
+      &::after {
+        content: "\f107";
+        position: absolute;
+        right: -0.7rem;
+        top: 1.1em;
+        font-family: "Font Awesome 7 Free";
+        font-weight: bold;
+        margin-left: auto;
+        font-size: 0.85em;
+        display: inline-block;
+        transition: all var(--f-transition-medium) ease-out;
+      }
+
+      &.small {
+        font-size: base.$small-font-size;
+      }
+    }
+
+    &[open] {
+      & > summary::after {
+        transform: rotate(-180deg);
+      }
+    }
+
+    & > :last-child {
+      margin-bottom: base.$paragraph-margin-bottom;
+    }
+
+    &:hover {
+      summary {
+        filter: brightness(120%);
+      }
+
+      border-left-color: var(--f-color-border-2);
+    }
+
+    body & {
+      @extend .px-2;
+    }
+  }
+
+  .details::details-content {
+    display: block;
+    block-size: 0;
+    overflow: hidden;
+    transition-property: block-size, content-visibility;
+    transition-duration: var(--f-transition-medium);
+    transition-behavior: allow-discrete;
+    transition-timing-function: ease-out;
+  }
+
+  .details[open]::details-content {
+    block-size: auto;
+    block-size: calc-size(auto, size);
+  }
+}

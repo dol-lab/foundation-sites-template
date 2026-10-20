@@ -1,47 +1,43 @@
 @charset 'utf-8';
 
 ///
-///  Functions that are used throughout scripts.
-///  Must come first.
-@import "custom-functions";
-
-///
-///  A separate file for color settings.
-///  Must come second, as variables are used throughout foundation components.
-@import "colors";
-
-///
 ///  Font import, only up here by convention.
-@import "fonts";
+@use "fonts";
 
 ///
-///  Foundation settings, overwriting !default values for component variables
-@import "settings";
-
-///
-///  All variables and maps we introduced
-@import "custom-settings";
-
-///
-///  @import statements for foundation partials
-///  Some are "custom forks" to allow for CSS variable usage.
-@import "custom-foundation-imports";
+///  Custom components that print their CSS when loaded.
+@use "custom-includes/s-scroll-snap";
+@use "custom-includes/s-reveal";
 
 ///
 ///  Basically foundation's 'normalize' with a few extra knobs.
 ///  Previously called custom-foundation-global-styles-not-prefixed
-$box-sizing-root: ".f";
-$box-sizing-all: ".f *";
-@import "custom-normalize";
+@use "custom-normalize" with (
+  $box-sizing-root: ".f",
+  $box-sizing-all: ".f *"
+);
+
+///
+///  The partials below print nothing on load: their CSS is a `styles` mixin.
+///  `@use` cannot sit inside `.f`, and an included mixin keeps `X &` selectors
+///  resolving to `X .f …` (meta.load-css() would print `.f X …`).
+@use "custom-functions";
+@use "custom-foundation-includes";
+@use "custom-styles/root-tokens";
+@use "custom-styles";
+
+///
+///  Motion UI from node_modules (still on Sass imports inside), loaded as one module.
+@use "motion-ui";
 
 ///
 ///  Design tokens and the palette. They stay outside `.f`: they are inherited
 ///  and belong on :root, which nested would become `.f :root` and never match.
 ///  The back end is always light, so no dark-theme variants here.
-@import "custom-styles/root-tokens";
+@include root-tokens.styles;
 
 :root {
-  @include foundation-apply-theme("light");
+  @include custom-functions.foundation-apply-theme("light");
 }
 
 ///
@@ -52,17 +48,16 @@ $box-sizing-all: ".f *";
   ///
   ///  @include statements for foundation mixins
   ///  Some are "custom forks" to allow for CSS variable usage.
-  @import "custom-foundation-includes";
+  @include custom-foundation-includes.styles;
 
   ///
   ///  Our styling, comes late to overwrite foundation styles.
-  @import "custom-styles";
+  @include custom-styles.styles;
 
   ///
   ///  Motion UI stuff
-  @import "motion-ui";
-  @include motion-ui-transitions;
-  @include motion-ui-animations;
+  @include motion-ui.motion-ui-transitions;
+  @include motion-ui.motion-ui-animations;
 }
 
 ///

@@ -1,3 +1,8 @@
+@use "../util/breakpoint";
+@use "../util/mixins";
+@use "../util/unit";
+@use "grid";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -20,8 +25,8 @@
   $root: false
 ) {
   // Store the current column count so it can be re-set later
-  $old-grid-column-count: $grid-column-count;
-  $grid-column-count: $columns !global;
+  $old-grid-column-count: grid.$grid-column-count;
+  grid.$grid-column-count: $columns;
 
   @if $root {
     @at-root { @content; }
@@ -30,7 +35,7 @@
   }
 
   // Restore the old column count
-  $grid-column-count: $old-grid-column-count !global;
+  grid.$grid-column-count: $old-grid-column-count;
 }
 
 /// Creates a grid row.
@@ -45,9 +50,9 @@
 @mixin grid-row(
   $columns: null,
   $behavior: null,
-  $size: $grid-row-width,
+  $size: grid.$grid-row-width,
   $cf: true,
-  $gutters: $grid-column-gutter
+  $gutters: grid.$grid-column-gutter
 ) {
   $margin: auto;
 
@@ -66,7 +71,7 @@
   }
 
   @if $cf {
-    @include clearfix;
+    @include mixins.clearfix;
   }
 
   @if $columns != null {
@@ -79,9 +84,9 @@
 /// Inverts the margins of a row to nest it inside of a column.
 ///
 /// @param {Number|Map} $gutters [$grid-column-gutter] - Gutter map or single value to use when inverting margins. Responsive gutter settings by default.
-@mixin grid-row-nest($gutters: $grid-column-gutter) {
-  @include -zf-each-breakpoint {
-    $margin: rem-calc(-zf-get-bp-val($gutters, $-zf-size)) * 0.5 * -1;
+@mixin grid-row-nest($gutters: grid.$grid-column-gutter) {
+  @include mixins.zf-each-breakpoint {
+    $margin: unit.rem-calc(breakpoint.zf-get-bp-val($gutters, breakpoint.$zf-size)) * 0.5 * -1;
 
     margin-right: $margin;
     margin-left: $margin;
@@ -91,7 +96,7 @@
 /// Set a grid row size
 ///
 /// @param {Keyword|Number} $size [$grid-row-width] Maximum size of the row. Set to `expand` to make the row taking the full width.
-@mixin grid-row-size($size: $grid-row-width) {
+@mixin grid-row-size($size: grid.$grid-row-width) {
   @if $size == expand {
     $size: none;
   }

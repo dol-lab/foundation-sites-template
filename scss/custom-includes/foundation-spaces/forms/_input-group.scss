@@ -1,3 +1,8 @@
+@use "../global";
+@use "../util/unit";
+@use "../util/value";
+@use "text";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -22,26 +27,26 @@ $input-prefix-border: 1px solid var(--f-color-border-0) !default;
 $input-prefix-padding: 1rem !default;
 
 @mixin foundation-form-prepostfix {
-  $height: ($input-font-size * $input-line-height) + (get-side($input-padding, 'top') + get-side($input-padding, 'bottom')) - rem-calc(1);
+  $height: (text.$input-font-size * text.$input-line-height) + (value.get-side(text.$input-padding, 'top') + value.get-side(text.$input-padding, 'bottom')) - unit.rem-calc(1);
 
   .input-group {
-    display: if($global-flexbox, flex, table);
+    display: if(global.$global-flexbox, flex, table);
     width: 100%;
-    margin-bottom: $form-spacing;
+    margin-bottom: text.$form-spacing;
 
-    @if $global-flexbox {
+    @if global.$global-flexbox {
       align-items: stretch;
     }
 
     > :first-child {
       &, &.input-group-button > * {
-        border-radius: if($global-text-direction == rtl, 0 $input-radius $input-radius 0, $input-radius 0 0 $input-radius);
+        border-radius: if(global.$global-text-direction == rtl, 0 text.$input-radius text.$input-radius 0, text.$input-radius 0 0 text.$input-radius);
       }
     }
 
     > :last-child {
       &, &.input-group-button > * {
-        border-radius: if($global-text-direction == rtl, $input-radius 0 0 $input-radius, 0 $input-radius $input-radius 0);
+        border-radius: if(global.$global-text-direction == rtl, text.$input-radius 0 0 text.$input-radius, 0 text.$input-radius text.$input-radius 0);
       }
     }
   }
@@ -50,7 +55,7 @@ $input-prefix-padding: 1rem !default;
     margin: 0;
     white-space: nowrap;
 
-    @if not $global-flexbox {
+    @if not global.$global-flexbox {
       display: table-cell;
       vertical-align: middle;
     }
@@ -66,7 +71,7 @@ $input-prefix-padding: 1rem !default;
     text-align: center;
     white-space: nowrap;
 
-    @if $global-flexbox {
+    @if global.$global-flexbox {
       display: flex;
       flex: 0 0 auto;
       align-items: center;
@@ -75,13 +80,13 @@ $input-prefix-padding: 1rem !default;
       height: 100%;
     }
 
-    @if has-value($input-prefix-border) {
+    @if value.has-value($input-prefix-border) {
       &:first-child {
-        border-#{$global-right}: 0;
+        border-#{global.$global-right}: 0;
       }
 
       &:last-child {
-        border-#{$global-left}: 0;
+        border-#{global.$global-left}: 0;
       }
     }
   }
@@ -91,7 +96,7 @@ $input-prefix-padding: 1rem !default;
 
     border-radius: 0;
 
-    @if $global-flexbox {
+    @if global.$global-flexbox {
       flex: 1 1 0px; // sass-lint:disable-line zero-unit
       min-width: 0;
     }
@@ -104,7 +109,7 @@ $input-prefix-padding: 1rem !default;
     padding-bottom: 0;
     text-align: center;
 
-    @if $global-flexbox {
+    @if global.$global-flexbox {
       display: flex;
       flex: 0 0 auto;
     } @else {
@@ -118,7 +123,7 @@ $input-prefix-padding: 1rem !default;
     label {
       @extend %input-group-child;
 
-      @if $global-flexbox {
+      @if global.$global-flexbox {
         align-self: stretch;
         height: auto;
       } @else {
@@ -127,12 +132,12 @@ $input-prefix-padding: 1rem !default;
 
       padding-top: 0;
       padding-bottom: 0;
-      font-size: $input-font-size;
+      font-size: text.$input-font-size;
     }
   }
 
   // Specificity bump needed to prevent override by buttons
-  @if not $global-flexbox {
+  @if not global.$global-flexbox {
     .input-group {
       .input-group-button {
         display: table-cell;

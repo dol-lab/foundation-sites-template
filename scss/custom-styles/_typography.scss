@@ -1,245 +1,254 @@
+@use "../custom-functions";
+@use "../custom-includes/foundation-spaces/global";
+@use "../custom-includes/foundation-spaces/typography/base";
+@use "../custom-includes/foundation-spaces/util/breakpoint";
+@use "../custom-includes/s-button";
+
 // 3. Typography
 // ---------
 
-p {
-  font-size: $paragraph-font-size;
-  color: var(--f-color-text-1);
+@mixin styles {
+  p {
+    font-size: global.$paragraph-font-size;
+    color: var(--f-color-text-1);
 
-  &.small {
-    font-size: $small-font-size;
+    &.small {
+      font-size: base.$small-font-size;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    // @include foundation-palette();
   }
 
-  &:last-child {
-    margin-bottom: 0;
-  }
+  .stat {
+    font-weight: global.$global-weight-bold;
+    line-height: 1.2;
+    text-transform: uppercase;
 
-  // @include foundation-palette();
-}
-
-.stat {
-  font-weight: $global-weight-bold;
-  line-height: 1.2;
-  text-transform: uppercase;
-
-  @include breakpoint(medium down) {
-    font-size: 2rem;
-  }
-}
-
-.lead {
-  font-size: 1.25em;
-}
-
-.highlight-word {
-  &::before {
-    content: "»";
-  }
-
-  &::after {
-    content: "«";
-  }
-
-  margin-right: 1ch;
-}
-
-span {
-  &.small {
-    font-size: $small-font-size;
-  }
-}
-
-.fa {
-  @include foundation-palette($hover: false);
-}
-
-a {
-  &:focus {
-    outline: none;
-  }
-
-  @include foundation-palette;
-  @include foundation-palette($selector: "li", $child: ">&");
-  @include button-sizes;
-}
-
-/*
- * Prose links take the Space's brand colour.
- *
- * This is a *default*: it says what a link looks like when nothing else has an opinion, so it
- * is written at the weight of one. `:where()` contributes no specificity, which leaves the
- * whole thing at (0,0,1) — the `a` and nothing more — and any component with a class of its
- * own now overrides it by simply existing.
- *
- */
-:where(body .s-fg-a-c1-parent *:not([data-dropdown]))
-  a:not(
-    :where(
-        [data-dropdown] a,
-        [class^="wp-block"],
-        .primary,
-        .secondary,
-        .alert,
-        .success,
-        .warning,
-        .accordion-title,
-        .button,
-        [role="tab"],
-        [role="menuitem"]
-      )
-  ) {
-  color: var(--f-color-brand);
-
-  // Spelled out rather than left to inherit from the line above: at this weight the reset's
-  // own `a:focus { color: inherit }` would otherwise take the colour off a focused link, which
-  // is a thing the old (0,4,3) rule simply sat on top of without anyone noticing.
-  &:focus {
-    color: var(--f-color-brand);
-  }
-
-  &:hover,
-  &:visited {
-    color: var(--f-color-brand-darker);
-  }
-}
-
-.line-clamp {
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  hyphens: auto;
-  overflow: hidden;
-  display: -webkit-box;
-  display: flex;
-}
-
-.hover-underline:hover {
-  text-decoration: underline;
-}
-
-ul {
-  font-size: $paragraph-font-size;
-
-  // @include foundation-palette();
-}
-
-small {
-  color: var(--f-color-text-2);
-  display: inline-block;
-  line-height: $header-lineheight;
-
-  & > a {
-    &:hover {
-      color: var(--f-color-text-0);
+    @include breakpoint.breakpoint(medium down) {
+      font-size: 2rem;
     }
   }
-}
 
-code {
-  border-radius: $global-radius-small;
-  font-size: 0.85em;
-  position: relative;
-  top: -0.08em;
-  padding: 0.15em 0.4em;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-}
-
-pre {
-  tab-size: 2ch;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  overflow-x: auto;
-  border: 1px solid var(--f-color-border-1);
-  border-radius: $global-radius-small;
-  background-color: var(--f-color-bg-2);
-  color: var(--f-color-text-0);
-  font-size: 0.875rem;
-  line-height: 1.5;
-  white-space: pre;
-
-  // Inside a block the inline `code` look (padding, border, offset) only gets in the way.
-  & > code {
-    display: block;
-    position: static;
-    max-width: none;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    color: inherit;
-    font: inherit;
-    overflow-wrap: normal;
-    white-space: inherit;
-    word-break: normal;
+  .lead {
+    font-size: 1.25em;
   }
-}
 
-// A key on a keyboard: foundation-typography gives it font and padding, this adds the relief.
-// Deliberately not themed, it looks the same light and dark.
-kbd {
-  margin: 0 0.1em;
-  padding: 0.2em 0.4em 0.15em;
-  font-size: 0.875em;
-  line-height: 1.2;
-  color: #24292e;
-  background-color: #f7f7f7;
-  border: 1px solid #ccc;
-  border-bottom: 2px solid #bbb;
-  border-radius: 4px;
-  box-shadow: 0 1px 0 rgb(0 0 0 / 10%), inset 0 1px 0 #fff;
-  text-shadow: 0 1px 0 #fff;
-  white-space: nowrap;
-}
+  .highlight-word {
+    &::before {
+      content: "»";
+    }
 
-input,
-textarea,
-select {
-  font-size: $paragraph-font-size;
-  flex: 1;
-}
+    &::after {
+      content: "«";
+    }
 
-small > label,
-label.small {
-  font-size: $small-font-size;
-}
+    margin-right: 1ch;
+  }
 
-label[for] {
-  cursor: pointer;
-}
+  span {
+    &.small {
+      font-size: base.$small-font-size;
+    }
+  }
 
-.hover-underline {
-  &:hover {
+  .fa {
+    @include custom-functions.foundation-palette($hover: false);
+  }
+
+  a {
+    &:focus {
+      outline: none;
+    }
+
+    @include custom-functions.foundation-palette;
+    @include custom-functions.foundation-palette($selector: "li", $child: ">&");
+    @include s-button.button-sizes;
+  }
+
+  /*
+   * Prose links take the brand colour: `.brand-links` on any container (`.s-fg-a-c1-parent` is
+   * the old name, kept until no markup carries it).
+   *
+   * This is a *default*: it says what a link looks like when nothing else has an opinion, so it
+   * is written at the weight of one. `:where()` contributes no specificity, which leaves the
+   * whole thing at (0,0,1) — the `a` and nothing more — and any component with a class of its
+   * own now overrides it by simply existing.
+   *
+   */
+  :where(body :is(.brand-links, .s-fg-a-c1-parent) *:not([data-dropdown]))
+    a:not(
+      :where(
+          [data-dropdown] a,
+          [class^="wp-block"],
+          .primary,
+          .secondary,
+          .alert,
+          .success,
+          .warning,
+          .accordion-title,
+          .button,
+          [role="tab"],
+          [role="menuitem"]
+        )
+    ) {
+    color: var(--f-color-brand);
+
+    // Spelled out rather than left to inherit from the line above: at this weight the reset's
+    // own `a:focus { color: inherit }` would otherwise take the colour off a focused link, which
+    // is a thing the old (0,4,3) rule simply sat on top of without anyone noticing.
+    &:focus {
+      color: var(--f-color-brand);
+    }
+
+    &:hover,
+    &:visited {
+      color: var(--f-color-brand-darker);
+    }
+  }
+
+  .line-clamp {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    hyphens: auto;
+    overflow: hidden;
+    display: -webkit-box;
+    display: flex;
+  }
+
+  .hover-underline:hover {
     text-decoration: underline;
   }
-}
 
-// 17. Sections
-// -----------
+  ul {
+    font-size: global.$paragraph-font-size;
 
-.section-title {
-  @include header-style("h1");
-
-  font-weight: $global-weight-bold;
-  line-height: $header-lineheight;
-}
-
-.section-header {
-  @include header-style("h2");
-
-  font-weight: $global-weight-normal;
-  line-height: $header-lineheight;
-}
-
-.section-wrap {
-  margin: 2rem auto;
-  width: 100%;
-  max-width: var(--f-grid-container-max);
-
-  &.small {
-    max-width: calc(var(--f-grid-container-max) / 3 * 2);
+    // @include foundation-palette();
   }
 
-  @include breakpoint(medium) {
-    width: var(--f-grid-container-max);
+  small {
+    color: var(--f-color-text-2);
+    display: inline-block;
+    line-height: base.$header-lineheight;
+
+    & > a {
+      &:hover {
+        color: var(--f-color-text-0);
+      }
+    }
+  }
+
+  code {
+    border-radius: global.$global-radius-small;
+    font-size: 0.85em;
+    position: relative;
+    top: -0.08em;
+    padding: 0.15em 0.4em;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+  }
+
+  pre {
+    tab-size: 2ch;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+    border: 1px solid var(--f-color-border-1);
+    border-radius: global.$global-radius-small;
+    background-color: var(--f-color-bg-2);
+    color: var(--f-color-text-0);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    white-space: pre;
+
+    // Inside a block the inline `code` look (padding, border, offset) only gets in the way.
+    & > code {
+      display: block;
+      position: static;
+      max-width: none;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      overflow-wrap: normal;
+      white-space: inherit;
+      word-break: normal;
+    }
+  }
+
+  // A key on a keyboard: foundation-typography gives it font and padding, this adds the relief.
+  // Deliberately not themed, it looks the same light and dark.
+  kbd {
+    margin: 0 0.1em;
+    padding: 0.2em 0.4em 0.15em;
+    font-size: 0.875em;
+    line-height: 1.2;
+    color: #24292e;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-bottom: 2px solid #bbb;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 rgb(0 0 0 / 10%), inset 0 1px 0 #fff;
+    text-shadow: 0 1px 0 #fff;
+    white-space: nowrap;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: global.$paragraph-font-size;
+    flex: 1;
+  }
+
+  small > label,
+  label.small {
+    font-size: base.$small-font-size;
+  }
+
+  label[for] {
+    cursor: pointer;
+  }
+
+  .hover-underline {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // 17. Sections
+  // -----------
+
+  .section-title {
+    @include custom-functions.header-style("h1");
+
+    font-weight: global.$global-weight-bold;
+    line-height: base.$header-lineheight;
+  }
+
+  .section-header {
+    @include custom-functions.header-style("h2");
+
+    font-weight: global.$global-weight-normal;
+    line-height: base.$header-lineheight;
+  }
+
+  .section-wrap {
+    margin: 2rem auto;
+    width: 100%;
+    max-width: var(--f-grid-container-max);
+
+    &.small {
+      max-width: calc(var(--f-grid-container-max) / 3 * 2);
+    }
+
+    @include breakpoint.breakpoint(medium) {
+      width: var(--f-grid-container-max);
+    }
   }
 }

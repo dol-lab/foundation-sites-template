@@ -1,0 +1,137 @@
+@use "../custom-includes/foundation-spaces/global";
+
+// .clipped: a media frame that crops its image (.square, .letterbox, .tint, .height-*).
+
+@mixin styles {
+  .clipped {
+    position: relative;
+    display: flex;
+    align-content: center;
+    width: 100%;
+    overflow: hidden;
+
+    img {
+      object-position: 50% 33%;
+
+      &[src=""],
+      &:not([src]) {
+        display: none;
+      }
+    }
+
+    img,
+    iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: var(--f-color-bg-2);
+
+      @media screen and (width >= 0\0) and (resolution >= +72dpi) {
+        height: auto;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &.tint {
+      color: var(--f-color-bg-0);
+      background-color: var(--f-color-text-0);
+
+      &::after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background-color: var(--f-color-text-0);
+        opacity: 0.375;
+        transition: opacity global.$global-transition-medium global.$global-transition-timing;
+      }
+
+      & > *:not(img) {
+        z-index: 10;
+      }
+
+      img,
+      iframe {
+        z-index: 0;
+      }
+
+      &.tint-negativ {
+        color: var(--f-color-text-0);
+        background-color: var(--f-color-bg-0);
+
+        &::after {
+          background-color: var(--f-color-bg-0);
+        }
+      }
+    }
+
+    a:hover &.tint,
+    .is-active &.tint {
+      &::after {
+        opacity: 0.625;
+        transition: opacity global.$global-transition-medium global.$global-transition-timing;
+      }
+    }
+
+    &.square {
+      padding-bottom: 100%;
+      height: 0;
+    }
+
+    &.letterbox {
+      padding-bottom: 56.25%;
+      height: 0;
+    }
+
+    &.line {
+      background: var(--f-color-bg-2);
+      height: 10px;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        backdrop-filter: blur(50px) saturate(200%);
+        backdrop-filter: blur(20px);
+        transition: background-color global.$global-transition-medium global.$global-transition-timing;
+      }
+    }
+
+    &.feature-image {
+      background: var(--f-color-bg-1);
+      height: 100px;
+
+      &.large {
+        height: 200px;
+      }
+    }
+
+    &.variable {
+      padding-bottom: 0;
+      height: 100%;
+      max-height: 200px;
+
+      img {
+        position: relative;
+      }
+    }
+
+    &.full {
+      padding-bottom: 100vh;
+    }
+
+    @for $i from 1 through 8 {
+      $number: $i * 50;
+
+      &.height-#{$number} {
+        height: 100%;
+        padding-bottom: #{$number}px;
+      }
+    }
+  }
+}

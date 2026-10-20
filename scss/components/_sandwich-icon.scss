@@ -1,0 +1,83 @@
+@use "../custom-functions";
+@use "../custom-includes/foundation-spaces/global";
+@use "../custom-settings";
+
+// .sandwich-icon and .flat-arrow-down-icon: two-line CSS icons.
+
+@mixin styles {
+  .sandwich-icon,
+  .flat-arrow-down-icon {
+    cursor: pointer;
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    color: inherit;
+    box-sizing: border-box;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      display: block;
+      height: custom-settings.$icon-line-weight * 1px;
+      box-shadow: inset 0 0 0 custom-settings.$icon-line-weight * 1px currentcolor;
+      transition-duration: global.$global-transition-medium;
+      transition-timing-function: global.$global-transition-timing-cubic-bezier;
+    }
+  }
+
+  .sandwich-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::before,
+    &::after {
+      width: 20px;
+      transition-property: transform;
+    }
+
+    &::before {
+      @include custom-functions.cross-browser(transform, translate(0, -5px) rotate(0deg));
+    }
+
+    &::after {
+      @include custom-functions.cross-browser(transform, translate(0, 5px) rotate(0deg));
+    }
+  }
+
+  .flat-arrow-down-icon {
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+
+    &::before,
+    &::after {
+      width: 20px;
+      transition-property: transform;
+    }
+
+    &::before {
+      @include custom-functions.cross-browser(transform, translate(-45%, 0) rotate(22.5deg));
+
+      .is-active & {
+        @include custom-functions.cross-browser(transform, translate(-45%, 0) rotate(-22.5deg));
+      }
+    }
+
+    &::after {
+      @include custom-functions.cross-browser(transform, translate(45%, 0) rotate(-22.5deg));
+
+      .is-active & {
+        @include custom-functions.cross-browser(transform, translate(45%, 0) rotate(22.5deg));
+      }
+    }
+  }
+}

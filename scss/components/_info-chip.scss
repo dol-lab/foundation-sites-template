@@ -1,0 +1,216 @@
+@use "../colors";
+@use "../custom-functions";
+@use "../custom-includes/foundation-spaces/global";
+@use "../custom-includes/foundation-spaces/util/unit";
+@use "../custom-settings";
+
+// .info-chips (the row) and .info-chip (static or clickable chip).
+
+@mixin styles {
+  .info-chips {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  	gap: 2px;
+    font-size: unit.rem-calc(global.$global-font-size * 0.875);
+    max-width: 100%;
+    padding: 1px;
+
+    &.small {
+      font-size: unit.rem-calc(global.$global-font-size * 0.75);
+    }
+
+    &.large {
+      font-size: unit.rem-calc(global.$global-font-size);
+    }
+
+    // Opt-in: chips shrink + ellipsize (the label span already truncates) and expand on hover/focus.
+    // Lives on the container so the whole set shares the behavior and .info-chip stays a dumb unit.
+    &.chips-collapsible {
+      .info-chip {
+        max-width: 8rem;
+        transition: max-width 0.2s ease;
+
+        &:hover,
+        &:focus-within {
+          max-width: 20rem;
+        }
+
+        & > span {
+          min-width: 0; // allow the label to shrink so text-overflow: ellipsis applies
+        }
+      }
+    }
+
+    .flex-nowrap & {
+      flex-wrap: nowrap;
+      overflow: hidden;
+
+      .info-chip {
+        overflow: hidden;
+
+        span {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+
+    &.no-margin {
+      margin: 0 -3px;
+    }
+
+    @each $color-name, $color in colors.$foundation-palette {
+      &.#{$color-name} span {
+        background: var(--f-color-bg-2);
+        border-color: var(--f-color-bg-2);
+      }
+    }
+
+    @include custom-functions.foundation-palette($child: ".info-chip span:last-child", $property: "border-color", $hover: "false");
+    @include custom-functions.foundation-palette($child: ".info-chip span:last-child", $property: "background", $hover: "false");
+  }
+
+  .info-chip {
+    // Fills and the border color live in custom properties so the states below can
+    // swap them on the chip itself, without having to out-specify the `> span`
+    // rules. Default is the static chip: no fill of its own, a hairline border,
+    // and a tint on the key segment light enough to stay a seam rather than a
+    // grey block. The tint is anatomy (icon | key | value), not a state.
+    --_chip-bg: transparent;
+    --_chip-key-bg: #{custom-functions.color-mix-blend(var(--f-color-bg-2), 55%, var(--f-color-bg-1), 45%)};
+    --_chip-separator: var(--f-color-bg-2);
+    --_chip-ring: #{custom-settings.$info-chip-ring};
+
+    text-decoration: none !important;
+    display: flex;
+    background: var(--_chip-bg);
+    color: var(--f-color-text-0);
+    margin: 0.25em;
+    padding: 0 !important;
+    margin-left: 0;
+    border-radius: global.$global-radius;
+    overflow: hidden;
+    line-height: 1.3;
+    text-align: center;
+    cursor: default;
+    box-shadow: custom-settings.$info-border-shadow;
+
+    // A clickable chip is raised: a surface of its own (`bg-1`), a firmer border,
+    // and a drop shadow that deepens on hover. The chip stays put -- chips sit in
+    // dense rows, where a moving one shifts the reader's eye off the row it
+    // belongs to. A static chip has none of the three, which is the whole
+    // difference: nothing about it suggests pressing.
+    // The chip's own markup has to say so: an `[href]`, a <button>, or
+    // `.clickable` where the handler is in JS (same opt-in as `.card.clickable`).
+    // A chip that only sits inside a link stays flat: the row around it is the
+    // click target, and lighting up the chip promises one it does not have.
+    // `:where()` keeps this at .info-chip specificity, so .hollow / .clear win.
+    &:where([href], button, .clickable) {
+      --_chip-bg: var(--f-color-bg-1);
+      --_chip-ring: #{custom-settings.$info-chip-ring-clickable};
+
+      cursor: pointer;
+      box-shadow: custom-settings.$info-chip-shadow;
+      transition: box-shadow global.$global-transition-short global.$global-transition-timing;
+
+      &:hover,
+      &:focus-visible {
+        --_chip-ring: #{custom-settings.$info-chip-ring-hover};
+
+        box-shadow: custom-settings.$info-chip-shadow-hover;
+      }
+
+      &:active {
+        box-shadow: custom-settings.$info-chip-shadow;
+      }
+    }
+
+    /* & > span {
+  		padding: $info-chip-padding-round;
+  	} */
+    &.round {
+      border-radius: 2rem;
+    }
+
+    &.hollow {
+      --_chip-bg: transparent;
+      --_chip-key-bg: transparent;
+
+      &,
+      span,
+      span:last-child {
+        background: none;
+      }
+    }
+
+    &.clear {
+      width: 100%;
+      background: none;
+      margin: 1em 0;
+      flex-direction: column;
+      text-align: left;
+      color: var(--f-color-text-2);
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      & > span,
+      & > div,
+      & > a {
+        display: block;
+        padding: 0;
+        border: none;
+
+        &:last-child {
+          color: var(--f-color-text-0);
+          background: none;
+        }
+      }
+    }
+
+    & > span {
+      display: inline-block;
+      padding: custom-settings.$info-chip-padding;
+      align-self: center;
+      border-right: 1px solid var(--_chip-separator);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:first-child {
+        border-top-left-radius: global.$global-radius;
+        border-bottom-left-radius: global.$global-radius;
+      }
+
+      &:last-child {
+        @include custom-functions.foundation-palette($property: "background", $hover: "false");
+        @include custom-functions.foundation-palette($property: "border-color", $hover: "false");
+
+        border-right: none;
+      }
+
+      &:nth-child(2) {
+        background: var(--_chip-key-bg);
+      }
+    }
+
+    & > .icon {
+      line-height: 1.1rem;
+    }
+
+    a {
+      display: inline-block;
+      padding: custom-settings.$info-chip-padding;
+      background: var(--f-color-bg-2);
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+}

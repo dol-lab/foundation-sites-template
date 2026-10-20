@@ -92,9 +92,8 @@ function gulpInlinePartials() {
   });
 }
 
-// Deprecation noise from Foundation and the legacy @import tree. Steps 4 and 5
-// of plan.md remove the causes; until then the build would print thousands of
-// these.
+// Deprecation noise from motion-ui (node_modules), which still uses @import and
+// global built-in functions. scss/ itself compiles without warnings.
 const MUTED_WARNINGS = [
   'Sass @import rules are deprecated',
   'Deprecation',

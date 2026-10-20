@@ -1,0 +1,81 @@
+@use "../custom-includes/foundation-spaces/global";
+@use "../custom-settings";
+
+// .avatar-container (the corner and hover state of an avatar) and .avatar (its size).
+
+@mixin styles {
+  .avatar-container {
+    z-index: 20;
+    width: custom-settings.$avatar-default-size;
+    min-width: custom-settings.$avatar-default-size;
+
+    // The corner of an avatar is one property, set by whoever has an opinion about it:
+    // round in comments, squared off where the avatar sits in a corner of a card. Everything
+    // inside the container follows it, so nobody has to name the inner elements again.
+    border-radius: var(--f-avatar-radius, 0);
+
+    & > .clipped,
+    & > .avatar-trigger,
+    & img {
+      border-radius: inherit;
+    }
+
+    @each $avatar-size, $size in custom-settings.$avatar-sizes {
+      &.#{$avatar-size} {
+        width: $size;
+        min-width: $size;
+      }
+    }
+
+    img[data-toggle],
+    img[role="button"] {
+      cursor: pointer;
+      transition: global.$global-transition-short;
+    }
+
+    img[data-move] {
+      cursor: move;
+      transition: global.$global-transition-short;
+    }
+
+    &:hover img[data-toggle],
+    &:hover img[data-move],
+    &:hover img[role="button"],
+    img[role="button"].open,
+    [aria-expanded="true"] {
+      border-radius: global.$global-radius;
+      transform: scale(0.8);
+    }
+
+    &:focus-visible img[data-toggle],
+    &:focus-visible img[data-move],
+    &:focus-visible img[role="button"] {
+      border-radius: global.$global-radius;
+      transform: scale(0.9);
+    }
+
+    @each $size-label, $size in custom-settings.$avatar-sizes {
+      .#{$size-label} & {
+        width: $size;
+        min-width: $size;
+      }
+    }
+  }
+
+  .avatar {
+    flex: 0 0 auto;
+    width: custom-settings.$avatar-default-size;
+
+    img {
+      border-radius: global.$global-radius;
+    }
+
+    @each $avatar-size, $size in custom-settings.$avatar-sizes {
+      &.#{$avatar-size},
+      .avatar.#{$avatar-size} & {
+        width: $size;
+        height: $size;
+      }
+    }
+  }
+}

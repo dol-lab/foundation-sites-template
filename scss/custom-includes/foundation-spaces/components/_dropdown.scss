@@ -1,3 +1,5 @@
+@use "../global";
+
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
@@ -28,7 +30,7 @@ $dropdown-width: 250px !default;
 
 /// Border radius dropdown panes.
 /// @type Number
-$dropdown-radius: $global-radius !default;
+$dropdown-radius: global.$global-radius !default;
 
 /// Sizes for dropdown panes. Each size is a CSS class you can apply.
 /// @type Map
