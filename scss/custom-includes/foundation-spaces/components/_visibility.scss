@@ -38,6 +38,7 @@
     $lower-bound: unit.zf-bp-to-em($lower-bound-size);
   }
 
+  // stylelint-disable no-invalid-position-declaration -- a mixin: the declarations land in the including rule
   @if $upper-bound-size == null {
     @media screen and (max-width: $lower-bound) {
       display: none !important;
@@ -49,6 +50,7 @@
       display: none !important;
     }
   }
+  // stylelint-enable no-invalid-position-declaration
 }
 
 

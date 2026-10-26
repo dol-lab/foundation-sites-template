@@ -107,6 +107,7 @@ $accordionmenu-arrow-size: 4px !default;
               0 0 1px var(--f-color-neutral-500),
               var(--f-drop-shadow);
           }
+
           > a {
             color: var(--f-color-text-0);
           }
@@ -167,6 +168,7 @@ $accordionmenu-arrow-size: 4px !default;
     position: absolute;
     top: 0;
     #{global.$global-right}: 0;
+
     width: $accordionmenu-submenu-toggle-width;
     height: $accordionmenu-submenu-toggle-height;
     cursor: pointer;

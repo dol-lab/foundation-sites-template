@@ -24,8 +24,8 @@ $select-triangle-color: var(--f-color-text-1) !default;
 $select-radius: global.$global-radius !default;
 
 @mixin form-select {
-  $height: (text.$input-font-size * unit.unitless-calc(text.$input-line-height)) +
-    (value.get-side(text.$input-padding, "top") + value.get-side(text.$input-padding, "bottom")) - unit.rem-calc(1);
+  $padding: value.get-side(text.$input-padding, "top") + value.get-side(text.$input-padding, "bottom");
+  $height: (text.$input-font-size * unit.unitless-calc(text.$input-line-height)) + $padding - unit.rem-calc(1);
 
 
   --_f-chevron-for-dark: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMBJREFUeNrEllsOhCAMRVszC9IlzU7KCmVHTJsoMWYMUtpyv9BgbuXQB5ZSdgBYYY4ycgBivk8KYFsQMfMiTTBP4o3nUzCKzOabLJbLy2/g31evGkAginR4/ZegKH5qX3bJCscA3t0x3kgO5tQFyhhFf50xRqFLbyMUNJQzgyjGS/wgCpvKqkRBpuWrE4V9d+1E4dPUXqIg107SQOE/2DRQxMwTDygIInVDET9T3lCoj/6j/VCmGjZOl2lKpZ8AAwDQP7zIimDGFQAAAABJRU5ErkJggg==');

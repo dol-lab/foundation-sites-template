@@ -9,6 +9,7 @@
 /// The maximum width of a row.
 /// @type Number
 @use "../global";
+
 $grid-row-width: global.$global-width !default;
 
 /// The default column count of a grid. Changing this value affects the logic of the grid mixins, and the number of CSS classes output.

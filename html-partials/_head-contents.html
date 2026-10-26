@@ -1,11 +1,12 @@
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spaces Documentation</title>
+<title>Spaces Design System</title>
 <link rel="stylesheet" href="css/app.css">
+<link rel="alternate" type="text/markdown" href="llms.txt" title="This page as markdown, for agents">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
-<script rel="script" href="js/app.js"></script>
+<script src="js/app.js" defer></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="assets/foundation.min.js"></script>
 <script>
@@ -13,102 +14,3 @@
         jQuery(document).foundation();
     });
 </script>
-
-
-<style>
-    /* :root {
-        --f-color-brand-base: #ebade7;
-        --f-color-brand-base-contrast: #000000;
-    } */
-
-    /*color 1 & 2*/
-    html body .s-fg-c1 {
-        color: var(--f-color-brand);
-    }
-
-    html body .s-fg-c2 {
-        color: var(--f-color-brand-contrast);
-    }
-
-    body .is-active .s-fg-c1-active,
-    body .s-fg-c1-active.active,
-    body .active>.s-fg-c1-active {
-        color: var(--f-color-brand);
-    }
-
-    body .s-fg-c1-active.active,
-    body .active>.s-fg-c2-active {
-        color: var(--f-color-brand-contrast);
-    }
-
-    body .s-fg-c1-hover:hover {
-        color: var(--f-color-brand);
-    }
-
-    body .s-fg-c2-hover:hover {
-        color: var(--f-color-brand-contrast);
-    }
-
-    /*background-color 1*/
-    html body .s-bg-c1 {
-        background-color: var(--f-color-brand);
-    }
-
-    body .s-bg-c1-active.active,
-    body .active>.s-bg-c1-active {
-        background-color: var(--f-color-brand);
-    }
-
-    body .s-bg-c1-hover:hover {
-        background-color: var(--f-color-brand);
-    }
-
-    /*border-color 1*/
-    html body .s-bd-c1 {
-        border-color: var(--f-color-brand);
-        border-left-color: var(--f-color-brand);
-        border-top-color: var(--f-color-brand);
-        border-right-color: var(--f-color-brand);
-        border-bottom-color: var(--f-color-brand);
-    }
-
-    /*hover-color 1*/
-    body .s-bd-c1-hover:hover {
-        border-color: var(--f-color-brand);
-        border-left-color: var(--f-color-brand);
-        border-top-color: var(--f-color-brand);
-        border-right-color: var(--f-color-brand);
-        border-bottom-color: var(--f-color-brand);
-    }
-
-    /*active-color 1*/
-    body .s-bd-c1-active.active {
-        border-color: var(--f-color-brand);
-        border-left-color: var(--f-color-brand);
-        border-top-color: var(--f-color-brand);
-        border-right-color: var(--f-color-brand);
-        border-bottom-color: var(--f-color-brand);
-    }
-</style>
-
-<svg width="0" height="0" style="position:absolute; opacity: 0;">
-  <defs>
-    <clipPath id="space-container-path" clipPathUnits="objectBoundingBox">
-      <path d="
-        M0.901470588235294,0.07900067521944631
-        L0.40441176470588236,0.0027008777852802163
-        c-0.06102941176470589,-0.009453072248480757 -0.12279411764705882,0.008777852802160703 -0.16691176470588234,0.04929101958136394
-        L0.055882352941176466,0.21809588116137743
-        C0.01985294117647059,0.25118163403106014 0,0.29574611748818364 0,0.3423362592842674
-        v0.4713031735313977
-        c0,0.05334233625928427 0.04191176470588236,0.09790708311840787 0.09852941176470588,0.10668493560377358
-        l0.4970588235294117,0.07629979743416611
-        c0.06102941176470589,0.009453072248480757 0.12279411764705882,-0.008777852802160703 0.16691176470588234,-0.04861580013504389
-        l0.18161764705882352,-0.16677920324105333
-        c0.036029411764705886,-0.03308575286968265 0.055882352941176466,-0.07765023632680622 0.055882352941176466,-0.12424037812288993
-        V0.18568534773801487
-        c0,-0.05334233625928427 -0.04191176470588236,-0.09858203916272788 -0.09852941176470588,-0.10668467251856854
-        Z"/>
-    </clipPath>
-  </defs>
-</svg>

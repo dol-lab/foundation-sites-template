@@ -1,13 +1,12 @@
 @use "custom-functions";
-
 @use "sass:color";
 @use "sass:map";
 
 $button-height: 2.4rem;
+
 // Unified spacing scale (Tailwind-like system)
 // Used for both padding and margin utilities
 // Properly ordered from smallest to largest
-//
 $spacing-scale: (
   0: 0,
   // 0px
@@ -53,6 +52,7 @@ $avatar-sizes: (
   xxlarge: 240px,
 );
 $avatar-default-size: map.get($avatar-sizes, medium);
+
 // Dynamic spacing that changes based on breakpoint
 // Maps breakpoint names to spacing scale numbers
 $dynamic-relation: (
@@ -67,7 +67,8 @@ $dynamic-relation: (
 // Info Chip
 // ---------
 $info-chip-padding: 0.3em 0.6em;
-/* $info-chip-padding-round: 0.37em 0.8em; */
+$info-chip-padding-round-x: 0.75em;
+
 // Every chip has a 1px border, drawn as a ring shadow so it costs no layout.
 // Its color is `--_chip-ring`, which each state sets (see .info-chip): a
 // hairline on a static chip, a firm line on a clickable one. Deriving it from

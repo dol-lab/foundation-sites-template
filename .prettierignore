@@ -1,0 +1,2 @@
+# Prettier splits private Sass functions (-theme-pick, -header-size-at) into a minus sign: scss is stylelint's.
+*.scss

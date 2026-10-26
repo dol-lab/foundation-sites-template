@@ -15,9 +15,9 @@
 /// @type Color
 $form-label-color: inherit !default;
 
-/// Font size for form labels.
+/// Font size for form labels: the size of the text around them.
 /// @type Number
-$form-label-font-size: unit.rem-calc(14) !default;
+$form-label-font-size: inherit !default;
 
 /// Font weight for form labels.
 /// @type Keyword

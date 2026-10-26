@@ -7,8 +7,9 @@ vendor/
 # exclude all subdirectories + files
 node_modules/**
 
-# don't include this generated file.
+# don't include these generated files.
 index.html
+llms.txt
 
 css/**
 !css/*.css
@@ -17,3 +18,4 @@ _deleted
 # include all directories, not files (empty dirs are not tracked via git)
 !node_modules/**/
 !node_modules/what-input/dist/what-input.min.js
+shots/

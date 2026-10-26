@@ -1,6 +1,9 @@
 @use "../custom-includes/foundation-spaces/global";
+@use "../custom-includes/foundation-spaces/util/breakpoint";
 
 // .clipped: a media frame that crops its image (.square, .letterbox, .tint, .height-*).
+// .feature-image: a Space header, 80px on a card, .large 200px on the Space itself.
+// .clipped-title: a frosted label over that image, the Space's name.
 
 @mixin styles {
   .clipped {
@@ -26,11 +29,6 @@
       height: 100%;
       object-fit: cover;
       background: var(--f-color-bg-2);
-
-      @media screen and (width >= 0\0) and (resolution >= +72dpi) {
-        height: auto;
-        transform: translate(-50%, -50%);
-      }
     }
 
     &.tint {
@@ -102,12 +100,25 @@
       }
     }
 
+    // Without an image it shows a pattern in the palette's surface colors.
     &.feature-image {
-      background: var(--f-color-bg-1);
-      height: 100px;
+      --_s: 75px;
+      --_c1: var(--f-color-bg-2);
+      --_c2: var(--f-color-bg-0);
+      --_c3: var(--f-color-bg-1);
+
+      align-items: center;
+      height: 80px;
+      background:
+        repeating-conic-gradient(from 30deg, transparent 0 120deg, var(--_c3) 0 50%) calc(var(--_s) / 2)
+          calc(var(--_s) * 0.5774 / 2),
+        repeating-conic-gradient(from 30deg, var(--_c1) 0 60deg, var(--_c2) 0 120deg, var(--_c3) 0 50%);
+      background-size: var(--_s) calc(var(--_s) * 0.5774);
 
       &.large {
         height: 200px;
+        max-height: 25vw;
+        min-height: 64px;
       }
     }
 
@@ -132,6 +143,59 @@
         height: 100%;
         padding-bottom: #{$number}px;
       }
+    }
+  }
+
+  // Frosted so it stays legible on any image. One line on a card; two on a .large header, where
+  // it grows with the screen. An icon before the name (privacy) stays small.
+  .clipped > .clipped-title {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    max-width: 80%;
+    margin-top: 7%;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0 var(--f-radius-small) var(--f-radius-small) 0;
+    color: var(--f-color-text-0);
+    background: color-mix(in oklab, var(--f-color-bg-0) 55%, transparent);
+    backdrop-filter: blur(20px) saturate(200%);
+    font-size: 1rem;
+    line-height: 1.3;
+
+    & > .fa {
+      font-size: 0.75em;
+    }
+
+    // stylelint-disable-next-line no-descending-specificity -- not the same elements as .tint's children
+    & > :last-child {
+      overflow: hidden;
+      min-width: 0;
+      color: inherit;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .clipped.large > .clipped-title {
+    font-size: 1.05rem;
+
+    @include breakpoint.breakpoint(medium) {
+      font-size: 1.18125rem;
+    }
+
+    @include breakpoint.breakpoint(large) {
+      font-size: 1.3125rem;
+    }
+
+    & > :last-child {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      hyphens: auto;
+      white-space: normal;
     }
   }
 }

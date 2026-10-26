@@ -10,12 +10,6 @@
 
     .radio {
       height: auto;
-
-      &:has(input[type="radio"]:focus-visible) {
-        outline: 2px solid Highlight;
-        outline-offset: 2px;
-        border-radius: var(--f-radius-small);
-      }
     }
 
     .radio-accordion-item {

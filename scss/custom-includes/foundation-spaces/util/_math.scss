@@ -48,7 +48,7 @@
       $value: $value * $base;
     }
   } @else if $exponent < 1 {
-    @for $i from 0 through -$exponent {
+    @for $i from 0 through -1 * $exponent {
       $value: divide($value, $base);
     }
   }

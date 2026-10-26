@@ -35,6 +35,7 @@ $legend-padding: unit.rem-calc(0 3) !default;
     // Covers up the fieldset's border to create artificial padding
     margin: 0;
     margin-#{global.$global-left}: unit.rem-calc(-3);
+
     padding: $legend-padding;
   }
 }

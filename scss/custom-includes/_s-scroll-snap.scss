@@ -7,7 +7,6 @@
 @use "foundation-spaces/xy-grid/cell";
 @use "foundation-spaces/xy-grid/grid";
 @use "foundation-spaces/xy-grid/xy-grid";
-
 @use "sass:list";
 @use "sass:map";
 
@@ -217,6 +216,7 @@
 * $breakpoint-fallback is a start, not finished yet, though.
 * At the moment $global width should no exceed width of 'large' breakpoint.
 */
+// stylelint-disable-next-line no-duplicate-selectors -- kept with its doc comment; merging would reorder the output
 .scroll-snap-container-x {
   $widescreen-breakpoint: "";
 
@@ -262,9 +262,7 @@
 
             // This is where the magic happens.
             width: calc(
-              (#{$container-width} - #{$grid-container-gutter}) /
-                (#{float-grid.$grid-column-count} / #{$i}) -
-                #{$grid-margin-gutter}
+              (#{$container-width} - #{$grid-container-gutter}) / (#{float-grid.$grid-column-count} / #{$i}) - #{$grid-margin-gutter}
             );
           }
         }

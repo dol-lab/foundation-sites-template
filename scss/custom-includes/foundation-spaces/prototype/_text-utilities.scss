@@ -19,6 +19,7 @@ $prototype-text-overflow: ellipsis !default;
 
 /// Image Replacement utility. `text-hide`
 @mixin text-hide {
+  // stylelint-disable-next-line font-family-no-missing-generic-family-keyword -- `0/0 a` only hides the text
   font: 0/0 a !important;
   color: transparent !important;
   text-shadow: none !important;

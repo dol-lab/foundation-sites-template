@@ -16,7 +16,6 @@
     min-width: auto;
     flex-grow: 0;
     font-size: global.$paragraph-font-size;
-
     border: base.$hr-border;
     transition: box-shadow global.$global-transition-short global.$global-transition-timing;
     background-color: var(--f-color-bg-1);
@@ -38,6 +37,12 @@
     & > :is(.clipped, img, picture, video, figure):first-child {
       overflow: hidden;
       border-radius: card.$card-border-radius card.$card-border-radius 0 0;
+    }
+
+    // So does an avatar that opens the first section: it takes the card's top-left corner.
+    // An explicit --f-avatar-radius (round comment avatars) still wins.
+    & > .card-section:first-child > .avatar-container:first-child {
+      border-radius: var(--f-avatar-radius, #{card.$card-border-radius} 0 0 0);
     }
 
     &.overflow-auto {
@@ -91,7 +96,7 @@
 
     h1 {
       margin-bottom: 0;
-      word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     :not(.align-justify):not(.align-center) {
@@ -172,7 +177,7 @@
     & > a {
       text-decoration: none;
 
-      &::only-child:hover {
+      &:only-child:hover {
         background: var(--f-color-bg-2);
       }
     }

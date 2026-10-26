@@ -27,31 +27,41 @@
       }
     }
 
-    img[data-toggle],
-    img[role="button"] {
+    // `.avatar-trigger` takes the place of `.clipped` in an avatar that opens something
+    // (a link to the profile, or a `<span role="button">`). Its image shrinks while pointed at
+    // or open.
+    & > .avatar-trigger {
       cursor: pointer;
-      transition: global.$global-transition-short;
+
+      & img {
+        transition: global.$global-transition-short;
+      }
+
+      &:hover img,
+      &[aria-expanded="true"] img {
+        border-radius: global.$global-radius;
+        transform: scale(0.8);
+      }
+
+      &:focus-visible img {
+        border-radius: global.$global-radius;
+        transform: scale(0.9);
+      }
     }
 
-    img[data-move] {
-      cursor: move;
-      transition: global.$global-transition-short;
+    // A Foundation `.menu` pads its links, which would collapse the square.
+    .menu & > a.avatar-trigger {
+      padding: 0;
+
+      &.square {
+        padding-bottom: 100%;
+      }
     }
 
-    &:hover img[data-toggle],
-    &:hover img[data-move],
-    &:hover img[role="button"],
-    img[role="button"].open,
-    [aria-expanded="true"] {
-      border-radius: global.$global-radius;
-      transform: scale(0.8);
-    }
-
-    &:focus-visible img[data-toggle],
-    &:focus-visible img[data-move],
-    &:focus-visible img[role="button"] {
-      border-radius: global.$global-radius;
-      transform: scale(0.9);
+    @media (prefers-reduced-motion: reduce) {
+      & > .avatar-trigger img {
+        transition: none;
+      }
     }
 
     @each $size-label, $size in custom-settings.$avatar-sizes {

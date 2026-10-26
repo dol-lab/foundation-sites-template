@@ -74,7 +74,6 @@
 
     @if meta.type-of(grid.$grid-column-gutter) == 'map' {
       // Static (unresponsive) row gutters
-      //
       @each $breakpoint, $value in grid.$grid-column-gutter {
         &.#{$gutter}-#{$breakpoint} {
           > .#{$column} {

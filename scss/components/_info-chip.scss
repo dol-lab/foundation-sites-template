@@ -127,11 +127,17 @@
       }
     }
 
-    /* & > span {
-  		padding: $info-chip-padding-round;
-  	} */
+    // The curve takes room from the outer edges, so only they get more padding.
     &.round {
       border-radius: 2rem;
+
+      & > span:first-child {
+        padding-left: custom-settings.$info-chip-padding-round-x;
+      }
+
+      & > span:last-child {
+        padding-right: custom-settings.$info-chip-padding-round-x;
+      }
     }
 
     &.hollow {

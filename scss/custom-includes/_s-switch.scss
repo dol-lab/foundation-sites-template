@@ -126,6 +126,7 @@ $switch-cursor-disabled: not-allowed !default;
     position: absolute;
     top: $switch-paddle-offset;
     #{global.$global-left}: $switch-paddle-offset;
+
     display: block;
     width: $paddle-width;
     height: $paddle-height;
@@ -166,6 +167,7 @@ $switch-cursor-disabled: not-allowed !default;
 /// Adds styles for the active state text within a switch.
 @mixin switch-text-active {
   #{global.$global-left}: 8%;
+
   display: none;
 
   input:checked + label > & {
@@ -203,6 +205,7 @@ $switch-cursor-disabled: not-allowed !default;
   .switch-paddle::after {
     top: $paddle-offset;
     #{global.$global-left}: $paddle-offset;
+
     width: $paddle-width;
     height: $paddle-height;
   }
@@ -218,6 +221,7 @@ $switch-cursor-disabled: not-allowed !default;
     @include switch-container;
 
     height: $switch-height;
+
     &:has(input[type="checkbox"]:focus-visible) {
       outline: 2px solid Highlight;
       outline-offset: 2px;

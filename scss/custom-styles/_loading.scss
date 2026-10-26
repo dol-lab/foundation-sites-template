@@ -2,7 +2,6 @@
 
 // 20. Loading states
 // ---------
-//
 // Three ways to say "this is busy", from whole element to single control:
 //   .loading                on a container, marks every .loading-target inside it
 //   .card.loading           a card with no content yet (skeleton shimmer)
@@ -27,6 +26,7 @@
       box-shadow: inset 0 0 2px 1.2px var(--loading-target-color);
       mix-blend-mode: var(--loading-target-blend);
       animation: loading-mask 0.8s linear infinite;
+
       @include custom-functions.cross-browser(
         mask-image,
         radial-gradient(ellipse 100% 100% at center, var(--f-color-bg-2) 0%, transparent 40%)

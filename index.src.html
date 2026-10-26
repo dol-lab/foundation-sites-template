@@ -1,67 +1,51 @@
 <!doctype html>
-<html class="no-js" lang="en" style="--f-color-theme: #975938">
+<html class="no-js" lang="en" themed style="--f-color-theme: #975938">
 
 <head>
 	@@include('html-partials/_head-contents.html')
+	@@include('html-partials/_demo.html')
 </head>
 
-<body class="home blog logged-in admin-bar no-customize-support">
+<body>
 
 	@@include('html-partials/_main-nav.html')
 
-	<div class="space grid-container">
-
+	<div class="space grid-container pt-8">
 		<div class="grid-x grid-margin-x grid-margin-y">
-
-			@@include('html-partials/_breadcrumbs.html')
 
 			@@include('html-partials/_space-header.html')
 
-			@@include('html-partials/_sidebar.html')
+			@@include('html-partials/_index.html')
 
-			<div class="spaces-content cell large-8 swap-container-parent show-second">
-				<div class="spaces-static second-swap-container">
-					<div class="grid-x grid-margin-x grid-margin-y">
-						@@include('html-partials/_content-docs.html')
+			<main class="cell large-9">
+				<div class="grid-x grid-margin-y">
+					@@include('html-partials/_content-start.html')
+					@@include('html-partials/_content-colors.html')
+					@@include('html-partials/_content-typography.html')
 
-						@@include('html-partials/_content-post-4.html')
-						@@include('html-partials/_content-post-5.html')
-						@@include('html-partials/_content-post-2.html')
-						@@include('html-partials/_content-post-5.html')
-						@@include('html-partials/_content-post-1.html')
-						@@include('html-partials/_content-post-2.html')
-						@@include('html-partials/_content-post-3.html')
-						@@include('html-partials/_content-post-6.html')
+					@@include('html-partials/_content-accordion.html')
+					@@include('html-partials/_content-avatars.html')
+					@@include('html-partials/_content-badges.html')
+					@@include('html-partials/_content-breadcrumbs.html')
+					@@include('html-partials/_content-buttons.html')
+					@@include('html-partials/_content-callouts.html')
+					@@include('html-partials/_content-details.html')
+					@@include('html-partials/_content-forms.html')
+					@@include('html-partials/_content-info-chips.html')
+					@@include('html-partials/_content-menus.html')
+					@@include('html-partials/_content-modal.html')
+					@@include('html-partials/_content-pagination.html')
+					@@include('html-partials/_content-progress.html')
+					@@include('html-partials/_content-scroll-snap.html')
+					@@include('html-partials/_content-tabs.html')
 
-						@@include('html-partials/_content-tabs-thumbnail.html')
+					@@include('html-partials/_content-space.html')
 
-						@@include('html-partials/_content-details.html')
-
-						@@include('html-partials/_content-accordions.html')
-
-						@@include('html-partials/_content-slider.html')
-
-						@@include('html-partials/_content-modal.html')
-
-						@@include('html-partials/_content-menus.html')
-
-						@@include('html-partials/_content-misc.html')
-
-						@@include('html-partials/_content-labels.html')
-
-						@@include('html-partials/_content-callouts.html')
-
-						@@include('html-partials/_content-scrollsnap.html')
-
-						@@include('html-partials/_content-pagination.html')
-
-					</div>
+					@@include('html-partials/_content-reference.html')
 				</div>
-			</div>
+			</main>
 		</div>
 	</div>
-
-	@@include('html-partials/_styles-syntaxhighlighter.html')
 
 </body>
 

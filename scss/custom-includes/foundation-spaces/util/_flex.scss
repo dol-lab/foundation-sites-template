@@ -1,5 +1,4 @@
 @use "../global";
-
 @use "sass:map";
 
 @function zf-flex-justify($text-direction) {
@@ -17,7 +16,7 @@
 // Internal variable that contains the flex justifying options
 $zf-flex-justify: zf-flex-justify(global.$global-text-direction);
 
-
+// Internal variable that contains the flex alignment options
 $zf-flex-align: (
   'top': flex-start,
   'bottom': flex-end,

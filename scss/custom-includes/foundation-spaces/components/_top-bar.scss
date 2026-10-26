@@ -123,12 +123,14 @@ $topbar-unstack-breakpoint: medium !default;
     @include top-bar-container;
   }
 
+  // stylelint-disable-next-line no-duplicate-selectors -- one block per include keeps Foundation's output order
   .top-bar {
     // Stack on small screens by default
     @include top-bar-stacked;
   }
 
   // Top bar container
+  // stylelint-disable-next-line no-duplicate-selectors
   .top-bar {
     @include breakpoint.breakpoint($topbar-unstack-breakpoint) {
       @include top-bar-unstack;

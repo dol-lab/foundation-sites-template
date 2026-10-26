@@ -64,6 +64,7 @@ $buttongroup-radius-on-each: false !default;
   #{$child-selector} {
     margin: 0;
     margin-#{global.$global-right}: $spacing;
+
     margin-bottom: $spacing;
     font-size: map.get(s-button.$button-sizes, default);
 

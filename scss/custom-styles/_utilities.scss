@@ -326,12 +326,15 @@
   .rounded {
     border-radius: var(--f-radius);
   }
+
   .rounded-small {
     border-radius: var(--f-radius-small);
   }
+
   .rounded-none {
     border-radius: 0;
   }
+
   .rounded-full {
     border-radius: var(--f-radius-full);
   }

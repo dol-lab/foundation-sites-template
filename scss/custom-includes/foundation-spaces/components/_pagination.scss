@@ -90,6 +90,7 @@ $pagination-arrow-next: '\00BB' !default;
   $background-hover: $pagination-item-background-hover
 ) {
   margin-#{global.$global-left}: 0;
+
   margin-bottom: $margin-bottom;
 
   @include mixins.clearfix;
@@ -97,6 +98,7 @@ $pagination-arrow-next: '\00BB' !default;
   // List item
   li {
     margin-#{global.$global-right}: $spacing;
+
     border-radius: $radius;
     font-size: $font-size;
 
@@ -194,6 +196,7 @@ $pagination-arrow-next: '\00BB' !default;
     .pagination-previous.disabled::before {
       display: inline-block;
       margin-#{global.$global-right}: 0.5rem;
+
       content: $pagination-arrow-previous;
     }
 
@@ -201,6 +204,7 @@ $pagination-arrow-next: '\00BB' !default;
     .pagination-next.disabled::after {
       display: inline-block;
       margin-#{global.$global-left}: 0.5rem;
+
       content: $pagination-arrow-next;
     }
   }

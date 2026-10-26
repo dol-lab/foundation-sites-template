@@ -59,6 +59,7 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
 @mixin styles {
   @include forms.spaces-forms;
   @include typography.foundation-typography;
+
   // Grid class groups nothing uses, neither the platform nor index.html.
   // Flip one back on if a project needs it.
   @include classes.foundation-xy-grid-classes(
@@ -97,9 +98,11 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
   ///
 
   @include s-accordion.spaces-accordion;
+
   @if $include-media-object {
     @include media-object.foundation-media-object;
   }
+
   @include s-orbit.spaces-orbit;
   @include responsive-embed.foundation-responsive-embed;
   @include s-tabs.spaces-tabs;
@@ -111,9 +114,11 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
   @include s-menu.spaces-menu;
   @include menu-icon.foundation-menu-icon;
   @include s-accordion-menu.spaces-accordion-menu;
+
   @if $include-drilldown-menu {
     @include drilldown.foundation-drilldown-menu;
   }
+
   @include dropdown-menu.foundation-dropdown-menu;
 
   ///  Layout components
@@ -122,11 +127,14 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
   @if $include-off-canvas {
     @include off-canvas.foundation-off-canvas;
   }
+
   @include s-reveal.spaces-reveal;
+
   // @include foundation-sticky;
   @if $include-title-bar {
     @include title-bar.foundation-title-bar;
   }
+
   @if $include-top-bar {
     @include top-bar.foundation-top-bar;
   }
@@ -136,6 +144,7 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
   @include visibility.foundation-visibility-classes;
   @include prototype.foundation-prototype-classes;
   @include flex.foundation-flex-classes;
+
   @if $include-float-classes {
     @include float.foundation-float-classes;
   }

@@ -2,6 +2,8 @@
 css/
 *.map
 index.html
+llms.txt
 bun.lock
 assets/
 fonts/
+shots/

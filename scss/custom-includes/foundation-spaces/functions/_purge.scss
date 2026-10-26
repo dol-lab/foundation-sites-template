@@ -1,6 +1,5 @@
 @use "../helpers/true" as truthy;
 @use "to-list";
-
 @use "sass:list";
 
 /// Removes all false and null values from `$list`.

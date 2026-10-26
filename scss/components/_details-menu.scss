@@ -1,0 +1,88 @@
+@use "../custom-includes/foundation-spaces/global";
+@use "sass:list";
+
+// .details-menu: a <details> that folds a menu, the look of .accordion-menu without its JS. A flat row
+// while closed, a raised card inset by --offset while open. The summary paints --toggle-bg with a
+// --toggle-tint layer on top, so every state hovers the same way.
+
+@mixin styles {
+  .details-menu {
+    --offset: 0.5rem;
+    --toggle-bg: transparent;
+
+    width: 100%;
+    overflow: hidden;
+    transition: all var(--f-transition-medium);
+
+    // Mixed from the text color, not a --f-color-bg-* step: those sit next to the page background in
+    // light mode and read as a hole in the card.
+    &[open] {
+      --toggle-bg: color-mix(in oklab, var(--f-color-text-0) 6%, var(--f-color-bg-1));
+
+      width: calc(100% - var(--offset));
+      margin: calc(var(--offset) / 2);
+      border-radius: var(--f-radius);
+      background: var(--f-color-bg-1);
+      box-shadow: var(--f-drop-shadow);
+    }
+
+    & > summary {
+      --toggle-tint: transparent;
+
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: global.$global-menu-padding;
+      line-height: 1.15;
+      background-color: var(--toggle-bg);
+      background-image: linear-gradient(var(--toggle-tint), var(--toggle-tint));
+      list-style: none;
+      cursor: pointer;
+      transition: background-color var(--f-transition-short);
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      // A fixed box: the caret is the same width at every level, so what stands before it keeps one column.
+      &::after {
+        @extend .caret;
+
+        width: 0.75rem;
+        margin-left: auto;
+        font-size: 0.625rem;
+        color: var(--f-color-text-2);
+        text-align: center;
+        transform: rotate(-90deg);
+        transition:
+          transform var(--f-transition-medium),
+          color var(--f-transition-short);
+      }
+
+      &:hover,
+      &:focus-visible {
+        --toggle-tint: color-mix(in oklab, var(--f-color-text-0) 7%, transparent);
+
+        color: var(--f-color-text-0);
+
+        &::after {
+          color: var(--f-color-brand);
+        }
+      }
+    }
+
+    &[open] > summary {
+      box-shadow: inset 0 -1px var(--f-color-border-0);
+
+      &::after {
+        transform: rotate(-180deg);
+      }
+    }
+
+    // A nested fold is inset by half an --offset while open: its summary gives that back, so labels and
+    // carets stay in one column across levels.
+    & .details-menu[open] > summary {
+      padding-inline: calc(#{list.nth(global.$global-menu-padding, 2)} - var(--offset) / 2);
+    }
+  }
+}

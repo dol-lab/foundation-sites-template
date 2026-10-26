@@ -4,12 +4,26 @@ A themeable fork of [Foundation for Sites 6](https://get.foundation/sites/docs/)
 
 ## Build
 
+The package manager is [bun](https://bun.sh) (`packageManager` in `package.json`); `bun.lock` is the only lockfile. Do not add a `package-lock.json` or `yarn.lock`.
+
 ```sh
 bun install
-bunx gulp sass   # builds both css files (about 2 s)
-bun start        # watch, plus the demo page index.html (built from index.src.html + html-partials/)
-bun run lint     # stylelint on scss/
+bun run build       # both css files (about 2 s)
+bun run build:html  # the demo page index.html and llms.txt, from index.src.html + html-partials/
+bun start           # both builds, then watch and serve
+bun run lint        # stylelint on scss/
 ```
+
+The demo page is published to GitHub Pages on every push to `master` (`.github/workflows/pages.yml`).
+
+## The demo page
+
+`index.src.html` lists the sections; each is a partial `html-partials/_content-<id>.html` holding one `<section class="cell demo-section" id="<id>">`, linked from the table of contents in `_index.html`. `build-html.js` inlines `@@include('…')` (a `.md` file is rendered with marked) and expands two markers:
+
+- `<!-- example -->…<!-- /example -->` renders the markup and shows the same markup below it, so the code shown is the code rendered. A `<div class="demo-row">` wrapper is left out of the shown code.
+- `<!-- code -->…<!-- /code -->` shows the markup without rendering it.
+
+It also writes `llms.txt`, the page as markdown for agents: per section the title, id, intro and prose, each example's markup as a fenced block, then the reference `.md` files. A `.demo-captured` (captured Spaces markup shown in place, `_space-*.html`; a marker without style) is left out of it. Both outputs are gitignored and built by the Pages workflow.
 
 ## Files
 
@@ -54,8 +68,7 @@ Light/dark: the palette is written with `light-dark()` on `:root`, which sets `c
 
 ## To Do
 
-- Delete the stale tracked builds in `scss/` (`app*.css*`), `yarn.lock`, `package-lock.json`, `.github/`, `migrations/`; then `bun install` to resync `bun.lock`.
-- Demo markup: drop `.badge-space` and the top-bar and drilldown demos (now unstyled).
+- Delete the stale tracked builds in `scss/` (`app*.css*`), the Foundation issue and PR templates in `.github/`, and `migrations/`.
 - Move `.sms-*` (`custom-styles/_animations-focus.scss`) to the Milestones plugin.
 - Drop the aliases `.s-fg-a-c1-parent` (for `.brand-links`) and `.main-menu` (for `.app-header`) once no markup uses them.
 - Verify `rgb(from light-dark(…))` in Firefox and Safari; fix the existing `bun run lint` errors.
@@ -70,4 +83,14 @@ Light/dark: the palette is written with `light-dark()` on `:root`, which sets `c
 - `.ignore` keeps built and binary files out of ripgrep-based search (editors, coding agents). Never commit a second copy of a build output.
 - Info chips: a static chip is flat (hairline ring, no fill, full-contrast label); a clickable one (`[href]`, `<button>`, `.clickable`) gets a surface and a shadow, and does not move on hover. `[href]` is the signal because chips are `<a>` even without a link. The ring is a `0 0 0 1px` shadow (no layout cost), the shadow uses `--f-color-shadow` (never a text-derived color, which glows on dark), and the state selectors sit in `:where()` so `.hollow` and `.clear` still win.
 - `<details>` is unstyled unless it asks: `.details` (look and open animation), `.details-animated` (animation only), or any `<details>` inside `.user-generated`. Its `::details-content` is not matched by `*`, so the box model gets a rule of its own there (`_custom-normalize.scss`); without it everything inside a `<details>` is content-box.
-- `js/app.js` folds `[data-collapse="<breakpoint>"]` (a `<details>` or a Foundation `.accordion`) from that breakpoint up to the next one, on load. A `<details>` holding the URL's `:target` stays open.
+- `.details-menu` folds a menu into a `<details>` with the look of `.accordion-menu` (raised card while open) and no JS; it replaces Foundation's accordion menu. Its caret is the summary's `::after` (`.caret`), a fixed box so nested levels keep one column; a nested open fold gives back its half `--offset` in the summary's padding.
+- `js/app.js` folds `[data-collapse="<breakpoint>"]` (a `<details>` or a Foundation `.accordion`) from that breakpoint through the next one (`MediaQuery.upTo()` includes it): `small` folds below large. It acts on load and when the viewport enters or leaves that range, not on every breakpoint change, so a user who reopens it inside the range is not overruled. On leaving it reopens only what it folded (`data-collapsed`, cleared when the user opens it). A `<details>` holding the URL's `:target` stays open.
+- The breakpoints are not Foundation's: medium 30em (480px), large 45em (720px), xlarge 60em, xxlarge 75em (`util/_breakpoint.scss`). Hand-written media queries must use these.
+- Foundation's dropdown menu turns a `<ul>` that is a direct child of a menu `<li>` into a submenu, so content with its own list (tabs in a header panel) is wrapped in a `<div>`. In a `.menu`, an `<hr>` in its own `<li>` is a divider with a small margin: the items' padding spaces it.
+- Headings have no top margin: the block above sets the gap, and a table or list sets none. The library does not add one in `.user-generated`: Spaces puts that class on a post's outer `.card-divider` (title and header inside) and opens `.page-content` with a hidden `h1.reader-only`, so a sibling rule would also space those. The demo's rendered markdown spaces its headings in `_demo.html`.
+- Page-only CSS and JS live in `html-partials/_demo.html`, prefixed `demo-` (`ds-` is defaultspace's prefix). The controls card in `#start` (`_content-start.html`) swaps the Space header's image and sets `--f-color-theme` (from that image's `data-color`, or the picker) and `--f-color-brand-base` with a black or white `-contrast`. Nothing page-only goes into `scss/`; the page uses library classes, so a missing style there is a gap in the library.
+- Code style: `bun run lint` must pass (stylelint on all SCSS, Prettier on JS; `bun run lint:fix` fixes what it can). Each rule exception in `stylelint.config.js` says why; anything else is fixed or disabled inline with a `-- reason`. JS follows `.prettierrc.json` (`bun run format`). SCSS is checked by stylelint only and listed in `.prettierignore`: Prettier rewrites a private function call such as `-theme-pick(…)` into `- theme-pick(…)`, a minus sign that Sass compiles silently into the custom properties.
+- Agent tooling (no screenshot needed for most questions): `bun run check [id…]` builds CSS and page, lints and shoots, printing only failures and changed shots. `bun run probe '<selector>' [property…] [--width=375] [--state=<name>]` prints box, computed values and the matching rules with their SCSS line, as JSON. `bun run outline <partial> [depth]` prints a partial's element tree with line numbers.
+- `bun run shots [id…]` writes one PNG per `section[id]` and `nav[id]` (the header) at 375 and 1280px to `shots/`, plus the click states in `shots.config.js` (open header menus), and a `<stem>.json` of the shot's elements (box, computed style that differs from the tag's default, class, text). A changed shot prints its changed regions with the element each lies in, then what changed in the elements as text; pixels that changed with no element changing print as `noise` (hidden by `check`). It keeps `.prev.png` and a `.diff.png` (old | new, one row per region) until it changes again; shots over 1600px are split into `-1`, `-2`, …. Chromium renders an element differently depending on where it sits in the viewport and shifts one taller than the viewport while capturing it, so each target is scrolled to the top, nudged onto whole pixels (`translate`) and given a viewport it fits in; without that shots flap on unchanged source. Element keys skip Foundation's generated ids (`6ys753-…`), which change on every load. The body gradient is turned off for shots: it shows through sections and depends on their offset. Lazy images are forced eager and jQuery slides awaited, or shots flap. Playwright is not a dependency here: it resolves from spaces-markup's `node_modules` (this package lives in its `vendor/`), browser from `CHROME` or `/usr/bin/chromium`.
+- `gulpfile.js` compiles with `charset: false`: otherwise Sass counts a BOM in the source map that the returned CSS lacks, and every mapping (DevTools, `probe`) points one column early, into the previous rule.
+- `index.html` is gitignored. `build-html.js` builds it with only `marked`, so the Pages workflow runs it without gulp or sass and deploys the committed `css/`: rebuild and commit `css/` before pushing a style change, or the published page shows the old CSS.

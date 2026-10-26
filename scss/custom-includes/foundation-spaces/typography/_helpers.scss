@@ -161,6 +161,7 @@ $code-block-margin-bottom: 1.5rem !default;
     // Use to remove numbers from ordered list & bullets from unordered list
     &.no-bullet {
       margin-#{global.$global-left}: 0;
+
       list-style: none;
     }
   }

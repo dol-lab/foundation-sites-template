@@ -11,9 +11,9 @@
     justify-content: center;
     align-items: center;
 
-    &:not(.small) {
+    &:not(.tiny, .small) {
       min-height: custom-settings.$button-height;
-  		line-height: calc(custom-settings.$button-height / 2);
+      line-height: calc(custom-settings.$button-height / 2);
     }
 
     &.expanded {
@@ -42,7 +42,8 @@
       outline: none;
     }
 
-    &:last-child {
+    // A last button after another one keeps its margin, or it sits lower than its row.
+    &:last-child:not(.button + *) {
       margin-bottom: 0;
     }
 

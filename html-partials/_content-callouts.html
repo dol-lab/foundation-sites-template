@@ -1,79 +1,40 @@
-<div class="cell">
-    <div class="card static post-card">
-        <section class="card-section page-header pb-0 flex-dir-row">
-            <div class="flex flex-dir-column align-center">
-                <h2>Callouts</h2>
-            </div>
-            <div class="edit-bar align-self-top pr-0">
-                <button class="dots" type="button">
-                </button>
-            </div>
-        </section>
-        <!-- <div class="post-content">
-									<h2>Callouts</h2>
-								</div> -->
-        <div class="post-content">
+<section class="cell demo-section" id="callouts">
+    <div class="card static overflow-initial">
+        <div class="card-section">
+            <h2>Callouts</h2>
+            <p class="demo-intro"><code>.callout</code> sets a message apart from the text around it. Takes a palette color.</p>
+            <!-- example -->
             <div class="callout">
-                <h3>This is a default callout</h3>
-                <p>It has an easy to override visual style, and is appropriately subdued.</p>
-                <p>
-                    <a class="default" href="#">It's dangerous to go alone, take this default
-                        link.</a>
-                </p>
-                <a class="dropdown button" href="#">It's dangerous to go alone, take this default
-                    button.</a>
+                <h3>Default</h3>
+                <p>Subdued, for a side note. <a href="#">A link</a>.</p>
             </div>
             <div class="callout primary">
-                <h3>This is a primary callout</h3>
-                <p>It has an easy to override visual style, and is appropriately subdued.</p>
-                <p>
-                    <a class="primary" href="#">It's dangerous to go alone, take this primary
-                        link.</a>
-                </p>
-                <a class="button primary" href="#">It's dangerous to go alone, take this primary
-                    button.</a>
-            </div>
-            <div class="callout secondary">
-                <h3>This is a secondary callout</h3>
-                <p>It has an easy to override visual style, and is appropriately subdued.</p>
-                <p>
-                    <a class="secondary" href="#">It's dangerous to go alone, take this
-                        secondary
-                        link.</a>
-                </p>
-                <a class="button secondary" href="#">It's dangerous to go alone, take this
-                    secondary button.</a>
+                <h3>Primary</h3>
+                <p>Information the reader needs. <a href="#">A link</a>.</p>
+                <a class="button primary" href="#">Action</a>
             </div>
             <div class="callout success">
-                <h3>This is a success callout</h3>
-                <p>It has an easy to override visual style, and is appropriately subdued.</p>
-                <p>
-                    <a class="success" href="#">It's dangerous to go alone, take this success
-                        link.</a>
-                </p>
-                <a class="button success" href="#">It's dangerous to go alone, take this success
-                    button.</a>
+                <h3>Success</h3>
+                <p>Something worked.</p>
             </div>
             <div class="callout warning">
-                <h3>This is a warning callout</h3>
-                <p>It has an easy to override visual style, and is appropriately subdued.</p>
-                <p>
-                    <a class="warning" href="#">It's dangerous to go alone, take this warning
-                        link.</a>
-                </p>
-                <a class="button warning" href="#">It's dangerous to go alone, take this warning
-                    button.</a>
+                <h3>Warning</h3>
+                <p>Something needs attention.</p>
             </div>
             <div class="callout alert">
-                <h3>This is an alert callout</h3>
-                <p>It has an easy to override visual style, and is appropriately subdued.</p>
-                <p>
-                    <a class="alert" href="#">It's dangerous to go alone, take this altert
-                        link.</a>
-                </p>
-                <a class="button alert" href="#">It's dangerous to go alone, take this altert
-                    button.</a>
+                <h3>Alert</h3>
+                <p>Something went wrong.</p>
+                <a class="button alert" href="#">Retry</a>
             </div>
+            <!-- /example -->
+
+            <h3>Sizes</h3>
+            <p>A form's status message is a <code>.callout.small</code> (<code>role="status"</code>); <code>.large</code> adds room.</p>
+            <!-- example -->
+            <p class="callout small alert" role="status">Your answer could not be saved.</p>
+            <p class="callout small success" role="status">Saved.</p>
+            <div class="callout large primary"><p>A large callout.</p></div>
+            <!-- /example -->
         </div>
     </div>
-</div>
+</section>

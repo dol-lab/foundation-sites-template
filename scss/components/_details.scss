@@ -2,7 +2,7 @@
 
 // .details: disclosure with an animated open. Opt-in, so a plugin's own <details> starts from the
 // browser's look; what members write (.user-generated) gets it without a class.
-// .details-animated: the animation alone, for a disclosure that brings its own look.
+// .details-animated: the animation alone, for a disclosure that brings its own look (.details-menu has it).
 
 @mixin styles {
   .details,
@@ -79,7 +79,7 @@
     }
   }
 
-  :is(.details, .details-animated, .user-generated details)::details-content {
+  :is(.details, .details-animated, .details-menu, .user-generated details)::details-content {
     display: block;
     block-size: 0;
     overflow: hidden;
@@ -89,7 +89,7 @@
     transition-timing-function: ease-out;
   }
 
-  :is(.details, .details-animated, .user-generated details)[open]::details-content {
+  :is(.details, .details-animated, .details-menu, .user-generated details)[open]::details-content {
     block-size: auto;
     block-size: calc-size(auto, size);
   }

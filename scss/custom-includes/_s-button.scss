@@ -322,6 +322,7 @@ $button-responsive-expanded: false !default;
   } @else if $fill == clear {
     border-color: transparent;
     background-color: transparent;
+
     @include custom-functions.color-mix(color, var(--f-color-#{$name}), 10%, var(--f-color-text-0), 90%);
 
     &:hover,

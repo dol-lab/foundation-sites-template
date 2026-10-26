@@ -46,6 +46,7 @@
 @use "components/pagination";
 @use "components/callout";
 @use "components/details";
+@use "components/details-menu";
 @use "components/app-header";
 @use "custom-styles/utilities";
 @use "custom-styles/loading";
@@ -91,6 +92,7 @@
   @include pagination.styles;
   @include callout.styles;
   @include details.styles;
+  @include details-menu.styles;
   @include app-header.styles;
   @include utilities.styles;
   @include loading.styles;

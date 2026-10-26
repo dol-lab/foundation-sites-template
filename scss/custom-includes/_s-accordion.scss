@@ -67,6 +67,7 @@ $accordion-content-padding: 1rem !default;
   $background: $accordion-background
 ) {
   margin-#{global.$global-left}: 0;
+
   background: $background;
   list-style-type: none;
   border-radius: global.$global-radius;

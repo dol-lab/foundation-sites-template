@@ -54,7 +54,7 @@ $input-background-disabled: custom-functions.color-mix-opacity(var(--f-color-bg-
 
 /// Border color of disabled text inputs.
 /// @type Color
-$input-border-disabled: custom-functions.color-mix-opacity(var(--f-color-bg-2), 80%, 20%) !default;
+$input-border-disabled: var(--f-color-border-1) !default;
 
 /// Color of disabled text inputs.
 /// @type Color

@@ -17,6 +17,11 @@
         list-style: none;
       }
     }
+
+    // A divider between items: the items' own padding already spaces it.
+    & li > hr {
+      margin-block: 0.25rem;
+    }
   }
 
   li {

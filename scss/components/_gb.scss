@@ -11,6 +11,7 @@ $gb-variants: (
   @each $key, $val in $gb-variants {
     .gb-#{$key} {
       --_c2: color-mix(in oklab, var(--f-color-border-0) 10%, transparent);
+
       background: $val no-repeat;
       background-size: 100% 1px;
     }

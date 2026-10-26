@@ -118,6 +118,7 @@ $dropdown-menu-item-background-active: var(--f-color-bg-2) !default;
 
         #{global.$global-right}: 5px;
         #{global.$global-left}: auto;
+
         margin-top: -1 * ($dropdownmenu-arrow-size * 0.5);
       }
     }
@@ -222,6 +223,7 @@ $dropdown-menu-item-background-active: var(--f-color-bg-2) !default;
       top: 50%;
       #{global.$global-right}: 5px;
       #{global.$global-left}: auto;
+
       margin-top: -1 * $dropdownmenu-arrow-size;
     }
 
@@ -250,6 +252,7 @@ $dropdown-menu-item-background-active: var(--f-color-bg-2) !default;
     position: absolute;
     top: 0;
     #{global.$global-left}: 100%;
+
     z-index: 1;
     display: none;
     min-width: $dropdownmenu-min-width;

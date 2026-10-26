@@ -3,7 +3,6 @@
 @use "custom-includes/foundation-spaces/normalize/normalize";
 @use "custom-includes/foundation-spaces/global";
 @use "custom-includes/foundation-spaces/util/breakpoint";
-
 @include normalize.foundation-normalize;
 
 // These styles are applied to a <meta> tag, which is read by the Foundation JavaScript

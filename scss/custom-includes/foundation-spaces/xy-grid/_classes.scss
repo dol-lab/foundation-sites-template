@@ -53,6 +53,7 @@
 
   }
 
+  // stylelint-disable-next-line no-duplicate-selectors -- after .cell, as in Foundation's output order
   .grid-x {
     > .auto {
       @include cell.xy-cell-size(auto, $gutter-type: none);

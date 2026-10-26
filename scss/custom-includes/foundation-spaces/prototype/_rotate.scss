@@ -14,6 +14,7 @@
   transform: rotate($deg + deg);
 }
 
+// stylelint-disable scss/at-mixin-pattern -- named after the CSS functions they wrap; renaming breaks callers
 /// RotateX Mixin: Rotate an element to a certain deg on X-Axis
 /// @param {Number} $deg[] Degree of rotation
 @mixin rotateX($deg) {

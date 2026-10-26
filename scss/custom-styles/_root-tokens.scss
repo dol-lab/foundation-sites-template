@@ -5,7 +5,6 @@
 
 // 0a. Design tokens
 // ---------
-//
 // Custom properties only, and deliberately in a file of their own: they are
 // inherited, so they have to sit on :root. app-backend.scss wraps our styles
 // in `.f`, where a nested `:root` would compile to `.f :root` and never match,
@@ -26,7 +25,7 @@
     --f-transition-long: 500ms;
     --f-transition-timing: ease-in-out;
     --f-transition-timing-cubic-bezier: cubic-bezier(0.8, 0, 0.2, 1.2);
-  	--f-color-shadow: rgba(0, 0, 0, 0.13);
+  	--f-color-shadow: rgb(0 0 0 / 13%);
     --f-drop-shadow: 0 5px 20px var(--f-color-shadow),
       0 2px 5px color-mix(in srgb, var(--f-color-shadow) 50%, transparent);
     --f-drop-shadow-large: 0 14px 28px var(--f-color-shadow),

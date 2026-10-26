@@ -6,10 +6,13 @@
 @mixin styles {
   .prose-layout {
     display: grid;
+
     --target-offset-left: var(--min-offset-x); // overwrite this.
     --min-offset-x: clamp(0.75rem, 2vw, 2rem);
+
     padding-left: 0;
     padding-right: 0;
+
     --max-prose-width: calc(70ch * var(--font-ch-factor, 1)); // with is measured via 0-char, some fonts have wide chars.
 
     // Grid Layout:
@@ -17,7 +20,6 @@
     // 2. Center: Hard-set to 70ch to prevent the Right column's 1fr from crushing it.
     //	  It uses min() to remain responsive on screens narrower than 70ch + padding.
     // 3. Right: Consumes whatever space is left.
-    //
     grid-template-columns:
       minmax(var(--min-offset-x), var(--target-offset-left))
       minmax(min(100% - calc(var(--min-offset-x) * 2), var(--max-prose-width)), var(--max-prose-width))
@@ -36,13 +38,16 @@
 
     .alignwide {
       width: calc(100% - var(--f-spacing-3) * 2);
-      /*horizontally center */
+
+      /* horizontally center */
       margin-inline: auto;
+
       /* padding: var(--f-spacing-3); */
     }
 
     .alignfull:not(.is-style-rounded) {
       border-radius: 0;
+
       figure,
       img {
         border-radius: 0;

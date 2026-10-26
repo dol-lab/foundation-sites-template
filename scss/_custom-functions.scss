@@ -392,6 +392,7 @@
 ///
 /// @requires $global-focus
 ///
+
 /* @mixin a11y-focus {
   &:active,
   &:focus {
@@ -427,7 +428,7 @@
 ///
 @mixin a11y-focus-inset {
   outline: 2px solid transparent;
-  outline-offset: 0px;
+  outline-offset: 0;
   box-shadow: inset global.$global-focus;
 }
 
@@ -442,9 +443,11 @@
   @if $mode == "light" or $light == $dark {
     @return $light;
   }
+
   @if $mode == "dark" {
     @return $dark;
   }
+
   @return light-dark(#{$light}, #{$dark});
 }
 
@@ -467,6 +470,7 @@
 
   $brand: map.get(colors.$foundation-palette, "brand");
   $brand-contrast: map.get(colors.$foundation-palette-contrast, "brand");
+
   --f-color-brand: #{-theme-pick(
       $mode,
       "var(--f-color-brand-base, #{$brand})",

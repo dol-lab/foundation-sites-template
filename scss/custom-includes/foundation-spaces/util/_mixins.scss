@@ -33,13 +33,13 @@ $zf-bp-value: null;
   $helper: math.round($size * 0.65);
 
   @if $side == top {
-    box-shadow: inset 0 $helper $size (-1)*$helper $color;
+    box-shadow: inset 0 $helper $size (-1) * $helper $color;
   } @else if $side == left {
-    box-shadow: inset $helper 0 $size (-1)*$helper $color;
+    box-shadow: inset $helper 0 $size (-1) * $helper $color;
   } @else if $side == right {
-    box-shadow: inset (-1)*$helper 0 $size (-1)*$helper $color;
+    box-shadow: inset (-1) * $helper 0 $size (-1) * $helper $color;
   } @else if $side == bottom {
-    box-shadow: inset 0 (-1)*$helper $size (-1)*$helper $color;
+    box-shadow: inset 0 (-1) * $helper $size (-1) * $helper $color;
   }
 }
 
@@ -229,7 +229,7 @@ $zf-bp-value: null;
   height: 1px #{$important};
   padding: 0 #{$important};
   overflow: hidden #{$important};
-  clip: rect(0, 0, 0, 0) #{$important};
+  clip-path: inset(50%) #{$important};
   white-space: nowrap #{$important};
   border: 0 #{$important};
 }
@@ -245,7 +245,7 @@ $zf-bp-value: null;
   width: auto #{$important};
   height: auto #{$important};
   overflow: visible #{$important};
-  clip: auto #{$important};
+  clip-path: none #{$important};
   white-space: normal #{$important};
 }
 
