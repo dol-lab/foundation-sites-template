@@ -125,6 +125,34 @@
       & + .tabs-content .tabs-panel {
         border-top: #{list.nth(base.$hr-border, 1)} solid var(--f-color-border-2);
       }
+
+      // One underline anchored to the active tab, so it slides to the next one. Each tab bar
+      // scopes its own anchor; a browser that cannot keeps the underline on the tab above.
+      @supports (anchor-scope: all) {
+        position: relative;
+        anchor-scope: --f-active-tab;
+
+        .tabs-title:is(.is-active-tab, .is-active) > a {
+          anchor-name: --f-active-tab;
+          box-shadow: none;
+        }
+
+        &::after {
+          content: "";
+          display: block;
+          position: absolute;
+          position-anchor: --f-active-tab;
+          inset: auto anchor(right) anchor(bottom) anchor(left);
+          width: auto;
+          height: 2px;
+          background: var(--f-color-text-1);
+          transition: inset global.$global-transition-medium global.$global-transition-timing-cubic-bezier;
+
+          @media (prefers-reduced-motion: reduce) {
+            transition: none;
+          }
+        }
+      }
     }
 
     &.bar {

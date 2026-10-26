@@ -24,6 +24,6 @@ module.exports = {
   },
   "markup-open": {
     click: ["#buttons .demo-markup > summary"],
-    target: "#buttons .demo-markup",
+    target: "#buttons .demo-example",
   },
 };

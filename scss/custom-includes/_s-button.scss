@@ -341,9 +341,9 @@ $button-responsive-expanded: false !default;
 
 /// Adds a dropdown arrow to a button.
 /// @param {Number} $size [0.4em] - Size of the arrow. We recommend using an `em` value so the triangle scales when used inside different sizes of buttons.
-/// @param {Color} $color [white] - Color of the arrow.
+/// @param {Color} $color [currentColor] - Color of the arrow. Not `inherit`: it is one value of the `border-color` shorthand, where `inherit` drops the whole declaration.
 /// @param {Number} $offset [$button-padding] - Distance between the arrow and the text of the button. Defaults to whatever the right padding of a button is.
-@mixin button-dropdown($size: 0.4em, $color: inherit, $offset: value.get-side($button-padding, right)) {
+@mixin button-dropdown($size: 0.4em, $color: currentColor, $offset: value.get-side($button-padding, right)) {
   &::after {
     @include mixins.css-triangle($size, $color, down);
 

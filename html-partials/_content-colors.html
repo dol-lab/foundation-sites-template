@@ -4,11 +4,18 @@
             <h2>Colors</h2>
             <p class="demo-intro">Custom properties are the source of truth. Use the roles, never a literal, so Space theming and dark mode reach every component. Pick a Space color above the header to see the surfaces follow it.</p>
 
-            <h3>Surfaces, text, borders</h3>
+            <h3>Surfaces</h3>
+            <p>The backgrounds are layers: the page, a card on it, and a surface on the card (radio tabs, a disabled field).</p>
+            <div class="demo-layers">
+                <code>--f-color-bg-0</code><small>page</small>
+                <div>
+                    <code>--f-color-bg-1</code><small>cards</small>
+                    <div><code>--f-color-bg-2</code><small>on a card</small></div>
+                </div>
+            </div>
+
+            <h3>Text, borders</h3>
             <div class="demo-swatches">
-                <div class="demo-swatch" style="--swatch: var(--f-color-bg-0)"><code>--f-color-bg-0</code><small>page</small></div>
-                <div class="demo-swatch" style="--swatch: var(--f-color-bg-1)"><code>--f-color-bg-1</code><small>cards</small></div>
-                <div class="demo-swatch" style="--swatch: var(--f-color-bg-2)"><code>--f-color-bg-2</code><small>raised</small></div>
                 <div class="demo-swatch" style="--swatch: var(--f-color-text-0)"><code>--f-color-text-0</code><small>headings</small></div>
                 <div class="demo-swatch" style="--swatch: var(--f-color-text-1)"><code>--f-color-text-1</code><small>body</small></div>
                 <div class="demo-swatch" style="--swatch: var(--f-color-text-2)"><code>--f-color-text-2</code><small>muted</small></div>

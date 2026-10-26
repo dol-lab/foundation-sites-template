@@ -57,9 +57,11 @@ function renderExamples(html) {
   return html
     .replace(
       EXAMPLE_RE,
-      (_m, body) => `<div class="demo-example">
+      (_m, body) => `<figure class="demo-example">
+<div class="demo-preview">
 ${body}</div>
-<details class="demo-markup"><summary>Markup</summary>${codeBlock(body)}</details>
+<details class="demo-markup"><summary>Code</summary>${codeBlock(body)}</details>
+</figure>
 `,
     )
     .replace(CODE_RE, (_m, body) => codeBlock(body));

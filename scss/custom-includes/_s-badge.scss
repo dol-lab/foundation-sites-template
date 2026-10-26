@@ -72,6 +72,14 @@ $badge-rounding: 2 !default;
   .badge {
     @include badge-base;
 
+    // An icon sits like a digit: Font Awesome's 1.25em width would stretch the badge into a pill,
+    // and its glyph is taller than a digit's.
+    & > :is(.fa, .fas, .far) {
+      --fa-width: 1em;
+
+      font-size: 0.85em;
+    }
+
     &:not(.hollow, .clear) {
       background: $badge-background;
       color: $badge-color;

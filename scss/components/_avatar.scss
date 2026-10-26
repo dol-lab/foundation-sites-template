@@ -12,7 +12,7 @@
     // The corner of an avatar is one property, set by whoever has an opinion about it:
     // round in comments, squared off where the avatar sits in a corner of a card. Everything
     // inside the container follows it, so nobody has to name the inner elements again.
-    border-radius: var(--f-avatar-radius, 0);
+    border-radius: var(--f-avatar-radius, #{global.$global-radius});
 
     & > .clipped,
     & > .avatar-trigger,
