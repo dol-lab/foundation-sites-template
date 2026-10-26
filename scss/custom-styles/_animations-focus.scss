@@ -60,6 +60,27 @@
     }
   }
 
+  // Reduced motion, one rule for all: everything jumps to its end state. Not 0s, which would
+  // skip the transitionend/animationend that Foundation's Motion waits for. A spinner keeps
+  // turning: frozen, it no longer says "busy". `*` does not match `::details-content`.
+  @media (prefers-reduced-motion: reduce) {
+    :not(.spinner),
+    ::before,
+    ::after,
+    ::details-content {
+      // stylelint-disable-next-line declaration-no-important -- must beat every component's own transition
+      transition-duration: 0.01ms !important;
+      // stylelint-disable-next-line declaration-no-important -- as above
+      transition-delay: 0s !important;
+      // stylelint-disable-next-line declaration-no-important -- as above
+      animation-duration: 0.01ms !important;
+      // stylelint-disable-next-line declaration-no-important -- as above
+      animation-iteration-count: 1 !important;
+      // stylelint-disable-next-line declaration-no-important -- as above
+      scroll-behavior: auto !important;
+    }
+  }
+
   // 28. Swiper
   // ---------
   // (No custom swiper styles in the original file)

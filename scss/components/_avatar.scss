@@ -58,12 +58,6 @@
       }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      & > .avatar-trigger img {
-        transition: none;
-      }
-    }
-
     @each $size-label, $size in custom-settings.$avatar-sizes {
       .#{$size-label} & {
         width: $size;

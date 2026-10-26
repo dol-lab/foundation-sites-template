@@ -147,10 +147,6 @@
           height: 2px;
           background: var(--f-color-text-1);
           transition: inset global.$global-transition-medium global.$global-transition-timing-cubic-bezier;
-
-          @media (prefers-reduced-motion: reduce) {
-            transition: none;
-          }
         }
       }
     }

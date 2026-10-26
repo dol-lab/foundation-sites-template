@@ -3,6 +3,13 @@
  */
 
 !(function (window, document, $) {
+  // jQuery's slides (Foundation's accordions, the tabs below) are not CSS, so the reduced-motion rule misses them.
+  var reduced_motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  $.fx.off = reduced_motion.matches;
+  reduced_motion.addEventListener("change", function (e) {
+    $.fx.off = e.matches;
+  });
+
   $(function () {
     $(".tabs[data-transition]").map(function () {
       var el = $(`.tabs-content[data-tabs-content=${this.id}]`);
@@ -15,8 +22,8 @@
     var tab_id = $(this).attr("href")
       ? $(this).attr("href")
       : $(this).attr("data-tabs-target")
-      ? "#" + $(this).attr("data-tabs-target")
-      : "";
+        ? "#" + $(this).attr("data-tabs-target")
+        : "";
     var tabs_id = $(this).parents(".tabs").attr("id");
     var tabs_title = $(this).parents(".tabs-title");
     var tabs_content = $(`.tabs-content[data-tabs-content=${tabs_id}]`);
