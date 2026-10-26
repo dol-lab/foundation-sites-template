@@ -1,20 +1,28 @@
 <section class="cell demo-section" id="start">
-	<div class="card static">
-        <div class="card-section">
-            <div class="demo-controls" id="demo-controls">
-                <div class="demo-control" id="header-image-choice" role="group" aria-labelledby="header-image-label">
-                    <span id="header-image-label">Header image</span>
+    <div class="card static demo-controls-card">
+        <div class="card-section demo-controls" id="demo-controls">
+            <div class="demo-control" id="header-image-choice" role="group" aria-labelledby="header-image-label">
+                <span class="demo-label" id="header-image-label">Header image</span>
+                <div>
                     <button type="button" class="demo-thumb is-current" aria-pressed="true" data-color="#975938"><img src="assets/img/img-header--1.png" alt="Image 1"></button>
                     <button type="button" class="demo-thumb" aria-pressed="false" data-color="#a3c3f3"><img src="assets/img/chris-lutke-RJ0AtWtDlKM-unsplash.jpg" alt="Image 2"></button>
                     <button type="button" class="demo-thumb" aria-pressed="false" data-color="#A63017"><img src="assets/img/img-header--2.png" alt="Image 3"></button>
                     <button type="button" class="demo-thumb" aria-pressed="false" data-color="#4A9A6D"><img src="assets/img/img-header--4.png" alt="Image 4"></button>
                 </div>
-                <div class="demo-control">
-                    <label for="theme-color">Theme</label>
+            </div>
+            <div class="demo-control">
+                <label class="demo-label" for="theme-color">Theme</label>
+                <div>
+                    <div class="switch small brand m-0">
+                        <input class="switch-input" role="switch" id="themingSwitch" type="checkbox" checked>
+                        <label class="switch-paddle" for="themingSwitch"><span class="show-for-sr">Themed Space</span></label>
+                    </div>
                     <input type="color" id="theme-color" value="#975938">
                 </div>
-                <div class="demo-control">
-                    <label for="brand-color">Brand</label>
+            </div>
+            <div class="demo-control">
+                <label class="demo-label" for="brand-color">Brand</label>
+                <div>
                     <input type="color" id="brand-color" value="#db3b01">
                     <button type="button" class="button clear tiny" id="brand-color-reset" hidden>Reset</button>
                 </div>

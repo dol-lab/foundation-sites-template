@@ -4,7 +4,7 @@
             <summary>Contents</summary>
             <div class="demo-index-groups">
                 <div>
-                    <h2>Start</h2>
+                    <h2 class="demo-label">Start</h2>
                     <ul class="menu vertical">
                         <li><a href="#start">Getting started</a></li>
                         <li><a href="#colors">Colors</a></li>
@@ -12,7 +12,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h2>Components</h2>
+                    <h2 class="demo-label">Components</h2>
                     <ul class="menu vertical">
                         <li><a href="#accordion">Accordion</a></li>
                         <li><a href="#avatars">Avatars</a></li>
@@ -32,14 +32,14 @@
                     </ul>
                 </div>
                 <div>
-                    <h2>Spaces</h2>
+                    <h2 class="demo-label">Spaces</h2>
                     <ul class="menu vertical">
                         <li><a href="#post-cards">Post cards</a></li>
                         <li><a href="#sidebar">Sidebar</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h2>Reference</h2>
+                    <h2 class="demo-label">Reference</h2>
                     <ul class="menu vertical">
                         <li><a href="#helper-classes">Helper classes</a></li>
                         <li><a href="#variables">CSS variables</a></li>
@@ -48,5 +48,24 @@
                 </div>
             </div>
         </details>
+        <div class="card-section demo-index-mode">
+            <fieldset class="radio-tabs radio-tabs-icons stretch small hollow" data-color-mode aria-label="Color theme">
+                <label for="demo-mode-light" class="radio-tabs-option" aria-label="Light">
+                    <i class="fa-solid fa-sun"></i>
+                    <input id="demo-mode-light" type="radio" name="demo_color_mode" value="light">
+                    <span>Light</span>
+                </label>
+                <label for="demo-mode-dark" class="radio-tabs-option" aria-label="Dark">
+                    <i class="fa-solid fa-moon"></i>
+                    <input id="demo-mode-dark" type="radio" name="demo_color_mode" value="dark">
+                    <span>Dark</span>
+                </label>
+                <label for="demo-mode-auto" class="radio-tabs-option" aria-label="System">
+                    <i class="fa-solid fa-desktop"></i>
+                    <input id="demo-mode-auto" type="radio" name="demo_color_mode" value="auto">
+                    <span>System</span>
+                </label>
+            </fieldset>
+        </div>
     </div>
 </nav>

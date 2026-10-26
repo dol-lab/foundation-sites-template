@@ -74,7 +74,7 @@ Same `--f-color-theme` input, two derivations (see
 | ------------------ | ---------------------------------------------- | --------------------------------------------- |
 | `--f-color-bg-0`   | `oklch(from theme 0.96 min(c/6, 0.01) h)`      | `oklch(from theme 0.19 min(c*0.6, 0.035) h)`  |
 | `--f-color-bg-1`   | `oklch(from theme 0.995 min(c/6, 0.01) h)`     | `oklch(from theme 0.23 min(c*0.6, 0.019) h)`  |
-| `--f-color-bg-2`   | `oklch(from theme 0.97 min(c/5, 0.025) h)`     | `oklch(from theme 0.32 min(c*0.6, 0.02) h)`   |
+| `--f-color-bg-2`   | `oklch(from theme 0.97 min(c/6, 0.012) h)`     | `oklch(from theme 0.32 min(c*0.6, 0.02) h)`   |
 | `--f-color-text-*` | `oklch(from theme 0.4–0.5 calc(c/3..c/9) h)`   | `color-mix` of dim theme into neutral-600/700 |
 
 In short: **light theme pulls lightness up + chroma way down**, **dark theme
