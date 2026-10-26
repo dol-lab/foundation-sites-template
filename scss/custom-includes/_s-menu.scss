@@ -77,8 +77,9 @@ $menu-icons-back-compat: true !default;
     li {
       @include mixins.disable-mouse-outline;
 
-      &:not(.menu-text):hover > a:not([role="tab"]),
-      &:not(.menu-text):active > a:not([role="tab"]) {
+      // A .details-link item also holds its caret and its open fold: its link hovers on its own (_details-menu.scss).
+      &:not(.menu-text, .details-link):hover > a:not([role="tab"]),
+      &:not(.menu-text, .details-link):active > a:not([role="tab"]) {
         background-color: $menu-item-background-hover;
       }
     }

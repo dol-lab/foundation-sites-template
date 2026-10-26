@@ -6,9 +6,17 @@
 // while closed, a raised card inset by --offset while open. The summary paints --toggle-bg with a
 // --toggle-tint layer on top, so every state hovers the same way.
 
+$offset: 0.5rem;
+$gap: 0.5rem;
+$caret-width: 0.75rem;
+$padding-y: list.nth(global.$global-menu-padding, 1);
+$padding-x: list.nth(global.$global-menu-padding, 2);
+$hover-tint: color-mix(in oklab, var(--f-color-text-0) 7%, transparent);
+$ring: 1.5rem;
+
 @mixin styles {
   .details-menu {
-    --offset: 0.5rem;
+    --offset: #{$offset};
     --toggle-bg: transparent;
 
     width: 100%;
@@ -32,7 +40,7 @@
 
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: $gap;
       padding: global.$global-menu-padding;
       line-height: 1.15;
       background-color: var(--toggle-bg);
@@ -49,7 +57,7 @@
       &::after {
         @extend .caret;
 
-        width: 0.75rem;
+        width: $caret-width;
         margin-left: auto;
         font-size: 0.625rem;
         color: var(--f-color-text-2);
@@ -64,9 +72,14 @@
         font-size: base.$small-font-size;
       }
 
+      // An .icons menu gives the icon its own margin (_icons.scss), as on the links beside it.
+      .icons & {
+        gap: 0;
+      }
+
       &:hover,
       &:focus-visible {
-        --toggle-tint: color-mix(in oklab, var(--f-color-text-0) 7%, transparent);
+        --toggle-tint: #{$hover-tint};
 
         color: var(--f-color-text-0);
 
@@ -87,7 +100,69 @@
     // A nested fold is inset by half an --offset while open: its summary gives that back, so labels and
     // carets stay in one column across levels.
     & .details-menu[open] > summary {
-      padding-inline: calc(#{list.nth(global.$global-menu-padding, 2)} - var(--offset) / 2);
+      padding-inline: calc(#{$padding-x} - var(--offset) / 2);
     }
+  }
+
+  // A parent that is also a link: a link inside a <summary> is nested in a button, so the <a> is the
+  // summary's sibling, laid over its row, and the summary only folds. The summary repeats the title,
+  // hidden (`aria-hidden`, named by `aria-label`), so the row wraps and grows as the link does. The link
+  // leaves a square --strip (a one-line row's height, `lh` resolving on the summary and on the link alike)
+  // to the summary, whose caret sits centered in a ring: a button of its own, told apart from the link
+  // before any hover (a summary that only folds has no ring). The summary's gap grows by what the ring's
+  // padding does, so its hidden title wraps where the link's does. Two targets, two hovers, one tint.
+  .details-link {
+    --strip: calc(#{2 * $padding-y} + 1lh);
+    --strip-pad: calc((var(--strip) - #{$ring}) / 2);
+
+    position: relative;
+
+    & > a {
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline: 0 var(--strip);
+      z-index: 1;
+      padding-inline-end: $gap;
+      line-height: 1.15;
+
+      &:is(:hover, :active) {
+        background-color: $hover-tint;
+      }
+    }
+
+    & > .details-menu > summary {
+      gap: calc(#{$gap} + var(--strip-pad));
+      background-image: linear-gradient(to left, var(--toggle-tint) var(--strip), transparent 0);
+
+      // Sizes in rem: the caret has its own small font size. Round, so the turning caret turns its ring in place.
+      &::after {
+        width: $ring;
+        height: $ring;
+        margin-block: $ring * -0.5; // taller than a line: takes no height, centered by align-self
+        line-height: $ring;
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 1px var(--f-color-border-0);
+      }
+
+      & > [aria-hidden="true"] {
+        visibility: hidden;
+      }
+    }
+
+    &:has(> .details-menu[open]) > a {
+      inset-block-start: $offset * 0.5;
+      inset-inline: $offset * 0.5 calc(var(--strip) + #{$offset * 0.5});
+    }
+  }
+
+  // Also beats the nested fold's padding above: the strip keeps its size at every level.
+  .details-link > .details-menu > summary,
+  .details-menu .details-link > .details-menu[open] > summary {
+    padding-inline-end: var(--strip-pad);
+  }
+
+  // Nested, an open summary gives half the offset back at its start (above): so does the link.
+  .details-menu .details-link:has(> .details-menu[open]) > a {
+    padding-inline-start: $padding-x - $offset * 0.5;
   }
 }

@@ -42,35 +42,42 @@
 
             <h3>Details menu</h3>
             <p>A <code>.details-menu</code> is a flat row while closed and a raised card while open; nested ones keep their carets in one column. No JS: find-in-page opens it, <code>name="…"</code> makes a group exclusive. Spaces folds the member list and a member's "Change role to" this way.</p>
+            <p>A parent that is also a link sits in <code>li.details-link</code>: the <code>&lt;a&gt;</code> comes before the <code>&lt;details&gt;</code> and lies over its row, the summary only folds (a link inside a summary would be nested in a button). The summary repeats the title in an <code>aria-hidden</code> span so the row wraps as the link does, and is named by <code>aria-label</code>. Spaces' main menu in the sidebar is built this way.</p>
             <!-- example -->
-            <div class="card static">
-                <details class="details-menu" open>
-                    <summary>Teaching</summary>
-                    <ul class="menu vertical">
-                        <li><a href="#">Schedule</a></li>
-                        <li>
-                            <details class="details-menu" open>
-                                <summary>Modules</summary>
-                                <ul class="menu vertical">
-                                    <li><a href="#">Module manual</a></li>
-                                    <li><a href="#">Examination regulations</a></li>
-                                </ul>
-                            </details>
-                        </li>
-                    </ul>
-                </details>
-                <details class="details-menu">
-                    <summary>Change role to</summary>
-                    <ul class="menu vertical">
-                        <li><a href="#">Member</a></li>
-                        <li><a href="#">Editor</a></li>
-                    </ul>
-                </details>
-            </div>
+            <ul class="menu vertical card static">
+                <li class="details-link">
+                    <a href="#">Teaching</a>
+                    <details class="details-menu" open>
+                        <summary aria-label="Teaching"><span aria-hidden="true">Teaching</span></summary>
+                        <ul class="menu vertical">
+                            <li><a href="#">Schedule</a></li>
+                            <li class="details-link">
+                                <a href="#">Modules</a>
+                                <details class="details-menu" open>
+                                    <summary aria-label="Modules"><span aria-hidden="true">Modules</span></summary>
+                                    <ul class="menu vertical">
+                                        <li><a href="#">Module manual</a></li>
+                                        <li><a href="#">Examination regulations</a></li>
+                                    </ul>
+                                </details>
+                            </li>
+                        </ul>
+                    </details>
+                </li>
+                <li>
+                    <details class="details-menu">
+                        <summary>Change role to</summary>
+                        <ul class="menu vertical">
+                            <li><a href="#">Member</a></li>
+                            <li><a href="#">Editor</a></li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
             <!-- /example -->
 
             <h3>Accordion menu</h3>
-            <p>Foundation's JS version, still in Spaces' sidebar. Prefer a details menu.</p>
+            <p>Foundation's JS version, still in Spaces' header on small screens (<code>data-responsive-menu</code>). Prefer a details menu.</p>
             <!-- example -->
             <ul class="vertical menu accordion-menu" data-accordion-menu>
                 <li>
