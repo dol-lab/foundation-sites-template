@@ -65,47 +65,28 @@
         display: none;
       }
 
-      ul {
-        button.submenu-toggle {
-          height: global.$paragraph-font-size + map.get(custom-settings.$spacing-scale, 3) + map.get(custom-settings.$spacing-scale, 3);
-
-          &:hover {
-            background-color: var(--f-color-bg-2);
-          }
-        }
-      }
-
-      button.submenu-toggle {
-        text-decoration: none;
+      // The toggle is as high as the link's first line; its caret sits centred and only turns.
+      & > button.submenu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: global.$paragraph-font-size + 2 * map.get(custom-settings.$spacing-scale, 3);
         border-radius: 0 global.$global-radius 0 0;
-        height: global.$paragraph-font-size + map.get(custom-settings.$spacing-scale, 3) + map.get(custom-settings.$spacing-scale, 3);
+        text-decoration: none;
 
         &:hover {
           background-color: var(--f-color-bg-2);
         }
 
         &::after {
-          position: absolute;
-          top: map.get(custom-settings.$spacing-scale, 3);
-          left: map.get(custom-settings.$spacing-scale, 3);
-
           @extend .caret;
+
+          transform: rotate(-90deg);
+          transition: transform global.$global-transition-medium;
         }
 
-        &[aria-expanded="false"] {
-          &::after {
-            transform: rotate(-90deg);
-            transition: global.$global-transition-medium;
-          }
-        }
-
-        &[aria-expanded="true"] {
-          &::after {
-            transform: rotate(-180deg);
-            transition: global.$global-transition-medium;
-            left: auto;
-            right: map.get(custom-settings.$spacing-scale, 3);
-          }
+        &[aria-expanded="true"]::after {
+          transform: rotate(-180deg);
         }
       }
     }
