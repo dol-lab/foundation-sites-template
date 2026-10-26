@@ -28,20 +28,32 @@
 	$(function () {
 		update_accordion_collapse();
 	});
+	/**
+	 * Closes `[data-collapse="<breakpoint>"]` disclosures from that breakpoint up to the next one:
+	 * a `<details>` or a Foundation `.accordion`.
+	 *
+	 * A `<details>` holding the URL's #target stays open: the browser opened it to reveal the
+	 * target, and that is the reason for the visit.
+	 */
 	function update_accordion_collapse() {
-		var accordion = $('.accordion[data-collapse]');
-		var breakpoint = accordion.attr('data-collapse');
-		var max = Foundation.MediaQuery.queries.findIndex(element => element.name == breakpoint) + 1;
-		var max_breakpoint = Foundation.MediaQuery.queries[max].name;
-		if (Foundation.MediaQuery.upTo(max_breakpoint) && Foundation.MediaQuery.atLeast(breakpoint)) {
-			// accordion.foundation('hideAll');
-			accordion.find('.accordion-item').removeClass('is-active');
-			accordion.find('.accordion-content').slideUp();
+		var queries = Foundation.MediaQuery.queries;
+		var target = document.querySelector(':target');
 
-		} else {
-			// ...
-		}
+		$('[data-collapse]').each(function () {
+			var breakpoint = this.getAttribute('data-collapse');
+			var next = queries[queries.findIndex(element => element.name == breakpoint) + 1];
+			if (!next || !Foundation.MediaQuery.atLeast(breakpoint) || !Foundation.MediaQuery.upTo(next.name)) {
+				return;
+			}
+
+			if (this.matches('details')) {
+				if (!(target && this.contains(target))) {
+					this.open = false;
+				}
+			} else if (this.matches('.accordion')) {
+				$(this).find('.accordion-item').removeClass('is-active');
+				$(this).find('.accordion-content').slideUp();
+			}
+		});
 	}
-
-	//data-collapse
 }(window, document, jQuery);

@@ -27,3 +27,10 @@ $box-sizing-all: "*" !default;
 #{$box-sizing-all}::after {
   box-sizing: inherit;
 }
+
+// A <details>' content inherits from this pseudo-element, which `*` does not match: without it
+// everything inside a <details> is content-box. Its own rule, since a browser that does not know
+// the pseudo-element drops the whole selector list.
+#{$box-sizing-all}::details-content {
+  box-sizing: inherit;
+}

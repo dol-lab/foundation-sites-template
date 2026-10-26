@@ -1,9 +1,12 @@
 @use "../custom-includes/foundation-spaces/typography/base";
 
-// <details> and .details: disclosure with an animated open.
+// .details: disclosure with an animated open. Opt-in, so a plugin's own <details> starts from the
+// browser's look; what members write (.user-generated) gets it without a class.
+// .details-animated: the animation alone, for a disclosure that brings its own look.
 
 @mixin styles {
-  details {
+  .details,
+  .user-generated details {
     border-left: 1px solid transparent;
     transition: all var(--f-transition-medium);
     border-bottom-left-radius: 0;
@@ -64,7 +67,7 @@
     }
 
     &:hover {
-      summary {
+      & > summary {
         filter: brightness(120%);
       }
 
@@ -76,7 +79,7 @@
     }
   }
 
-  .details::details-content {
+  :is(.details, .details-animated, .user-generated details)::details-content {
     display: block;
     block-size: 0;
     overflow: hidden;
@@ -86,7 +89,7 @@
     transition-timing-function: ease-out;
   }
 
-  .details[open]::details-content {
+  :is(.details, .details-animated, .user-generated details)[open]::details-content {
     block-size: auto;
     block-size: calc-size(auto, size);
   }
