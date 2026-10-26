@@ -34,33 +34,33 @@
             <!-- /example -->
 
             <h3>Checkboxes and radios</h3>
-            <p>The native input is hidden; <code>.checkbox-label</code> draws it. A <code>.label-wrapper</code> makes the visible text part of the click target.</p>
+            <p>The native input is hidden; <code>.checkbox-label</code> draws it. A <code>.label-wrapper</code> makes the visible text part of the click target; inside it the drawn control is an <code>aria-hidden</code> <code>&lt;span&gt;</code>, as labels must not nest.</p>
             <!-- example -->
             <label class="label-wrapper" for="demo-check-1">
                 <span class="checkbox small success">
                     <input class="checkbox-input" id="demo-check-1" type="checkbox" checked>
-                    <label class="checkbox-label" for="demo-check-1"></label>
+                    <span class="checkbox-label" aria-hidden="true"></span>
                 </span>
                 <span>Checked</span>
             </label>
             <label class="label-wrapper" for="demo-check-2">
                 <span class="checkbox small">
                     <input class="checkbox-input" id="demo-check-2" type="checkbox">
-                    <label class="checkbox-label" for="demo-check-2"></label>
+                    <span class="checkbox-label" aria-hidden="true"></span>
                 </span>
                 <span>Unchecked</span>
             </label>
             <label class="label-wrapper" for="demo-radio-1">
                 <span class="radio small">
                     <input class="radio-input" id="demo-radio-1" type="radio" name="demo-radio" checked>
-                    <label class="radio-label" for="demo-radio-1"></label>
+                    <span class="radio-label" aria-hidden="true"></span>
                 </span>
                 <span>Radio one</span>
             </label>
             <label class="label-wrapper" for="demo-radio-2">
                 <span class="radio small">
                     <input class="radio-input" id="demo-radio-2" type="radio" name="demo-radio">
-                    <label class="radio-label" for="demo-radio-2"></label>
+                    <span class="radio-label" aria-hidden="true"></span>
                 </span>
                 <span>Radio two</span>
             </label>

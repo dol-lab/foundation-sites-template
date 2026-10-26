@@ -2,7 +2,8 @@
 @use "../custom-includes/foundation-spaces/global";
 @use "../custom-includes/s-switch";
 
-// .checkbox and .radio with their .checkbox-label / .radio-label.
+// .checkbox and .radio with their .checkbox-label / .radio-label: a <label> for the input,
+// or an aria-hidden <span> when a .label-wrapper is the label (labels must not nest).
 
 @mixin styles {
   .checkbox,
@@ -27,10 +28,9 @@
       font-size: s-switch.$switch-height-large;
     }
 
-    .label-wrapper {
-      & > label {
-        padding-left: 0.5rem;
-      }
+    .label-wrapper > .checkbox-label,
+    .label-wrapper > .radio-label {
+      padding-left: 0.5rem;
     }
   }
 

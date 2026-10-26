@@ -96,7 +96,7 @@ $switch-cursor-disabled: not-allowed !default;
   opacity: 0;
 }
 
-/// Adds styles for the background and paddle of a switch. Apply this to a `<label>` within a switch.
+/// Adds styles for the background and paddle of a switch. Apply this to a `<label>` within a switch, or to a `<span>` when the switch sits in a label of its own.
 @mixin switch-paddle {
   $switch-width: $switch-height * 2;
   $paddle-height: $switch-height - ($switch-paddle-offset * 2);
@@ -157,7 +157,7 @@ $switch-cursor-disabled: not-allowed !default;
   }
 }
 
-/// Adds base styles for active/inactive text inside a switch. Apply this to text elements inside the switch `<label>`.
+/// Adds base styles for active/inactive text inside a switch. Apply this to text elements inside the `.switch-paddle`.
 @mixin switch-text {
   position: absolute;
   top: 50%;
@@ -170,7 +170,7 @@ $switch-cursor-disabled: not-allowed !default;
 
   display: none;
 
-  input:checked + label > & {
+  input:checked + .switch-paddle > & {
     display: block;
   }
 }
@@ -179,7 +179,7 @@ $switch-cursor-disabled: not-allowed !default;
 @mixin switch-text-inactive {
   #{global.$global-right}: 15%;
 
-  input:checked + label > & {
+  input:checked + .switch-paddle > & {
     display: none;
   }
 }
@@ -234,7 +234,7 @@ $switch-cursor-disabled: not-allowed !default;
     @include switch-input;
   }
 
-  // <label> element
+  // <label>, or <span> inside a label
   .switch-paddle {
     @include switch-paddle;
   }
