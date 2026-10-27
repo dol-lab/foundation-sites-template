@@ -81,7 +81,7 @@ Handover:
 
 Order matters: the library goes first, consumers follow, nothing is removed before consumers stop using it. The demo is published by the Pages workflow (not a committed `index.html`). spaces-markup keeps `dev-master`; its `vendor/` reaches production through `spaces-markup/composer.json`.
 
-- removes aliases and the Foundation accordion code no consumer uses any more (flags in `_custom-foundation-includes.scss`). Still in use: the accordion plugin by child-member `page-members.php` (`data-responsive-accordion-tabs`), the accordion menu by spaces-markup `main-menu.compiled.php` and spaces-frame (`data-responsive-menu` at small widths). -- refactor consumers.
+- removes aliases and the Foundation accordion code no consumer uses any more (flags in `_custom-foundation-includes.scss`). Still in use: the accordion plugin by child-member `page-members.php` (`data-responsive-accordion-tabs`) -- refactor consumers. The accordion menu has no consumer left (the header's burger is a `.details-menu` list): drop `_s-accordion-menu.scss`, `components/_accordion-menu.scss`, the `.accordion-menu` exceptions in `_s-menu.scss` and AccordionMenu/ResponsiveMenu from `foundation.min.js` once spaces-markup ships the new header.
 
 - [x] GitHub Actions: `actions/deploy-pages@v4` and `actions/upload-artifact` target the deprecated Node.js 20 (forced onto Node.js 24); bump them.
 

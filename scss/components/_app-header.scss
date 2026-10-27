@@ -1,12 +1,55 @@
+@use "../custom-includes/foundation-spaces/util/breakpoint";
+@use "../custom-includes/foundation-spaces/util/unit";
+@use "sass:map";
+
 // App header
 // ---------
 // The site header: a bar holding one `.menu.dropdown` (brand, entries with dropdown panels, icon
-// buttons), which Foundation's responsive menu turns into a `.menu.accordion-menu` at small widths.
-// Entry classes: `.navbar-icon` (icon button, its `span` label shows in the dropdown only),
+// buttons) and the burger, a `.menu.vertical.app-header-burger` after it.
+// Entry classes: `.navbar-icon` (icon button, its `span` label shows in the bar only),
 // `.menu-main-expand` (panel spans the header width), `.no-arrow`, `.search`, `.avatar`,
-// `.main-menu-burger`. At small widths only `.navbar-icon` entries show; the consumer opens the
-// rest (the open state lives outside the header, so outside the back-end build's `.f` scope).
-// `.main-menu` is the old name, kept as an alias.
+// `.main-menu-burger`. `.collapse-below-<breakpoint>` collapses the bar below that breakpoint: only
+// `.navbar-icon` entries show, the others are listed again in the burger (`.details-menu` folds), which
+// the consumer opens (the open state lives outside the header, so outside the back-end build's `.f`
+// scope). `.main-menu` is the old name, kept as an alias.
+
+// The bar below the breakpoint.
+@mixin collapsed {
+  & .menu.dropdown {
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  & .menu.dropdown > li:not(.navbar-icon) {
+    display: none;
+  }
+
+  & .menu.dropdown > li.navbar-icon {
+    justify-content: center;
+    flex-grow: 0;
+    flex-basis: 0;
+  }
+
+  & .menu.dropdown > li.navbar-icon > a {
+    padding-inline: 0.75rem;
+  }
+
+  & .menu.dropdown > .navbar-icon > a > span {
+    display: none;
+  }
+
+  & .menu.dropdown > .navbar-icon > a > span + :is(svg, i) {
+    display: initial;
+  }
+
+  & .menu.dropdown > .navbar-icon > a::after {
+    display: none;
+  }
+
+  & .menu.dropdown .search {
+    margin-left: 0;
+  }
+}
 
 @mixin styles {
   .app-header,
@@ -114,63 +157,13 @@
       margin-left: auto;
     }
 
-    & .menu.accordion-menu {
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    & .menu.accordion-menu a {
-      padding-inline: 0.75rem;
-    }
-
-    & .menu.accordion-menu > li.navbar-icon {
-      justify-content: center;
-      flex-grow: 0;
-      flex-basis: 0;
-    }
-
-    & .menu.accordion-menu > li.navbar-icon.search {
-      display: flex;
-    }
-
-    & .menu.accordion-menu > li.navbar-icon > a > span {
-      display: none;
-    }
-
-    & .menu.accordion-menu > li.navbar-icon > a::after {
-      display: none;
-    }
-
-    & .menu.accordion-menu > li > .menu-anchor {
-      height: 48px;
-      box-sizing: border-box;
-      align-items: center;
-      display: flex;
-      color: var(--f-color-text-1);
-      fill: currentcolor;
-    }
-
-    & .menu.accordion-menu > li:not(.navbar-icon) {
-      display: none;
-    }
-
-    & .menu.accordion-menu > .flex-spacer-left {
-      margin-left: initial;
-    }
-
-    & .menu.accordion-menu[data-multi-open="false"] .is-accordion-submenu-parent[aria-expanded="true"] {
-      box-shadow: none;
-      width: 100%;
-      margin: initial;
-    }
-
     & .is-dropdown-submenu-parent.is-active .menu-anchor,
     & .dropdown .menu-anchor:hover {
       background: var(--f-color-bg-2);
       color: var(--f-color-text-0);
     }
 
-    & > * > :is(.dropdown, .accordion-menu) {
+    & > * > .dropdown {
       & .submenu {
         border-top: 1px solid var(--f-color-border-0);
         border-radius: 0 0 var(--f-radius) var(--f-radius);
@@ -211,6 +204,25 @@
 
       & .main-menu-burger > a {
         padding: 0;
+      }
+    }
+
+    & .app-header-burger {
+      display: none;
+    }
+
+    & .app-header-burger > li > .menu-anchor {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  @each $size in breakpoint.$breakpoint-classes {
+    @if $size != breakpoint.$zf-zero-breakpoint {
+      @include breakpoint.breakpoint(unit.zf-bp-to-em(map.get(breakpoint.$breakpoints, $size)) - 0.00125 down) {
+        :is(.app-header, .main-menu).collapse-below-#{$size} {
+          @include collapsed;
+        }
       }
     }
   }

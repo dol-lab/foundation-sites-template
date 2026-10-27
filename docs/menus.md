@@ -45,7 +45,7 @@ Opened here by `.dots`, the button Spaces puts in the corner of a card. Spaces' 
 
 ## Details menu
 
-A `.details-menu` is a flat row while closed and a raised card while open; nested ones keep their carets in one column. No JS: find-in-page opens it, `name="…"` makes a group exclusive. Spaces folds the member list and a member's "Change role to" this way.
+A `.details-menu` is a flat row while closed and a raised card while open; nested ones keep their carets in one column. No JS: find-in-page opens it, `name="…"` makes a group exclusive. Spaces folds the member list, a member's "Change role to" and the header's burger this way.
 
 A parent that is also a link sits in `li.details-link`: the `<a>` comes before the `<details>` and lies over its row, the summary only folds (a link inside a summary would be nested in a button). The summary repeats the title in an `aria-hidden` span so the row wraps as the link does, and is named by `aria-label`. Spaces' main menu in the sidebar is built this way.
 
@@ -79,28 +79,5 @@ A parent that is also a link sits in `li.details-link`: the `<a>` comes before t
             </ul>
         </details>
     </li>
-</ul>
-```
-
-## Accordion menu
-
-Foundation's JS version, still in Spaces' header on small screens (`data-responsive-menu`). Anywhere else use the details menu above.
-
-```html example
-<ul class="vertical menu accordion-menu" data-accordion-menu>
-    <li>
-        <a href="#">Item 1</a>
-        <ul class="menu vertical nested">
-            <li>
-                <a href="#">Item 1A</a>
-                <ul class="menu vertical nested">
-                    <li><a href="#">Item 1Ai</a></li>
-                    <li><a href="#">Item 1Aii</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Item 1B</a></li>
-        </ul>
-    </li>
-    <li><a href="#">Item 2</a></li>
 </ul>
 ```

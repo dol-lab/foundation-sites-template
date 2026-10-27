@@ -1,8 +1,8 @@
 <!-- The Spaces header as spaces-core prints it, cut down to the parts this library styles. -->
-<nav class="app-header" id="app-header">
+<nav class="app-header collapse-below-large" id="app-header">
 	<div class="grid-container">
-		<ul class="menu grid-margin-x dropdown" data-responsive-menu="accordion large-dropdown" data-click-open="true"
-			data-close-on-click-inside="false" data-multi-open="false">
+		<ul class="menu grid-margin-x dropdown" data-dropdown-menu data-click-open="true"
+			data-close-on-click-inside="false">
 			<li class="navbar-icon">
 				<a href="#" class="menu-anchor" aria-label="Go to the home Space">
 					<svg class="spaces-logo" style="margin-inline-end: .5em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136 148.1">
@@ -126,7 +126,7 @@
 					</li>
 				</ul>
 			</li>
-			<li class="in-burger">
+			<li>
 				<a href="#" class="menu-anchor">Study</a>
 				<ul class="vertical menu">
 					<li><a class="submenu-element" href="#">Course Selection</a></li>
@@ -138,7 +138,7 @@
 					<li><a class="submenu-element" href="#"><i class="fa fa-university"></i>&nbsp;Partner Universities</a></li>
 				</ul>
 			</li>
-			<li class="menu-main-expand in-burger">
+			<li class="menu-main-expand">
 				<a href="#" class="menu-anchor">Labs</a>
 				<ul class="vertical menu">
 					<li>
@@ -236,6 +236,19 @@
 					<span class="sr-only">Open main menu</span>
 				</button>
 			</li>
+		</ul>
+		<!-- The burger: below the breakpoint, the entries that are not icons. Spaces opens it from the sandwich button. -->
+		<ul class="menu vertical app-header-burger hide-for-large">
+			<li>
+				<details class="details-menu" name="app-header-burger">
+					<summary>Study</summary>
+					<ul class="vertical menu">
+						<li><a class="submenu-element" href="#">Course Selection</a></li>
+						<li><a class="submenu-element" href="#">About Courses</a></li>
+					</ul>
+				</details>
+			</li>
+			<li><a class="menu-anchor" href="#">Help</a></li>
 		</ul>
 	</div>
 </nav>
