@@ -1,192 +1,145 @@
 <div class="grid-margin-y grid-y">
     <div class="cell">
-        <div class="card static overflow-initial">
-            <ul id="defaultspace-settings-menu" class="tabs line expanded" data-active-collapse="true"
-                data-tabs>
+        <div class="card overflow-initial defaultspace-settings-container">
+            <ul id="defaultspace-settings-menu" class="tabs line expanded" data-active-collapse="true" data-tabs>
                 <li class="tabs-title is-active">
-                    <a href="#overview">Overview</a>
+                    <a href="#overview"><i class="fa fa-filter" aria-hidden="true"></i><span>Overview</span></a>
                 </li>
                 <li class="tabs-title">
-                    <a href="#settings">Settings</a>
+                    <a href="#settings"><i class="fa fa-cog" aria-hidden="true"></i><span>Settings</span></a>
                 </li>
             </ul>
             <div class="tabs-content" data-tabs-content="defaultspace-settings-menu">
                 <div class="tabs-panel is-active" id="overview">
-                    <div class="card-divider p-1">
-                        <div class="info-chips small round">
-                            <a class="info-chip small">
-                                <span>Long Term Project</span>
-                            </a>
-                        </div>
+                    <ul class="vertical menu icons icon-left">
+                        <li class="menu-item" id="categories">
+                            <details class="details-menu">
+                                <summary><i class="fas fa-tag" aria-hidden="true"></i><span>Categories</span></summary>
+                                <ul class="vertical menu">
+                                    <li class="menu-item"><a href="#category/events/">Events</a></li>
+                                    <li class="menu-item">
+                                        <details class="details-menu">
+                                            <summary><span>Final</span></summary>
+                                            <ul class="vertical menu">
+                                                <li class="menu-item"><a href="#category/final/documentation/">Documentation</a></li>
+                                                <li class="menu-item"><a href="#category/final/presentation/">Presentation</a></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                    <li class="menu-item"><a href="#category/general/">General</a></li>
+                                </ul>
+                            </details>
+                        </li>
+                    </ul>
+                    <div class="card-divider space-description-wrapper brand-links">
+                        <div class="user-generated"><p>A blog of a midterm project at KISD</p></div>
                     </div>
-                    <div class="card-divider space-description user-generated">
-                        <div class="container">desc</div>
-                    </div>
-                    <div class="card-divider p-1">
-                        <div class="info-chips small">
-                            <a class="info-chip small"
-                                href="#status/draft" alt="Draft">
-                                <span>Draft</span>
-                                <span>1</span>
+                    <div class="card-divider p-0 pb-1">
+                        <div class="info-chips small px-1">
+                            <a class="info-chip round" href="#" title="Change the category of this Space">
+                                <span class="value">Middle Term Project</span>
                             </a>
-                            <a class="info-chip small"
-                                href="#status/publish" alt="Published">
-                                <span>Published</span>
-                                <span>2</span>
+                            <a class="info-chip round" href="#" title="Change the privacy of this Space">
+                                <span class="tag-icon"><i class="fa fa-circle-nodes"></i></span>
+                                <span class="value">Platform Users</span>
+                            </a>
+                            <a class="info-chip round" href="#" title="Edit Space Details">
+                                <span class="tag-icon"><i class="fas fa-pen"></i></span>
+                                <span class="value">Edit</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="tabs-panel" id="settings">
-                    <ul class="vertical menu accordion-menu icons icon-left" data-accordion-menu
-                        data-multi-open="false">
-                        <li class="card-divider p-3" id="space-user-info">
-                            <small>You are a super admin and you can make changes in any
-                                space.</small>
+                    <ul class="vertical menu icons icon-left">
+                        <li class="menu-item card-divider" id="space-user-info">
+                            <small>You are a super admin and you can make changes in any space.</small>
                         </li>
-                        <li class="card-divider p-3" id="notification-toogle-switch">
-                            <label class="icon-left label-wrapper" for="notification-toggle-current_blog">
-                                <i class="fa fa-envelope">
-                                </i>
-                                <span>Notify Me</span>
-                                <div class="switch small notification-toggle success"
-                                    title="Email notifications for New Working Space">
-                                    <input class="switch-input" id="notification-toggle-current_blog"
-                                        data-blog-id="current_blog" type="checkbox"
-                                        name="notification-toggle" checked="">
-                                    <span class="switch-paddle" aria-hidden="true"></span>
-                                </div>
-                            </label>
+                        <li class="menu-item" id="space-privacy">
+                            <details class="details-menu">
+                                <summary><i class="fa fa-circle-nodes" aria-hidden="true"></i><span>Space Privacy</span></summary>
+                                <ul class="change-privacy-list p-3 pt-0 radio-accordion icons icon-left success">
+                                    <li class="radio-accordion-item">
+                                        <div class="radio">
+                                            <label class="label-wrapper" for="privacy_spaces_1">
+                                                <i class="fa fa-globe-europe" aria-hidden="true"></i>
+                                                <input type="radio" id="privacy_spaces_1" class="radio-input" name="blog_public" value="1">
+                                                <span>World</span>
+                                                <span class="radio-label ml-auto" aria-hidden="true"></span>
+                                            </label>
+                                        </div>
+                                        <div class="card-section p-0 radio-accordion-content">
+                                            <small>Visible to the world. Allow search engines to index this Space.</small>
+                                        </div>
+                                    </li>
+                                    <li class="radio-accordion-item">
+                                        <div class="radio">
+                                            <label class="label-wrapper" for="privacy_spaces_-1">
+                                                <i class="fa fa-circle-nodes" aria-hidden="true"></i>
+                                                <input type="radio" id="privacy_spaces_-1" class="radio-input" name="blog_public" value="-1" checked>
+                                                <span>Platform Users</span>
+                                                <span class="radio-label ml-auto" aria-hidden="true"></span>
+                                            </label>
+                                        </div>
+                                        <div class="card-section p-0 radio-accordion-content visible">
+                                            <small>Visible only to registered users of the platform.</small>
+                                        </div>
+                                    </li>
+                                    <li class="radio-accordion-item">
+                                        <div class="radio">
+                                            <label class="label-wrapper" for="privacy_spaces_-2">
+                                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                                <input type="radio" id="privacy_spaces_-2" class="radio-input" name="blog_public" value="-2">
+                                                <span>Space Members</span>
+                                                <span class="radio-label ml-auto" aria-hidden="true"></span>
+                                            </label>
+                                        </div>
+                                        <div class="card-section p-0 radio-accordion-content">
+                                            <small>Only members of this Space can read posts. The Space and its description stay visible in public lists.</small>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </details>
                         </li>
-                        <li class="card-divider p-3 flex-dir-column"
-                            id="space-privacy">
-                            <a>
-                                <i class="fa fa fa-graduation-cap privacy-icon">
-                                </i>
-                                <span>Space Privacy</span>
-                            </a>
-                            <ul class="radio-accordion icons icon-left success">
-                                <li class="radio-accordion-item">
-                                    <div class="radio">
-                                        <label class="label-wrapper" for="privacy_spaces_1-59c50eb">
-                                            <i class="fa fa-globe-europe">
-                                            </i>
-                                            <input type="radio" id="privacy_spaces_1-59c50eb"
-                                                class="radio-input" name="blog_public-59c50eb" value="1"
-                                                data-space-settings>
-                                            <span>World</span>
-                                            <span class="radio-label flex-spacer-left" aria-hidden="true"></span>
-                                        </label>
-                                    </div>
-                                    <div class="card-section p-0 radio-accordion-content">
-                                        <small>
-                                            Visible to the world. Allow search engines to index
-                                            this
-                                            space.
-                                        </small>
-                                    </div>
-                                </li>
-                                <li class="radio-accordion-item">
-                                    <div class="radio">
-                                        <label class="label-wrapper" for="privacy_spaces_0-59c50eb">
-                                            <i class="fa fa-globe-europe">
-                                            </i>
-                                            <input type="radio" id="privacy_spaces_0-59c50eb"
-                                                class="radio-input" name="blog_public-59c50eb" value="0"
-                                                data-space-settings>
-                                            <span>World, discourage search engines</span>
-                                            <span class="radio-label flex-spacer-left" aria-hidden="true"></span>
-                                        </label>
-                                    </div>
-                                    <div class="card-section p-0 radio-accordion-content">
-                                        <small>
-                                            Visible to the world. Discourage search engines from
-                                            indexing this space.
-                                        </small>
-                                    </div>
-                                </li>
-                                <li class="radio-accordion-item">
-                                    <div class="radio">
-                                        <label class="label-wrapper" for="privacy_spaces_-1-59c50eb">
-                                            <i class="fa fa-graduation-cap">
-                                            </i>
-                                            <input type="radio" id="privacy_spaces_-1-59c50eb"
-                                                class="radio-input" name="blog_public-59c50eb" value="-1"
-                                                checked="checked" data-space-settings>
-                                            <span>Spaces Community</span>
-                                            <span class="radio-label flex-spacer-left" aria-hidden="true"></span>
-                                        </label>
-                                    </div>
-                                    <div class="card-section p-0 radio-accordion-content visible">
-                                        <small>
-                                            Visible only to registered users of the Spaces
-                                            Community.
-                                        </small>
-                                        <label class="label-wrapper" for="selfregistration-59c50eb">
-                                            <div class="checkbox small success">
-                                                <input type="checkbox" id="selfregistration-59c50eb"
-                                                    class="checkbox-input" name="space_registration-59c50eb"
-                                                    checked="checked" data-space-settings
-                                                    data-self-reg>
-                                                <span class="checkbox-label" aria-hidden="true"></span>
+                        <li class="menu-item" id="change-appearance">
+                            <a href="#wp-admin/customize.php"><i class="fa fa-paint-roller" aria-hidden="true"></i><span>Change Appearance</span></a>
+                        </li>
+                        <li class="menu-item" id="features">
+                            <details class="details-menu">
+                                <summary><i class="fa fa-puzzle-piece" aria-hidden="true"></i><span>Features</span></summary>
+                                <ul class="vertical menu">
+                                    <li class="menu-item spaces-feature-row p-2" id="feature-calendar">
+                                        <label class="icon-left label-wrapper" for="spaces-feature-toggle-calendar">
+                                            <i class="fa fa-calendar-alt" aria-hidden="true"></i>
+                                            <span>Calendar</span>
+                                            <div class="switch small success">
+                                                <input type="checkbox" id="spaces-feature-toggle-calendar" class="switch-input">
+                                                <span class="switch-paddle" aria-hidden="true"></span>
                                             </div>
-                                            <small>Self Registration (if enabled, users can join
-                                                this
-                                                space on their own)</small>
                                         </label>
-                                    </div>
-                                </li>
-                                <li class="radio-accordion-item">
-                                    <div class="radio">
-                                        <label class="label-wrapper" for="privacy_spaces_-2-59c50eb">
-                                            <i class="fa fa-lock">
-                                            </i>
-                                            <input type="radio" id="privacy_spaces_-2-59c50eb"
-                                                class="radio-input" name="blog_public-59c50eb" value="-2"
-                                                data-space-settings>
-                                            <span>Space Members</span>
-                                            <span class="radio-label flex-spacer-left" aria-hidden="true"></span>
+                                    </li>
+                                    <li class="menu-item spaces-feature-row p-2" id="feature-space-files">
+                                        <label class="icon-left label-wrapper" for="spaces-feature-toggle-space-files">
+                                            <i class="fa fa-folder-open" aria-hidden="true"></i>
+                                            <span>Space Files</span>
+                                            <div class="switch small success">
+                                                <input type="checkbox" id="spaces-feature-toggle-space-files" class="switch-input" checked>
+                                                <span class="switch-paddle" aria-hidden="true"></span>
+                                            </div>
                                         </label>
-                                    </div>
-                                    <div class="card-section p-0 radio-accordion-content">
-                                        <small>
-                                            This space is private. Only members of this space
-                                            can read
-                                            posts. It is, however, possible
-                                            to see the space in public lists, read its
-                                            description, see
-                                            who is responsible for the
-                                            space.
-                                        </small>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </li>
+                                </ul>
+                            </details>
                         </li>
-                        <li class="card-divider p-3" id="change-appearance">
-                            <a href="#wp-admin/customize.php">
-                                <i class="fa fa-eye">
-                                </i>
-                                <span>Change Appearance</span>
-                            </a>
-                        </li>
-                        <li class="card-divider p-3" id="goto-backend">
-                            <a
-                                href="#wp-admin/admin.php?page=spaces-blog-options">
-                                <i class="fa fa-sliders-h">
-                                </i>
-                                <span>Go to Backend</span>
-                            </a>
-                        </li>
-                        <li class="card-divider p-3" id="network-admin">
-                            <a href="#wp-admin/network/site-info.php?id=3435">
-                                <i class="fa fa-sitemap">
-                                </i>
-                                <span>Network Admin</span>
-                            </a>
-                        </li>
-                        <li class="card-divider p-3" id="leave-space">
-                            <a href="#"
-                                title="Click here to leave this Space." class="alert">Leave Space</a>
+                        <li class="menu-item" id="advanced">
+                            <details class="details-menu">
+                                <summary><i class="fas fa-wrench" aria-hidden="true"></i><span>Advanced</span></summary>
+                                <ul class="vertical menu">
+                                    <li class="menu-item"><a href="#wp-admin/"><i class="fa fa-sliders-h" aria-hidden="true"></i><span>Go to Backend</span></a></li>
+                                    <li class="menu-item"><a href="#wp-admin/network/site-info.php"><i class="fa fa-sitemap" aria-hidden="true"></i><span>Network Admin</span></a></li>
+                                    <li class="menu-item"><a href="#del" class="alert"><i class="fas fa-trash" aria-hidden="true"></i><span>Trash this Space</span></a></li>
+                                </ul>
+                            </details>
                         </li>
                     </ul>
                 </div>
@@ -194,310 +147,73 @@
         </div>
     </div>
     <div class="cell">
-        <div class="card static overflow-initial ds-main-menu-container">
-            <ul id="defaultspace-main-menu" class="tabs line expanded" data-tabs
-                data-deep-link="true">
+        <div class="card overflow-initial ds-main-menu-container">
+            <ul id="defaultspace-main-menu" class="tabs line expanded" data-tabs>
                 <li class="tabs-title flex-grow-1 is-active">
-                    <a class="flex-grow-1" data-tabs-target="primary-swap-menu"
-                        data-swap-content="primary-swap-container" group-id="0">
-                        <i class="fa fa-fa fa-newspaper" aria-hidden="true">
-                        </i>
-                        <span>Stream</span>
-                    </a>
+                    <a class="flex-grow-1" href="#primary-swap-menu"><i class="fa fa-newspaper" aria-hidden="true"></i><span>Stream</span></a>
                 </li>
-                <li class="tabs-title flex-grow-1 not-active menu-is-static">
-                    <a class="flex-grow-1" data-tabs-target="secondary-swap-menu"
-                        data-swap-content="secondary-swap-container" group-id="1">
-                        <i class="fa fa-fa fa-book" aria-hidden="true">
-                        </i>
-                        <span>Book</span>
-                    </a>
+                <li class="tabs-title flex-grow-1">
+                    <a class="flex-grow-1" href="#secondary-swap-menu"><i class="fa fa-book" aria-hidden="true"></i><span>Book</span></a>
                 </li>
             </ul>
             <div class="tabs-content" data-tabs-content="defaultspace-main-menu">
                 <div id="primary-swap-menu" class="tabs-panel is-active">
-                    <ul id="menu-stream" class="vertical menu accordion-menu" data-transition
-                        data-submenu-toggle="true"
-                        data-accordion-menu>
-                        <li id="menu-item-3"
-                            class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-3">
-                            <a href="#" aria-current="page">
-                                <span>Home</span>
-                            </a>
-                        </li>
+                    <ul class="vertical menu ds-nav-menu">
+                        <li class="menu-item current-menu-item"><a href="#" aria-current="page"><span>Home</span></a></li>
                     </ul>
                 </div>
-                <div id="secondary-swap-menu" class="tabs-panel not-active menu-is-static">
-                    <ul id="menu-book" class="vertical menu accordion-menu"
-                        data-transition data-submenu-toggle="true"
-                        data-accordion-menu>
-                        <li id="menu-item-4"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4">
-                            <a href="#/beispiel-seite/">
-                                <span>Beispiel-Seite</span>
-                            </a>
-                        </li>
+                <div id="secondary-swap-menu" class="tabs-panel">
+                    <ul class="vertical menu ds-nav-menu">
+                        <li class="menu-item"><a href="#description/"><span>Description</span></a></li>
+                        <li class="menu-item"><a href="#introduction/"><span>Introduction</span></a></li>
                     </ul>
                 </div>
                 <div class="card-divider p-0 flex-dir-row-reverse small ds-main-menu-dots">
-                    <button class="button p-0 m-0 clear dots js-edit-main-menu" type="button" aria-label="Actions" data-main-menu-name="Main menu">
-                    </button>
+                    <button class="button p-0 m-0 clear dots" type="button" aria-label="Actions"></button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="cell">
-        <div class="card accordion overflow-initial" data-accordion data-allow-all-closed="true">
-            <div class="card-section accordion-item p-0 is-active" data-accordion-item>
-                <a href="#" class="card-title p-3">
+    <aside class="widget cell">
+        <div class="card overflow-initial">
+            <details class="ds-widget-details" open>
+                <summary class="card-title p-3 gap-1">
                     Details
-                    <span class="badge brand" style="margin-left: .5em;">3</span>
-                    <span class="badge brand hollow" style="margin-left: .5em;">3</span>
-                    <span class="badge brand clear" style="margin-left: .5em;">3</span>
-                </a>
-                <div class="card-divider brand-links accordion-content" data-tab-content>
-                    <details
-                        class="details">
-                        <summary>Studienverlaufsplan, Modulhandbuch und Prüfungsordnung
-                            (German
-                            version)
-                        </summary>
-
-                        <ul class="wp-block-list" id="block-f37e0bf1-c114-4156-90f2-1642afa069a9">
-                            <li>
-                                <a href="#"
-                                    data-featherlight="image">Verlaufsplan Studienrichtung
-                                    »Integrated Studies in Design«</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    data-featherlight="image">Verlaufsplan Studienrichtung
-                                    »European Studies in Design«</a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#">Modulhandbuch
-                                    Bachelor »Integrated Design«</a>
-                            </li>
-                            <li>
-                                <a rel="noopener noreferrer"
-                                    href="https://www.th-koeln.de/studium/integrated-design-bachelor--ordnungen-und-formulare_4256.php"
-                                    target="_blank" class="external-link">Prüfungsordnung
-                                    Bachelor »Integrated Design«&nbsp;</a>
-                            </li>
-                        </ul>
-                    </details>
-                    <details
-                        class="details">
-                        <summary>Study schedule, Module Manual and Examination Regulations
-                            (English version)
-                        </summary>
-                        <ul class="wp-block-list" id="block-c3ecf009-20df-4103-b349-8c9a1e83406d">
-                            <li>
-                                <a href="#"
-                                    data-featherlight="image">Schedule Study branch
-                                    »Integrated
-                                    Studies in Design«</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    data-featherlight="image">Schedule Study branch
-                                    »European
-                                    Studies in Design«</a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#">Module
-                                    Manual Bachelor »Integrated Design«&nbsp;</a>
-                            </li>
-                            <li>
-                                <a href="https://www.th-koeln.de/en/academics/integrated-design-bachelor--forms-and-regulations_5834.php"
-                                    class="external-link" target="_blank"
-                                    rel="noopener noreferrer">Examination Regulations</a>
-                            </li>
-                        </ul>
-                    </details>
-                    <details
-                        class="details">
-                        <summary>Study Journal</summary>
-                        <ul class="wp-block-list" id="block-7106ff8d-826f-4c10-9cd8-be8115c46f93">
-                            <li>
-                                <a
-                                    href="#">Leitfaden
-                                    »Study Journal« (German version)</a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#">Manual
-                                    »Study Journal« (English Version)</a>
-                            </li>
-                        </ul>
-                    </details>
+                    <span class="badge brand">3</span>
+                    <span class="badge brand hollow">3</span>
+                    <span class="badge brand clear">3</span>
+                </summary>
+                <div class="card-divider brand-links p-0 ds-widget-content">
+                    <div class="card-section user-generated">
+                        <details class="details">
+                            <summary>Study schedule, Module Manual and Examination Regulations</summary>
+                            <ul>
+                                <li><a href="#">Schedule »Integrated Studies in Design«</a></li>
+                                <li><a href="#">Module Manual Bachelor »Integrated Design«</a></li>
+                            </ul>
+                        </details>
+                        <details class="details">
+                            <summary>Study Journal</summary>
+                            <ul>
+                                <li><a href="#">Manual »Study Journal«</a></li>
+                            </ul>
+                        </details>
+                    </div>
                 </div>
-            </div>
+            </details>
         </div>
-    </div>
-    <aside id="" class="widget spaces-widget-listmediafiles cell">
-        <div class="card accordion overflow-initial" data-accordion
-            data-allow-all-closed="true">
-            <div class="card-section accordion-item p-0" data-accordion-item>
-                <a href="#" class="card-title p-3">Media</a>
-                <div class="card-divider brand-links p-0 accordion-content" data-tab-content style="display: none;">
-                    <div class="card-section brand-links user-generated">
-                        <div>
-                            <div class="spaces-widget-listmediafiles-body-container">
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="img-orbit--3.png" target="_blank"
-                                            data-featherlight="image">img-orbit--3.png</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="img-orbit--1.png" target="_blank"
-                                            data-featherlight="image">img-orbit--1.png</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="img-orbit--4.png" target="_blank"
-                                            data-featherlight="image">img-orbit--4.png</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="img-orbit--2.png" target="_blank"
-                                            data-featherlight="image">img-orbit--2.png</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-pdf" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="halbach_thesis_aaaarchive--digital.pdf"
-                                            target="_blank">halbach_thesis_aaaarchive--digital.pdf</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="google-deepmind-BMn5Z-MGv5c-unsplash.jpg"
-                                            target="_blank"
-                                            data-featherlight="image">google-deepmi…5Z-MGv5c-unsplash.jpg</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="google-deepmind-oDhwECq7kPQ-unsplash.jpg"
-                                            target="_blank"
-                                            data-featherlight="image">google-deepmi…wECq7kPQ-unsplash.jpg</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="google-deepmind-_wG-sQ40_H4-unsplash.jpg"
-                                            target="_blank"
-                                            data-featherlight="image">google-deepmind-_wG-sQ40_H4-unsplash.jpg</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="google-deepmind-0uLuFx4yAZw-unsplash.jpg"
-                                            target="_blank"
-                                            data-featherlight="image">google-deepmind-0uLuFx4yAZw-unsplash.jpg</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="google-deepmind-Sqg9QWERMDU-unsplash.jpg"
-                                            target="_blank"
-                                            data-featherlight="image">google-deepmi…QWERMDU-unsplash.jpg</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="shubham-dhage-tWNSdhcCWrk-unsplash.jpg"
-                                            target="_blank"
-                                            data-featherlight="image">shubham-dhage-tWNSdhcCWrk-unsplash.jpg</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="google-deepmind-pLh_n9pnRhw-unsplash.jpg"
-                                            target="_blank"
-                                            data-featherlight="image">google-deepmind-pLh_n9pnRhw-unsplash.jpg</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="google-deepmind-ItdhOYWOqUo-unsplash.jpg"
-                                            target="_blank"
-                                            data-featherlight="image">google-deepmi…hOYWOqUo-unsplash.jpg</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#" title="google-deepmind-htMw1CbMUIk-unsplash.jpg"
-                                            target="_blank"
-                                            data-featherlight="image">google-deepmi…w1CbMUIk-unsplash.jpg</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#"
-                                            title="cropped-ml_hio_the_room_of_wishes_from_harry_potter_but_as_a_designers__078f5e67-60b1-4995-b20c-4f4d3a51d864.png.png"
-                                            target="_blank"
-                                            data-featherlight="image">cropped-ml_hio…-4f4d3a51d864.png.png</a>
-                                    </p>
-                                </div>
-                                <div class="file-item">
-                                    <p>
-                                        <i class="far fa-file-image" aria-hidden="true">
-                                        </i>
-                                        <a href="#"
-                                            title="ml_hio_the_room_of_wishes_from_harry_potter_but_as_a_designers__078f5e67-60b1-4995-b20c-4f4d3a51d864.png"
-                                            target="_blank"
-                                            data-featherlight="image">ml_hio_the_roo…-b20c-4f4d3a51d864.png</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-divider p-0">
-                        <div class="edit-bar align-self-top">
-                            <button class="button p-0 m-0 clear dots js-widget-menu" type="button" aria-label="Actions">
-                            </button>
-                        </div>
+    </aside>
+    <aside class="widget spaces-widget-listmediafiles cell">
+        <div class="card overflow-initial">
+            <details class="ds-widget-details">
+                <summary class="card-title p-3">Media</summary>
+                <div class="card-divider brand-links p-0 ds-widget-content">
+                    <div class="card-section user-generated">
+                        <p><i class="far fa-file-image" aria-hidden="true"></i> <a href="#">img-orbit--1.png</a></p>
+                        <p><i class="far fa-file-image" aria-hidden="true"></i> <a href="#">img-orbit--3.png</a></p>
                     </div>
                 </div>
-            </div>
+            </details>
         </div>
     </aside>
 </div>
