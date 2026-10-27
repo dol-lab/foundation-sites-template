@@ -1,8 +1,3 @@
-@use "foundation-spaces/global";
-@use "foundation-spaces/util/breakpoint";
-@use "foundation-spaces/util/math" as zf-math;
-@use "foundation-spaces/util/mixins";
-@use "foundation-spaces/util/unit";
 @use "s-button";
 
 // Foundation for Sites
@@ -10,230 +5,34 @@
 // Licensed under MIT Open Source
 
 @use "sass:map";
-@use "sass:math";
 
 ////
 //// @group button-group
 ////
 
+// Fills, palettes and sizes of the buttons in a .button-group. Layout, seams and corners: components/_button-group.scss.
+
 /// Margin for button groups.
 /// @type Number
 $buttongroup-margin: 0.9rem !default;
-
-/// Margin between buttons in a button group.
-/// @type Number
-$buttongroup-spacing: 1px !default;
 
 /// Selector for the buttons inside a button group.
 /// @type String
 $buttongroup-child-selector: '.button' !default;
 
-/// Maximum number of buttons that can be in an even-width button group. (Only needed when $global-flexbox: false;)
-/// @type Number
-$buttongroup-expand-max: 6 !default;
-
-/// Determines if $button-radius is applied to each button or the button group as a whole. Use $global-radius in _settings.scss to change radius.
-/// @type Boolean
-$buttongroup-radius-on-each: false !default;
-
-/// Add styles for a button group container.
-/// @param {String} $child-selector [$buttongroup-child-selector] - Selector for the buttons inside a button group.
-/// @param {Number} $spacing [$buttongroup-spacing] - Spacing between buttons in a button group.
-@mixin button-group(
-  $child-selector: $buttongroup-child-selector,
-  $spacing: $buttongroup-spacing
-) {
-  margin-bottom: $buttongroup-margin;
-
-  @if global.$global-flexbox {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: stretch;
-    flex-grow: 1;
-
-    &::before,
-    &::after {
-      display: none; // Disable clearfix
-    }
-  } @else {
-    font-size: 0;
-  }
-
-  @include mixins.clearfix;
-
-  #{$child-selector} {
-    margin: 0;
-    margin-#{global.$global-right}: $spacing;
-
-    margin-bottom: $spacing;
-    font-size: map.get(s-button.$button-sizes, default);
-
-    @if global.$global-flexbox {
-      flex: 0 0 auto;
-    }
-
-    &:last-child {
-      margin-#{global.$global-right}: 0;
-    }
-
-    @if not $buttongroup-radius-on-each {
-      border-radius: 0;
-
-      &:first-child {
-        border-top-#{global.$global-left}-radius: s-button.$button-radius;
-        border-bottom-#{global.$global-left}-radius: s-button.$button-radius;
-      }
-
-      &:last-child {
-        border-top-#{global.$global-right}-radius: s-button.$button-radius;
-        border-bottom-#{global.$global-right}-radius: s-button.$button-radius;
-      }
-    }
-  }
-}
-
-/// Make buttons bonded without gap between them. Borders between buttons are merged
-/// @param {String} $selector [$buttongroup-child-selector] - Selector for the buttons inside a button group.
-@mixin button-group-no-gaps(
-  $selector: $buttongroup-child-selector,
-  $border-width: s-button.$button-hollow-border-width
-) {
-  #{$selector} {
-    margin-#{global.$global-right}: unit.rem-calc(-$border-width);
-
-    + #{$selector} {
-      border-#{global.$global-left}-color: transparent;
-    }
-  }
-}
-
-/// Creates a full-width button group, making each button equal width.
-/// @param {String} $selector [$buttongroup-child-selector] - Selector for the buttons inside a button group.
-/// @param {Number} $spacing [$buttongroup-spacing] - Spacing between buttons in a button group.
-@mixin button-group-expand(
-  $selector: $buttongroup-child-selector,
-  $spacing: $buttongroup-spacing,
-  $count: null
-) {
-  @if not global.$global-flexbox {
-    margin-#{global.$global-right}: -$spacing;
-
-    &::before,
-    &::after {
-      display: none; // Disable clearfix
-    }
-  }
-
-  #{$selector} {
-    @if global.$global-flexbox {
-      flex: 1 1 0px;
-    } @else {
-      // One child
-      &:first-child {
-        &:last-child {
-          width: calc(100% - #{$spacing});
-        }
-      }
-
-      // Two or more childreen
-      @for $i from 2 through $buttongroup-expand-max {
-        &:first-child:nth-last-child(#{$i}) {
-          &, &:first-child:nth-last-child(#{$i}) ~ #{$selector} {
-            display: inline-block;
-            width: calc(#{math.percentage(zf-math.divide(1, $i))} - #{$spacing});
-            margin-#{global.$global-right}: $spacing;
-
-            &:last-child {
-              margin-#{global.$global-right}: $spacing * -$buttongroup-expand-max;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-/// Stacks the buttons in a button group.
-/// @param {String} $selector [$buttongroup-child-selector] - Selector for the buttons inside the button group.
-@mixin button-group-stack(
-  $selector: $buttongroup-child-selector
-) {
-  @if global.$global-flexbox {
-    flex-wrap: wrap;
-  }
-
-  #{$selector} {
-    @if global.$global-flexbox {
-      flex: 0 0 100%;
-    } @else {
-      width: 100%;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    @if not $buttongroup-radius-on-each {
-      border-radius: 0;
-
-      &:first-child {
-        border-top-#{global.$global-left}-radius: global.$global-radius;
-        border-top-#{global.$global-right}-radius: global.$global-radius;
-      }
-
-      &:last-child {
-        border-bottom-#{global.$global-left}-radius: global.$global-radius;
-        border-bottom-#{global.$global-right}-radius: global.$global-radius;
-      }
-    }
-  }
-}
-
-/// Un-stacks the buttons in a button group.
-/// @param {String} $selector [$buttongroup-child-selector] - Selector for the buttons inside the button group.
-@mixin button-group-unstack(
-  $selector: $buttongroup-child-selector
-) {
-  #{$selector} {
-    @if global.$global-flexbox {
-      flex: 0 0 auto;
-    } @else {
-      width: auto;
-    }
-
-    margin-bottom: 0;
-
-    @if not $buttongroup-radius-on-each {
-      &:first-child {
-        border-top-#{global.$global-left}-radius: global.$global-radius;
-        border-top-#{global.$global-right}-radius: 0;
-        border-bottom-#{global.$global-left}-radius: global.$global-radius;
-      }
-
-      &:last-child {
-        border-top-#{global.$global-right}-radius: global.$global-radius;
-        border-bottom-#{global.$global-right}-radius: global.$global-radius;
-        border-bottom-#{global.$global-left}-radius: 0;
-      }
-    }
-
-  }
-}
-
 @mixin spaces-button-group {
   .button-group {
-    @include button-group;
+    margin-bottom: $buttongroup-margin;
+
+    #{$buttongroup-child-selector} {
+      font-size: map.get(s-button.$button-sizes, default);
+    }
 
     // Sizes
     @each $size, $value in map.remove(s-button.$button-sizes, default) {
       &.#{$size} #{$buttongroup-child-selector} {
         font-size: $value;
       }
-    }
-
-    // Even-width Group
-    &.expanded {
-      @include button-group-expand;
     }
 
     // Solid, hollow & clear styles
@@ -261,55 +60,6 @@ $buttongroup-radius-on-each: false !default;
               @include s-button.button-fill-style-from-css-vars($filling, $name);
             }
           }
-        }
-      }
-
-    }
-
-    &.no-gaps {
-      @include button-group-no-gaps;
-    }
-
-    &.stacked,
-    &.stacked-for-small,
-    &.stacked-for-medium {
-      @include button-group-stack;
-
-      &.expanded {
-        @include button-group-expand;
-      }
-    }
-
-    &.stacked-for-small {
-      @include breakpoint.breakpoint(medium) {
-        @include button-group-unstack;
-      }
-    }
-
-    &.stacked-for-medium {
-      @include breakpoint.breakpoint(large) {
-        @include button-group-unstack;
-      }
-    }
-
-    &.stacked-for-small.expanded {
-      @include breakpoint.breakpoint(small only) {
-        display: block;
-
-        #{$buttongroup-child-selector} {
-          display: block;
-          margin-#{global.$global-right}: 0;
-        }
-      }
-    }
-
-    &.stacked-for-medium.expanded {
-      @include breakpoint.breakpoint(medium down) {
-        display: block;
-
-        #{$buttongroup-child-selector} {
-          display: block;
-          margin-#{global.$global-right}: 0;
         }
       }
     }

@@ -9,7 +9,6 @@
 
 // .card and its parts: .card-header, .card-title, .card-section, .card-divider.
 
-@use "sass:list";
 @use "sass:map";
 
 @mixin styles {
@@ -31,6 +30,17 @@
       padding: 0 !important;
 
       @include custom-functions.foundation-palette;
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+
+    // A card that is one link shows keyboard focus around the card: the anchor's own inset outline
+    // lies under its positioned `.clipped` image.
+    &:has(> .card-anchor:focus-visible) {
+      outline: global.$global-focus;
+      outline-offset: 0;
     }
 
     // Media as a card's first child follows the card's top corners. The card clips them itself
@@ -79,10 +89,6 @@
     select {
       font-size: text.$input-font-size;
     }
-
-    &.accordion {
-      background: card.$card-background;
-    }
   }
 
   .card-header {
@@ -104,11 +110,6 @@
     &:is(.flex-dir-row) {
       flex-direction: row;
       align-items: center;
-    }
-
-    &.no-padding {
-      padding: 0;
-      padding-left: list.nth(s-button.$button-padding, 2);
     }
   }
 
@@ -140,22 +141,6 @@
     padding: map.get(custom-settings.$spacing-scale, 3);
     display: flex;
 
-    &.nested {
-      border-top: none;
-      margin-top: -1rem;
-
-      .card-section.no-padding.flex-dir-row {
-        border-top: base.$hr-border;
-        margin-top: -1.375rem;
-        padding-top: 0.75rem;
-
-        .page-title {
-          font-size: 1rem;
-          font-weight: 400;
-        }
-      }
-    }
-
     &-negative {
       margin-inline: -#{map.get(custom-settings.$spacing-scale, 3)};
     }
@@ -172,7 +157,10 @@
       }
     }
 
-    &.no-padding {
+    // Content fills the section edge to edge: no padding, borderless fields.
+    &.flush {
+      padding: 0;
+
       & > :is(#{selector.text-inputs()}),
       & > textarea,
       & > select,
@@ -185,22 +173,10 @@
         box-sizing: border-box;
       }
     }
-
-    @each $size-label, $_ in custom-settings.$avatar-sizes {
-      &.#{$size-label} {
-        &:last-child {
-          height: var(--f-avatar-#{$size-label});
-        }
-      }
-    }
   }
 
   .card-divider {
     border-top: base.$hr-border;
-
-    &.accordion-content {
-      border-top: base.$hr-border !important;
-    }
 
     &:first-child {
       border: none;

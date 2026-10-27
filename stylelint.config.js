@@ -1,7 +1,10 @@
 // Each exception says why the standard rule does not fit this code.
 module.exports = {
   extends: ["stylelint-config-standard-scss"],
+  plugins: ["@stylistic/stylelint-plugin"],
   rules: {
+    // Stylelint 16 dropped its stylistic rules; Prettier cannot format the SCSS (README Notes).
+    "@stylistic/indentation": 2,
     // Nested component rules are ordered on purpose; the rule cannot follow nesting and @include.
     "no-descending-specificity": null,
     // `--_name` is a private custom property, `--f-palette--name` a modifier.

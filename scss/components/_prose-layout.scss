@@ -6,9 +6,9 @@
     display: grid;
 
     // Knobs: --f-prose-offset-left (the left column's target width), --f-prose-ch-factor (a font
-    // whose 0 is narrow or wide). --target-offset-left is the old name of the first, still read.
+    // whose 0 is narrow or wide).
     --_min-offset-x: clamp(0.75rem, 2vw, 2rem);
-    --_offset-left: var(--f-prose-offset-left, var(--target-offset-left, var(--_min-offset-x)));
+    --_offset-left: var(--f-prose-offset-left, var(--_min-offset-x));
     --_max-width: calc(70ch * var(--f-prose-ch-factor, 1));
 
     padding-left: 0;

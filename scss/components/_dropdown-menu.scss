@@ -28,8 +28,7 @@
           padding: 0;
         }
 
-        &.no-padding > a,
-        & > a.no-padding {
+        & > a.p-0 {
           padding: 0 !important;
         }
 

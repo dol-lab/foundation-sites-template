@@ -30,12 +30,9 @@
     border: 0;
   }
 
+  // Deprecated: use `.p-0`.
   .no-padding {
     padding: 0;
-
-    & > a {
-      display: flex;
-    }
   }
 
   .disabled {

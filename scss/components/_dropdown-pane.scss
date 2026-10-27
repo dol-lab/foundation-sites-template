@@ -16,7 +16,7 @@
     }
 
     &.is-open {
-      z-index: 2000;
+      z-index: var(--f-z-dropdown);
     }
 
     .card-divider,
@@ -27,6 +27,24 @@
         cursor: pointer;
         line-height: 1rem;
         box-sizing: content-box;
+      }
+    }
+
+    // A row's single link or button covers the row, which tints on hover. The cover sits
+    // below the row's content (isolation keeps it above the pane), so nested controls still click.
+    .card-divider:has(> :is(a, button):only-child) {
+      position: relative;
+      isolation: isolate;
+
+      &:hover {
+        background-color: var(--f-color-bg-2);
+      }
+
+      & > :is(a, button)::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
       }
     }
   }

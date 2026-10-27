@@ -1,6 +1,6 @@
 # Tabs
 
-Foundation's tabs: `.tabs` with `data-tabs` and an id, and a `.tabs-content` naming that id. Each `.tabs-title` links to its `.tabs-panel` by id (or names it in `data-tabs-target`). Spaces sets `data-link-active-class` and `data-panel-active-class` to `is-active-tab`, since a parent dropdown menu reacts to `is-active`; both are styled.
+Foundation's tabs: `.tabs` with `data-tabs` and an id, and a `.tabs-content` naming that id. Each `.tabs-title` links to its `.tabs-panel` by id (or names it in `data-tabs-target`). Mark the initial title and panel `.is-active`. Once initialised, the active title is styled by its link's `aria-selected`, which Foundation sets whatever the active class: a tab bar inside a dropdown menu sets `data-link-active-class` and `data-panel-active-class` to `is-active-tab`, since the menu strips `li.is-active` when it closes.
 
 ```html example
 <ul class="tabs line" data-tabs id="demo-tabs">
@@ -23,7 +23,7 @@ Foundation's tabs: `.tabs` with `data-tabs` and an id, and a `.tabs-content` nam
 
 ## Styles
 
-The examples below show the titles only: they switch, but have no `.tabs-content`. `.line` underlines the active tab, `.bar` separates the titles and suits a card's top edge, `.expanded` spreads them over the width.
+The examples below show the titles only: they switch, but have no `.tabs-content`. Plain `.tabs` underline the active tab, and the underline slides to the next one on a change (a jump under reduced motion). `.line` adds a hairline above the panel, `.bar` fills the active title instead, separates the titles and suits a card's top edge, `.expanded` spreads them over the width. The active title is `.is-active` or carries `aria-selected` (Foundation sets it on the link, React Aria on the title).
 
 ```html example
 <ul class="tabs line expanded" data-tabs id="demo-tabs-line">
@@ -33,7 +33,7 @@ The examples below show the titles only: they switch, but have no `.tabs-content
 ```
 
 ```html example
-<div class="card static">
+<div class="card">
     <ul class="tabs bar expanded" data-tabs id="demo-tabs-bar">
         <li class="tabs-title is-active"><a href="#demo-tab-bar-1" aria-selected="true">Bar</a></li>
         <li class="tabs-title"><a href="#demo-tab-bar-2">In a card</a></li>

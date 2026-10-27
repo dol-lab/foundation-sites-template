@@ -43,7 +43,7 @@ $dropdown-sizes: (
 /// Applies styles for a basic dropdown.
 @mixin dropdown-container {
   position: absolute;
-  z-index: 10;
+  z-index: var(--f-z-dropdown);
   display: none;
   width: $dropdown-width;
   padding: $dropdown-padding;

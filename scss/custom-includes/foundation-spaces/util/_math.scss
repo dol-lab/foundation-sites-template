@@ -100,9 +100,7 @@
     }
   } @else if meta.type-of($fraction) == 'list' {
     // "50 of 100", "50/100"...
-    @if list.length($fraction) == 3
-    and meta.type-of(list.nth($fraction, 1) == 'number')
-    and meta.type-of(list.nth($fraction, 3) == 'number') {
+    @if list.length($fraction) == 3 and meta.type-of(list.nth($fraction, 1)) == 'number' and meta.type-of(list.nth($fraction, 3)) == 'number' {
       @return (list.nth($fraction, 1), list.nth($fraction, 3));
     }
   }
@@ -119,8 +117,7 @@
 @function zf-is-fraction($value, $allow-no-denominator: false) {
   $parsed: zf-parse-fraction($value);
 
-  @return not(list.nth($parsed, 1) == null
-    or (list.nth($parsed, 2) == null and $allow-no-denominator == false));
+  @return not(list.nth($parsed, 1) == null or (list.nth($parsed, 2) == null and $allow-no-denominator == false));
 }
 
 /// Calculate a percentage from a given fraction.

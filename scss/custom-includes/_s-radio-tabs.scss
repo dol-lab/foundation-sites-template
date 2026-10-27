@@ -48,7 +48,7 @@
 
 @mixin radio-tabs-global {
   // Radii and padding for container and children
-  --_br-parent: 1em;
+  --_br-parent: var(--f-radius);
   --_padding-parent: 0.25em;
   --_br-child: calc(var(--_br-parent) - var(--_padding-parent));
 

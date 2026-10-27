@@ -1,8 +1,9 @@
 @use "../custom-includes/foundation-spaces/global";
 
-// .box-shadow, .box-shadow-large, .no-box-shadow.
+// .box-shadow-large, .no-box-shadow (`.shadow` is the prototype's).
 
 @mixin styles {
+  // Deprecated: use `.shadow`.
   .box-shadow {
     box-shadow: global.$global-drop-shadow;
   }

@@ -1,6 +1,6 @@
 # Buttons
 
-`.button` plus a palette color, a fill (`.hollow`, `.clear`) and a size (`.tiny`, `.small`, `.large`).
+`.button` plus a palette color, a fill (`.hollow`, `.clear`) and a size (`.tiny`, `.small`, `.large`). Join buttons with a [button group](button-group.md).
 
 ## Colors
 
@@ -36,16 +36,6 @@
     <a href="#" class="button">Default</a>
     <a href="#" class="button large">Large</a>
     <a href="#" class="button expanded">Expanded</a>
-</div>
-```
-
-## Button group
-
-```html example
-<div class="button-group">
-    <a href="#" class="button">One</a>
-    <a href="#" class="button">Two</a>
-    <a href="#" class="button">Three</a>
 </div>
 ```
 

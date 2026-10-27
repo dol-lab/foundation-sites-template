@@ -1,0 +1,86 @@
+@use "../custom-includes/foundation-spaces/global";
+
+// User card
+// ---------
+// `.card-user`: an avatar and the user's name in a row. Where users can be selected, the
+// avatar holds a `.checkbox` under its picture: hovering the card, focusing the checkbox or
+// ticking it (`.is-selected`) swaps the picture for it.
+// `.user-name` takes its size from the size class around it, as the avatar does.
+
+@mixin styles {
+  .card-user {
+    // The header is as tall as the avatar, whatever the card's size class.
+    & .user-card-header {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+
+      & > .avatar-container {
+        align-self: flex-start;
+      }
+    }
+
+    & .avatar-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      & .clipped {
+        z-index: 10;
+      }
+
+      & .checkbox {
+        position: absolute;
+        inset: 0;
+        outline-offset: -2px; // the card clips an outer outline
+
+        & ~ .clipped {
+          transition: global.$global-transition-medium;
+        }
+      }
+
+      & .checkbox-label {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &:hover .avatar-container .checkbox ~ .clipped,
+    & .avatar-container:has(.checkbox input:focus-visible) .clipped,
+    &.is-selected .checkbox ~ .clipped {
+      pointer-events: none;
+      transform: scale(0.5);
+      opacity: 0;
+      transition: global.$global-transition-short;
+    }
+  }
+
+  .user-name {
+    font-size: 0.875rem;
+    margin: 0;
+    display: inline-block;
+
+    & .fa {
+      margin-left: 1em;
+      color: var(--f-color-text-2);
+    }
+
+    .small & {
+      height: 1.125rem;
+
+      &:last-child {
+        height: initial;
+      }
+    }
+
+    .large & {
+      font-size: 1rem;
+    }
+
+    .xlarge &,
+    .xxlarge & {
+      font-size: 1.5rem;
+    }
+  }
+}

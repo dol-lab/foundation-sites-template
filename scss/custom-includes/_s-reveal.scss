@@ -35,10 +35,6 @@ $reveal-border: 1px solid var(--f-color-border-0) !default;
 /// @type Number
 $reveal-radius: global.$global-radius !default;
 
-/// z-index for modals. The overlay uses this value, while the modal itself uses this value plus one.
-/// @type Number
-$reveal-zindex: 1005 !default;
-
 /// Background color of modal overlays.
 /// @type Color
 $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, transparent) !default;
@@ -61,7 +57,7 @@ $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, trans
 @mixin reveal-overlay($background: $reveal-overlay-background) {
   position: fixed;
   inset: 0;
-  z-index: $reveal-zindex;
+  z-index: var(--f-z-overlay);
   display: none;
   background-color: $background;
   overflow-y: auto;
@@ -70,7 +66,7 @@ $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, trans
 
 /// Adds base styles for a modal.
 @mixin reveal-modal-base {
-  z-index: $reveal-zindex + 1;
+  z-index: var(--f-z-modal);
 
   // Workaround android browser z-index bug
   backface-visibility: hidden;

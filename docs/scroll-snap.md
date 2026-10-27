@@ -1,9 +1,9 @@
 # Scroll snap
 
-A row that scrolls sideways and snaps each element into place: `.scroll-snap-container-x` on the parent, `.scroll-snap-element` on the children. Any element can be one, also a grid cell such as `.medium-6`.
+A row that scrolls sideways and snaps each element to its start: `.scroll-snap-container-x` on the parent, `.scroll-snap-element` on the children. Each element is as wide as the row unless a width modifier says otherwise. Spaces uses it for the events widget.
 
 ```html example
-<div class="scroll-snap-container-x snap-align-center width-medium">
+<div class="scroll-snap-container-x width-medium">
     <div class="scroll-snap-element"><div class="card"><div class="card-section">Element 1</div></div></div>
     <div class="scroll-snap-element"><div class="card"><div class="card-section">Element 2</div></div></div>
     <div class="scroll-snap-element"><div class="card"><div class="card-section">Element 3</div></div></div>
@@ -16,20 +16,9 @@ A row that scrolls sideways and snaps each element into place: `.scroll-snap-con
 
 All of them go on `.scroll-snap-container-x`.
 
-- Where an element snaps: `.snap-align-start`, `.snap-align-center`, `.snap-align-end`.
+- Where an element snaps: start by default, `.snap-align-center` or `.snap-align-end`.
 - Element width, relative: `.width-small` (20%), `.width-medium` (40%), `.width-large` (60%), `.width-xlarge` (80%). Default: 100%.
 - Element width, fixed: `.width-fixed-small` (240px), `.width-fixed-medium` (320px), `.width-fixed-large` (480px).
-- Per breakpoint: `.<breakpoint>-scroll-snap` stacks the elements below the breakpoint and scrolls from there up; `.<breakpoint>-no-scroll-snap` stops scrolling from there up.
-
-## Arrows
-
-Wrap the container in `.left-right-navigation` for arrows that show on hover.
-
-```html
-<div class="left-right-navigation">
-    <div class="scroll-snap-container-x">…</div>
-</div>
-```
 
 ## Bleeding out of the grid
 

@@ -300,13 +300,13 @@ $button-responsive-expanded: false !default;
     border: $button-hollow-border-width solid var(--f-color-#{$name});
     border-color: color-mix(in oklab, var(--f-color-#{$name}) 15%, transparent);
     border-width: $button-hollow-border-width;
-    color: color-mix(in oklab, var(--f-color-#{$name}) 10%, var(--f-color-text-0) 80%);
+    color: color-mix(in oklab, var(--f-color-#{$name}) 10%, var(--f-color-text-0));
     background-color: color-mix(in oklab, var(--f-color-#{$name}) 10%, var(--f-color-bg-1));
 
     &:hover,
     &:focus {
       border-color: color-mix(in oklab, var(--f-color-#{$name}-darker) 15%, transparent);
-      color: color-mix(in oklab, var(--f-color-#{$name}) 10%, var(--f-color-text-0) 80%);
+      color: color-mix(in oklab, var(--f-color-#{$name}) 10%, var(--f-color-text-0));
       background-color: color-mix(in oklab, var(--f-color-#{$name}) 25%, var(--f-color-bg-1));
     }
   } @else if $fill == clear {

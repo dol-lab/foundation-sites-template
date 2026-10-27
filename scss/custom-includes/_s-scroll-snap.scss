@@ -1,116 +1,11 @@
-@use "../custom-settings";
-@use "foundation-spaces/global";
-@use "foundation-spaces/grid/grid" as float-grid;
 @use "foundation-spaces/util/breakpoint";
-@use "foundation-spaces/util/math";
-@use "foundation-spaces/util/unit";
 @use "foundation-spaces/xy-grid/cell";
 @use "foundation-spaces/xy-grid/grid";
 @use "foundation-spaces/xy-grid/xy-grid";
-@use "sass:list";
 @use "sass:map";
 
-/**
- * @name Scroll Snapping Component
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll_snap/Basic_concepts
- * @description
- * This SCSS file provides a flexible and responsive horizontal scroll-snapping component,
- * ideal for creating carousels, sliders, and galleries with native CSS performance.
- * It integrates seamlessly with the existing XY grid system, allowing standard grid
- * classes to be used as slider elements.
- *
- * @features
- * - Native CSS horizontal scroll snapping for performance.
- * - Optional hover-activated arrow navigation.
- * - Responsive width controls to show a variable number of items.
- * - Alignment options (start, center, end).
- * - Automatic width calculation for grid cells (e.g., .medium-6) used inside.
- * - Responsive helper classes to enable or disable snapping at specific breakpoints.
- * - Styles for "full-bleed" layouts that break out of the main grid container.
- *
- * @usage
- *
- * * <div class="scroll-snap-container-x">
- * <div class="scroll-snap-element">...</div>
- * <div class="scroll-snap-element">...</div>
- * </div>
- *
- * * <div class="left-right-navigation">
- * <div class="scroll-snap-container-x">...</div>
- * </div>
- *
- * * <div class="scroll-snap-container-x medium-scroll-snap">
- * <div class="scroll-snap-element small-12 medium-6 large-4">...</div>
- * <div class="scroll-snap-element small-12 medium-6 large-4">...</div>
- * <div class="scroll-snap-element small-12 medium-6 large-4">...</div>
- * </div>
- *
- * @modifiers
- * Add these classes to the `.scroll-snap-container-x` element.
- *
- * // --- Alignment ---
- * .snap-align-start  // Snaps elements to the left edge.
- * .snap-align-center // Snaps elements to the center.
- * .snap-align-end    // Snaps elements to the right edge.
- *
- * // --- Relative Widths (shows multiple items) ---
- * .width-small      // Each item is 20% width.
- * .width-medium     // Each item is 40% width.
- * .width-large      // Each item is 60% width.
- * .width-xlarge     // Each item is 80% width.
- *
- * // --- Fixed Widths ---
- * .width-fixed-small  // Each item is 240px width.
- * .width-fixed-medium // Each item is 320px width.
- * .width-fixed-large  // Each item is 480px width.
- *
- * // --- Responsive Toggling ---
- * .<breakpoint>-scroll-snap // Stacks vertically until the breakpoint, then enables scroll snap.
- * .<breakpoint>-no-scroll-snap // Disables scroll snap at and above the breakpoint.
- * (e.g., .large-scroll-snap)
- */
-
+///  A row that scrolls sideways and snaps each `.scroll-snap-element` into place (docs/scroll-snap.md).
 @mixin styles {
-  .left-right-navigation {
-    position: relative;
-
-    &:hover {
-      &::before,
-      &::after {
-        opacity: 1;
-        transition: opacity global.$global-transition-medium;
-      }
-    }
-
-    &::before,
-    &::after {
-      opacity: 0;
-      transition: opacity global.$global-transition-medium;
-      display: flex;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      padding: global.$global-padding;
-      background: var(--f-color-text-0);
-      border-radius: global.$global-radius-xsmall;
-      box-shadow: global.$global-drop-shadow;
-      font-family: custom-settings.$icon-font-family;
-      font-size: 1rem;
-      font-weight: global.$global-weight-bold;
-      z-index: 10;
-    }
-
-    &::before {
-      content: "\f104";
-      left: global.$global-gutter-small;
-    }
-
-    &::after {
-      content: "\f105";
-      right: global.$global-gutter-small;
-    }
-  }
-
   .scroll-snap-container-x {
     @include grid.xy-grid($direction: horizontal, $wrap: false);
 
@@ -126,17 +21,7 @@
       margin: 0;
       flex: 1 1 100%;
 
-      & > span {
-        position: relative;
-        left: 0.5rem;
-
-        & + * {
-          margin-top: 0.5rem;
-        }
-      }
-    }
-
-    &.snap-align-start .scroll-snap-element {
+      // Without an align there is no snap point, and the row scrolls freely.
       scroll-snap-align: start;
     }
 
@@ -175,98 +60,8 @@
     &.width-fixed-large .scroll-snap-element {
       min-width: 480px;
     }
-  }
 
-  @each $breakpoint, $width in breakpoint.$breakpoints {
-    .#{$breakpoint}-scroll-snap.scroll-snap-container-x {
-      display: block;
-    }
-
-    @include breakpoint.breakpoint(#{$breakpoint} up) {
-      .scroll-snap-container-x {
-        &.#{$breakpoint}-scroll-snap {
-          display: flex;
-        }
-        &.#{$breakpoint}-no-scroll-snap {
-          display: block;
-
-          .scroll-snap-element {
-            min-width: 100%;
-          }
-        }
-      }
-    }
-
-    @include breakpoint.breakpoint(#{$breakpoint}) {
-      .scroll-snap-element {
-        @include cell.xy-cell-gutters(
-          $gutter-type: padding,
-          $gutter-position: top right bottom left,
-          $breakpoint: #{$breakpoint}
-        );
-      }
-    }
-  }
-
-  /**
-  * Todo Create a Fallback if global width is bigger than the biggest breakpoint defined in a cell.
-  * $breakpoint-fallback is a start, not finished yet, though.
-  * At the moment $global width should no exceed width of 'large' breakpoint.
-  */
-  // stylelint-disable-next-line no-duplicate-selectors -- kept with its doc comment; merging would reorder the output
-  .scroll-snap-container-x {
-    $widescreen-breakpoint: "";
-
-    .grid-x {
-      $breakpoint-fallback: ();
-
-      // loop through each breakpoint-list-item.
-      @each $breakpoint, $width in breakpoint.$breakpoints {
-        $index: list.index((breakpoint.$breakpoints), ($breakpoint $width));
-
-        @if $index == 1 {
-          $breakpoint-fallback: list.append($breakpoint-fallback, $breakpoint);
-        }
-
-        // set up media-query.
-        @include breakpoint.breakpoint($breakpoint) {
-          // loop through all possible column counts.
-          @for $i from 1 through float-grid.$grid-column-count {
-            // set gutter width
-            $grid-margin-gutter: map.get(xy-grid.$grid-margin-gutters, #{$breakpoint});
-            $grid-container-gutter: map.get(
-              xy-grid.$grid-container-padding,
-              #{$breakpoint}
-            );
-
-            // this is the cell, e.g. medium-8.
-            & > .#{$breakpoint}-#{$i} {
-              $container-width: 100%;
-
-              // From the breakpoint where the grid container is full width, the reference width is the
-              // container, not 100vw.
-              @if (
-                math.strip-unit(unit.rem-calc(math.strip-unit($width))) >= math.strip-unit(xy-grid.$grid-container)
-              ) {
-                @if $widescreen-breakpoint == "" {
-                  $widescreen-breakpoint: $breakpoint;
-                }
-
-                $container-width: xy-grid.$grid-container;
-              }
-
-              // This is where the magic happens.
-              width: calc(
-                (#{$container-width} - #{$grid-container-gutter}) / (#{float-grid.$grid-column-count} / #{$i}) - #{$grid-margin-gutter}
-              );
-            }
-          }
-        }
-
-        $breakpoint-fallback: list.append($breakpoint-fallback, $breakpoint);
-      }
-    }
-
+    // Widen the row by a gutter so the elements' padding lines up with the grid.
     .grid-container & {
       @each $breakpoint, $width in breakpoint.$breakpoints {
         @include breakpoint.breakpoint($breakpoint) {
@@ -300,6 +95,18 @@
             }
           }
         }
+      }
+    }
+  }
+
+  @each $breakpoint, $width in breakpoint.$breakpoints {
+    @include breakpoint.breakpoint(#{$breakpoint}) {
+      .scroll-snap-element {
+        @include cell.xy-cell-gutters(
+          $gutter-type: padding,
+          $gutter-position: top right bottom left,
+          $breakpoint: #{$breakpoint}
+        );
       }
     }
   }

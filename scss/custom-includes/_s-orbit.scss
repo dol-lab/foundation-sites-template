@@ -37,7 +37,7 @@ $orbit-bullet-margin-bottom: 0.5rem !default;
 
 /// Default background color for Orbit's caption.
 /// @type String
-$orbit-caption-background: color-mix(in oklab, var(--f-color-bg-1) 75%, transparent 35%) !default;
+$orbit-caption-background: color-mix(in oklab, var(--f-color-bg-1) 75%, transparent) !default;
 
 /// Default padding for Orbit's caption.
 /// @type Number
@@ -121,8 +121,8 @@ $orbit-control-zindex: 10 !default;
   border: $orbit-control-border;
   opacity: 0.4;
   display: flex;
-  width: custom-settings.$control-height;
-  height: custom-settings.$control-height;
+  width: custom-settings.$button-height;
+  height: custom-settings.$button-height;
   align-items: center;
   justify-content: center;
   cursor: pointer;

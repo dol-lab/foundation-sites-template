@@ -74,6 +74,7 @@ The Sass globals (`$global-radius`, `$global-radius-xsmall`, `$global-transition
 | `--f-drop-shadow`, `--f-drop-shadow-large` | | Elevation, drawn in `--f-color-shadow`: change the color, not the shadows |
 | `--f-avatar-xsmall` … `-xxlarge` | `24px` … `240px` | Avatar sizes, from `$avatar-sizes` |
 | `--f-opacity-disabled` | `0.5` | A disabled control, `.disabled`, `$button-opacity-disabled`, `$switch-opacity-disabled` |
+| `--f-z-header`, `-overlay`, `-modal`, `-dropdown` | `1000`, `1005`, `1006`, `2000` | Page layers, from `$z-index`: the app header, a modal's backdrop, the modal, and dropdowns and tooltips (above a modal, so one opened inside it shows). Stacking inside a component keeps small numbers |
 
 These are read with a fallback and not declared, so set them where they apply:
 
@@ -81,7 +82,7 @@ These are read with a fallback and not declared, so set them where they apply:
 | --- | --- | --- |
 | `--f-avatar-stack-overlap` | `0.6rem` | How far avatars in an `.avatar-stack` overlap |
 | `--f-auto-grid-min-width` | `250px` | `.auto-grid`'s minimum column width |
-| `--f-prose-offset-left` | `clamp(0.75rem, 2vw, 2rem)` | `.prose-layout`'s left column target width; `--target-offset-left` is the old name, still read |
+| `--f-prose-offset-left` | `clamp(0.75rem, 2vw, 2rem)` | `.prose-layout`'s left column target width |
 | `--f-prose-ch-factor` | `1` | Scales `.prose-layout`'s 70ch column for a font with a narrow or wide `0` |
 
 A narrower or wider `.grid-container` needs no rebuild. The tokens are seeded from `$grid-container` and `$grid-container-padding` (`scss/custom-includes/foundation-spaces/xy-grid/_xy-grid.scss`); `.grid-container.full` keeps `padding: 0`, and Sass math on the cell gutters (`_s-scroll-snap.scss`, `custom-styles/_utilities.scss`) does not follow a runtime override.

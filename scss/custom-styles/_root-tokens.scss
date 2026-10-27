@@ -49,5 +49,9 @@
     @each $size, $value in custom-settings.$avatar-sizes {
       --f-avatar-#{$size}: #{$value};
     }
+
+    @each $layer, $value in custom-settings.$z-index {
+      --f-z-#{$layer}: #{$value};
+    }
   }
 }

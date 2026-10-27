@@ -6,7 +6,8 @@
     .button {
       display: flex;
 
-      &.no-padding {
+      // `.p-0` alone loses to `.menu a`.
+      &.p-0 {
         padding: 0;
       }
     }

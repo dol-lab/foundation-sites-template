@@ -1,10 +1,11 @@
 @use "../custom-includes/foundation-spaces/global";
 @use "../custom-settings";
 
-// .dots and .add: icon buttons drawn with a pseudo-element.
+// .dots and .add: icon buttons drawn with a pseudo-element. WordPress' pagination prints its gap as
+// `span.page-numbers.dots` with its own "…", so that one is left alone (at `.dots` specificity).
 
 @mixin styles {
-  .dots,
+  .dots:not(:where(.page-numbers)),
   .add {
     cursor: pointer;
     z-index: 50;
@@ -42,8 +43,7 @@
     }
   }
 
-  // U+22EF sits on the math axis, so it centers without offsetting a baseline "...". WordPress' pagination
-  // prints its gap as `span.page-numbers.dots` with its own "…".
+  // U+22EF sits on the math axis, so it centers without offsetting a baseline "...".
   .dots:not(.page-numbers)::after {
     content: "\22EF";
   }

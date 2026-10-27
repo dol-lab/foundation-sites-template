@@ -65,7 +65,7 @@ $tooltip-radius: global.$global-radius !default;
 @mixin tooltip {
   position: absolute;
   top: calc(100% + #{$tooltip-pip-height});
-  z-index: 1200;
+  z-index: var(--f-z-dropdown);
   max-width: $tooltip-max-width;
   padding: $tooltip-padding;
   border-radius: $tooltip-radius;

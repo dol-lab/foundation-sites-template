@@ -13,9 +13,9 @@
 /// @type Boolean
 $prototype-shadow-breakpoints: global.$global-prototype-breakpoints !default;
 
-/// Default value for `prototype-box-shadow`
+/// Default value for `prototype-box-shadow`: the theme's drop shadow, so `.shadow` follows `--f-color-shadow`.
 /// @type Number
-$prototype-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%) !default;
+$prototype-box-shadow: global.$global-drop-shadow !default;
 
 /// Shadow Utility: Adds a light box shadow to an element by default.
 /// @param {Number} $shadow [$prototype-box-shadow] Box Shadow of a component

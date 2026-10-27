@@ -9,5 +9,9 @@
     & > *:first-child {
       margin-right: 0.5rem;
     }
+
+    & > :is(input, textarea, select) {
+      flex: 1;
+    }
   }
 }

@@ -24,6 +24,7 @@
 @use "components/label-wrapper";
 @use "components/switch";
 @use "components/checkbox";
+@use "components/user-card";
 @use "components/radio-accordion";
 @use "components/input";
 @use "components/input-group";
@@ -42,7 +43,6 @@
 @use "components/tooltip";
 @use "components/tabs";
 @use "components/shake";
-@use "components/accordion";
 @use "components/pagination";
 @use "components/callout";
 @use "components/table";
@@ -72,6 +72,7 @@
   @include label-wrapper.styles;
   @include switch.styles;
   @include checkbox.styles;
+  @include user-card.styles;
   @include radio-accordion.styles;
   @include input.styles;
   @include input-group.styles;
@@ -90,7 +91,6 @@
   @include tooltip.styles;
   @include tabs.styles;
   @include shake.styles;
-  @include accordion.styles;
   @include pagination.styles;
   @include callout.styles;
   @include table.styles;

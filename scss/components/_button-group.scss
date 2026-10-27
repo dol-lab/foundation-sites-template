@@ -1,90 +1,100 @@
 @use "../custom-includes/foundation-spaces/global";
+@use "../custom-includes/foundation-spaces/util/breakpoint";
+@use "../custom-includes/s-button";
 
-// .button-group.
+// .button-group: layout, seams and corners (fills and sizes: custom-includes/_s-button-group.scss).
+
+// The group holds the radius; its first and last child inherit the outer corners, so a rule that squares
+// the group's corners (a flush card section) squares theirs too.
+@mixin corners($first, $last) {
+  > * {
+    border-radius: 0;
+  }
+
+  > :first-child {
+    @each $corner in $first {
+      border-#{$corner}-radius: inherit;
+    }
+  }
+
+  > :last-child {
+    @each $corner in $last {
+      border-#{$corner}-radius: inherit;
+    }
+  }
+}
+
+// Hollow buttons overlap by their border along the axis, so two borders read as one line.
+@mixin direction($direction, $overlap, $first, $last) {
+  flex-direction: $direction;
+
+  @include corners($first, $last);
+
+  &.hollow > * + * {
+    margin: 0;
+    margin-#{$overlap}-start: -(s-button.$button-hollow-border-width);
+  }
+}
+
+@mixin stack {
+  @include direction(column, block, start-start start-end, end-start end-end);
+
+  > * {
+    flex: none;
+  }
+}
 
 @mixin styles {
   .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    align-items: stretch;
+    gap: 1px;
     border-radius: global.$global-radius;
-    overflow: hidden;
 
-    &:not(.no-gaps) {
-      gap: 1px;
-    }
+    @include direction(row, inline, start-start end-start, start-end end-end);
 
-    input {
-      width: initial;
-    }
+    > * {
+      flex: 0 0 auto;
+      margin: 0;
 
-    button,
-    .button,
-    select,
-    input {
-      margin-bottom: 0;
-
-      &:hover {
+      // The hovered or focused button lies on top: its border and focus ring are not covered by a neighbour.
+      &:hover,
+      &:focus-visible {
         z-index: 1;
       }
+    }
 
-      &:not(:first-child, :last-child) {
-        border-radius: 0;
-      }
+    > select,
+    > input {
+      width: auto;
+    }
 
-      &:first-child:not(:last-child) {
-        border-radius: global.$global-radius 0 0 global.$global-radius;
-      }
+    &.hollow,
+    &.no-gaps {
+      gap: 0;
+    }
 
-      &:last-child:not(:first-child) {
-        margin-right: 0;
-        border-radius: 0 global.$global-radius global.$global-radius 0;
-      }
+    &.expanded > *,
+    > .expanded {
+      flex: 1 1 0;
+      width: auto;
+    }
 
-      &.hollow {
-        &:not(:last-child) {
-          margin-right: -1px;
-        }
-      }
+    &.stacked {
+      @include stack;
+    }
 
-      &.expanded {
-        flex: 1;
-        width: initial;
+    &.stacked-for-small {
+      @include breakpoint.breakpoint(small only) {
+        @include stack;
       }
     }
 
-    button,
-    .button {
-      &:not(.hollow) + .hollow {
-        margin-left: -2px;
-      }
-    }
-
-    &.hollow {
-      button,
-      .button,
-      select,
-      input {
-        &:first-child {
-          border-radius: global.$global-radius 0 0 global.$global-radius;
-        }
-
-        &:last-child {
-          border-radius: 0 global.$global-radius global.$global-radius 0;
-        }
-
-        &:not(:last-child) {
-          margin-right: -1px;
-        }
-      }
-    }
-
-    &.expanded {
-      width: 100%;
-
-      button,
-      .button,
-      select {
-        &:not(:last-child) {
-          margin-right: 1px;
-        }
+    &.stacked-for-medium {
+      @include breakpoint.breakpoint(medium down) {
+        @include stack;
       }
     }
   }

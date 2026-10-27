@@ -53,13 +53,13 @@ $breadcrumbs-item-separator: true !default;
   $breadcrumbs-item-separator: $breadcrumbs-item-slash;
 }
 
-/// Used character for the breadcrumb separator.
+/// Breadcrumb separator: a chevron from the icon font, since a breadcrumb is a path from parent to child (a plain list of siblings is a `.dot-list`).
 /// @type Content
-$breadcrumbs-item-separator-item: custom-settings.$separator !default;
+$breadcrumbs-item-separator-item: "\f054" !default;
 
-/// Used character for the breadcrumb separator in rtl mode.
+/// Breadcrumb separator in rtl mode.
 /// @type Content
-$breadcrumbs-item-separator-item-rtl: custom-settings.$separator !default;
+$breadcrumbs-item-separator-item-rtl: "\f053" !default;
 
 /// Color of breadcrumb separator item.
 /// @type Color
@@ -102,6 +102,9 @@ $breadcrumbs-item-separator-opacity: 60% !default;
           position: relative;
           margin: 0 $breadcrumbs-item-margin;
           content: $separator;
+          font-family: custom-settings.$icon-font-family;
+          font-size: 0.625em;
+          font-weight: bold;
           color: $breadcrumbs-item-separator-color;
           opacity: $breadcrumbs-item-separator-opacity;
         }

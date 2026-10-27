@@ -1,26 +1,15 @@
 @use "../custom-settings";
 
-// Middle-dot separators: .dot-list, .dot-list-dot-before, .dot-after.
+// Middle-dot separators between the children of .dot-list: after each but the last,
+// or with .dot-before before each but the first (a wrapped line then starts with the dot).
 
 @mixin styles {
-  .dot-list {
-    & > *:not(:last-child)::after {
-      content: custom-settings.$separator;
-      margin: 0 0.5em;
-    }
-  }
-
-  .dot-list-dot-before {
-    & > *:not(:first-child)::before {
-      content: custom-settings.$separator;
-      margin: 0 0.5em;
-    }
-  }
-
-  .dot-after {
-    &::after {
-      content: custom-settings.$separator;
-      margin: 0 0.5em;
-    }
+  .dot-list:not(.dot-before) > *:not(:last-child)::after,
+  .dot-list.dot-before > *:not(:first-child)::before,
+  // Deprecated: use `.dot-list.dot-before`, and `.dot-list` on the parent of `.dot-after`.
+  .dot-list-dot-before > *:not(:first-child)::before,
+  .dot-after::after {
+    content: custom-settings.$separator;
+    margin: 0 0.5em;
   }
 }

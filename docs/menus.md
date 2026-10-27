@@ -34,11 +34,11 @@ Find-in-page opens a closed submenu that holds the match (browsers with `hidden=
 
 ## Dropdown pane
 
-Opened here by `.dots`, the button Spaces puts in the corner of a card. Spaces' own context menus (post, comment, profile, avatar) are not dropdown panes: spaces-markup builds them (`includes/Menu.php`, `assets/js/menu.js`) on a `.card.static`.
+Opened here by `.dots`, the button Spaces puts in the corner of a card. Spaces' own context menus (post, comment, profile, avatar) are not dropdown panes: spaces-markup builds them (`includes/Menu.php`, `assets/js/menu.js`) on a `.card`.
 
 ```html example
 <button class="button p-0 m-0 clear dots" type="button" aria-label="Actions" data-toggle="demo-dropdown-pane"></button>
-<ul class="dropdown-pane card static" id="demo-dropdown-pane" data-dropdown data-position="bottom" data-alignment="left">
+<ul class="dropdown-pane card" id="demo-dropdown-pane" data-dropdown data-position="bottom" data-alignment="left">
     <li class="card-divider p-3"><a href="#">Edit</a></li>
     <li class="card-divider p-3"><a href="#">Share</a></li>
     <li class="card-divider p-3"><a href="#" class="alert">Delete</a></li>
@@ -52,7 +52,7 @@ A `.details-menu` is a flat row while closed and a raised card while open; neste
 A parent that is also a link sits in `li.details-link`: the `<a>` comes before the `<details>` and lies over its row, the summary only folds (a link inside a summary would be nested in a button). The summary repeats the title in an `aria-hidden` span so the row wraps as the link does, and is named by `aria-label`. Spaces' main menu in the sidebar is built this way.
 
 ```html example
-<ul class="menu vertical card static">
+<ul class="menu vertical card">
     <li class="details-link">
         <a href="#">Teaching</a>
         <details class="details-menu" open>

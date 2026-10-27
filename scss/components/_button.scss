@@ -37,14 +37,14 @@
       margin-bottom: 0;
     }
 
-    .card-section.no-padding:not(:first-child) > &,
-    .card-divider.no-padding:not(:first-child) > & {
+    .card-section.flush:not(:first-child) > &,
+    .card-divider.flush:not(:first-child) > & {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
     }
 
-    .card-section.no-padding:not(:last-child) > &,
-    .card-divider.no-padding:not(:last-child) > & {
+    .card-section.flush:not(:last-child) > &,
+    .card-divider.flush:not(:last-child) > & {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
     }

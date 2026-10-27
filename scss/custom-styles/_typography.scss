@@ -64,18 +64,17 @@
   :where(body :is(.brand-links, .s-fg-a-c1-parent) *:not([data-dropdown]))
     a:not(
       :where(
-          [data-dropdown] a,
-          [class^="wp-block"],
-          .primary,
-          .secondary,
-          .alert,
-          .success,
-          .warning,
-          .accordion-title,
-          .button,
-          [role="tab"],
-          [role="menuitem"]
-        )
+        [data-dropdown] a,
+        [class^="wp-block"],
+        .primary,
+        .secondary,
+        .alert,
+        .success,
+        .warning,
+        .button,
+        [role="tab"],
+        [role="menuitem"]
+      )
     ) {
     color: var(--f-color-brand);
 
@@ -181,7 +180,6 @@
   textarea,
   select {
     font-size: global.$paragraph-font-size;
-    flex: 1;
   }
 
   small > label,

@@ -59,15 +59,15 @@
   $brand-contrast: map.get(colors.$foundation-palette-contrast, "brand");
 
   --f-color-brand: #{-theme-pick(
-      $mode,
-      "var(--f-color-brand-base, #{$brand})",
-      "color-mix(in oklab, var(--f-color-brand-base, #{$brand}) 87%, white 13%)"
-    )};
+    $mode,
+    "var(--f-color-brand-base, #{$brand})",
+    "color-mix(in oklab, var(--f-color-brand-base, #{$brand}) 87%, white 13%)"
+  )};
   --f-color-brand-contrast: #{-theme-pick(
-      $mode,
-      "var(--f-color-brand-base-contrast, #{$brand-contrast})",
-      "color-mix(in oklab, var(--f-color-brand-base-contrast, #{$brand-contrast}) 87%, white 13%)"
-    )};
+    $mode,
+    "var(--f-color-brand-base-contrast, #{$brand-contrast})",
+    "color-mix(in oklab, var(--f-color-brand-base-contrast, #{$brand-contrast}) 87%, white 13%)"
+  )};
   --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
 }
 
@@ -115,10 +115,10 @@
     @if $color-name != "brand" {
       --f-color-#{$color-name}: #{-theme-pick($mode, $color, map.get(colors.$foundation-palette-darktheme, $color-name))};
       --f-color-#{$color-name}-contrast: #{-theme-pick(
-          $mode,
-          map.get(colors.$foundation-palette-contrast, $color-name),
-          map.get(colors.$foundation-palette-darktheme-contrast, $color-name)
-        )};
+        $mode,
+        map.get(colors.$foundation-palette-contrast, $color-name),
+        map.get(colors.$foundation-palette-darktheme-contrast, $color-name)
+      )};
     }
   }
 

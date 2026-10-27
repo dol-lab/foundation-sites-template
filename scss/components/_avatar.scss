@@ -20,13 +20,6 @@
       border-radius: inherit;
     }
 
-    @each $avatar-size, $_ in custom-settings.$avatar-sizes {
-      &.#{$avatar-size} {
-        width: var(--f-avatar-#{$avatar-size});
-        min-width: var(--f-avatar-#{$avatar-size});
-      }
-    }
-
     // `.avatar-trigger` takes the place of `.clipped` in an avatar that opens something
     // (a link to the profile, or a `<span role="button">`). Its image shrinks while pointed at
     // or open.
@@ -53,13 +46,6 @@
     .menu & > a.avatar-trigger {
       padding: 0;
     }
-
-    @each $size-label, $_ in custom-settings.$avatar-sizes {
-      .#{$size-label} & {
-        width: var(--f-avatar-#{$size-label});
-        min-width: var(--f-avatar-#{$size-label});
-      }
-    }
   }
 
   .avatar {
@@ -69,13 +55,24 @@
     img {
       border-radius: global.$global-radius;
     }
+  }
 
-    @each $avatar-size, $_ in custom-settings.$avatar-sizes {
-      &.#{$avatar-size},
-      .avatar.#{$avatar-size} & {
-        width: var(--f-avatar-#{$avatar-size});
-        height: var(--f-avatar-#{$avatar-size});
-      }
+  // A size class on the avatar, or on any ancestor (`.small .avatar-container`); its own
+  // class wins, as the ancestor form is lowered by `:where()`. Not one inheriting custom
+  // property: `.avatar` is also WordPress' class on every avatar `<img>`, which would pick it up.
+  @each $size, $_ in custom-settings.$avatar-sizes {
+    $width: var(--f-avatar-#{$size});
+
+    .avatar-container.#{$size},
+    :where(.#{$size}) .avatar-container {
+      width: $width;
+      min-width: $width;
+    }
+
+    .avatar.#{$size},
+    .avatar.#{$size} .avatar {
+      width: $width;
+      height: $width;
     }
   }
 }

@@ -1,6 +1,6 @@
 # Breadcrumbs
 
-`.breadcrumbs` is a list of links separated by a dot; the last item is the current page, `.disabled` one that cannot be visited.
+`.breadcrumbs` is a path from parent to child, its links separated by a chevron; the last item is the current page, `.disabled` one that cannot be visited. A plain list of siblings (post meta, a row of names) is a `.dot-list` and keeps the dot.
 
 ```html example
 <nav aria-label="You are here">

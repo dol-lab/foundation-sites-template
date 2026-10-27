@@ -19,7 +19,6 @@
 @use "custom-includes/foundation-spaces/prototype/prototype";
 @use "custom-includes/foundation-spaces/typography/typography";
 @use "custom-includes/foundation-spaces/xy-grid/classes";
-@use "custom-includes/s-accordion";
 @use "custom-includes/s-accordion-menu";
 @use "custom-includes/s-badge";
 @use "custom-includes/s-breadcrumbs";
@@ -96,8 +95,6 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
 
   ///  Containers
   ///
-
-  @include s-accordion.spaces-accordion;
 
   @if $include-media-object {
     @include media-object.foundation-media-object;

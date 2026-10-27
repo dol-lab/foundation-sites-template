@@ -10,7 +10,7 @@ Utility classes from `scss/custom-styles/_utilities.scss` and Foundation's proto
 - **Side:** `t` (top), `b` (bottom), `l` (left), `r` (right), `x` (horizontal), `y` (vertical), *(blank)* (all)
 - **Auto margins:** `m-auto`, `mx-auto`, `my-auto`, `mt-auto`, `mr-auto`, `mb-auto`, `ml-auto`
 
-A side beats an axis, an axis beats all sides: `pl-1` overrides `p-2`.
+A side beats an axis, an axis beats all sides: `pl-1` overrides `p-2`. `.p-0` also empties a `.menu` or dropdown-menu link. A `.card-section` or `.card-divider` whose content should fill it edge to edge (borderless fields, buttons squared toward the neighbouring sections) takes `.flush` instead.
 
 | Size  | Value     | Pixels |
 | ----- | --------- | ------ |
@@ -25,7 +25,7 @@ A side beats an axis, an axis beats all sides: `pl-1` overrides `p-2`.
 | **8** | 2.5rem    | 40px   |
 | **9** | 3rem      | 48px   |
 
-Legacy: `.padding-button`, `.padding-xlarge`, `.padding-xxlarge`, Foundation's `.padding-{0-3}` / `.margin-{0-3}` (with sides, e.g. `.padding-top-1`) and `.gutter-*`. Use the scale for anything new.
+Legacy: `.no-padding` (deprecated alias of `.p-0`), `.padding-button`, `.padding-xlarge`, `.padding-xxlarge`, Foundation's `.padding-{0-3}` / `.margin-{0-3}` (with sides, e.g. `.padding-top-1`) and `.gutter-*`. Use the scale for anything new.
 
 ## Layout and grid
 
@@ -74,7 +74,8 @@ Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile)
 - **Links:** `.brand-links` on a container gives the prose links inside it the brand colour (`.s-fg-a-c1-parent` is the old name, kept as an alias).
 - **Borders:** `.bordered`, `.border-none` (`.no-border` is deprecated)
 - **Radius:** `.rounded` (`--f-radius`), `.rounded-small`, `.rounded-none`, `.rounded-full`
-- **Shadows:** `.shadow`, `.no-box-shadow`
+- **Shadows:** `.shadow` (the theme's drop shadow), `.box-shadow-large`, `.no-box-shadow` (`.box-shadow` is a deprecated alias of `.shadow`)
+- **Separators:** `.dot-list` puts a `·` after each child but the last; `.dot-list.dot-before` puts it before each but the first, so a wrapped line starts with it (`.dot-list-dot-before` and `.dot-after` are deprecated)
 
 ### Interactive
 
