@@ -42,8 +42,11 @@
     border-radius: var(--f-radius-small);
   }
 
-  label > [disabled] ~ * {
-    opacity: 0.5;
+  // A disabled input fades its drawn control, and in a wrapping label the row's text too
+  // (the switch paddle: _s-switch.scss).
+  label > :disabled ~ *,
+  :disabled ~ :is(.checkbox-label, .radio-label) {
+    opacity: var(--f-opacity-disabled);
   }
 
   .checkbox-label,
@@ -66,10 +69,6 @@
       font-size: s-switch.$switch-height-large;
     }
 
-    [disabled] ~ & {
-      opacity: 0.5;
-    }
-
     [type="checkbox"] + &,
     [type="radio"] + & {
       margin: 0;
@@ -82,7 +81,7 @@
     &.round {
       .checkbox-label {
         &::before {
-          border-radius: 50%;
+          border-radius: var(--f-radius-full);
         }
       }
     }
@@ -93,8 +92,8 @@
       &::before {
         content: "";
         box-shadow: inset 0 0 0 2px var(--f-color-text-2);
-        border-radius: global.$global-radius-small;
-        transition: all global.$global-transition-medium;
+        border-radius: global.$global-radius-xsmall;
+        transition: box-shadow global.$global-transition-medium;
         height: 1em;
         width: 1em;
       }
@@ -108,7 +107,8 @@
         border-right: 2px solid transparent;
         transform: rotate(45deg) translate(0.03125em, 0.03125em);
         z-index: 2;
-        transition: all global.$global-transition-medium;
+        transition-property: transform, border-color;
+        transition-duration: global.$global-transition-medium;
       }
 
       &.small {
@@ -127,12 +127,11 @@
     input:checked ~ .checkbox-label {
       &::before {
         box-shadow: inset 0 0 0 2em currentcolor;
-        transition: all global.$global-transition-medium;
       }
 
       &::after {
         transform: rotate(45deg) translate(-0.03125em, -0.03125em);
-        transition: all global.$global-transition-short;
+        transition-duration: global.$global-transition-short;
         transition-delay: global.$global-transition-short;
         border-color: var(--f-color-bg-1);
       }
@@ -146,7 +145,7 @@
       &::before {
         content: "";
         box-shadow: inset 0 0 0 2px var(--f-color-text-2);
-        transition: all global.$global-transition-medium;
+        transition: box-shadow global.$global-transition-medium;
         border-radius: var(--f-radius-full);
         height: 1em;
         width: 1em;
@@ -156,7 +155,6 @@
     input:checked ~ .radio-label {
       &::before {
         box-shadow: inset 0 0 0 calc(0.5em - 2px) currentcolor;
-        transition: all global.$global-transition-medium;
       }
     }
   }

@@ -1,0 +1,38 @@
+///
+///  The partials both entries share. Each prints nothing on load: its CSS is a
+///  `styles` mixin, so app-backend.scss can include the same rules inside `.f`.
+///  `@use` cannot sit inside `.f`, and an included mixin keeps `X &` selectors
+///  resolving to `X .f …` (meta.load-css() would print `.f X …`).
+
+///
+///  Font import, only up here by convention.
+@use "fonts";
+
+///
+///  Basically foundation's 'normalize' with a few extra knobs (configured by
+///  app-backend.scss before this loads).
+@use "custom-normalize";
+@use "custom-foundation-includes";
+@use "custom-includes/s-scroll-snap";
+@use "custom-styles";
+
+///
+///  Motion UI from node_modules (still on Sass imports inside), loaded as one module.
+@use "motion-ui";
+
+///
+///  Every component rule, in cascade order. `@content` is where app.scss puts
+///  the light/dark palette; the backend sets its tokens outside `.f`.
+@mixin styles {
+  @include s-scroll-snap.styles;
+
+  ///  Foundation's components, some forked to read CSS variables.
+  @include custom-foundation-includes.styles;
+
+  @content;
+
+  ///  Our styling, comes late to overwrite foundation styles.
+  @include custom-styles.styles;
+  @include motion-ui.motion-ui-transitions;
+  @include motion-ui.motion-ui-animations;
+}

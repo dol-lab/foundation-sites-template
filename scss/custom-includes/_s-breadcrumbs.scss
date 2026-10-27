@@ -6,6 +6,7 @@
 // Licensed under MIT Open Source
 
 @use "sass:meta";
+@use "../custom-settings";
 
 ////
 /// @group breadcrumbs
@@ -54,11 +55,11 @@ $breadcrumbs-item-separator: true !default;
 
 /// Used character for the breadcrumb separator.
 /// @type Content
-$breadcrumbs-item-separator-item: "·" !default;
+$breadcrumbs-item-separator-item: custom-settings.$separator !default;
 
 /// Used character for the breadcrumb separator in rtl mode.
 /// @type Content
-$breadcrumbs-item-separator-item-rtl: "·" !default;
+$breadcrumbs-item-separator-item-rtl: custom-settings.$separator !default;
 
 /// Color of breadcrumb separator item.
 /// @type Color

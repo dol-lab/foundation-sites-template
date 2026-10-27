@@ -1,6 +1,7 @@
 @use "../custom-includes/foundation-spaces/components/card";
 @use "../custom-includes/foundation-spaces/global";
 @use "../custom-includes/foundation-spaces/typography/base";
+@use "../custom-includes/s-accordion-menu";
 @use "../custom-settings";
 
 // .accordion-menu: carets, submenu toggles, expanded submenu parents.
@@ -10,10 +11,6 @@
 
 @mixin styles {
   .accordion-menu .nested.is-accordion-submenu {
-    /* removed because user-role change in defaultspace
-  	margin-top: 0.75rem;
-  	*/
-
     .is-submenu-item {
       border: none;
     }
@@ -58,7 +55,7 @@
     &.has-submenu-toggle {
       & > a {
         margin-right: 0;
-        padding-right: 36px;
+        padding-right: s-accordion-menu.$accordionmenu-submenu-toggle-width;
       }
 
       & > a::after {
@@ -99,11 +96,11 @@
   .accordion-submenu-parent-expanded {
     transition: all global.$global-transition-medium;
     box-shadow: global.$global-drop-shadow;
-    margin: calc(var(--offset) / 2);
+    margin: calc(var(--_offset) / 2);
     background: card.$card-background;
     border-color: var(--f-color-bg-2);
     display: block;
-    width: calc(100% - var(--offset));
+    width: calc(100% - var(--_offset));
     border-radius: global.$global-radius;
 
     & + * {
@@ -119,7 +116,7 @@
   }
 
   .accordion-menu .is-accordion-submenu-parent {
-    --offset: #{global.$global-gutter-small};
+    --_offset: #{global.$global-gutter-small};
 
     &[aria-expanded="false"] {
       @extend .accordion-submenu-parent-collapsed;

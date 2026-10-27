@@ -17,7 +17,7 @@ The palette follows the device's light or dark mode. Attributes on any element c
 
 - `data-theme="light"` or `"dark"` forces a mode.
 - `themed` with `--f-color-theme` tints the surfaces toward a hue. Every Space does this with its own color.
-- `--f-color-brand-base` overrides the brand color, `--f-radius` every corner.
+- `--f-color-brand-base` overrides the brand color (on `<html>` or a `themed` element), `--f-radius` every corner.
 
 ```html
 <html themed style="--f-color-theme: #975938">

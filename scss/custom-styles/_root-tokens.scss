@@ -1,9 +1,11 @@
+@use "../custom-includes/foundation-spaces/global";
 @use "../custom-includes/foundation-spaces/util/breakpoint";
 @use "../custom-includes/foundation-spaces/util/unit";
 @use "../custom-includes/foundation-spaces/xy-grid/xy-grid";
+@use "../custom-functions";
 @use "../custom-settings";
 
-// 0a. Design tokens
+// Design tokens
 // ---------
 // Custom properties only, and deliberately in a file of their own: they are
 // inherited, so they have to sit on :root. app-backend.scss wraps our styles
@@ -18,22 +20,15 @@
     --f-radius-small: calc(var(--f-radius) / 2);
     --f-radius-xsmall: calc(var(--f-radius) * 0.4);
     --f-radius-full: 9999px;
-    --f-gutter-small: 10px;
-    --f-gutter-large: 16px;
+    --f-opacity-disabled: 0.5;
+    --f-gutter-small: #{global.$global-gutter-small};
     --f-transition-short: 100ms;
     --f-transition-medium: 250ms;
     --f-transition-long: 500ms;
     --f-transition-timing: ease-in-out;
     --f-transition-timing-cubic-bezier: cubic-bezier(0.8, 0, 0.2, 1.2);
-  	--f-color-shadow: rgb(0 0 0 / 13%);
-    --f-drop-shadow: 0 5px 20px var(--f-color-shadow),
-      0 2px 5px color-mix(in srgb, var(--f-color-shadow) 50%, transparent);
-    --f-drop-shadow-large: 0 14px 28px var(--f-color-shadow),
-      0 10px 10px color-mix(in srgb, var(--f-color-shadow) 22%, transparent);
-    --f-margin: 1rem;
-    --f-padding: 1rem;
-    --f-menu-padding: 0.75rem 0.9rem;
-    --f-menu-nested-margin: 1rem;
+
+    @include custom-functions.drop-shadows;
 
     // Grid container size. The SCSS variables stay the source of truth; these
     // mirror them so a site (or a single wrapper) can resize the container

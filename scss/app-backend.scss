@@ -1,34 +1,14 @@
 @charset 'utf-8';
 
 ///
-///  Font import, only up here by convention.
-@use "fonts";
-
-///
-///  Custom components that print their CSS when loaded.
-@use "custom-includes/s-scroll-snap";
-@use "custom-includes/s-reveal";
-
-///
-///  Basically foundation's 'normalize' with a few extra knobs.
-///  Previously called custom-foundation-global-styles-not-prefixed
+///  Configured here, before _bundle.scss loads it.
 @use "custom-normalize" with (
   $box-sizing-root: ".f",
   $box-sizing-all: ".f *"
 );
-
-///
-///  The partials below print nothing on load: their CSS is a `styles` mixin.
-///  `@use` cannot sit inside `.f`, and an included mixin keeps `X &` selectors
-///  resolving to `X .f …` (meta.load-css() would print `.f X …`).
+@use "bundle";
 @use "custom-functions";
-@use "custom-foundation-includes";
 @use "custom-styles/root-tokens";
-@use "custom-styles";
-
-///
-///  Motion UI from node_modules (still on Sass imports inside), loaded as one module.
-@use "motion-ui";
 
 ///
 ///  Design tokens and the palette. They stay outside `.f`: they are inherited
@@ -45,19 +25,7 @@
 ///  integrate better into user's platform experiences.
 ///  Styles need to be prefixed to prevent unforseeable effects.
 .f {
-  ///
-  ///  @include statements for foundation mixins
-  ///  Some are "custom forks" to allow for CSS variable usage.
-  @include custom-foundation-includes.styles;
-
-  ///
-  ///  Our styling, comes late to overwrite foundation styles.
-  @include custom-styles.styles;
-
-  ///
-  ///  Motion UI stuff
-  @include motion-ui.motion-ui-transitions;
-  @include motion-ui.motion-ui-animations;
+  @include bundle.styles;
 }
 
 ///

@@ -1,9 +1,11 @@
 // .caret (extended by menus and accordions) and .caret-icon.
 
+@use "../custom-settings";
+
 @mixin styles {
   .caret {
     content: "\f078";
-    font-family: "Font Awesome 7 Free";
+    font-family: custom-settings.$icon-font-family;
     font-size: 0.625em;
     font-weight: bold;
     align-self: center;

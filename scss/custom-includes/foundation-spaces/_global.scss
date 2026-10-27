@@ -47,7 +47,7 @@ $white: #fefefe !default;
 
 /// Background color of the body.
 /// @type Color
-$body-background: var(--f-color-bg-2) !default;
+$body-background: var(--f-color-bg-0) !default;
 
 /// Text color of the body.
 /// @type Color
@@ -92,9 +92,10 @@ $global-radius: var(--f-radius) !default;
 
 /// Custom: Smaller border radius for compact components.
 /// @type String
-$global-radius-small: var(--f-radius-xsmall) !default;
+$global-radius-xsmall: var(--f-radius-xsmall) !default;
 
-/// Custom: Small gutter size for compact layouts.
+/// Custom: Small gutter size for compact layouts. A number, since the grid does
+/// math on it; `--f-gutter-small` mirrors it.
 /// @type Number
 $global-gutter-small: 8px !default;
 
@@ -102,25 +103,25 @@ $global-gutter-small: 8px !default;
 /// @type Number
 $global-gutter-large: 12px !default;
 
-/// Custom: Short transition duration.
-/// @type Number
-$global-transition-short: 150ms !default;
+/// Custom: Short transition duration, from the `--f-transition-short` token.
+/// @type String
+$global-transition-short: var(--f-transition-short) !default;
 
-/// Custom: Medium transition duration.
-/// @type Number
-$global-transition-medium: 300ms !default;
+/// Custom: Medium transition duration, from the `--f-transition-medium` token.
+/// @type String
+$global-transition-medium: var(--f-transition-medium) !default;
 
-/// Custom: Long transition duration.
-/// @type Number
-$global-transition-long: 400ms !default;
+/// Custom: Long transition duration, from the `--f-transition-long` token.
+/// @type String
+$global-transition-long: var(--f-transition-long) !default;
 
 /// Custom: Transition timing function.
 /// @type String
-$global-transition-timing: ease !default;
+$global-transition-timing: var(--f-transition-timing) !default;
 
 /// Custom: Cubic bezier transition timing function.
 /// @type String
-$global-transition-timing-cubic-bezier: cubic-bezier(0.4, 0, 0.2, 1) !default;
+$global-transition-timing-cubic-bezier: var(--f-transition-timing-cubic-bezier) !default;
 
 /// Custom: Global drop shadow value (references CSS variable).
 /// @type String
@@ -143,7 +144,8 @@ $global-focus: 2px solid $global-focus-color !default;
 $paragraph-font-size: 0.9375rem; // 15px
 
 /// Global value used for all menu styles. Can be overwritten at individual menu component level.
-/// @type Number
+/// A list of numbers with no token: menus do math on it (`list.nth`).
+/// @type List
 $global-menu-padding: 0.75rem 0.75rem !default;
 
 /// Global value used for all menu styles. Nested margin for submenu.

@@ -42,14 +42,10 @@
     }
   }
 
-  .dots {
-    padding-bottom: 0.675rem;
-
-    &::after {
-      content: "...";
-      letter-spacing: 0.03125rem;
-      margin-top: -0.65rem;
-    }
+  // U+22EF sits on the math axis, so it centers without offsetting a baseline "...". WordPress' pagination
+  // prints its gap as `span.page-numbers.dots` with its own "…".
+  .dots:not(.page-numbers)::after {
+    content: "\22EF";
   }
 
   .add {

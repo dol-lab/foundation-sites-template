@@ -1,5 +1,4 @@
 @use "../../../colors";
-@use "../../../custom-functions";
 @use "../global";
 @use "../util/value";
 
@@ -17,7 +16,7 @@ $progress-height: 1rem !default;
 
 /// Background color of a progress bar.
 /// @type Color
-$progress-background: custom-functions.color-mix-blend(var(--f-color-text-1), 7%, var(--f-color-bg-1), 93%) !default;
+$progress-background: color-mix(in oklab, var(--f-color-text-1) 7%, var(--f-color-bg-1)) !default;
 
 /// Bottom margin of a progress bar.
 /// @type Number

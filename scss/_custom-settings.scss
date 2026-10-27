@@ -1,8 +1,17 @@
-@use "custom-functions";
 @use "sass:color";
 @use "sass:map";
 
 $button-height: 2.4rem;
+
+// A compact control (tab, slider arrow, submenu toggle) and a comfortable touch target (menu row, icon button).
+$control-height: 36px !default;
+$touch-target: 48px !default;
+
+// The separator between items (.dot-list, breadcrumbs).
+$separator: "·" !default;
+
+// The icon font every CSS-drawn glyph (`content: "\f…"`) is set in.
+$icon-font-family: "Font Awesome 7 Free" !default;
 
 // Unified spacing scale (Tailwind-like system)
 // Used for both padding and margin utilities
@@ -43,53 +52,18 @@ $padding-special: (
   xxlarge: 1.5rem 2.5rem 1.75rem,
   // Complex: top 1.5rem, horizontal 2.5rem, bottom 1.75rem
 );
+
+// Emitted as `--f-avatar-<size>`, which the avatar rules read. `small` is a
+// button's height so it lines up in a row of buttons; the rest are px.
 $avatar-sizes: (
   xsmall: 24px,
-  small: 2.4rem,
+  small: $button-height,
   medium: 54px,
   large: 96px,
   xlarge: 144px,
   xxlarge: 240px,
 );
-$avatar-default-size: map.get($avatar-sizes, medium);
-
-// Dynamic spacing that changes based on breakpoint
-// Maps breakpoint names to spacing scale numbers
-$dynamic-relation: (
-  small: 3,
-  // At small breakpoint, use p-3 (0.75rem / 12px)
-  medium: 4,
-  // At medium breakpoint, use p-4 (1rem / 16px)
-  large: 7,
-  // At large breakpoint, use p-7 (2rem / 32px)
-);
-
-// Info Chip
-// ---------
-$info-chip-padding: 0.3em 0.6em;
-$info-chip-padding-round-x: 0.75em;
-
-// Every chip has a 1px border, drawn as a ring shadow so it costs no layout.
-// Its color is `--_chip-ring`, which each state sets (see .info-chip): a
-// hairline on a static chip, a firm line on a clickable one. Deriving it from
-// the text color is what makes it hold up in both themes.
-$info-chip-ring: custom-functions.color-mix-opacity(var(--f-color-text-0), 8%, 92%);
-$info-chip-ring-clickable: custom-functions.color-mix-opacity(var(--f-color-text-0), 12%, 88%);
-$info-chip-ring-hover: custom-functions.color-mix-opacity(var(--f-color-text-0), 24%, 76%);
-$info-chip-ring-shadow: 0 0 0 1px var(--_chip-ring);
-
-// On top of the ring, a clickable chip gets a drop shadow. `--f-color-shadow` is
-// the theme's own shadow color (light: black 13%, dark: black 50%), which keeps
-// it subtle on light and readable on dark. Hover deepens the shadow *and* the
-// ring, because black on a near-black card is barely a change -- there the ring
-// is the whole cue.
-$info-chip-shadow:
-  $info-chip-ring-shadow,
-  0 1px 2px 0 var(--f-color-shadow);
-$info-chip-shadow-hover:
-  $info-chip-ring-shadow,
-  0 2px 6px -1px var(--f-color-shadow),
-  0 1px 2px -1px var(--f-color-shadow);
+$avatar-default-size: medium; // a key of $avatar-sizes
 
 // Button & Input
 // ---------
@@ -98,20 +72,3 @@ $input-height: $button-height;
 // Menu
 // ---------
 $border: 1px solid var(--f-color-bg-2);
-
-// Icons
-$icon-line-weight: 2;
-
-// Spinner
-// ---------
-
-$spinner-sizes: (
-  tiny: 0.625rem,
-  // matches switch-height-tiny
-  small: 0.75rem,
-  // matches switch-height-small
-  medium: 1rem,
-  // matches switch-height
-  large: 1.5rem,
-  // matches switch-height-large
-);

@@ -1,6 +1,7 @@
 @use "foundation-spaces/global";
 @use "foundation-spaces/util/mixins";
 @use "s-menu";
+@use "../custom-settings";
 
 ////
 /// @group accordion-menu
@@ -44,7 +45,7 @@ $accordion-submenu-toggle-border: $accordionmenu-border !default;
 
 /// Sets accordion menu submenu toggle background width.
 /// @type Number
-$accordionmenu-submenu-toggle-width: 36px !default;
+$accordionmenu-submenu-toggle-width: custom-settings.$control-height !default;
 
 /// Sets accordion menu submenu toggle background height.
 /// @type Number

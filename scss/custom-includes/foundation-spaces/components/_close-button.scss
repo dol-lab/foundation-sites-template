@@ -1,4 +1,3 @@
-@use "../util/mixins";
 
 // Foundation for Sites
 // https://get.foundation
@@ -103,7 +102,6 @@ $closebutton-color-hover: var(--f-color-text-0) !default;
   color: $closebutton-color;
   cursor: pointer;
 
-  @include mixins.disable-mouse-outline;
 
   &:hover,
   &:focus {

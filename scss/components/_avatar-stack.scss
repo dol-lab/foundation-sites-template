@@ -10,23 +10,23 @@
 
 @mixin styles {
   .avatar-stack {
-    --avatar-overlap: 0.6rem;
-    --f-avatar-radius: 50%;
+    --_overlap: var(--f-avatar-stack-overlap, 0.6rem);
+    --f-avatar-radius: var(--f-radius-full);
 
     display: flex;
     flex-flow: row-reverse wrap;
     justify-content: flex-end;
-    height: map.get(custom-settings.$avatar-sizes, small);
-    min-width: map.get(custom-settings.$avatar-sizes, small);
+    height: var(--f-avatar-small);
+    min-width: var(--f-avatar-small);
     overflow: hidden;
-    padding-left: calc(var(--avatar-overlap) + #{map.get(custom-settings.$spacing-scale, 2)});
-    margin-right: calc(-0.7 * var(--avatar-overlap));
+    padding-left: calc(var(--_overlap) + #{map.get(custom-settings.$spacing-scale, 2)});
+    margin-right: calc(-0.7 * var(--_overlap));
 
     .avatar-container {
       overflow: hidden;
       border: 3px solid var(--f-color-bg-1);
       box-sizing: border-box;
-      margin-left: calc(-1 * var(--avatar-overlap));
+      margin-left: calc(-1 * var(--_overlap));
     }
   }
 }

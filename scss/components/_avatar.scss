@@ -6,8 +6,8 @@
 @mixin styles {
   .avatar-container {
     z-index: 20;
-    width: custom-settings.$avatar-default-size;
-    min-width: custom-settings.$avatar-default-size;
+    width: var(--f-avatar-#{custom-settings.$avatar-default-size});
+    min-width: var(--f-avatar-#{custom-settings.$avatar-default-size});
 
     // The corner of an avatar is one property, set by whoever has an opinion about it:
     // round in comments, squared off where the avatar sits in a corner of a card. Everything
@@ -20,10 +20,10 @@
       border-radius: inherit;
     }
 
-    @each $avatar-size, $size in custom-settings.$avatar-sizes {
+    @each $avatar-size, $_ in custom-settings.$avatar-sizes {
       &.#{$avatar-size} {
-        width: $size;
-        min-width: $size;
+        width: var(--f-avatar-#{$avatar-size});
+        min-width: var(--f-avatar-#{$avatar-size});
       }
     }
 
@@ -49,36 +49,32 @@
       }
     }
 
-    // A Foundation `.menu` pads its links, which would collapse the square.
+    // A Foundation `.menu` pads its links.
     .menu & > a.avatar-trigger {
       padding: 0;
-
-      &.square {
-        padding-bottom: 100%;
-      }
     }
 
-    @each $size-label, $size in custom-settings.$avatar-sizes {
+    @each $size-label, $_ in custom-settings.$avatar-sizes {
       .#{$size-label} & {
-        width: $size;
-        min-width: $size;
+        width: var(--f-avatar-#{$size-label});
+        min-width: var(--f-avatar-#{$size-label});
       }
     }
   }
 
   .avatar {
     flex: 0 0 auto;
-    width: custom-settings.$avatar-default-size;
+    width: var(--f-avatar-#{custom-settings.$avatar-default-size});
 
     img {
       border-radius: global.$global-radius;
     }
 
-    @each $avatar-size, $size in custom-settings.$avatar-sizes {
+    @each $avatar-size, $_ in custom-settings.$avatar-sizes {
       &.#{$avatar-size},
       .avatar.#{$avatar-size} & {
-        width: $size;
-        height: $size;
+        width: var(--f-avatar-#{$avatar-size});
+        height: var(--f-avatar-#{$avatar-size});
       }
     }
   }

@@ -1,4 +1,5 @@
 @use "../custom-includes/foundation-spaces/util/breakpoint";
+@use "../custom-settings";
 
 // .dropdown.menu.
 
@@ -17,7 +18,7 @@
     & > li > a {
       display: flex;
       align-items: center;
-      height: 48px;
+      height: custom-settings.$touch-target;
       box-sizing: border-box;
     }
 
@@ -33,6 +34,9 @@
         }
 
         & > a {
+          // Inherits the menu's background, so the item does not cut off shadows.
+          background-color: inherit;
+
           @include breakpoint.breakpoint(medium down) {
             padding: 0.5rem;
           }

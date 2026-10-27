@@ -1,5 +1,4 @@
 @use "foundation-spaces/global";
-@use "foundation-spaces/util/mixins";
 @use "foundation-spaces/util/unit";
 
 // Foundation for Sites
@@ -63,7 +62,7 @@ $switch-paddle-transition:
 
 /// Opacity of a disabled switch.
 /// @type Number
-$switch-opacity-disabled: 0.5 !default;
+$switch-opacity-disabled: var(--f-opacity-disabled) !default;
 
 /// Cursor for a disabled switch.
 /// @type Cursor
@@ -150,10 +149,6 @@ $switch-cursor-disabled: not-allowed !default;
   input:disabled ~ & {
     cursor: $switch-cursor-disabled;
     opacity: $switch-opacity-disabled;
-  }
-
-  input:focus ~ & {
-    @include mixins.disable-mouse-outline;
   }
 }
 
@@ -261,7 +256,7 @@ $switch-cursor-disabled: not-allowed !default;
     border-radius: var(--f-radius-full) !important;
 
     &::after {
-      border-radius: 50%;
+      border-radius: var(--f-radius-full);
     }
   }
 

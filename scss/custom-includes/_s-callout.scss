@@ -1,5 +1,4 @@
 @use "../colors";
-@use "../custom-functions";
 @use "foundation-spaces/global";
 
 // Foundation for Sites
@@ -22,7 +21,7 @@ $callout-background-fade: 85% !default;
 
 /// Default border style for callouts.
 /// @type List
-$callout-border: 1px solid custom-functions.color-mix-opacity(var(--f-color-text-0), 25%, 75%) !default;
+$callout-border: 1px solid var(--f-color-border-2) !default;
 
 /// Default bottom margin for callouts.
 /// @type Number

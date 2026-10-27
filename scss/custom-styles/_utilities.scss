@@ -2,12 +2,13 @@
 @use "../custom-includes/foundation-spaces/xy-grid/xy-grid";
 @use "../custom-settings";
 
-// 19. Utilities
+// Utilities
 // ---------
 
 @use "sass:map";
 
 @mixin styles {
+  // Deprecated: use `.ml-auto`, `.mr-auto`, `.mx-auto`. Kept while Spaces markup uses them.
   .flex-spacer-left {
     margin-left: auto;
   }
@@ -24,6 +25,7 @@
     width: 640px;
   }
 
+  // Deprecated: use `.border-none`.
   .no-border {
     border: 0;
   }
@@ -37,7 +39,7 @@
   }
 
   .disabled {
-    opacity: 0.5;
+    opacity: var(--f-opacity-disabled);
     pointer-events: none;
     cursor: not-allowed;
   }
@@ -54,130 +56,36 @@
     }
   }
 
-  .show-on-focus-within {
-    position: absolute;
-    left: -9999px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-  }
-
+  // Visually hidden (with `.sr-only`, `_general-base.scss`) until something inside it has focus.
   .show-on-focus-within:focus-within {
-    position: relative;
-    left: auto;
-    width: auto;
-    height: auto;
-    overflow: visible;
+    justify-content: space-between;
   }
 
-  // Modern spacing utilities (Tailwind-like)
-  // Organized by property specificity (least to most specific)
-  // This ensures more specific utilities override less specific ones
-  // e.g., pl-1 overrides p-2, pr-2 overrides px-9
+  // Spacing utilities, from least to most specific property, so a later class
+  // wins over an earlier one at equal specificity (`pl-1` over `p-2`).
+  $spacing-properties: (
+    p: padding,
+    px: padding-inline,
+    py: padding-block,
+    pt: padding-block-start,
+    pr: padding-inline-end,
+    pb: padding-block-end,
+    pl: padding-inline-start,
+    m: margin,
+    mx: margin-inline,
+    my: margin-block,
+    mt: margin-block-start,
+    mr: margin-inline-end,
+    mb: margin-block-end,
+    ml: margin-inline-start,
+    gap: gap,
+  );
 
-  // Padding utilities - all sides
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .p-#{$size-number} {
-      padding: $size;
-    }
-  }
-
-  // Padding utilities - horizontal
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .px-#{$size-number} {
-      padding-inline: $size;
-    }
-  }
-
-  // Padding utilities - vertical
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .py-#{$size-number} {
-      padding-block: $size;
-    }
-  }
-
-  // Padding utilities - top
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .pt-#{$size-number} {
-      padding-block-start: $size;
-    }
-  }
-
-  // Padding utilities - right
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .pr-#{$size-number} {
-      padding-inline-end: $size;
-    }
-  }
-
-  // Padding utilities - bottom
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .pb-#{$size-number} {
-      padding-block-end: $size;
-    }
-  }
-
-  // Padding utilities - left
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .pl-#{$size-number} {
-      padding-inline-start: $size;
-    }
-  }
-
-  // Margin utilities - all sides
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .m-#{$size-number} {
-      margin: $size;
-    }
-  }
-
-  // Margin utilities - horizontal
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .mx-#{$size-number} {
-      margin-inline: $size;
-    }
-  }
-
-  // Margin utilities - vertical
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .my-#{$size-number} {
-      margin-block: $size;
-    }
-  }
-
-  // Margin utilities - top
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .mt-#{$size-number} {
-      margin-block-start: $size;
-    }
-  }
-
-  // Margin utilities - right
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .mr-#{$size-number} {
-      margin-inline-end: $size;
-    }
-  }
-
-  // Margin utilities - bottom
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .mb-#{$size-number} {
-      margin-block-end: $size;
-    }
-  }
-
-  // Margin utilities - left
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .ml-#{$size-number} {
-      margin-inline-start: $size;
-    }
-  }
-
-  // Gap utilities
-  @each $size-number, $size in custom-settings.$spacing-scale {
-    .gap-#{$size-number} {
-      gap: $size;
+  @each $prefix, $property in $spacing-properties {
+    @each $size-number, $size in custom-settings.$spacing-scale {
+      .#{$prefix}-#{$size-number} {
+        #{$property}: $size;
+      }
     }
   }
 
@@ -272,7 +180,7 @@
           }
 
           &-bottom {
-            margin-block-end: $gutter !important;
+            padding-block-end: $gutter !important;
           }
         }
       }
@@ -291,6 +199,7 @@
     align-items: center;
   }
 
+  // Deprecated: use Foundation's `.align-left` and `.align-right`.
   .align-flex-start {
     justify-content: flex-start;
   }

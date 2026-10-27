@@ -1,7 +1,5 @@
-@use "../custom-functions";
 @use "foundation-spaces/global";
 @use "foundation-spaces/util/breakpoint";
-@use "foundation-spaces/util/mixins";
 
 // Foundation for Sites
 // https://get.foundation
@@ -43,7 +41,7 @@ $reveal-zindex: 1005 !default;
 
 /// Background color of modal overlays.
 /// @type Color
-$reveal-overlay-background: custom-functions.color-mix-opacity(var(--f-color-text-0), 14%, 86%) !default;
+$reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, transparent) !default;
 
 
 // Placeholder selector for medium-and-up modals
@@ -67,14 +65,11 @@ $reveal-overlay-background: custom-functions.color-mix-opacity(var(--f-color-tex
   display: none;
   background-color: $background;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   backdrop-filter: blur(5px);
 }
 
 /// Adds base styles for a modal.
 @mixin reveal-modal-base {
-  @include mixins.disable-mouse-outline;
-
   z-index: $reveal-zindex + 1;
 
   // Workaround android browser z-index bug
@@ -138,10 +133,9 @@ $reveal-overlay-background: custom-functions.color-mix-opacity(var(--f-color-tex
 
     &.zf-has-scroll {
       overflow-y: scroll;
-      -webkit-overflow-scrolling: touch;
     }
 
-    body { // sass-lint:disable-line no-qualifying-elements
+    body {
       overflow-y: hidden;
     }
   }
@@ -161,7 +155,6 @@ $reveal-overlay-background: custom-functions.color-mix-opacity(var(--f-color-tex
     margin-right: auto;
     margin-left: auto;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
 
     // The close button sits in the corner, level with a leading heading, which keeps clear of it.
     > .close-button {

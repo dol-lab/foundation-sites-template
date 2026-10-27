@@ -1,29 +1,26 @@
 // .prose-layout: a readable center column (max 70ch) with .alignwide and .alignfull.
 
-// Aligns content for best readability (max 70ch).
-// You can specify a targeted left-padding.
 // NOTE: This can not contain naked text (text in no container).
 @mixin styles {
   .prose-layout {
     display: grid;
 
-    --target-offset-left: var(--min-offset-x); // overwrite this.
-    --min-offset-x: clamp(0.75rem, 2vw, 2rem);
+    // Knobs: --f-prose-offset-left (the left column's target width), --f-prose-ch-factor (a font
+    // whose 0 is narrow or wide). --target-offset-left is the old name of the first, still read.
+    --_min-offset-x: clamp(0.75rem, 2vw, 2rem);
+    --_offset-left: var(--f-prose-offset-left, var(--target-offset-left, var(--_min-offset-x)));
+    --_max-width: calc(70ch * var(--f-prose-ch-factor, 1));
 
     padding-left: 0;
     padding-right: 0;
 
-    --max-prose-width: calc(70ch * var(--font-ch-factor, 1)); // with is measured via 0-char, some fonts have wide chars.
-
-    // Grid Layout:
-    // 1. Left: Fluid offset (min-offset-x to target-offset).
-    // 2. Center: Hard-set to 70ch to prevent the Right column's 1fr from crushing it.
-    //	  It uses min() to remain responsive on screens narrower than 70ch + padding.
-    // 3. Right: Consumes whatever space is left.
+    // Left: fluid, from the minimum offset to the target. Center: up to --_max-width, so the right
+    // column's 1fr cannot crush it, and min() keeps it responsive below 70ch plus the offsets.
+    // Right: whatever is left.
     grid-template-columns:
-      minmax(var(--min-offset-x), var(--target-offset-left))
-      minmax(min(100% - calc(var(--min-offset-x) * 2), var(--max-prose-width)), var(--max-prose-width))
-      minmax(var(--min-offset-x), 1fr);
+      minmax(var(--_min-offset-x), var(--_offset-left))
+      minmax(min(100% - calc(var(--_min-offset-x) * 2), var(--_max-width)), var(--_max-width))
+      minmax(var(--_min-offset-x), 1fr);
 
     // Force all direct children into the center column
     > * {
@@ -41,8 +38,6 @@
 
       /* horizontally center */
       margin-inline: auto;
-
-      /* padding: var(--f-spacing-3); */
     }
 
     .alignfull:not(.is-style-rounded) {

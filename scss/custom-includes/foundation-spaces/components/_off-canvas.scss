@@ -1,4 +1,3 @@
-@use "../../../custom-functions";
 @use "../global";
 @use "../util/breakpoint";
 @use "../util/mixins";
@@ -31,7 +30,7 @@ $offcanvas-background: var(--f-color-bg-2) !default;
 
 /// Box shadow for the off-canvas overlap panel.
 /// @type Shadow
-$offcanvas-shadow: 0 0 10px custom-functions.color-mix-opacity(var(--f-color-text-0), 70%, 30%) !default;
+$offcanvas-shadow: 0 0 10px color-mix(in oklab, var(--f-color-text-0) 70%, transparent) !default;
 
 /// Inner box shadow size for the off-canvas push panel.
 /// @type Number
@@ -39,7 +38,7 @@ $offcanvas-inner-shadow-size: 20px !default;
 
 /// Inner box shadow color for the off-canvas push panel.
 /// @type Color
-$offcanvas-inner-shadow-color: custom-functions.color-mix-opacity(var(--f-color-text-0), 25%, 75%) !default;
+$offcanvas-inner-shadow-color: color-mix(in oklab, var(--f-color-text-0) 25%, transparent) !default;
 
 /// Z-index of an off-canvas content overlay.
 /// @type Number
@@ -71,7 +70,7 @@ $offcanvas-fixed-reveal: true !default;
 
 /// Background color for the overlay that appears when an off-canvas panel is open.
 /// @type Color
-$offcanvas-exit-background: custom-functions.color-mix-opacity(var(--f-color-bg-0), 25%, 75%) !default;
+$offcanvas-exit-background: color-mix(in oklab, var(--f-color-bg-0) 25%, transparent) !default;
 
 /// CSS class used for the main content area. The off-canvas mixins use this to target the page content.
 $maincontent-class: 'off-canvas-content' !default;
@@ -161,7 +160,6 @@ $maincontent-class: 'off-canvas-content' !default;
     position: absolute;
   }
 
-  @include mixins.disable-mouse-outline;
 
   // Increase CSS specificity
   &.is-transition-push {
@@ -199,7 +197,6 @@ $maincontent-class: 'off-canvas-content' !default;
     left: 0;
     height: 100%;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
 
     @each $name, $size in $sizes {
       @include breakpoint.breakpoint($name) {
@@ -236,7 +233,6 @@ $maincontent-class: 'off-canvas-content' !default;
     right: 0;
     height: 100%;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
 
     @each $name, $size in $sizes {
       @include breakpoint.breakpoint($name) {
@@ -273,7 +269,6 @@ $maincontent-class: 'off-canvas-content' !default;
     left: 0;
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
 
     @each $name, $size in $sizes {
       @include breakpoint.breakpoint($name) {
@@ -310,7 +305,6 @@ $maincontent-class: 'off-canvas-content' !default;
     left: 0;
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
 
     @each $name, $size in $sizes {
       @include breakpoint.breakpoint($name) {

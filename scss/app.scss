@@ -1,52 +1,16 @@
 @charset 'utf-8';
 
 ///
-///  Each partial loads what it needs with `@use`; this file sets the cascade
+///  Each partial loads what it needs with `@use`; _bundle.scss sets the cascade
 ///  order. Knobs are `!default` variables at the top of the partial that owns
 ///  them. A project configures one before anything loads that partial (so
 ///  lower-level partials first), then loads this file:
 ///  `@use "…/scss/custom-includes/s-button" with ($button-padding: 1rem); @use "…/scss/app";`
-
-///
-///  Font import, only up here by convention.
-@use "fonts";
-
-///
-///  Custom components that print their CSS when loaded.
-@use "custom-includes/s-scroll-snap";
-@use "custom-includes/s-reveal";
-
-///
-///  Basically foundation's 'normalize' with a few extra knobs.
-///  Previously called custom-foundation-global-styles-not-prefixed
-@use "custom-normalize";
-
-///
-///  The partials below print nothing on load: their CSS is a `styles` mixin, so
-///  app-backend.scss can include the same partials inside `.f`.
-@use "custom-foundation-includes";
+@use "bundle";
 @use "custom-styles/root-variables";
-@use "custom-styles";
 
-///
-///  Motion UI from node_modules (still on Sass imports inside), loaded as one module.
-@use "motion-ui";
-
-///
-///  @include statements for foundation mixins
-///  Some are "custom forks" to allow for CSS variable usage.
-@include custom-foundation-includes.styles;
-
-///
-///  Design tokens and the light/dark palettes. Outside "custom-styles" because
-///  they belong on :root, which cannot be nested (see app-backend.scss).
-@include root-variables.styles;
-
-///
-///  Our styling, comes late to overwrite foundation styles.
-@include custom-styles.styles;
-
-///
-///  Motion UI stuff
-@include motion-ui.motion-ui-transitions;
-@include motion-ui.motion-ui-animations;
+@include bundle.styles {
+  ///  Design tokens and the light/dark palettes, on :root, which cannot be
+  ///  nested (see app-backend.scss).
+  @include root-variables.styles;
+}

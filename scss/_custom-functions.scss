@@ -1,135 +1,7 @@
 @use "colors";
-@use "custom-includes/foundation-spaces/global";
 @use "custom-includes/foundation-spaces/typography/base";
-@use "custom-includes/foundation-spaces/util/breakpoint";
-@use "custom-includes/foundation-spaces/util/unit";
-@use "custom-includes/foundation-spaces/util/value";
-
-/* ==============================================================================
-  Custom Utilities — SCSS Helpers and Mixins
-  ------------------------------------------------------------------------------
-
-  00. Module Imports
-  01. Function: color-mix-opacity
-  02. Function: color-mix-blend
-  03. Mixin:    color-mix
-  04. Mixin:    cross-browser
-  05. Mixin:    foundation-palette
-  08. Mixin:    header-style
-  09. Mixin:    header-list
-  10. Function: strip-unit
-  11. Function: multiply-list
-  12. Function: extract-from-compact
-  13. Mixin:    excerpt
-
-============================================================================== */
-
 @use "sass:map";
-@use "sass:math";
-@use "sass:color";
 @use "sass:list";
-@use "sass:meta";
-
-/* ==============================================================================
-  01 - Function to replace SCSS rgba() with CSS Variable support
-============================================================================== */
-
-////
-/// Returns a mixed color with transparency, using CSS `color-mix()` in `oklab`.
-///
-/// Useful as a modern replacement for `rgba()` when working with custom props.
-///
-/// @param {Color|String} $color                     - Base color (can be `var(...)`)
-/// @param {Number}       $color-percentage          - Percentage for `$color` (e.g., 30%)
-/// @param {Number}       $transparency-percentage   - Percentage for transparency (e.g., 70%)
-///
-/// @return {Color} Mixed color result
-////
-
-@function color-mix-opacity($color, $color-percentage, $transparency-percentage) {
-  @return color-mix(in oklab, $color $color-percentage, transparent $transparency-percentage);
-}
-
-////
-/// Returns a blend of two colors using CSS `color-mix()` in `oklab`.
-///
-/// @param {Color|String} $color-a            - First color (can be `var(...)`)
-/// @param {Number}       $color-a--percentage - Percentage for `$color-a`
-/// @param {Color|String} $color-b            - Second color (can be `var(...)`)
-/// @param {Number}       $color-b--percentage - Percentage for `$color-b`
-///
-/// @return {Color} Mixed color result
-////
-
-@function color-mix-blend($color-a, $color-a--percentage, $color-b, $color-b--percentage) {
-  @return color-mix(in oklab, $color-a $color-a--percentage, $color-b $color-b--percentage);
-}
-
-/* ==============================================================================
-  03 - color-mix Mixin
-============================================================================== */
-
-////
-/// Shorthand mixin to apply a `color-mix()` result to a chosen property.
-///
-/// @param {String}       $property               - Target property (e.g., `color`, `background`, `border-color`, `fill`)
-/// @param {Color|String} $color-a                - Color A (can be CSS variable)
-/// @param {Number}       $color-a--percentage    - Percentage for Color A (e.g., 30%)
-/// @param {Color|String} $color-b                - Color B (can be CSS variable)
-/// @param {Number}       $color-b--percentage    - Percentage for Color B (e.g., 70%)
-/// @param {String}       $space [oklab]          - Color space (e.g., `oklab`)
-///
-
-@mixin color-mix(
-  $property,
-  // 'color' | 'background' | 'bg' | 'background-color' | 'border' | 'border-color'
-  $color-a,
-  $color-a--percentage,
-  // e.g. --f-color-success, 30%
-  $color-b,
-  $color-b--percentage,
-  // e.g. --f-color-text-0, 70%
-  $space: oklab
-) {
-  $prop-name: null;
-
-  // Normalize property aliases
-  @if $property == color or $property == text {
-    $prop-name: color;
-  } @else if $property == background or $property == bg or $property == background-color {
-    $prop-name: background-color;
-  } @else if $property == border or $property == border-color {
-    $prop-name: border-color;
-  } @else if $property == fill {
-    $prop-name: fill;
-  } @else {
-    $prop-name: $property;
-  }
-
-  #{$prop-name}: color-mix(in #{$space}, #{$color-a} #{$color-a--percentage}, #{$color-b} #{$color-b--percentage});
-}
-
-/* ==============================================================================
-  04 - cross-browser Mixin
-============================================================================== */
-
-////
-/// Outputs a property with common vendor prefixes.
-///
-/// @param {String} $property - Property name without prefix
-/// @param {Any}    $val      - Value to assign
-///
-
-@mixin cross-browser($property, $val) {
-  -webkit-#{$property}: $val;
-  -moz-#{$property}: $val;
-  -ms-#{$property}: $val;
-  #{$property}: $val;
-}
-
-/* ==============================================================================
-  05 - foundation-palette Mixin
-============================================================================== */
 
 ////
 /// Applies Foundation palette classes to a selector, wiring CSS custom properties.
@@ -162,17 +34,6 @@
 }
 
 ////
-/// Emits size variants for buttons based on `$button-sizes`.
-///
-/// @requires $button-sizes
-///
-
-
-/* ==============================================================================
-  08 - header-style Mixin
-============================================================================== */
-
-////
 /// Applies the (fluid) font size of a heading level, see `header-font-size()`.
 ///
 /// @param {String}                 $header-size - Header key to style (e.g., `h1`)
@@ -189,205 +50,49 @@
   }
 }
 
-/* ==============================================================================
-  09 - header-list Mixin
-============================================================================== */
+/// Prints `--f-color-brand(-contrast, -darker)` from `--f-color-brand-base(-contrast)`.
+/// A custom property resolves where it is declared, so an element that sets
+/// `-base` needs these redeclared on itself (see `[themed]` in _root-variables).
+/// @param {String} $mode - 'auto', 'light' or 'dark'.
+@mixin brand-colors($mode: "auto") {
+  $brand: map.get(colors.$foundation-palette, "brand");
+  $brand-contrast: map.get(colors.$foundation-palette-contrast, "brand");
 
-////
-/// Outputs a complete set of header styles across breakpoints using a mapping.
-/// Optionally restricts to a subset of properties.
-///
-/// @param {Map}  $scale - Map of output selectors (h1..h6) to input scale keys
-/// @param {List} $property-list [null] - Optional list of properties to output
-///
-/// @requires $header-styles
-/// @requires breakpoint()
-///
-
-@mixin header-list(
-  $scale: (
-    h1: h1,
-    h2: h2,
-    h3: h3,
-    h4: h4,
-    h5: h5,
-    h6: h6,
-  ),
-  $property-list: null
-) {
-  @each $breakpoint in ("small", "medium", "large") {
-    @include breakpoint.breakpoint($breakpoint) {
-      @each $header-size, $properties in map.get(base.$header-styles, $breakpoint) {
-        $h: map.get($scale, $header-size); // h1 -> h3
-        $size: map.get(map.get(base.$header-styles, $breakpoint), $h); // small -> ()
-        #{$header-size} {
-          @each $label, $value in $size {
-            @if $property-list == null or list.index($property-list, $label) {
-              @if $label == "font-size" {
-                $value: unit.rem-calc($value);
-              }
-
-              #{$label}: $value;
-            }
-          }
-        }
-      }
-    }
-  }
+  --f-color-brand: #{-theme-pick(
+      $mode,
+      "var(--f-color-brand-base, #{$brand})",
+      "color-mix(in oklab, var(--f-color-brand-base, #{$brand}) 87%, white 13%)"
+    )};
+  --f-color-brand-contrast: #{-theme-pick(
+      $mode,
+      "var(--f-color-brand-base-contrast, #{$brand-contrast})",
+      "color-mix(in oklab, var(--f-color-brand-base-contrast, #{$brand-contrast}) 87%, white 13%)"
+    )};
+  --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
 }
 
-/* ==============================================================================
-  10 - strip-unit Function
-============================================================================== */
-
-////
-/// Removes the unit from a number and returns a unitless value.
-///
-/// @param {Number} $number - A number that may carry a unit
-/// @return {Number} Unitless number
-///
-
-@function strip-unit($number) {
-  @if meta.type-of($number) == "number" and not math.is-unitless($number) {
-    @return $number / ($number * 0 + 1);
-  }
-
-  @return $number;
+/// Prints the borders and the hover wash, from `--f-color-text-0`. An element
+/// that sets the text color (`[themed]`) needs these redeclared on itself.
+@mixin text-tints {
+  --f-color-border-0: rgb(from var(--f-color-text-0) r g b / 7%);
+  --f-color-border-1: rgb(from var(--f-color-text-0) r g b / 12%);
+  --f-color-border-2: rgb(from var(--f-color-text-0) r g b / 16%);
+  --f-color-tint: rgb(from var(--f-color-text-0) r g b / 7%); // hover wash
 }
 
-/* ==============================================================================
-  11 - multiply-list Function
-============================================================================== */
-
-////
-/// Multiplies each item in a list by a multiplier, preserving order.
-///
-/// @param {List}   $list       - Input list
-/// @param {Number} $multiplier - Factor to multiply each item by
-/// @return {List} New list with multiplied values
-////
-
-@function multiply-list($list, $multiplier) {
-  $new-list: ();
-
-  @each $item in $list {
-    $new-list: list.join($new-list, ($item * $multiplier));
-  }
-
-  @return $new-list;
+/// Prints `--f-drop-shadow(-large)` from `--f-color-shadow`. A custom property
+/// resolves where it is declared, so an element that sets `--f-color-shadow`
+/// (`[themed]`) needs these redeclared on itself.
+@mixin drop-shadows {
+  --f-drop-shadow: 0 5px 20px var(--f-color-shadow), 0 2px 5px color-mix(in srgb, var(--f-color-shadow) 50%, transparent);
+  --f-drop-shadow-large: 0 14px 28px var(--f-color-shadow), 0 10px 10px color-mix(in srgb, var(--f-color-shadow) 22%, transparent);
 }
 
-/* ==============================================================================
-  12 - extract-from-compact Function
-============================================================================== */
-
-////
-/// Extracts a side-specific value from a CSS shorthand list, handling 1–4 values.
-/// Works for padding/margin-style compacts: 1, 2, 3, or 4-value syntax.
-///
-/// @param {List}  $value - Compact value list (e.g., `10px 20px`, `5px 10px 15px`, …)
-/// @param {Ident} $side  - `top` | `right` | `bottom` | `left`
-/// @return {Any} Matched side value
-///
-
-@function extract-from-compact($value, $side) {
-  $index: 1;
-
-  // Top values are always at index 1. The same for when the list has only one item
-  @if $side == top or list.length($value) == 1 {
-    $index: 1;
-  }
-
-  // Covers "vertical horizontal" style
-  @else if list.length($value) == 2 {
-    @if $side == left or $side == right {
-      $index: 2;
-    }
-
-    @if $side == bottom {
-      $index: 1;
-    }
-  }
-
-  // Covers "top horizontal bottom" style
-  @else if list.length($value) == 3 {
-    @if $side == left or $side == right {
-      $index: 2;
-    }
-
-    @if $side == bottom {
-      $index: 3;
-    }
-  }
-
-  // Covers "top right bottom left" style
-  @else if list.length($value) == 4 {
-    @if $side == right {
-      $index: 2;
-    }
-
-    @if $side == bottom {
-      $index: 3;
-    }
-
-    @if $side == left {
-      $index: 4;
-    }
-  }
-
-  @return list.nth($value, $index);
-}
-
-/* ==============================================================================
-  13 - Excerpt
-  ------------------------------------------------------------------------------
-  Multi-line truncation with optional expansion control.
-============================================================================== */
-
-////
-/// Creates a multi-line text excerpt with ellipsis, with an option to expand.
-///
-/// @param {Number}  $font-size      [1em]   - Base font-size
-/// @param {Number}  $line-height    [1.4]   - Line height
-/// @param {Number}  $lines-to-show  [3]     - Number of lines to clamp
-/// @param {Boolean} $expand         [false] - If true, disables truncation
-///
-
-@mixin excerpt($font-size: 1em, $line-height: 1.4, $lines-to-show: 3, $expand: false) {
-  @if $expand == true {
-    max-height: initial;
-
-    /* Fallback for non-webkit */
-    -webkit-line-clamp: initial;
-    line-clamp: initial;
-    -webkit-box-orient: vertical;
-    overflow: initial;
-    text-overflow: initial;
-  } @else {
-    max-height: $font-size * $line-height * $lines-to-show;
-
-    /* Fallback for non-webkit */
-    -webkit-line-clamp: $lines-to-show;
-    line-clamp: $lines-to-show;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  line-height: $line-height;
-  display: block;
-
-  /* Fallback for non-webkit */
-  font-size: $font-size;
-}
-
-/**
- * Prints the palette as CSS custom properties.
- * "auto" pairs each light and dark value in light-dark(), so the element's
- * `color-scheme` picks one where the property is used; "light" and "dark"
- * print a single side. Sets no `color-scheme` itself.
- * @param {String} $mode - 'auto', 'light' or 'dark'.
- */
+/// Prints the palette as CSS custom properties.
+/// "auto" pairs each light and dark value in light-dark(), so the element's
+/// `color-scheme` picks one where the property is used; "light" and "dark"
+/// print a single side. Sets no `color-scheme` itself.
+/// @param {String} $mode - 'auto', 'light' or 'dark'.
 @function -theme-pick($mode, $light, $dark) {
   @if $mode == "light" or $light == $dark {
     @return $light;
@@ -417,44 +122,21 @@
     }
   }
 
-  $brand: map.get(colors.$foundation-palette, "brand");
-  $brand-contrast: map.get(colors.$foundation-palette-contrast, "brand");
-
-  --f-color-brand: #{-theme-pick(
-      $mode,
-      "var(--f-color-brand-base, #{$brand})",
-      "color-mix(in oklab, var(--f-color-brand-base, #{$brand}) 87%, white 13%)"
-    )};
-  --f-color-brand-contrast: #{-theme-pick(
-      $mode,
-      "var(--f-color-brand-base-contrast, #{$brand-contrast})",
-      "color-mix(in oklab, var(--f-color-brand-base-contrast, #{$brand-contrast}) 87%, white 13%)"
-    )};
+  @include brand-colors($mode);
 
   // Dark backgrounds step the other way, so cards stay lighter than the body.
   --f-color-bg-0: #{-theme-pick($mode, "var(--f-color-neutral-300)", "var(--f-color-neutral-100)")}; // body background
   --f-color-bg-1: #{-theme-pick($mode, "var(--f-color-neutral-100)", "var(--f-color-neutral-200)")}; // card and widget background
-  --f-color-bg-1-base: #{-theme-pick($mode, "var(--f-color-neutral-100)", "var(--f-color-neutral-200)")}; // not affected by color-theming
+  --f-color-bg-1-untinted: #{-theme-pick($mode, "var(--f-color-neutral-100)", "var(--f-color-neutral-200)")}; // bg-1 before `themed` tints it
   --f-color-bg-2: #{-theme-pick($mode, "var(--f-color-neutral-200)", "var(--f-color-neutral-300)")};
-
-  // Light shadows are the tokens in _root-tokens.scss.
-  @if $mode != "light" {
-    --f-color-shadow: #{-theme-pick($mode, "rgba(0, 0, 0, 0.13)", "rgba(0, 0, 0, 0.5)")};
-    --f-drop-shadow: 0 5px 20px #{-theme-pick($mode, "var(--f-color-shadow)", "rgba(0, 0, 0, 0.4)")},
-      0 2px 5px #{-theme-pick($mode, "color-mix(in srgb, var(--f-color-shadow) 50%, transparent)", "rgba(0, 0, 0, 0.3)")};
-    --f-drop-shadow-large: 0 14px 28px #{-theme-pick($mode, "var(--f-color-shadow)", "rgba(0, 0, 0, 0.3)")},
-      0 10px 10px #{-theme-pick($mode, "color-mix(in srgb, var(--f-color-shadow) 22%, transparent)", "rgba(0, 0, 0, 0.3)")};
-  }
-
+  --f-color-shadow: #{-theme-pick($mode, "rgb(0 0 0 / 13%)", "rgb(0 0 0 / 50%)")}; // the drop shadows' color
   --f-color-text-0: var(--f-color-neutral-700);
   --f-color-text-1: var(--f-color-neutral-600);
   --f-color-text-2: var(--f-color-neutral-500);
 
-  @each $color-name, $color in colors.$foundation-palette {
+  @each $color-name, $color in map.remove(colors.$foundation-palette, "brand") {
     --f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
   }
 
-  --f-color-border-0: rgb(from var(--f-color-text-0) r g b / 7%);
-  --f-color-border-1: rgb(from var(--f-color-text-0) r g b / 12%);
-  --f-color-border-2: rgb(from var(--f-color-text-0) r g b / 16%);
+  @include text-tints;
 }

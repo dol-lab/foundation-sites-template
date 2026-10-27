@@ -1,20 +1,25 @@
-@use "../custom-functions";
-@use "../custom-includes/foundation-spaces/global";
-@use "../custom-settings";
 
-// 21. Spinner
-// ---------
+// Motion shared across components: .spinner, .pulse, .highlight-on-load, and the reduced-motion rule.
+// A component's own animation stays in its partial (.shake, .loading, .clipped, .fa.slash).
+
+// Spinner sizes match the switch heights.
+$spinner-sizes: (
+  tiny: 0.625rem,
+  small: 0.75rem,
+  medium: 1rem,
+  large: 1.5rem,
+) !default;
 
 @mixin styles {
   .spinner {
-    border: 2px solid custom-functions.color-mix-opacity(var(--f-color-text-0), 83%, 17%);
-    border-radius: 50%;
-    border-top: 2px solid var(--f-palette--primary);
+    border: 2px solid color-mix(in oklab, var(--f-color-text-0) 83%, transparent);
+    border-radius: var(--f-radius-full);
+    border-top: 2px solid var(--f-color-primary);
     animation: spin 0.875s infinite cubic-bezier(0.9, 0.3, 0.3, 0.7);
     width: 1.5rem;
     height: 1.5rem;
 
-    @each $size-name, $size in custom-settings.$spinner-sizes {
+    @each $size-name, $size in $spinner-sizes {
       &.#{$size-name} {
         width: $size;
         height: $size;
@@ -50,7 +55,7 @@
     0% {
       opacity: 1;
       scale: 1;
-      box-shadow: 0 0 0 0 custom-functions.color-mix-opacity(var(--f-color-text-0), 10%, 90%);
+      box-shadow: 0 0 0 0 color-mix(in oklab, var(--f-color-text-0) 10%, transparent);
     }
 
     100% {
@@ -81,42 +86,41 @@
     }
   }
 
-  // 28. Swiper
-  // ---------
-  // (No custom swiper styles in the original file)
+  .highlight-on-load {
+    --_f-color-success-soft: color-mix(in oklab, var(--f-color-success) 38%, var(--f-color-bg-1) 62%);
+    --_f-color-success-bg: color-mix(in oklab, var(--f-color-success) 6%, var(--f-color-bg-1) 94%);
 
-  // 29. Keyboard focus
-  // ---------
+    animation-name: highlight-wave, highlight-fade;
+    animation-duration: 1.25s, 0.5s;
+    animation-delay: 0.3s, 9.5s;
+    animation-iteration-count: 2, 1;
+    animation-timing-function: cubic-bezier(0.226, 0.579, 0, 1), ease-in;
+    animation-fill-mode: none, forwards;
+    border-radius: var(--f-radius-xsmall);
+    background-image: linear-gradient(
+      45deg,
+      var(--_f-color-success-bg) 33.33%,
+      var(--_f-color-success-soft),
+      var(--_f-color-success-bg) 66.66%
+    );
+    background-size: 300%;
+    background-position: center right;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--f-color-success);
+    text-underline-offset: 0.175em;
 
-  // One rule for every element: an inset outline in the text color. Unlike a box-shadow ring, it is not clipped
-  // by an `overflow: hidden` parent nor replaced by the element's own shadow.
-  :focus-visible {
-    outline: global.$global-focus;
-    outline-offset: -2px;
-  }
-
-  // Main menu
-  .dropdown.menu > li > a {
-    // Fix cut off shadows
-    background-color: inherit;
-  }
-
-  // Meilensteine
-  .sms-single-toggle-size .caret-icon {
-    [data-whatintent="keyboard"] &:active,
-    [data-whatintent="keyboard"] &:focus {
-      outline: global.$global-focus;
-      outline-offset: 0;
+    @keyframes highlight-wave {
+      to {
+        background-position: center left;
+      }
     }
-  }
 
-  .sms-widget a {
-    box-shadow: unset !important;
-  }
-
-  .sms-options:has(:focus-visible),
-  .sms-single-bottom-container:has(:focus-visible) {
-    outline: global.$global-focus;
-    outline-offset: 0;
+    @keyframes highlight-fade {
+      to {
+        background-size: 0%;
+        text-decoration-color: transparent;
+      }
+    }
   }
 }

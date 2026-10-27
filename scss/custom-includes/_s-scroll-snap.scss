@@ -1,4 +1,4 @@
-@use "../custom-functions";
+@use "../custom-settings";
 @use "foundation-spaces/global";
 @use "foundation-spaces/grid/grid" as float-grid;
 @use "foundation-spaces/util/breakpoint";
@@ -70,237 +70,233 @@
  * (e.g., .large-scroll-snap)
  */
 
-.left-right-navigation {
-  position: relative;
+@mixin styles {
+  .left-right-navigation {
+    position: relative;
 
-  &:hover {
+    &:hover {
+      &::before,
+      &::after {
+        opacity: 1;
+        transition: opacity global.$global-transition-medium;
+      }
+    }
+
     &::before,
     &::after {
-      opacity: 1;
+      opacity: 0;
       transition: opacity global.$global-transition-medium;
+      display: flex;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: global.$global-padding;
+      background: var(--f-color-text-0);
+      border-radius: global.$global-radius-xsmall;
+      box-shadow: global.$global-drop-shadow;
+      font-family: custom-settings.$icon-font-family;
+      font-size: 1rem;
+      font-weight: global.$global-weight-bold;
+      z-index: 10;
+    }
+
+    &::before {
+      content: "\f104";
+      left: global.$global-gutter-small;
+    }
+
+    &::after {
+      content: "\f105";
+      right: global.$global-gutter-small;
     }
   }
 
-  &::before,
-  &::after {
-    opacity: 0;
-    transition: opacity global.$global-transition-medium;
-    display: flex;
-    position: absolute;
-    top: 50%;
+  .scroll-snap-container-x {
+    @include grid.xy-grid($direction: horizontal, $wrap: false);
 
-    @include custom-functions.cross-browser(transform, translateY(-50%));
+    position: relative;
+    overflow: auto hidden;
+    scroll-snap-type: x mandatory;
 
-    padding: global.$global-padding;
-    background: var(--f-color-text-0);
-    border-radius: global.$global-radius-small;
-    box-shadow: global.$global-drop-shadow;
-    font-family: "Font Awesome 7 Free";
-    font-size: 1rem;
-    font-weight: global.$global-weight-bold;
-    z-index: 10;
-  }
+    .scroll-snap-element {
+      max-width: 100%;
+      min-width: 100%;
+      width: initial;
+      box-sizing: border-box;
+      margin: 0;
+      flex: 1 1 100%;
 
-  &::before {
-    content: "\f104";
-    left: global.$global-gutter-small;
-  }
+      & > span {
+        position: relative;
+        left: 0.5rem;
 
-  &::after {
-    content: "\f105";
-    right: global.$global-gutter-small;
-  }
-}
-
-.scroll-snap-container-x {
-  @include grid.xy-grid($direction: horizontal, $wrap: false);
-
-  position: relative;
-  overflow: auto hidden;
-  -webkit-overflow-scrolling: touch;
-
-  @include custom-functions.cross-browser(scroll-snap-type, x mandatory);
-
-  .scroll-snap-element {
-    max-width: 100%;
-    min-width: 100%;
-    width: initial;
-    box-sizing: border-box;
-    margin: 0;
-    flex: 1 1 100%;
-
-    & > span {
-      position: relative;
-      left: 0.5rem;
-
-      & + * {
-        margin-top: 0.5rem;
-      }
-    }
-  }
-
-  &.snap-align-start .scroll-snap-element {
-    @include custom-functions.cross-browser(scroll-snap-align, start);
-  }
-
-  &.snap-align-center .scroll-snap-element {
-    @include custom-functions.cross-browser(scroll-snap-align, center);
-  }
-
-  &.snap-align-end .scroll-snap-element {
-    @include custom-functions.cross-browser(scroll-snap-align, end);
-  }
-
-  &.width-small .scroll-snap-element {
-    min-width: 20%;
-  }
-
-  &.width-medium .scroll-snap-element {
-    min-width: 40%;
-  }
-
-  &.width-large .scroll-snap-element {
-    min-width: 60%;
-  }
-
-  &.width-xlarge .scroll-snap-element {
-    min-width: 80%;
-  }
-
-  &.width-fixed-small .scroll-snap-element {
-    min-width: 240px;
-  }
-
-  &.width-fixed-medium .scroll-snap-element {
-    min-width: 320px;
-  }
-
-  &.width-fixed-large .scroll-snap-element {
-    min-width: 480px;
-  }
-}
-
-@each $breakpoint, $width in breakpoint.$breakpoints {
-  .#{$breakpoint}-scroll-snap.scroll-snap-container-x {
-    display: block;
-  }
-
-  @include breakpoint.breakpoint(#{$breakpoint} up) {
-    .scroll-snap-container-x {
-      &.#{$breakpoint}-scroll-snap {
-        display: flex;
-      }
-      &.#{$breakpoint}-no-scroll-snap {
-        display: block;
-
-        .scroll-snap-element {
-          min-width: 100%;
+        & + * {
+          margin-top: 0.5rem;
         }
       }
     }
-  }
 
-  @include breakpoint.breakpoint(#{$breakpoint}) {
-    .scroll-snap-element {
-      @include cell.xy-cell-gutters(
-        $gutter-type: padding,
-        $gutter-position: top right bottom left,
-        $breakpoint: #{$breakpoint}
-      );
+    &.snap-align-start .scroll-snap-element {
+      scroll-snap-align: start;
+    }
+
+    &.snap-align-center .scroll-snap-element {
+      scroll-snap-align: center;
+    }
+
+    &.snap-align-end .scroll-snap-element {
+      scroll-snap-align: end;
+    }
+
+    &.width-small .scroll-snap-element {
+      min-width: 20%;
+    }
+
+    &.width-medium .scroll-snap-element {
+      min-width: 40%;
+    }
+
+    &.width-large .scroll-snap-element {
+      min-width: 60%;
+    }
+
+    &.width-xlarge .scroll-snap-element {
+      min-width: 80%;
+    }
+
+    &.width-fixed-small .scroll-snap-element {
+      min-width: 240px;
+    }
+
+    &.width-fixed-medium .scroll-snap-element {
+      min-width: 320px;
+    }
+
+    &.width-fixed-large .scroll-snap-element {
+      min-width: 480px;
     }
   }
-}
 
-/**
-* Todo Create a Fallback if global width is bigger than the biggest breakpoint defined in a cell.
-* $breakpoint-fallback is a start, not finished yet, though.
-* At the moment $global width should no exceed width of 'large' breakpoint.
-*/
-// stylelint-disable-next-line no-duplicate-selectors -- kept with its doc comment; merging would reorder the output
-.scroll-snap-container-x {
-  $widescreen-breakpoint: "";
+  @each $breakpoint, $width in breakpoint.$breakpoints {
+    .#{$breakpoint}-scroll-snap.scroll-snap-container-x {
+      display: block;
+    }
 
-  .grid-x {
-    $breakpoint-fallback: ();
+    @include breakpoint.breakpoint(#{$breakpoint} up) {
+      .scroll-snap-container-x {
+        &.#{$breakpoint}-scroll-snap {
+          display: flex;
+        }
+        &.#{$breakpoint}-no-scroll-snap {
+          display: block;
 
-    // loop through each breakpoint-list-item.
-    @each $breakpoint, $width in breakpoint.$breakpoints {
-      $index: list.index((breakpoint.$breakpoints), ($breakpoint $width));
-
-      @if $index == 1 {
-        $breakpoint-fallback: list.append($breakpoint-fallback, $breakpoint);
+          .scroll-snap-element {
+            min-width: 100%;
+          }
+        }
       }
+    }
 
-      // set up media-query.
-      @include breakpoint.breakpoint($breakpoint) {
-        // loop through all possible column counts.
-        @for $i from 1 through float-grid.$grid-column-count {
-          // set gutter width
-          $grid-margin-gutter: map.get(xy-grid.$grid-margin-gutters, #{$breakpoint});
-          $grid-container-gutter: map.get(
-            xy-grid.$grid-container-padding,
-            #{$breakpoint}
-          );
+    @include breakpoint.breakpoint(#{$breakpoint}) {
+      .scroll-snap-element {
+        @include cell.xy-cell-gutters(
+          $gutter-type: padding,
+          $gutter-position: top right bottom left,
+          $breakpoint: #{$breakpoint}
+        );
+      }
+    }
+  }
 
-          // this is the cell, e.g. medium-8.
-          & > .#{$breakpoint}-#{$i} {
-            $container-width: 100%;
+  /**
+  * Todo Create a Fallback if global width is bigger than the biggest breakpoint defined in a cell.
+  * $breakpoint-fallback is a start, not finished yet, though.
+  * At the moment $global width should no exceed width of 'large' breakpoint.
+  */
+  // stylelint-disable-next-line no-duplicate-selectors -- kept with its doc comment; merging would reorder the output
+  .scroll-snap-container-x {
+    $widescreen-breakpoint: "";
 
-            /**
-						* If breakpoint width is greater or equal to grid-container we set the
-						* reference width from 100vw to the grid-container.
-						*/
-            @if (
-              math.strip-unit(unit.rem-calc(math.strip-unit($width))) >= math.strip-unit(xy-grid.$grid-container)
-            ) {
-              @if $widescreen-breakpoint == "" {
-                $widescreen-breakpoint: $breakpoint;
+    .grid-x {
+      $breakpoint-fallback: ();
+
+      // loop through each breakpoint-list-item.
+      @each $breakpoint, $width in breakpoint.$breakpoints {
+        $index: list.index((breakpoint.$breakpoints), ($breakpoint $width));
+
+        @if $index == 1 {
+          $breakpoint-fallback: list.append($breakpoint-fallback, $breakpoint);
+        }
+
+        // set up media-query.
+        @include breakpoint.breakpoint($breakpoint) {
+          // loop through all possible column counts.
+          @for $i from 1 through float-grid.$grid-column-count {
+            // set gutter width
+            $grid-margin-gutter: map.get(xy-grid.$grid-margin-gutters, #{$breakpoint});
+            $grid-container-gutter: map.get(
+              xy-grid.$grid-container-padding,
+              #{$breakpoint}
+            );
+
+            // this is the cell, e.g. medium-8.
+            & > .#{$breakpoint}-#{$i} {
+              $container-width: 100%;
+
+              // From the breakpoint where the grid container is full width, the reference width is the
+              // container, not 100vw.
+              @if (
+                math.strip-unit(unit.rem-calc(math.strip-unit($width))) >= math.strip-unit(xy-grid.$grid-container)
+              ) {
+                @if $widescreen-breakpoint == "" {
+                  $widescreen-breakpoint: $breakpoint;
+                }
+
+                $container-width: xy-grid.$grid-container;
               }
 
-              $container-width: xy-grid.$grid-container;
+              // This is where the magic happens.
+              width: calc(
+                (#{$container-width} - #{$grid-container-gutter}) / (#{float-grid.$grid-column-count} / #{$i}) - #{$grid-margin-gutter}
+              );
             }
-
-            // This is where the magic happens.
-            width: calc(
-              (#{$container-width} - #{$grid-container-gutter}) / (#{float-grid.$grid-column-count} / #{$i}) - #{$grid-margin-gutter}
-            );
           }
         }
+
+        $breakpoint-fallback: list.append($breakpoint-fallback, $breakpoint);
       }
-
-      $breakpoint-fallback: list.append($breakpoint-fallback, $breakpoint);
     }
-  }
 
-  .grid-container & {
-    @each $breakpoint, $width in breakpoint.$breakpoints {
-      @include breakpoint.breakpoint($breakpoint) {
-        $gutter: map.get(xy-grid.$grid-container-padding, #{$breakpoint});
-        $gutter-padding: calc(#{$gutter} / 4);
-        $grid-padding: calc(
-          50vw - (#{xy-grid.$grid-container} / 2) + #{$gutter-padding}
-        );
+    .grid-container & {
+      @each $breakpoint, $width in breakpoint.$breakpoints {
+        @include breakpoint.breakpoint($breakpoint) {
+          $gutter: map.get(xy-grid.$grid-container-padding, #{$breakpoint});
+          $gutter-padding: calc(#{$gutter} / 4);
+          $grid-padding: calc(
+            50vw - (#{xy-grid.$grid-container} / 2) + #{$gutter-padding}
+          );
 
-        width: calc(100% + #{$gutter});
-        margin: calc(-#{$gutter} / 2);
-        padding: $gutter-padding; // took me an hour to find. commenting this out destroys the home-layout (sidebar)
+          width: calc(100% + #{$gutter});
+          margin: calc(-#{$gutter} / 2);
+          padding: $gutter-padding; // took me an hour to find. commenting this out destroys the home-layout (sidebar)
 
-        &.scroll-snap-grid-container {
-          width: 100vw;
-          margin: 0;
-          padding-left: $grid-padding;
-
-          &::after {
-            content: "";
-            min-width: $grid-padding;
-            height: 10px;
-          }
-
-          @media screen and (max-width: #{xy-grid.$grid-container}) {
-            padding-left: $gutter-padding;
+          &.scroll-snap-grid-container {
+            width: 100vw;
+            margin: 0;
+            padding-left: $grid-padding;
 
             &::after {
-              min-width: $gutter-padding;
+              content: "";
+              min-width: $grid-padding;
+              height: 10px;
+            }
+
+            @media screen and (max-width: #{xy-grid.$grid-container}) {
+              padding-left: $gutter-padding;
+
+              &::after {
+                min-width: $gutter-padding;
+              }
             }
           }
         }

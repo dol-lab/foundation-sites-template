@@ -1,0 +1,20 @@
+// .table: rows split by hairlines, cells aligned to the top left. Opt-in: Foundation's table is not
+// emitted because it restyles every <table>, the block editor's included. .table-scroll wraps a wide one.
+
+@mixin styles {
+  .table-scroll {
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+
+    & :is(th, td) {
+      padding: 0.4rem 0.6rem;
+      border-bottom: 1px solid var(--f-color-border-0);
+      text-align: left;
+      vertical-align: top;
+    }
+  }
+}

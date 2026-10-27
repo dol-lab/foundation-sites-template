@@ -4,7 +4,7 @@
 @use "../custom-includes/foundation-spaces/util/breakpoint";
 @use "../custom-includes/s-button";
 
-// 3. Typography
+// Typography
 // ---------
 
 @mixin styles {
@@ -19,8 +19,6 @@
     &:last-child {
       margin-bottom: 0;
     }
-
-    // @include foundation-palette();
   }
 
   .stat {
@@ -35,18 +33,6 @@
 
   .lead {
     font-size: 1.25em;
-  }
-
-  .highlight-word {
-    &::before {
-      content: "»";
-    }
-
-    &::after {
-      content: "«";
-    }
-
-    margin-right: 1ch;
   }
 
   span {
@@ -66,12 +52,12 @@
   }
 
   /*
-   * Prose links take the brand colour: `.brand-links` on any container (`.s-fg-a-c1-parent` is
+   * Prose links take the brand color: `.brand-links` on any container (`.s-fg-a-c1-parent` is
    * the old name, kept until no markup carries it).
    *
    * This is a *default*: it says what a link looks like when nothing else has an opinion, so it
    * is written at the weight of one. `:where()` contributes no specificity, which leaves the
-   * whole thing at (0,0,1) — the `a` and nothing more — and any component with a class of its
+   * whole thing at (0,0,1), the `a` and nothing more, and any component with a class of its
    * own now overrides it by simply existing.
    *
    */
@@ -94,8 +80,7 @@
     color: var(--f-color-brand);
 
     // Spelled out rather than left to inherit from the line above: at this weight the reset's
-    // own `a:focus { color: inherit }` would otherwise take the colour off a focused link, which
-    // is a thing the old (0,4,3) rule simply sat on top of without anyone noticing.
+    // own `a:focus { color: inherit }` would otherwise take the color off a focused link.
     &:focus {
       color: var(--f-color-brand);
     }
@@ -113,7 +98,6 @@
     hyphens: auto;
     overflow: hidden;
     display: -webkit-box;
-    display: flex;
   }
 
   .hover-underline:hover {
@@ -122,8 +106,6 @@
 
   ul {
     font-size: global.$paragraph-font-size;
-
-    // @include foundation-palette();
   }
 
   small {
@@ -139,7 +121,7 @@
   }
 
   code {
-    border-radius: global.$global-radius-small;
+    border-radius: global.$global-radius-xsmall;
     font-size: 0.85em;
     position: relative;
     top: -0.08em;
@@ -152,9 +134,9 @@
     tab-size: 2ch;
     margin-bottom: 1.5rem;
     padding: 1rem;
-    overflow-x: auto;
+    overflow: auto;
     border: 1px solid var(--f-color-border-1);
-    border-radius: global.$global-radius-small;
+    border-radius: global.$global-radius-xsmall;
     background-color: var(--f-color-bg-2);
     color: var(--f-color-text-0);
     font-size: 0.875rem;
@@ -179,19 +161,19 @@
   }
 
   // A key on a keyboard: foundation-typography gives it font and padding, this adds the relief.
-  // Deliberately not themed, it looks the same light and dark.
+  // Fixed greys, not themed surfaces (a key keeps its look on a tinted card), in a light and a dark pair.
   kbd {
     margin: 0 0.1em;
     padding: 0.2em 0.4em 0.15em;
     font-size: 0.875em;
     line-height: 1.2;
-    color: #24292e;
-    background-color: #f7f7f7;
-    border: 1px solid #ccc;
-    border-bottom: 2px solid #bbb;
+    color: light-dark(#24292e, #e6edf3);
+    background-color: light-dark(#f7f7f7, #2d333b);
+    border: 1px solid light-dark(#ccc, #444c56);
+    border-bottom: 2px solid light-dark(#bbb, #373e47);
     border-radius: var(--f-radius-small);
-    box-shadow: 0 1px 0 rgb(0 0 0 / 10%), inset 0 1px 0 #fff;
-    text-shadow: 0 1px 0 #fff;
+    box-shadow: 0 1px 0 rgb(0 0 0 / 10%), inset 0 1px 0 light-dark(#fff, rgb(255 255 255 / 8%));
+    text-shadow: 0 1px 0 light-dark(#fff, #000);
     white-space: nowrap;
   }
 
@@ -211,7 +193,7 @@
     cursor: pointer;
   }
 
-  // 17. Sections
+  // Sections
   // -----------
 
   .section-title {

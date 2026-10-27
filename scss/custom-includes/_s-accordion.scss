@@ -72,9 +72,9 @@ $accordion-content-padding: 1rem !default;
   list-style-type: none;
   border-radius: global.$global-radius;
 
-	:not(.card)>&{
-		border: custom-settings.$border;
-	}
+  :not(.card) > & {
+    border: custom-settings.$border;
+  }
 
   &[disabled] {
     .accordion-title {

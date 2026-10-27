@@ -75,8 +75,6 @@ $menu-icons-back-compat: true !default;
 
   &:not(.dropdown, .accordion-menu) {
     li {
-      @include mixins.disable-mouse-outline;
-
       // A .details-link item also holds its caret and its open fold: its link hovers on its own (_details-menu.scss).
       &:not(.menu-text, .details-link):hover > a:not([role="tab"]),
       &:not(.menu-text, .details-link):active > a:not([role="tab"]) {
@@ -114,7 +112,7 @@ $menu-icons-back-compat: true !default;
 @mixin menu-expand {
   @if global.$global-flexbox {
     li {
-      flex: 1 1 0px; // sass-lint:disable-line zero-unit
+      flex: 1 1 0px;
     }
   } @else {
     display: table;

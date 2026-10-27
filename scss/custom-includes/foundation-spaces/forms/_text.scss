@@ -1,4 +1,3 @@
-@use "../../../custom-functions";
 @use "../global";
 @use "../util/selector";
 @use "../util/unit";
@@ -50,7 +49,7 @@ $input-background-focus: var(--f-color-bg-1) !default;
 
 /// Background color of disabled text inputs.
 /// @type Color
-$input-background-disabled: custom-functions.color-mix-opacity(var(--f-color-bg-1), 50%, 50%) !default;
+$input-background-disabled: color-mix(in oklab, var(--f-color-bg-1) 50%, transparent) !default;
 
 /// Border color of disabled text inputs.
 /// @type Color
@@ -58,7 +57,7 @@ $input-border-disabled: var(--f-color-border-1) !default;
 
 /// Color of disabled text inputs.
 /// @type Color
-$input-color-disabled: custom-functions.color-mix-opacity(var(--f-color-text-1), 50%, 50%) !default;
+$input-color-disabled: color-mix(in oklab, var(--f-color-text-1) 50%, transparent) !default;
 
 /// Border around text inputs.
 /// @type Border

@@ -1,4 +1,3 @@
-@use "../custom-functions";
 @use "../custom-includes/foundation-spaces/components/card";
 
 // .accordion.
@@ -10,8 +9,7 @@
 
       &:first-child:last-child > :first-child {
         overflow-wrap: anywhere;
-
-        @include custom-functions.cross-browser(hyphens, auto);
+        hyphens: auto;
 
         &[aria-expanded="false"] {
           border-radius: card.$card-border-radius;

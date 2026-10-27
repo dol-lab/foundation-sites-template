@@ -1,4 +1,3 @@
-@use "../../../custom-functions";
 @use "../global";
 @use "../util/breakpoint";
 @use "../util/mixins";
@@ -50,7 +49,7 @@ $pagination-item-color-current: var(--f-color-text-0) !default;
 
 /// Text color of a disabled pagination item.
 /// @type Color
-$pagination-item-color-disabled: custom-functions.color-mix-opacity(var(--f-color-text-1), 50%, 50%) !default;
+$pagination-item-color-disabled: color-mix(in oklab, var(--f-color-text-1) 50%, transparent) !default;
 
 /// Color of the ellipsis in a pagination menu.
 /// @type Color

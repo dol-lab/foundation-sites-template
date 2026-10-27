@@ -2,16 +2,40 @@
 @use "../custom-functions";
 @use "../custom-includes/foundation-spaces/global";
 @use "../custom-includes/foundation-spaces/util/unit";
-@use "../custom-settings";
 
 // .info-chips (the row) and .info-chip (static or clickable chip).
+
+$info-chip-padding: 0.3em 0.6em !default;
+$info-chip-padding-round-x: 0.75em !default;
+
+// Every chip has a 1px border, drawn as a ring shadow so it costs no layout.
+// Its color is `--_chip-ring`, which each state sets (see .info-chip): a
+// hairline on a static chip, a firm line on a clickable one. The border roles
+// derive from the text color, which makes them hold up in both themes.
+$info-chip-ring: var(--f-color-border-0) !default;
+$info-chip-ring-clickable: var(--f-color-border-1) !default;
+$info-chip-ring-hover: var(--f-color-border-2) !default;
+$info-chip-ring-shadow: 0 0 0 1px var(--_chip-ring) !default;
+
+// On top of the ring, a clickable chip gets a drop shadow. `--f-color-shadow` is
+// the theme's own shadow color (light: black 13%, dark: black 50%), which keeps
+// it subtle on light and readable on dark. Hover deepens the shadow *and* the
+// ring, because black on a near-black card is barely a change: there the ring
+// is the whole cue.
+$info-chip-shadow:
+  $info-chip-ring-shadow,
+  0 1px 2px 0 var(--f-color-shadow) !default;
+$info-chip-shadow-hover:
+  $info-chip-ring-shadow,
+  0 2px 6px -1px var(--f-color-shadow),
+  0 1px 2px -1px var(--f-color-shadow) !default;
 
 @mixin styles {
   .info-chips {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-  	gap: 2px;
+    gap: 0.25em;
     font-size: unit.rem-calc(global.$global-font-size * 0.875);
     max-width: 100%;
     padding: 1px;
@@ -57,10 +81,7 @@
       }
     }
 
-    &.no-margin {
-      margin: 0 -3px;
-    }
-
+    // In a colored row the value takes the color (below); the other segments get a neutral fill.
     @each $color-name, $color in colors.$foundation-palette {
       &.#{$color-name} span {
         background: var(--f-color-bg-2);
@@ -79,23 +100,21 @@
     // and a tint on the key segment light enough to stay a seam rather than a
     // grey block. The tint is anatomy (icon | key | value), not a state.
     --_chip-bg: transparent;
-    --_chip-key-bg: #{custom-functions.color-mix-blend(var(--f-color-bg-2), 55%, var(--f-color-bg-1), 45%)};
+    --_chip-key-bg: color-mix(in oklab, var(--f-color-bg-2) 55%, var(--f-color-bg-1));
     --_chip-separator: var(--f-color-bg-2);
-    --_chip-ring: #{custom-settings.$info-chip-ring};
+    --_chip-ring: #{$info-chip-ring};
 
     text-decoration: none !important;
     display: flex;
     background: var(--_chip-bg);
     color: var(--f-color-text-0);
-    margin: 0.25em;
     padding: 0 !important;
-    margin-left: 0;
     border-radius: global.$global-radius;
     overflow: hidden;
     line-height: 1.3;
     text-align: center;
     cursor: default;
-    box-shadow: custom-settings.$info-chip-ring-shadow;
+    box-shadow: $info-chip-ring-shadow;
 
     // A clickable chip is raised: a surface of its own (`bg-1`), a firmer border,
     // and a drop shadow that deepens on hover. The chip stays put -- chips sit in
@@ -109,21 +128,21 @@
     // `:where()` keeps this at .info-chip specificity, so .hollow / .clear win.
     &:where([href], button, .clickable) {
       --_chip-bg: var(--f-color-bg-1);
-      --_chip-ring: #{custom-settings.$info-chip-ring-clickable};
+      --_chip-ring: #{$info-chip-ring-clickable};
 
       cursor: pointer;
-      box-shadow: custom-settings.$info-chip-shadow;
+      box-shadow: $info-chip-shadow;
       transition: box-shadow global.$global-transition-short global.$global-transition-timing;
 
       &:hover,
       &:focus-visible {
-        --_chip-ring: #{custom-settings.$info-chip-ring-hover};
+        --_chip-ring: #{$info-chip-ring-hover};
 
-        box-shadow: custom-settings.$info-chip-shadow-hover;
+        box-shadow: $info-chip-shadow-hover;
       }
 
       &:active {
-        box-shadow: custom-settings.$info-chip-shadow;
+        box-shadow: $info-chip-shadow;
       }
     }
 
@@ -132,11 +151,11 @@
       border-radius: var(--f-radius-full);
 
       & > span:first-child {
-        padding-left: custom-settings.$info-chip-padding-round-x;
+        padding-left: $info-chip-padding-round-x;
       }
 
       & > span:last-child {
-        padding-right: custom-settings.$info-chip-padding-round-x;
+        padding-right: $info-chip-padding-round-x;
       }
     }
 
@@ -183,7 +202,7 @@
 
     & > span {
       display: inline-block;
-      padding: custom-settings.$info-chip-padding;
+      padding: $info-chip-padding;
       align-self: center;
       border-right: 1px solid var(--_chip-separator);
       overflow: hidden;
@@ -213,7 +232,7 @@
 
     a {
       display: inline-block;
-      padding: custom-settings.$info-chip-padding;
+      padding: $info-chip-padding;
       background: var(--f-color-bg-2);
       color: inherit;
       text-decoration: none;

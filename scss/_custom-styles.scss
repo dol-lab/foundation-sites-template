@@ -5,7 +5,7 @@
 //  so reorder only rules that cannot match the same element.
 //  - custom-styles/general-base, typography: base elements and type
 //  - components/: one partial per component, named after its class (`_info-chip.scss` is `.info-chip`)
-//  - custom-styles/utilities, loading, animations-focus: helpers that override components
+//  - custom-styles/utilities, loading, motion, focus: helpers that override components
 
 @use "custom-styles/general-base";
 @use "custom-styles/typography";
@@ -45,12 +45,14 @@
 @use "components/accordion";
 @use "components/pagination";
 @use "components/callout";
+@use "components/table";
 @use "components/details";
 @use "components/details-menu";
 @use "components/app-header";
 @use "custom-styles/utilities";
 @use "custom-styles/loading";
-@use "custom-styles/animations-focus";
+@use "custom-styles/motion";
+@use "custom-styles/focus";
 
 @mixin styles {
   @include general-base.styles;
@@ -91,10 +93,12 @@
   @include accordion.styles;
   @include pagination.styles;
   @include callout.styles;
+  @include table.styles;
   @include details.styles;
   @include details-menu.styles;
   @include app-header.styles;
   @include utilities.styles;
   @include loading.styles;
-  @include animations-focus.styles;
+  @include motion.styles;
+  @include focus.styles;
 }

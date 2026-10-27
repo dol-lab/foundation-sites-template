@@ -8,6 +8,7 @@
   .details,
   .user-generated details {
     border-left: 1px solid transparent;
+    padding-inline: var(--f-spacing-2);
     transition: all var(--f-transition-medium);
     border-bottom-left-radius: 0;
     margin-bottom: base.$paragraph-margin-bottom;
@@ -36,17 +37,27 @@
         content: none;
       }
 
-      @extend .py-3;
+      padding-block: var(--f-spacing-3);
+      isolation: isolate;
+
+      // The hover tint of .details-menu, widened over the details' padding and the caret.
+      &::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: 0 calc(-0.7rem - var(--f-spacing-2)) 0 calc(-1 * var(--f-spacing-2));
+        background-color: var(--_summary-tint, transparent);
+        transition: background-color var(--f-transition-short);
+        pointer-events: none;
+      }
 
       &::after {
-        content: "\f107";
+        @extend .caret;
+
         position: absolute;
         right: -0.7rem;
-        top: 1.1em;
-        font-family: "Font Awesome 7 Free";
-        font-weight: bold;
+        top: 1.7em;
         margin-left: auto;
-        font-size: 0.85em;
         display: inline-block;
         transition: all var(--f-transition-medium) ease-out;
       }
@@ -67,15 +78,9 @@
     }
 
     &:hover {
-      & > summary {
-        filter: brightness(120%);
-      }
+      --_summary-tint: var(--f-color-tint);
 
       border-left-color: var(--f-color-border-2);
-    }
-
-    body & {
-      @extend .px-2;
     }
   }
 

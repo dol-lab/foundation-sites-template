@@ -1,6 +1,7 @@
 @use "../custom-includes/foundation-spaces/util/breakpoint";
 @use "../custom-includes/foundation-spaces/util/unit";
 @use "sass:map";
+@use "../custom-settings";
 
 // App header
 // ---------
@@ -54,10 +55,10 @@
 @mixin styles {
   .app-header,
   .main-menu {
-    --app-header-height: var(--f-avatar-small);
+    --_height: var(--f-avatar-small);
 
     color: var(--f-color-text-1);
-    background: linear-gradient(to bottom, var(--f-color-bg-1-base), var(--f-color-bg-1) 120%);
+    background: linear-gradient(to bottom, var(--f-color-bg-1-untinted), var(--f-color-bg-1) 120%);
     position: relative;
     z-index: 1000;
 
@@ -70,8 +71,8 @@
     }
 
     & .menu.dropdown > li > :is(a, span, button) {
-      height: var(--app-header-height);
-      min-width: var(--app-header-height);
+      height: var(--_height);
+      min-width: var(--_height);
       padding-top: 0;
       padding-bottom: 0;
       margin-top: 0.25rem;
@@ -110,8 +111,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: var(--app-header-height);
-      height: var(--app-header-height);
+      width: var(--_height);
+      height: var(--_height);
     }
 
     & .menu > li.submenu .fa,
@@ -123,7 +124,7 @@
 
     & .menu > .navbar-icon > a {
       justify-content: center;
-      min-width: 48px;
+      min-width: custom-settings.$touch-target;
     }
 
     & .menu > .navbar-icon > a > svg {

@@ -11,7 +11,7 @@ Roboto in four weights. Headings take `--f-color-text-0`, body text `--f-color-t
     <h5>Heading 5</h5>
     <h6>Heading 6</h6>
     <p class="lead">A lead paragraph introduces a page.</p>
-    <p>Body text with a <a href="#">link</a>, <strong>strong</strong>, <em>emphasis</em>, <code>inline code</code> and <small>small print</small>.</p>
+    <p>Body text with a <a href="#">link</a>, <strong>strong</strong>, <em>emphasis</em>, <code>inline code</code>, a key <kbd>Esc</kbd> and <small>small print</small>.</p>
     <blockquote>A quote, as the block editor prints it.<cite>Someone</cite></blockquote>
     <ul>
         <li>An unordered list</li>
@@ -22,5 +22,23 @@ Roboto in four weights. Headings take `--f-color-text-0`, body text `--f-color-t
         <li>with two items</li>
     </ol>
     <pre class="code-block"><code>.card { background: var(--f-color-bg-1); }</code></pre>
+</div>
+```
+
+## Tables
+
+A table is unstyled unless it asks: `.table` splits the rows with hairlines (the block editor's tables in `.user-generated` keep their own look). Wrap a wide one in `.table-scroll`.
+
+```html example
+<div class="table-scroll">
+    <table class="table">
+        <thead>
+            <tr><th>Token</th><th>Role</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>--f-color-bg-1</code></td><td>Cards</td></tr>
+            <tr><td><code>--f-color-text-2</code></td><td>Muted text</td></tr>
+        </tbody>
+    </table>
 </div>
 ```

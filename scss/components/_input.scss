@@ -1,24 +1,12 @@
 @use "../custom-includes/foundation-spaces/forms/label";
+@use "../custom-includes/foundation-spaces/util/selector";
 @use "../custom-includes/s-label";
 @use "../custom-settings";
 
 // Text inputs and select: height and padding, .clear, .help-text, .form-error.
 
 @mixin styles {
-  [type="text"],
-  [type="password"],
-  [type="date"],
-  [type="datetime"],
-  [type="datetime-local"],
-  [type="month"],
-  [type="week"],
-  [type="email"],
-  [type="number"],
-  [type="search"],
-  [type="tel"],
-  [type="time"],
-  [type="url"],
-  [type="color"] {
+  #{selector.text-inputs()} {
     height: custom-settings.$input-height;
     padding: s-label.$label-padding;
     line-height: label.$form-label-line-height;

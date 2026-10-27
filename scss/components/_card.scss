@@ -3,6 +3,7 @@
 @use "../custom-includes/foundation-spaces/forms/text";
 @use "../custom-includes/foundation-spaces/global";
 @use "../custom-includes/foundation-spaces/typography/base";
+@use "../custom-includes/foundation-spaces/util/selector";
 @use "../custom-includes/s-button";
 @use "../custom-settings";
 
@@ -49,6 +50,7 @@
       overflow: auto;
     }
 
+    // Deprecated: the prototype `.overflow-hidden` does the same.
     &.overflow-hidden {
       overflow: hidden;
     }
@@ -99,10 +101,6 @@
       overflow-wrap: anywhere;
     }
 
-    :not(.align-justify):not(.align-center) {
-      justify-content: flex-start;
-    }
-
     &:is(.flex-dir-row) {
       flex-direction: row;
       align-items: center;
@@ -132,11 +130,15 @@
     }
   }
 
+  // Zero specificity, so Foundation's `.flex-dir-*` helpers turn it.
+  :where(.card-section, .card-divider) {
+    flex-direction: column;
+  }
+
   .card-section,
   .card-divider {
     padding: map.get(custom-settings.$spacing-scale, 3);
     display: flex;
-    flex-direction: column;
 
     &.nested {
       border-top: none;
@@ -158,18 +160,6 @@
       margin-inline: -#{map.get(custom-settings.$spacing-scale, 3)};
     }
 
-    &.flex-dir-row {
-      flex-direction: row;
-    }
-
-    &.flex-dir-row-reverse {
-      flex-direction: row-reverse;
-    }
-
-    &.flex-dir-column {
-      flex-direction: column;
-    }
-
     &.small {
       line-height: 1.25rem;
     }
@@ -183,20 +173,7 @@
     }
 
     &.no-padding {
-      & > [type="text"],
-      & > [type="password"],
-      & > [type="date"],
-      & > [type="datetime"],
-      & > [type="datetime-local"],
-      & > [type="month"],
-      & > [type="week"],
-      & > [type="email"],
-      & > [type="number"],
-      & > [type="search"],
-      & > [type="tel"],
-      & > [type="time"],
-      & > [type="url"],
-      & > [type="color"],
+      & > :is(#{selector.text-inputs()}),
       & > textarea,
       & > select,
       & > .input {
@@ -209,10 +186,10 @@
       }
     }
 
-    @each $size-label, $size in custom-settings.$avatar-sizes {
+    @each $size-label, $_ in custom-settings.$avatar-sizes {
       &.#{$size-label} {
         &:last-child {
-          height: $size;
+          height: var(--f-avatar-#{$size-label});
         }
       }
     }

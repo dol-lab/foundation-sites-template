@@ -1,4 +1,4 @@
-@use "../custom-functions";
+@use "../custom-settings";
 @use "foundation-spaces/global";
 @use "foundation-spaces/typography/base";
 @use "foundation-spaces/util/mixins";
@@ -13,7 +13,7 @@
 
 /// Default color for Orbit's bullets.
 /// @type Color
-$orbit-bullet-background: custom-functions.color-mix-opacity(var(--f-color-text-0), 10%, 90%) !default;
+$orbit-bullet-background: color-mix(in oklab, var(--f-color-text-0) 10%, transparent) !default;
 
 /// Default active color for Orbit's bullets.
 /// @type Color
@@ -37,7 +37,7 @@ $orbit-bullet-margin-bottom: 0.5rem !default;
 
 /// Default background color for Orbit's caption.
 /// @type String
-$orbit-caption-background: custom-functions.color-mix-opacity(var(--f-color-bg-1), 75%, 35%) !default;
+$orbit-caption-background: color-mix(in oklab, var(--f-color-bg-1) 75%, transparent 35%) !default;
 
 /// Default padding for Orbit's caption.
 /// @type Number
@@ -112,18 +112,17 @@ $orbit-control-zindex: 10 !default;
 
 /// Adds base styles for the next/previous buttons in an Orbit slider. These styles are shared between the `.orbit-next` and `.orbit-previous` classes in the default CSS.
 @mixin orbit-control {
-  @include mixins.disable-mouse-outline;
   @include mixins.vertical-center;
-  @include custom-functions.cross-browser(border-radius, 50px);
 
+  border-radius: var(--f-radius-full);
   z-index: $orbit-control-zindex;
   color: var(--f-color-text-0);
   background-color: $orbit-control-background;
   border: $orbit-control-border;
   opacity: 0.4;
   display: flex;
-  width: 36px;
-  height: 36px;
+  width: custom-settings.$control-height;
+  height: custom-settings.$control-height;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -139,7 +138,7 @@ $orbit-control-zindex: 10 !default;
 
   &::before,
   &::after {
-    font-family: "Font Awesome 7 Free";
+    font-family: custom-settings.$icon-font-family;
     font-weight: bold;
     font-size: 0.9rem;
   }
@@ -170,8 +169,6 @@ $orbit-control-zindex: 10 !default;
 
 /// Adds styles for a container of Orbit bullets. /// Adds styles for the Orbit previous button. These styles are used on the `.orbit-bullets` class.
 @mixin orbit-bullets {
-  @include mixins.disable-mouse-outline;
-
   position: relative;
   margin-top: $orbit-bullet-margin-top;
   margin-bottom: $orbit-bullet-margin-bottom;
@@ -181,7 +178,7 @@ $orbit-control-zindex: 10 !default;
     width: $orbit-bullet-diameter;
     height: $orbit-bullet-diameter;
     margin: $orbit-bullet-margin;
-    border-radius: 50%;
+    border-radius: var(--f-radius-full);
     background-color: $orbit-bullet-background;
 
     &:hover {

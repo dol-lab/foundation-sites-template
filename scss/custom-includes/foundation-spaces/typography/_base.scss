@@ -295,7 +295,7 @@ $keystroke-padding: unit.rem-calc(2 4 0) !default;
 
 /// Border radius for `<kbd>` elements.
 /// @type Number | List
-$keystroke-radius: global.$global-radius-small !default;
+$keystroke-radius: global.$global-radius-xsmall !default;
 
 /// Bottom border style for `<abbr>` elements.
 /// @type List

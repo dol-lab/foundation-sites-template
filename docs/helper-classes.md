@@ -37,7 +37,7 @@ Legacy: `.padding-button`, `.padding-xlarge`, `.padding-xxlarge`, Foundation's `
 | **Cells**     | `.cell`                                                                  | Add `.auto` (fill space) or `.shrink` (fit content).   |
 | **Widths**    | `.width-25`, `.width-50`, `.width-75`, `.width-100`, `.width-article`    | Heights: `.height-25` … `.height-100`.                 |
 | **Position**  | `.position-relative`, `.position-absolute`, `.position-fixed`, `.position-static` |                                                        |
-| **Overflow**  | `.overflow-hidden`, `.overflow-auto`, `.overflow-x-scroll`, …            |                                                        |
+| **Overflow**  | `.overflow-hidden`, `.overflow-visible`, `.overflow-x-scroll`, … | `.card` also takes `.overflow-auto`, `.overflow-initial`. |
 
 ### Grid columns
 
@@ -50,12 +50,12 @@ Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile)
 | Feature         | Classes                                                                      |
 | --------------- | ---------------------------------------------------------------------------- |
 | **Direction**   | `.flex-dir-row`, `.flex-dir-column`, `.flex-dir-*-reverse`                   |
-| **Justify**     | `.flex-justify-between`, `.align-flex-start`, `.align-flex-end`; Foundation's `.align-left`, `.align-center`, `.align-right`, `.align-justify`, `.align-spaced` |
+| **Justify**     | `.flex-justify-between`; Foundation's `.align-left`, `.align-center`, `.align-right`, `.align-justify`, `.align-spaced` (`.align-flex-start/-end` are deprecated aliases of `.align-left/-right`) |
 | **Align items** | `.flex-align-center`; Foundation's `.align-top`, `.align-middle`, `.align-bottom`, `.align-stretch` |
 | **Align self**  | `.align-self-top`, `.align-self-middle`, `.align-self-bottom`, `.align-self-stretch` |
 | **Wrap**        | `.flex-wrap`, `.flex-nowrap`                                                 |
 | **Grow/Shrink** | `.flex-grow-0`, `.flex-grow-1`, `.flex-shrink-0`, `.flex-shrink-1`, `.flex-child-auto`, `.flex-child-grow`, `.flex-child-shrink` |
-| **Push apart**  | `.flex-spacer-left`, `.flex-spacer-right`, `.flex-spacer-around` (auto margins on a child) |
+| **Push apart**  | `.ml-auto`, `.mr-auto`, `.mx-auto` (auto margins on a child; `.flex-spacer-left/-right/-around` are deprecated aliases) |
 
 ## Typography and visibility
 
@@ -72,7 +72,7 @@ Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile)
 ## Visual styles
 
 - **Links:** `.brand-links` on a container gives the prose links inside it the brand colour (`.s-fg-a-c1-parent` is the old name, kept as an alias).
-- **Borders:** `.bordered`, `.border-none` / `.no-border`
+- **Borders:** `.bordered`, `.border-none` (`.no-border` is deprecated)
 - **Radius:** `.rounded` (`--f-radius`), `.rounded-small`, `.rounded-none`, `.rounded-full`
 - **Shadows:** `.shadow`, `.no-box-shadow`
 
@@ -81,7 +81,7 @@ Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile)
 - **Disabled:** `.disabled` (faded, no pointer events)
 - **Clickable:** `.clickable` on `.card` / `.info-chip`: opt in where the whole element is interactive but nothing in the markup says so (a JS handler instead of an `[href]`).
 - **Click through:** `.click-through` lets the mouse pass the element but not its children.
-- **Reveal on focus:** `.show-on-focus-within` shows the element's content while something inside it has focus.
+- **Reveal on focus:** `.show-on-focus-within` keeps the element visually hidden until something inside it has focus (a row of skip links).
 
 ## Breakpoints
 
@@ -99,18 +99,18 @@ Used by the grid columns and the visibility classes.
 
 **Card**
 
-```
+```html example
 <div class="card p-3 shadow">
   <h3 class="mb-2">Title</h3>
-  <p class="mb-0 text-truncate">Description content...</p>
+  <p class="mb-0 text-truncate">A description that is cut off with an ellipsis once it is wider than the card it sits in.</p>
 </div>
 ```
 
 **Flex header**
 
-```
+```html example
 <header class="flex flex-justify-between flex-align-center gap-2 p-3">
-  <h1 class="mb-0">Logo</h1>
+  <h3 class="mb-0">Logo</h3>
   <div class="flex gap-2">
     <button class="button">Login</button>
     <button class="button primary">Sign Up</button>
@@ -120,9 +120,9 @@ Used by the grid columns and the visibility classes.
 
 **Sidebar layout**
 
-```
+```html example
 <div class="flex">
-  <aside class="flex-child-shrink width-article show-for-medium">...</aside>
-  <main class="flex-child-grow p-4">...</main>
+  <aside class="flex-child-shrink p-4 show-for-medium">Sidebar, from medium up</aside>
+  <main class="flex-child-grow p-4">Main content</main>
 </div>
 ```

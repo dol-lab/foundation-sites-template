@@ -1,4 +1,3 @@
-@use "../custom-functions";
 @use "../custom-includes/foundation-spaces/forms/label";
 @use "../custom-includes/foundation-spaces/global";
 @use "../custom-includes/s-button";
@@ -51,27 +50,13 @@
     }
   }
 
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-
-    50% {
-      background-position: 100% 50%;
-    }
-
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
   @keyframes background-pulse {
     0% {
       background-color: var(--f-color-success);
     }
 
     50% {
-      @include custom-functions.color-mix("bg", var(--f-color-success), 51%, transparent, 49%);
+      background-color: color-mix(in oklab, var(--f-color-success) 51%, transparent);
     }
 
     100% {

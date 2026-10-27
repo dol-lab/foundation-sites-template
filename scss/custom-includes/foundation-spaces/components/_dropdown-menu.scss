@@ -156,10 +156,6 @@ $dropdown-menu-item-background-active: var(--f-color-bg-2) !default;
   .dropdown.menu {
     @include dropdown-menu-direction(horizontal);
 
-    a {
-      @include mixins.disable-mouse-outline;
-    }
-
     // Top-level item
     > li > a {
       background: $dropdownmenu-background;

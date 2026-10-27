@@ -6,9 +6,6 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
-// [TODO] Check how plugin confirms disabled or vertical status
-// [TODO] Check if transition: all; is necessary
-
 ////
 /// @group slider
 ////
@@ -52,7 +49,6 @@ $slider-transition: all global.$global-transition-medium global.$global-transiti
 
 /// Adds the general styles for the slider handles.
 @mixin slider-handle {
-  @include mixins.disable-mouse-outline;
   @include mixins.vertical-center;
 
   left: 0;

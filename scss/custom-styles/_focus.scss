@@ -1,0 +1,29 @@
+@use "../custom-includes/foundation-spaces/global";
+
+// Keyboard focus, and the Milestones plugin's focus rules (to move there).
+
+@mixin styles {
+  // One rule for every element: an inset outline in the text color. Unlike a box-shadow ring, it is not clipped
+  // by an `overflow: hidden` parent nor replaced by the element's own shadow.
+  :focus-visible {
+    outline: global.$global-focus;
+    outline-offset: -2px;
+  }
+
+  // Meilensteine
+  .sms-single-toggle-size .caret-icon {
+    &:focus-visible {
+      outline-offset: 0;
+    }
+  }
+
+  .sms-widget a {
+    box-shadow: unset !important;
+  }
+
+  .sms-options:has(:focus-visible),
+  .sms-single-bottom-container:has(:focus-visible) {
+    outline: global.$global-focus;
+    outline-offset: 0;
+  }
+}

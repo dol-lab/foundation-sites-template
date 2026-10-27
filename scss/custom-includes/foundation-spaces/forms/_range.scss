@@ -1,4 +1,3 @@
-@use "../../../custom-functions";
 @use "../global";
 @use "../util/value";
 
@@ -16,11 +15,11 @@ $slider-height: 0.25rem !default;
 
 /// Default background color of the slider's track.
 /// @type Color
-$slider-background: custom-functions.color-mix-opacity(var(--f-color-text-0), 14%, 86%) !default;
+$slider-background: color-mix(in oklab, var(--f-color-text-0) 14%, transparent) !default;
 
 /// Default color of the active fill color of the slider.
 /// @type Color
-$slider-fill-background: custom-functions.color-mix-opacity(var(--f-color-text-0), 30%, 70%) !default;
+$slider-fill-background: color-mix(in oklab, var(--f-color-text-0) 30%, transparent) !default;
 
 /// Default height of the handle of the slider.
 /// @type Number

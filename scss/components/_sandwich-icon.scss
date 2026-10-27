@@ -1,20 +1,21 @@
-@use "../custom-functions";
 @use "../custom-includes/foundation-spaces/global";
 @use "../custom-settings";
 
 // .sandwich-icon and .flat-arrow-down-icon: two-line CSS icons.
 
+$line-weight: 2 !default; // px
+
 @mixin styles {
   .sandwich-icon,
   .flat-arrow-down-icon {
     cursor: pointer;
-    border-radius: 20px;
+    border-radius: var(--f-radius-full);
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: custom-settings.$touch-target;
+    height: custom-settings.$touch-target;
     padding: 12px;
     color: inherit;
     box-sizing: border-box;
@@ -24,8 +25,8 @@
       content: "";
       position: absolute;
       display: block;
-      height: custom-settings.$icon-line-weight * 1px;
-      box-shadow: inset 0 0 0 custom-settings.$icon-line-weight * 1px currentcolor;
+      height: $line-weight * 1px;
+      box-shadow: inset 0 0 0 $line-weight * 1px currentcolor;
       transition-duration: global.$global-transition-medium;
       transition-timing-function: global.$global-transition-timing-cubic-bezier;
     }
@@ -43,11 +44,11 @@
     }
 
     &::before {
-      @include custom-functions.cross-browser(transform, translate(0, -5px) rotate(0deg));
+      transform: translate(0, -5px) rotate(0deg);
     }
 
     &::after {
-      @include custom-functions.cross-browser(transform, translate(0, 5px) rotate(0deg));
+      transform: translate(0, 5px) rotate(0deg);
     }
   }
 
@@ -65,18 +66,18 @@
     }
 
     &::before {
-      @include custom-functions.cross-browser(transform, translate(-45%, 0) rotate(22.5deg));
+      transform: translate(-45%, 0) rotate(22.5deg);
 
       .is-active & {
-        @include custom-functions.cross-browser(transform, translate(-45%, 0) rotate(-22.5deg));
+        transform: translate(-45%, 0) rotate(-22.5deg);
       }
     }
 
     &::after {
-      @include custom-functions.cross-browser(transform, translate(45%, 0) rotate(-22.5deg));
+      transform: translate(45%, 0) rotate(-22.5deg);
 
       .is-active & {
-        @include custom-functions.cross-browser(transform, translate(45%, 0) rotate(22.5deg));
+        transform: translate(45%, 0) rotate(22.5deg);
       }
     }
   }

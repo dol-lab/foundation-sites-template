@@ -98,7 +98,7 @@ function renderSection(file, folded) {
   // Wide tables scroll instead of overflowing a phone.
   const rest = marked
     .parse(body)
-    .replace(/<table>([\s\S]*?)<\/table>/g, '<div class="table-scroll"><table>$1</table></div>');
+    .replace(/<table>([\s\S]*?)<\/table>/g, '<div class="table-scroll"><table class="table">$1</table></div>');
   const content = `${intro && `<p class="demo-intro">${marked.parseInline(intro)}</p>\n`}${rest}`;
   const card = folded
     ? `<details class="card static overflow-initial demo-doc">
