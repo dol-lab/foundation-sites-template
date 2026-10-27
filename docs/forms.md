@@ -93,6 +93,25 @@ The native input is hidden; `.checkbox-label` draws it. A `.label-wrapper` makes
 </div>
 ```
 
+With a visible label, a `.label-wrapper` is the label, as for checkboxes, and the paddle is an `aria-hidden` `<span>`.
+
+```html example
+<label class="label-wrapper" for="demo-switch-6">
+    <span class="switch small success">
+        <input class="switch-input" role="switch" id="demo-switch-6" type="checkbox" checked>
+        <span class="switch-paddle" aria-hidden="true"></span>
+    </span>
+    <span>Notify me</span>
+</label>
+<label class="label-wrapper" for="demo-switch-7">
+    <span class="switch small">
+        <input class="switch-input" role="switch" id="demo-switch-7" type="checkbox">
+        <span class="switch-paddle" aria-hidden="true"></span>
+    </span>
+    <span>Show archived Spaces</span>
+</label>
+```
+
 ## Slider
 
 ```html example
