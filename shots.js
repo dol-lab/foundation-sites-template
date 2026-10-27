@@ -1,6 +1,7 @@
 // Screenshots of the demo page into shots/: one PNG per section (and the header) and width,
-// plus the interaction states in shots.config.js. `bun run shots [id|state…]` (all without
-// arguments). Shots taller than MAX_HEIGHT are split into <id>@<width>-<n>.png.
+// plus the interaction states in shots.config.js. `bun run shots [id|state…] [--scheme=light|dark]`
+// (all without arguments; both color schemes without --scheme, dark ones as <id>@<width>-dark.png).
+// Shots taller than MAX_HEIGHT are split into <id>@<width>-<n>.png.
 // Each shot also stores its elements (box, style, text) in <stem>.json. A changed shot is
 // reported as text: the changed regions with the element they lie in, then what changed in
 // the elements. Pixels that changed with no element changing are reported as noise.
@@ -12,6 +13,7 @@ const { ROOT, STATES, HEIGHT, launch, openDemo, applyState } = require("./lib/br
 const { snapshotInPage, layoutDiff, elementAt } = require("./lib/layout");
 
 const WIDTHS = [375, 1280];
+const SCHEMES = ["light", "dark"];
 const MAX_HEIGHT = 1600;
 const MAX_REGIONS = 4;
 const MAX_CROP = 600;
@@ -255,44 +257,49 @@ async function unpin(target, page) {
   const browser = await launch();
   const tools = imageTools(await browser.newPage());
   fs.mkdirSync(OUT, { recursive: true });
-  const args = process.argv.slice(2);
+  const args = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+  const scheme = process.argv.find((a) => a.startsWith("--scheme="))?.split("=")[1];
+  const schemes = scheme ? [scheme] : SCHEMES;
   let failed = false;
 
   try {
     for (const width of WIDTHS) {
-      const page = await openDemo(browser, width);
-      const sections = await page.$$eval("nav[id], section[id]", (els) => els.map((el) => el.id));
-      const names = args.length ? args : [...sections, ...Object.keys(STATES)];
+      for (const colorScheme of schemes) {
+        const suffix = colorScheme === "light" ? "" : `-${colorScheme}`;
+        const page = await openDemo(browser, width, colorScheme);
+        const sections = await page.$$eval("nav[id], section[id]", (els) => els.map((el) => el.id));
+        const names = args.length ? args : [...sections, ...Object.keys(STATES)];
 
-      for (const name of names) {
-        const state = STATES[name];
-        if (state?.widths && !state.widths.includes(width)) continue;
-        // A state is clicked into a page of its own, so the sections are shot untouched.
-        const statePage = state ? await openDemo(browser, width) : null;
-        try {
-          let target;
-          if (state) {
-            target = (await applyState(statePage, state)) || statePage;
-          } else {
-            target = page.locator(`[id="${name}"]`);
-            if (!(await target.count())) throw new Error("no such section or state");
+        for (const name of names) {
+          const state = STATES[name];
+          if (state?.widths && !state.widths.includes(width)) continue;
+          // A state is clicked into a page of its own, so the sections are shot untouched.
+          const statePage = state ? await openDemo(browser, width, colorScheme) : null;
+          try {
+            let target;
+            if (state) {
+              target = (await applyState(statePage, state)) || statePage;
+            } else {
+              target = page.locator(`[id="${name}"]`);
+              if (!(await target.count())) throw new Error("no such section or state");
+            }
+            const viewport = target === statePage;
+            if (!viewport) await pin(target, page);
+            const snapshot = viewport
+              ? await statePage.locator("html").evaluate(snapshotInPage, { x: 0, y: 0, w: width, h: HEIGHT })
+              : await target.evaluate(snapshotInPage, null);
+            const png = await target.screenshot({ animations: "disabled" });
+            if (!viewport) await unpin(target, page);
+            (await saveSplit(tools, `${name}@${width}${suffix}`, png, snapshot)).forEach((line) => console.log(line));
+          } catch (err) {
+            console.error(`failed    ${name}@${width}${suffix}: ${err.message.split("\n")[0]}`);
+            failed = true;
+          } finally {
+            await statePage?.close();
           }
-          const viewport = target === statePage;
-          if (!viewport) await pin(target, page);
-          const snapshot = viewport
-            ? await statePage.locator("html").evaluate(snapshotInPage, { x: 0, y: 0, w: width, h: HEIGHT })
-            : await target.evaluate(snapshotInPage, null);
-          const png = await target.screenshot({ animations: "disabled" });
-          if (!viewport) await unpin(target, page);
-          (await saveSplit(tools, `${name}@${width}`, png, snapshot)).forEach((line) => console.log(line));
-        } catch (err) {
-          console.error(`failed    ${name}@${width}: ${err.message.split("\n")[0]}`);
-          failed = true;
-        } finally {
-          await statePage?.close();
         }
+        await page.close();
       }
-      await page.close();
     }
   } finally {
     await browser.close();

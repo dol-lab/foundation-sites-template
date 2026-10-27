@@ -1,6 +1,6 @@
 // What styles an element of the demo page, as JSON: box, computed values and the CSS rules
 // that match it, with their SCSS source line (via css/*.map) or their line in index.html.
-// `bun run probe '<selector>' [property…] [--width=375] [--state=<shots.config.js name>]`.
+// `bun run probe '<selector>' [property…] [--width=375] [--state=<shots.config.js name>] [--scheme=dark]`.
 // With properties, only rules declaring them are listed, for inheriting ones also on ancestors.
 const fs = require("node:fs");
 const path = require("node:path");
@@ -97,7 +97,7 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
   );
   const [selector, ...props] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
   if (!selector) {
-    console.error("usage: bun run probe '<selector>' [property…] [--width=375] [--state=<name>]");
+    console.error("usage: bun run probe '<selector>' [property…] [--width=375] [--state=<name>] [--scheme=dark]");
     process.exit(2);
   }
   if (opts.state && !STATES[opts.state]) {
@@ -107,7 +107,7 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
 
   const browser = await launch();
   try {
-    const page = await openDemo(browser, Number(opts.width) || 1280);
+    const page = await openDemo(browser, Number(opts.width) || 1280, opts.scheme);
     if (opts.state) await applyState(page, STATES[opts.state]);
     const el = page.locator(selector);
     const count = await el.count();
