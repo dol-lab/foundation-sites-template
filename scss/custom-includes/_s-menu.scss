@@ -518,9 +518,4 @@ $menu-icons-back-compat: true !default;
       }
     }
   }
-
-  // Prevent FOUC when using the Responsive Menu plugin
-  .no-js [data-responsive-menu] ul {
-    display: none;
-  }
 }

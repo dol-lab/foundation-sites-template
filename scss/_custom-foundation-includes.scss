@@ -27,7 +27,6 @@
 @use "custom-includes/s-callout";
 @use "custom-includes/s-label";
 @use "custom-includes/s-menu";
-@use "custom-includes/s-orbit";
 @use "custom-includes/s-progress-bar";
 @use "custom-includes/s-radio-tabs";
 @use "custom-includes/s-reveal";
@@ -100,7 +99,6 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
     @include media-object.foundation-media-object;
   }
 
-  @include s-orbit.spaces-orbit;
   @include responsive-embed.foundation-responsive-embed;
   @include s-tabs.spaces-tabs;
   @include thumbnail.foundation-thumbnail;
