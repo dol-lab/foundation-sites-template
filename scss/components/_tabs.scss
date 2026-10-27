@@ -1,8 +1,7 @@
-@use "../custom-functions";
 @use "../custom-includes/foundation-spaces/global";
 @use "../custom-includes/foundation-spaces/typography/base";
 
-// .tabs (.line, .bar, .image, .label-is-active), .tabs-content, .tabs-panel.
+// .tabs (.line, .bar, .label-is-active), .tabs-content, .tabs-panel.
 
 @use "sass:list";
 @use "../custom-settings";
@@ -97,7 +96,7 @@ $-active: ':is(.is-active, [aria-selected="true"], :has(> [aria-selected="true"]
     }
 
     // Plain tabs and `.line` underline the active tab; `.line` also rules off the panel below.
-    &:not(.bar, .image) {
+    &:not(.bar) {
       .tabs-title {
         & > a {
           &:hover {
@@ -164,41 +163,6 @@ $-active: ':is(.is-active, [aria-selected="true"], :has(> [aria-selected="true"]
         & > a:is(:hover, :focus),
         &#{$-active} > a {
           background: var(--f-color-bg-2);
-        }
-      }
-    }
-
-    &.image {
-      .tabs-title {
-        text-align: left;
-
-        .title {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: flex-end;
-          flex-direction: column;
-          padding: global.$global-padding;
-          font-weight: global.$global-weight-bold;
-          line-height: base.$header-lineheight;
-          z-index: 10;
-          pointer-events: none;
-
-          & > * {
-            pointer-events: all;
-          }
-
-          & > span {
-            margin-bottom: base.$header-margin-bottom;
-            white-space: initial;
-
-            &:last-child {
-              margin-bottom: initial;
-            }
-          }
-
-          @include custom-functions.header-style("h3", "font-size");
         }
       }
     }

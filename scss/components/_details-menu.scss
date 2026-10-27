@@ -3,8 +3,8 @@
 @use "sass:list";
 
 // .details-menu: a <details> that folds a menu, the look of .accordion-menu without its JS. A flat row
-// while closed, a raised card inset by --_offset while open. The summary paints --_toggle-bg with a
-// --_toggle-tint layer on top, so every state hovers the same way.
+// while closed, a raised card inset by --_offset while open (no header fill: it fought the shadow). The
+// summary paints a --_toggle-tint layer, so every state hovers the same way.
 
 $offset: 0.5rem;
 $gap: 0.5rem;
@@ -17,17 +17,12 @@ $ring: 1.5rem;
 @mixin styles {
   .details-menu {
     --_offset: #{$offset};
-    --_toggle-bg: transparent;
 
     width: 100%;
     overflow: hidden;
     transition: all var(--f-transition-medium);
 
-    // Mixed from the text color, not a --f-color-bg-* step: those sit next to the page background in
-    // light mode and read as a hole in the card.
     &[open] {
-      --_toggle-bg: color-mix(in oklab, var(--f-color-text-0) 6%, var(--f-color-bg-1));
-
       width: calc(100% - var(--_offset));
       margin: calc(var(--_offset) / 2);
       border-radius: var(--f-radius);
@@ -43,11 +38,9 @@ $ring: 1.5rem;
       gap: $gap;
       padding: global.$global-menu-padding;
       line-height: 1.15;
-      background-color: var(--_toggle-bg);
       background-image: linear-gradient(var(--_toggle-tint), var(--_toggle-tint));
       list-style: none;
       cursor: pointer;
-      transition: background-color var(--f-transition-short);
 
       &::-webkit-details-marker {
         display: none;

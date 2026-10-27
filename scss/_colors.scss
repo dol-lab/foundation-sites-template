@@ -11,14 +11,16 @@
 // palettes below; see docs/colors.md.
 
 // Palette colors: each has a base value (no suffix), a darker one for hover (-darker)
-// and a text color that contrasts with it (-contrast).
+// and a text color that contrasts with it (-contrast). Each pair passes AA (4.5:1) in both
+// modes, so a solid button or badge label is readable; as small text on a dark page the
+// colors stay below 4.5.
 $foundation-palette: (
-  brand: hsl(16deg 99% 43%),
-  primary: hsl(200deg 20% 50%),
+  brand: hsl(16deg 99% 42%),
+  primary: hsl(200deg 22% 43%),
   secondary: hsl(199deg 18% 33%),
-  success: hsl(152deg 62% 41%),
+  success: hsl(152deg 62% 32%),
   warning: hsl(41deg 100% 50%),
-  alert: hsl(358deg 86% 61%),
+  alert: hsl(358deg 72% 51%),
 );
 $foundation-palette-contrast: (
   brand: hsl(0deg 0% 100%),

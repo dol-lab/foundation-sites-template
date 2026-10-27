@@ -74,12 +74,22 @@
             padding-left: calc(0.75rem + 2px);
         }
 
-        /* Color mode, reachable wherever the page is scrolled. */
-        & .demo-index-mode {
+        /* Demo settings, reachable wherever the page is scrolled. */
+        & .demo-index-settings {
             border-top: 1px solid var(--f-color-border-0);
 
             & fieldset {
                 margin: 0;
+            }
+        }
+
+        & .demo-index-theme {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            & .label-wrapper {
+                margin: 0 auto 0 0;
             }
         }
 
@@ -240,9 +250,6 @@
             padding: 1.25rem 2rem;
         }
 
-        @media (min-width: 60em) {
-            grid-template-columns: repeat(3, auto);
-        }
     }
 
     .demo-controls {
@@ -303,6 +310,13 @@
             }
         }
 
+        & .button {
+            margin: 0;
+        }
+    }
+
+    /* Color pickers in the page controls and the index settings. */
+    :is(.demo-controls, .demo-index-settings) {
         /* The native picker drawn as a round swatch. */
         & input[type="color"] {
             flex: none;
@@ -338,14 +352,10 @@
             font-size: 0.8125rem;
         }
 
-        & .demo-control:has(:disabled) .demo-hex,
+        & :disabled + .demo-hex,
         & input:disabled {
             opacity: 0.35;
             cursor: default;
-        }
-
-        & .button {
-            margin: 0;
         }
     }
 
@@ -462,7 +472,7 @@
         if (e.target.closest('a[href="#"]')) e.preventDefault();
     });
 
-    // Space theming on or off (#start), light, dark or the device's mode and reduced motion (index), kept per browser.
+    // Space theming on or off, light, dark or the device's mode and reduced motion (index), kept per browser.
     document.addEventListener('DOMContentLoaded', () => {
         const root = document.documentElement;
         document.getElementById('themingSwitch').addEventListener('change', (e) => {

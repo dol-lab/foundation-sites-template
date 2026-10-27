@@ -27,7 +27,8 @@ The Sass globals (`$global-radius`, `$global-radius-xsmall`, `$global-transition
 | `--f-drop-shadow-small`, `--f-drop-shadow`, `--f-drop-shadow-large` | | Elevation, drawn in `--f-color-shadow`: change the color, not the shadows. `-small` for surfaces in the flow (hovered `.card.clickable`, open `.details-menu`), the others for layers above the page |
 | `--f-avatar-xsmall` … `-xxlarge` | `24px` … `240px` | Avatar sizes, from `$avatar-sizes` |
 | `--f-opacity-disabled` | `0.5` | A disabled control, `.disabled`, `$button-opacity-disabled`, `$switch-opacity-disabled` |
-| `--f-z-header`, `-overlay`, `-modal`, `-dropdown` | `1000`, `1005`, `1006`, `2000` | Page layers, from `$z-index`: the app header, a modal's backdrop, the modal, and dropdowns and tooltips (above a modal, so one opened inside it shows). Stacking inside a component keeps small numbers |
+| `--f-z-header`, `-overlay`, `-modal`, `-dropdown` | `1000`, `1005`, `1006`, `2000` | Page layers, from `$z-index`: the app header, a modal's backdrop, the modal, and dropdowns (above a modal, so one opened inside it shows). Stacking inside a component keeps small numbers |
+| `--f-breakpoint-small` … `-xxlarge` | `0em` … `75em` | Breakpoint widths, from `$breakpoints`, for scripts to build a `matchMedia` query. Read-only (a media query cannot use a custom property) |
 
 These are read with a fallback and not declared, so set them where they apply:
 

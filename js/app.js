@@ -57,9 +57,96 @@
     });
   }
 
+  // A `[data-close]` button removes its `[data-closable]` box (a reveal's `data-close` still goes to Foundation).
+  document.addEventListener("click", function (e) {
+    e.target.closest("[data-close]")?.closest("[data-closable]")?.remove();
+  });
+
+  /**
+   * Tooltips: hovering, focusing or tapping a `[data-tooltip]` shows its `title` in one shared popover.
+   * Delegated, so markup added later needs no init. On first contact the `title` moves to `data-tooltip`
+   * (and `aria-description`), so the browser's own tooltip does not show as well. Without popover
+   * support nothing moves and the browser's tooltip stays.
+   */
+  if ("showPopover" in HTMLElement.prototype) {
+    const tip = document.createElement("div");
+    tip.className = "tooltip";
+    tip.popover = "manual";
+    tip.setAttribute("aria-hidden", "true");
+    let trigger = null;
+    let timer = 0;
+
+    /**
+     * @param {EventTarget} target An event's target.
+     * @return {?Element} The tooltip trigger around target, if it has a text.
+     */
+    const triggerAt = (target) => {
+      const el = target.closest?.("[data-tooltip]");
+      if (el?.title) {
+        el.dataset.tooltip = el.title;
+        el.removeAttribute("title");
+        if (el.getAttribute("aria-label") !== el.dataset.tooltip)
+          el.setAttribute("aria-description", el.dataset.tooltip);
+      }
+      return el?.dataset.tooltip ? el : null;
+    };
+
+    /** @return {void} */
+    const hide = () => {
+      clearTimeout(timer);
+      if (trigger) tip.hidePopover();
+      trigger = null;
+    };
+
+    /**
+     * Shows el's text above it, or below where there is no room, kept inside the viewport.
+     * @param {Element} el A tooltip trigger.
+     * @return {void}
+     */
+    const show = (el) => {
+      if (el === trigger) return;
+      hide();
+      trigger = el;
+      tip.textContent = el.dataset.tooltip;
+      if (!tip.isConnected) document.body.append(tip);
+      tip.showPopover();
+      const r = el.getBoundingClientRect();
+      const t = tip.getBoundingClientRect();
+      const gap = 8;
+      const top = r.top - t.height - gap;
+      const maxLeft = document.documentElement.clientWidth - t.width - gap;
+      tip.style.top = (top < gap ? r.bottom + gap : top) + "px";
+      tip.style.left = Math.max(gap, Math.min(maxLeft, r.left + (r.width - t.width) / 2)) + "px";
+    };
+
+    document.addEventListener("pointerover", (e) => {
+      const el = e.pointerType !== "touch" && triggerAt(e.target);
+      if (!el || el === trigger) return;
+      clearTimeout(timer);
+      timer = setTimeout(() => show(el), 200);
+    });
+    document.addEventListener("pointerout", (e) => {
+      const el = e.target.closest?.("[data-tooltip]");
+      if (el && !el.contains(e.relatedTarget)) el === trigger ? hide() : clearTimeout(timer);
+    });
+    document.addEventListener("focusin", (e) => {
+      const el = triggerAt(e.target);
+      if (el) show(el);
+    });
+    document.addEventListener("focusout", (e) => {
+      if (trigger?.contains(e.target) && !trigger.contains(e.relatedTarget)) hide();
+    });
+    // A tap shows it (touch has no hover); a click elsewhere, Escape or scrolling hides it.
+    document.addEventListener("click", (e) => {
+      const el = triggerAt(e.target);
+      el ? show(el) : hide();
+    });
+    document.addEventListener("keydown", (e) => e.key === "Escape" && hide());
+    document.addEventListener("scroll", hide, { capture: true, passive: true });
+  }
+
   $(function () {
     update_collapse();
-    $(window).on("changed.zf.mediaquery", update_collapse);
   });
   // Once the user opens a folded disclosure, it is theirs: the next unfold leaves it as they left it.
   document.addEventListener(
@@ -80,13 +167,10 @@
    * target, and that is the reason for the visit.
    */
   function update_collapse() {
-    var queries = Foundation.MediaQuery.queries;
     var target = document.querySelector(":target");
 
     $("details[data-collapse]").each(function () {
-      var breakpoint = this.getAttribute("data-collapse");
-      var next = queries[queries.findIndex((element) => element.name == breakpoint) + 1];
-      var fold = !!next && Foundation.MediaQuery.atLeast(breakpoint) && Foundation.MediaQuery.upTo(next.name);
+      var fold = !!fold_query(this.getAttribute("data-collapse"))?.matches;
       if ($(this).data("folded") === fold) {
         return;
       }
@@ -100,5 +184,31 @@
         this.removeAttribute("data-collapsed");
       }
     });
+  }
+
+  // The names of `$breakpoints` in order; their widths are the `--f-breakpoint-<name>` tokens.
+  var breakpoints = ["small", "medium", "large", "xlarge", "xxlarge"];
+  var fold_queries = {};
+
+  /**
+   * The range a `data-collapse` breakpoint folds in, created once and watched for changes.
+   * @param {string} name A breakpoint name.
+   * @return {?MediaQueryList} Null for the last breakpoint or an unknown name.
+   */
+  function fold_query(name) {
+    if (!(name in fold_queries)) {
+      var i = breakpoints.indexOf(name);
+      var width = (bp) =>
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--f-breakpoint-" + bp)
+          .trim();
+      var end = breakpoints[i + 2];
+      fold_queries[name] =
+        i < 0 || i === breakpoints.length - 1
+          ? null
+          : window.matchMedia(`(width >= ${width(name)})` + (end ? ` and (width < ${width(end)})` : ""));
+      fold_queries[name]?.addEventListener("change", update_collapse);
+    }
+    return fold_queries[name];
   }
 })(window, document, jQuery);

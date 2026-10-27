@@ -78,36 +78,3 @@ Where space is short, `.label-is-active` shows only the icons and the active tab
     <li class="tabs-title"><a href="#demo-tab-label-3"><i class="fa fa-user-astronaut"></i> <span>Astronauts</span></a></li>
 </ul>
 ```
-
-## Image tabs
-
-`.image` puts each title over a picture. Combined with [scroll snap](scroll-snap.md) the titles scroll sideways.
-
-```html example
-<ul class="tabs image expanded scroll-snap-container-x snap-align-center width-medium" data-tabs id="demo-tabs-image">
-    <li class="tabs-title is-active scroll-snap-element">
-        <a href="#demo-tab-image-1" aria-selected="true">
-            <div class="clipped height-200 tint">
-                <div class="title"><span>Flowers</span></div>
-                <img src="assets/img/annie-spratt-KAR7AFxfQug-unsplash.jpg" alt="">
-            </div>
-        </a>
-    </li>
-    <li class="tabs-title scroll-snap-element">
-        <a href="#demo-tab-image-2">
-            <div class="clipped height-200 tint">
-                <div class="title"><span>Networked collaboration in the community</span></div>
-                <img src="assets/img/redd-francisco-c7xBEFBJhkg-unsplash.jpg" alt="">
-            </div>
-        </a>
-    </li>
-    <li class="tabs-title scroll-snap-element">
-        <a href="#demo-tab-image-3">
-            <div class="clipped height-200 tint">
-                <div class="title"><span>Landscape</span></div>
-                <img src="assets/img/cullen-jones-87ZpLG0mviA-unsplash.jpg" alt="">
-            </div>
-        </a>
-    </li>
-</ul>
-```

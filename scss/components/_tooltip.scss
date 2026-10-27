@@ -1,17 +1,43 @@
-// .tooltip and .has-tip.text.
+// .tooltip (the one popover js/app.js shows for every `[data-tooltip]`) and its trigger.
+// The popover sits in the top layer: no `overflow: hidden` ancestor clips it and it tops an open modal.
 
 @mixin styles {
-  .tooltip {
-    overflow-wrap: break-word;
-
-    // Keep line breaks the author typed, and stay narrow enough to read.
-    white-space: pre-wrap;
-    max-width: min(35ch, 80vw);
+  .has-tip,
+  [data-tooltip] {
+    position: relative;
+    display: inline-block;
+    font-weight: normal;
+    cursor: help;
   }
 
   // A word carrying a tooltip is marked as such, the way an abbreviation is.
-  .has-tip.text {
+  :is(.has-tip, [data-tooltip]).text {
     border-bottom: 1px dotted var(--f-color-border-2);
     margin-bottom: -1px;
+  }
+
+  .tooltip {
+    // Undo the popover's UA box; js/app.js sets `left` and `top`.
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    border: 0;
+    overflow: visible;
+    max-width: min(35ch, 80vw);
+    padding: 0.75rem;
+    border-radius: var(--f-radius);
+    background-color: var(--f-color-text-0);
+    color: var(--f-color-bg-1);
+    font-size: 0.8rem;
+    overflow-wrap: break-word;
+
+    // Keep line breaks the author typed.
+    white-space: pre-wrap;
+    pointer-events: none;
+    transition: opacity var(--f-transition-short);
+
+    @starting-style {
+      opacity: 0;
+    }
   }
 }

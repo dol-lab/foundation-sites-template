@@ -53,5 +53,10 @@
     @each $layer, $value in custom-settings.$z-index {
       --f-z-#{$layer}: #{$value};
     }
+
+    // For scripts (`matchMedia`); a media query cannot read custom properties, so CSS keeps the Sass mixin.
+    @each $name, $value in breakpoint.$breakpoints {
+      --f-breakpoint-#{$name}: #{unit.zf-bp-to-em($value)};
+    }
   }
 }

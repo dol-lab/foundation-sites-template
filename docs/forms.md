@@ -112,14 +112,12 @@ With a visible label, a `.label-wrapper` is the label, as for checkboxes, and th
 </label>
 ```
 
-## Slider
+## Range
+
+A native `<input type="range">`, tinted like a switch (`accent-color`).
 
 ```html example
-<div class="slider" data-slider data-initial-start="25" data-initial-end="75">
-    <span class="slider-handle" data-slider-handle role="slider" tabindex="0"></span>
-    <span class="slider-fill" data-slider-fill></span>
-    <span class="slider-handle" data-slider-handle role="slider" tabindex="0"></span>
-    <input type="hidden">
-    <input type="hidden">
-</div>
+<label>Volume
+    <input type="range" min="0" max="100" value="40">
+</label>
 ```

@@ -21,6 +21,11 @@
     }
   }
 
+  [type="range"] {
+    width: 100%;
+    accent-color: var(--f-color-text-1);
+  }
+
   select {
     height: custom-settings.$input-height;
     padding: s-label.$label-padding;

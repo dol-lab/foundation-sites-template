@@ -2,6 +2,8 @@
 
 `.button` plus a palette color, a fill (`.hollow`, `.clear`) and a size (`.tiny`, `.small`, `.large`). Join buttons with a [button group](button-group.md).
 
+A plain `.button` is a soft neutral fill; use `.secondary` for a dark solid one. Hollow labels take their color's hue (plain: primary's) at the text's lightness, so they stay AA in both modes.
+
 ## Colors
 
 ```html example

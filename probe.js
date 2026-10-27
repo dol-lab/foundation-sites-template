@@ -1,11 +1,12 @@
 // What styles an element of the demo page, as JSON: box, computed values and the CSS rules
 // that match it, with their SCSS source line (via css/*.map) or their line in index.html.
-// `bun run probe '<selector>' [property…] [--width=375] [--state=<shots.config.js name>] [--scheme=dark]`.
+// `bun run probe '<selector>' [property…] [--width=375[,800…]] [--state=<shots.config.js name>] [--scheme=dark]`.
 // With properties, only rules declaring them are listed, for inheriting ones also on ancestors.
+// Several widths resize the same page in turn (state applied once) and list one entry per width under `widths`.
 const fs = require("node:fs");
 const path = require("node:path");
 const { fileURLToPath } = require("node:url");
-const { ROOT, STATES, launch, openDemo, applyState } = require("./lib/browser");
+const { ROOT, STATES, HEIGHT, launch, openDemo, applyState } = require("./lib/browser");
 
 const DEFAULT_PROPS = [
   "display",
@@ -97,7 +98,9 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
   );
   const [selector, ...props] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
   if (!selector) {
-    console.error("usage: bun run probe '<selector>' [property…] [--width=375] [--state=<name>] [--scheme=dark]");
+    console.error(
+      "usage: bun run probe '<selector>' [property…] [--width=375[,800…]] [--state=<name>] [--scheme=dark]",
+    );
     process.exit(2);
   }
   if (opts.state && !STATES[opts.state]) {
@@ -105,9 +108,10 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
     process.exit(2);
   }
 
+  const widths = (opts.width || "1280").split(",").map(Number);
   const browser = await launch();
   try {
-    const page = await openDemo(browser, Number(opts.width) || 1280, opts.scheme);
+    const page = await openDemo(browser, widths[0], opts.scheme);
     if (opts.state) await applyState(page, STATES[opts.state]);
     const el = page.locator(selector);
     const count = await el.count();
@@ -116,6 +120,38 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
       process.exit(1);
     }
 
+    // Matched rules come from the DevTools protocol, which knows their stylesheet and position.
+    const cdp = await page.context().newCDPSession(page);
+    const sheets = {};
+    cdp.on("CSS.styleSheetAdded", ({ header }) => (sheets[header.styleSheetId] = header));
+    await cdp.send("DOM.enable");
+    await cdp.send("CSS.enable");
+    const marker = "data-probe-target";
+    await el.first().evaluate((node, m) => node.setAttribute(m, ""), marker);
+
+    const results = [];
+    for (const [i, width] of widths.entries()) {
+      if (i) {
+        await page.setViewportSize({ width, height: HEIGHT });
+        // Foundation and the demo throttle their resize handlers.
+        await page.waitForTimeout(300);
+      }
+      results.push({ width, ...(await probe(cdp, sheets, el, marker)) });
+    }
+    const out = results.length > 1 ? { widths: results } : results[0];
+    console.log(JSON.stringify({ selector, count, ...out }, null, 2));
+  } finally {
+    await browser.close();
+  }
+
+  /**
+   * @param {object} cdp The page's DevTools session.
+   * @param {object} sheets Stylesheet headers by id.
+   * @param {object} el Locator of the element.
+   * @param {string} marker Attribute set on it.
+   * @return {Promise<object>} Its element, box, computed values and matching rules.
+   */
+  async function probe(cdp, sheets, el, marker) {
     const shown = props.length ? props : DEFAULT_PROPS;
     const info = await el.first().evaluate((node, names) => {
       const r = node.getBoundingClientRect();
@@ -127,14 +163,6 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
       };
     }, shown);
 
-    // Matched rules come from the DevTools protocol, which knows their stylesheet and position.
-    const cdp = await page.context().newCDPSession(page);
-    const sheets = {};
-    cdp.on("CSS.styleSheetAdded", ({ header }) => (sheets[header.styleSheetId] = header));
-    await cdp.send("DOM.enable");
-    await cdp.send("CSS.enable");
-    const marker = "data-probe-target";
-    await el.first().evaluate((node, m) => node.setAttribute(m, ""), marker);
     const { root } = await cdp.send("DOM.getDocument", { depth: 0 });
     const { nodeId } = await cdp.send("DOM.querySelector", { nodeId: root.nodeId, selector: `[${marker}]` });
     const matched = await cdp.send("CSS.getMatchedStylesForNode", { nodeId });
@@ -183,8 +211,6 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
         );
       }
     }
-    console.log(JSON.stringify({ selector, count, ...info, rules }, null, 2));
-  } finally {
-    await browser.close();
+    return { ...info, rules };
   }
 })();

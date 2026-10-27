@@ -12,7 +12,6 @@
 @use "custom-includes/foundation-spaces/components/responsive-embed";
 @use "custom-includes/foundation-spaces/components/thumbnail";
 @use "custom-includes/foundation-spaces/components/title-bar";
-@use "custom-includes/foundation-spaces/components/tooltip";
 @use "custom-includes/foundation-spaces/components/top-bar";
 @use "custom-includes/foundation-spaces/components/visibility";
 @use "custom-includes/foundation-spaces/forms/forms";
@@ -30,7 +29,6 @@
 @use "custom-includes/s-progress-bar";
 @use "custom-includes/s-radio-tabs";
 @use "custom-includes/s-reveal";
-@use "custom-includes/s-slider";
 @use "custom-includes/s-switch";
 @use "custom-includes/s-tabs";
 
@@ -75,7 +73,6 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
   @include close-button.foundation-close-button;
   @include s-label.spaces-label;
   @include s-progress-bar.spaces-progress-bar;
-  @include s-slider.spaces-slider;
   @include s-switch.spaces-switch;
   @include s-radio-tabs.spaces-radio-tabs;
 
@@ -90,7 +87,6 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
   @include card.foundation-card;
   @include dropdown.foundation-dropdown;
   @include pagination.foundation-pagination;
-  @include tooltip.foundation-tooltip;
 
   ///  Containers
   ///

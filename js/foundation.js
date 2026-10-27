@@ -17,10 +17,7 @@ import { AccordionMenu } from "foundation-sites/js/foundation.accordionMenu";
 import { Dropdown } from "foundation-sites/js/foundation.dropdown";
 import { DropdownMenu } from "foundation-sites/js/foundation.dropdownMenu";
 import { Reveal } from "foundation-sites/js/foundation.reveal";
-import { Slider } from "foundation-sites/js/foundation.slider";
 import { Tabs } from "foundation-sites/js/foundation.tabs";
-import { Toggler } from "foundation-sites/js/foundation.toggler";
-import { Tooltip } from "foundation-sites/js/foundation.tooltip";
 
 Foundation.addToJquery($);
 
@@ -42,6 +39,8 @@ Object.assign(Foundation, {
 });
 
 Touch.init($);
+// js/app.js removes a `[data-closable]` box instead of fading it out.
+Triggers.Initializers.addCloseableListener = () => {};
 Triggers.init($, Foundation);
 MediaQuery._init();
 
@@ -50,10 +49,7 @@ const plugins = {
   Dropdown,
   DropdownMenu,
   Reveal,
-  Slider,
   Tabs,
-  Toggler,
-  Tooltip,
 };
 for (const [name, plugin] of Object.entries(plugins)) Foundation.plugin(plugin, name);
 

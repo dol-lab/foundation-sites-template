@@ -38,7 +38,7 @@ $label-color-default: var(--f-color-bg-1) !default;
 ///
 @mixin label-style-token($name) {
   background-color: var(--f-color-#{$name});
-  color: color-mix(in oklab, var(--f-color-#{$name}-contrast) 85%, var(--f-color-#{$name}) 15%);
+  color: var(--f-color-#{$name}-contrast);
 }
 
 ///

@@ -53,21 +53,10 @@
 /// Prints `--f-color-brand(-contrast, -darker)` from `--f-color-brand-base(-contrast)`.
 /// A custom property resolves where it is declared, so an element that sets
 /// `-base` needs these redeclared on itself (see `[themed]` in _root-variables).
-/// @param {String} $mode - 'auto', 'light' or 'dark'.
-@mixin brand-colors($mode: "auto") {
-  $brand: map.get(colors.$foundation-palette, "brand");
-  $brand-contrast: map.get(colors.$foundation-palette-contrast, "brand");
-
-  --f-color-brand: #{-theme-pick(
-    $mode,
-    "var(--f-color-brand-base, #{$brand})",
-    "color-mix(in oklab, var(--f-color-brand-base, #{$brand}) 87%, white 13%)"
-  )};
-  --f-color-brand-contrast: #{-theme-pick(
-    $mode,
-    "var(--f-color-brand-base-contrast, #{$brand-contrast})",
-    "color-mix(in oklab, var(--f-color-brand-base-contrast, #{$brand-contrast}) 87%, white 13%)"
-  )};
+/// The brand is not lightened in dark mode: its label would drop below AA.
+@mixin brand-colors {
+  --f-color-brand: var(--f-color-brand-base, #{map.get(colors.$foundation-palette, "brand")});
+  --f-color-brand-contrast: var(--f-color-brand-base-contrast, #{map.get(colors.$foundation-palette-contrast, "brand")});
   --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
 }
 
@@ -124,7 +113,7 @@
     }
   }
 
-  @include brand-colors($mode);
+  @include brand-colors;
 
   // Dark backgrounds step the other way, so cards stay lighter than the body.
   --f-color-bg-0: #{-theme-pick($mode, "var(--f-color-neutral-300)", "var(--f-color-neutral-100)")}; // body background

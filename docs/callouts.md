@@ -58,3 +58,14 @@ A form's status message is a `.callout.small` (`role="status"`); `.large` adds r
 <p class="callout small success" role="status">Saved.</p>
 <div class="callout large primary"><p>A large callout.</p></div>
 ```
+
+## Dismissible
+
+`data-closable` on the callout and a `.close-button` with `data-close` inside it: a click removes the callout (`js/app.js`).
+
+```html example
+<div class="callout warning" data-closable>
+    <p>Dismiss me.</p>
+    <button class="close-button" type="button" aria-label="Dismiss" data-close><span aria-hidden="true">&times;</span></button>
+</div>
+```
