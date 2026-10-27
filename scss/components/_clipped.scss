@@ -1,7 +1,8 @@
 @use "../custom-includes/foundation-spaces/global";
 @use "../custom-includes/foundation-spaces/util/breakpoint";
 
-// .clipped: a media frame that crops its image (.square, .letterbox, .tint, .height-*).
+// .clipped: a media frame that crops its image (.square, .letterbox, .tint, .height-*). .square and .letterbox
+// are `aspect-ratio` boxes (taller content grows them), .height-N and .full fixed heights.
 // .feature-image: a Space header, 80px on a card, .large 200px on the Space itself.
 // .clipped-title: a frosted label over that image, the Space's name.
 

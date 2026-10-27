@@ -4,10 +4,14 @@
 
 !(function (window, document, $) {
   // jQuery's slides (Foundation's accordion menu, the tabs below) are not CSS, so the reduced-motion rule misses them.
-  var reduced_motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  $.fx.off = reduced_motion.matches;
-  reduced_motion.addEventListener("change", function (e) {
-    $.fx.off = e.matches;
+  // A getter, read per animation, follows both the device and a `data-motion` setting on <html> (see _motion.scss).
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  Object.defineProperty($.fx, "off", {
+    configurable: true,
+    get: () => {
+      const setting = document.documentElement.dataset.motion;
+      return setting === "reduce" || (setting !== "full" && reducedMotion.matches);
+    },
   });
 
   $(function () {
@@ -33,6 +37,7 @@
    * Find-in-page opens a dropdown menu's submenu. A closed one is `hidden="until-found"`: the browser
    * searches it and, on a match, removes the attribute and fires `beforematch`, where Foundation opens it.
    * Without support, `until-found` is plain `hidden`, which the submenu's CSS would override: skip it then.
+   * A consumer's handler on Foundation's show/hide must not return false: jQuery would stop the event this syncs on.
    */
   if ("onbeforematch" in document.documentElement) {
     $(document).on("init.zf.dropdown-menu show.zf.dropdownMenu hide.zf.dropdownMenu", function (e) {

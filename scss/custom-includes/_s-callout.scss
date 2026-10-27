@@ -11,15 +11,16 @@
 /// @group callout
 ////
 
-/// Default background color.
-/// @type Color
-$callout-background: var(--f-color-bg-1) !default;
-
-/// Default fade value for callout backgrounds.
+/// Share of the palette color in the background (the rest is `--f-color-bg-1`).
 /// @type Number
-$callout-background-fade: 85% !default;
+$callout-background-tint: 15% !default;
 
-/// Default border style for callouts.
+/// Share of the palette color in the text (the rest is `--f-color-text-0`). Higher fails WCAG AA
+/// on the tinted background for the warning and success colors.
+/// @type Number
+$callout-text-tint: 25% !default;
+
+/// Default border style for callouts; the color is tinted per callout.
 /// @type List
 $callout-border: 1px solid var(--f-color-border-2) !default;
 
@@ -35,111 +36,75 @@ $callout-sizes: (
   large: 3rem,
 ) !default;
 
-/// Default font color for callouts.
-/// @type Color
-$callout-font-color: global.$body-font-color !default;
-
-/// Default font color for callouts, if the callout has a dark background.
-/// @type Color
-$callout-font-color-alt: global.$body-background !default;
-
 /// Default border radius for callouts.
 /// @type Color
 $callout-radius: global.$global-radius !default;
 
-/// Amount to tint links used within colored panels. Set to `false` to disable this feature.
-/// @type Number | Boolean
-$callout-link-tint: 15% !default;
-
-/// Amount to tint links used within colored panels while hover. Set to `false` to disable this feature.
-/// @type Number | Boolean
-$callout-link-tint-hover: 35% !default;
+/// Palette color of a callout without one.
 $callout-default-token: primary !default;
 
-/// Adds basic styles for a callout, including padding and margin.
+// A palette class only sets `--_callout-color`; everything else reads it. Text, headings and
+// links take one color (links are told apart by their underline), so all of it meets AA on the
+// tinted background in both color modes. A hollow button's own tint would vanish on it, so it sits
+// on the page background with a visible border.
 @mixin callout-base() {
   position: relative;
   margin: $callout-margin;
   padding: map.get($callout-sizes, default);
   border: $callout-border;
+  border-color: color-mix(in oklab, var(--_callout-color) 40%, var(--f-color-bg-1));
   border-radius: $callout-radius;
+  background-color: color-mix(in oklab, var(--_callout-color) $callout-background-tint, var(--f-color-bg-1));
+  color: color-mix(in oklab, var(--_callout-color) $callout-text-tint, var(--f-color-text-0));
 
   // Respect the padding, fool.
   > :first-child {
     margin-top: 0;
   }
 
-  > :last-child {
+  // Buttons directly inside sit on the bottom padding: only the last one losing its margin
+  // would shift it against its siblings (`vertical-align: middle`).
+  > :last-child,
+  > .button {
     margin-bottom: 0;
   }
-}
 
-@mixin callout-style-token($name) {
-  $bg-fade: $callout-background-fade;
-  $color-weight: (100% - $bg-fade);
-
-  background-color: color-mix(in oklab, var(--f-color-#{$name}) #{$color-weight}, var(--f-color-bg-1) #{$bg-fade});
-  border-color: color-mix(in oklab, var(--f-color-#{$name}) 40%, var(--f-color-bg-1));
-  color: color-mix(in oklab, var(--f-color-#{$name}) 50%, currentColor 90%);
-
-  > p,
-  > li,
-  > h1,
-  > h2,
-  > h3,
-  > h4,
-  > h5,
-  > h6 {
-    color: color-mix(in oklab, var(--f-color-#{$name}) 50%, currentColor 90%);
-  }
-
-  > .close-button {
+  > :is(p, li, h1, h2, h3, h4, h5, h6),
+  > .close-button,
+  a:not(.button) {
     color: inherit;
-    opacity: 0.9;
   }
 
-  // Optional: tint links inside colored callouts (keeps Foundation’s intent)
-  @if $callout-link-tint != false {
-    a:not(.button) {
-      color: color-mix(
-        in oklab,
-        var(--f-color-#{$name}) #{$callout-link-tint},
-        currentColor #{100% - $callout-link-tint}
-      );
+  a:not(.button) {
+    text-decoration: underline;
 
-      &:hover,
-      &:active,
-      &:focus {
-        color: color-mix(
-          in oklab,
-          var(--f-color-#{$name}) #{$callout-link-tint-hover},
-          currentColor #{100% - $callout-link-tint-hover}
-        );
-        text-decoration: underline;
-      }
+    &:hover {
+      text-decoration-thickness: 2px;
     }
+  }
+
+  .button.hollow:not(:hover, :focus) {
+    border-color: color-mix(in oklab, var(--_callout-color) 60%, var(--f-color-bg-1));
+    background-color: var(--f-color-bg-1);
   }
 }
 
 @mixin callout-size($padding) {
-  padding: $padding $padding $padding $padding;
+  padding: $padding;
 }
 
 @mixin spaces-callout {
   .callout {
+    --_callout-color: var(--f-color-#{$callout-default-token});
+
     @include callout-base;
 
-    // Default (no color class) uses your chosen token
-    @include callout-style-token($callout-default-token);
-
-    // Named variants from your palette keys
     @each $name, $_ in colors.$foundation-palette {
       &.#{$name} {
-        @include callout-style-token($name);
+        --_callout-color: var(--f-color-#{$name});
       }
     }
 
-    // Sizes (unchanged)
     @each $size, $padding in map.remove($callout-sizes, default) {
       &.#{$size} {
         @include callout-size($padding);

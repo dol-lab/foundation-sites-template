@@ -6,6 +6,8 @@
 
 // Typography
 // ---------
+// Headings have no top margin: the block above sets the gap. Not added in .user-generated either: Spaces puts
+// that class on a post's outer .card-divider (title inside) and opens .page-content with a hidden h1.reader-only. The demo spaces its markdown headings in _demo.html.
 
 @mixin styles {
   p {
@@ -52,8 +54,7 @@
   }
 
   /*
-   * Prose links take the brand color: `.brand-links` on any container (`.s-fg-a-c1-parent` is
-   * the old name, kept until no markup carries it).
+   * Prose links take the brand color: `.brand-links` on any container.
    *
    * This is a *default*: it says what a link looks like when nothing else has an opinion, so it
    * is written at the weight of one. `:where()` contributes no specificity, which leaves the
@@ -61,7 +62,7 @@
    * own now overrides it by simply existing.
    *
    */
-  :where(body :is(.brand-links, .s-fg-a-c1-parent) *:not([data-dropdown]))
+  :where(body .brand-links *:not([data-dropdown]))
     a:not(
       :where(
         [data-dropdown] a,

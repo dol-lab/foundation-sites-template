@@ -61,6 +61,19 @@
       min-width: 480px;
     }
 
+    // A mask, not overlays: it fades to whatever is behind the row and stays put while it scrolls.
+    &.fade-edges {
+      --_fade: var(--f-spacing-3);
+
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 var(--_fade),
+        #000 calc(100% - var(--_fade)),
+        transparent
+      );
+    }
+
     // Widen the row by a gutter so the elements' padding lines up with the grid.
     .grid-container & {
       @each $breakpoint, $width in breakpoint.$breakpoints {

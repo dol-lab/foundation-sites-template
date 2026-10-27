@@ -25,7 +25,7 @@ A side beats an axis, an axis beats all sides: `pl-1` overrides `p-2`. `.p-0` al
 | **8** | 2.5rem    | 40px   |
 | **9** | 3rem      | 48px   |
 
-Legacy: `.no-padding` (deprecated alias of `.p-0`), `.padding-button`, `.padding-xlarge`, `.padding-xxlarge`, Foundation's `.padding-{0-3}` / `.margin-{0-3}` (with sides, e.g. `.padding-top-1`) and `.gutter-*`. Use the scale for anything new.
+Legacy: `.padding-button`, `.padding-xlarge`, `.padding-xxlarge`, Foundation's `.padding-{0-3}` / `.margin-{0-3}` (with sides, e.g. `.padding-top-1`) and `.gutter-*`. Use the scale for anything new.
 
 ## Layout and grid
 
@@ -50,12 +50,12 @@ Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile)
 | Feature         | Classes                                                                      |
 | --------------- | ---------------------------------------------------------------------------- |
 | **Direction**   | `.flex-dir-row`, `.flex-dir-column`, `.flex-dir-*-reverse`                   |
-| **Justify**     | `.flex-justify-between`; Foundation's `.align-left`, `.align-center`, `.align-right`, `.align-justify`, `.align-spaced` (`.align-flex-start/-end` are deprecated aliases of `.align-left/-right`) |
+| **Justify**     | `.flex-justify-between`; Foundation's `.align-left`, `.align-center`, `.align-right`, `.align-justify`, `.align-spaced` |
 | **Align items** | `.flex-align-center`; Foundation's `.align-top`, `.align-middle`, `.align-bottom`, `.align-stretch` |
 | **Align self**  | `.align-self-top`, `.align-self-middle`, `.align-self-bottom`, `.align-self-stretch` |
 | **Wrap**        | `.flex-wrap`, `.flex-nowrap`                                                 |
 | **Grow/Shrink** | `.flex-grow-0`, `.flex-grow-1`, `.flex-shrink-0`, `.flex-shrink-1`, `.flex-child-auto`, `.flex-child-grow`, `.flex-child-shrink` |
-| **Push apart**  | `.ml-auto`, `.mr-auto`, `.mx-auto` (auto margins on a child; `.flex-spacer-left/-right/-around` are deprecated aliases) |
+| **Push apart**  | `.ml-auto`, `.mr-auto`, `.mx-auto` (auto margins on a child) |
 
 ## Typography and visibility
 
@@ -71,11 +71,11 @@ Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile)
 
 ## Visual styles
 
-- **Links:** `.brand-links` on a container gives the prose links inside it the brand colour (`.s-fg-a-c1-parent` is the old name, kept as an alias).
-- **Borders:** `.bordered`, `.border-none` (`.no-border` is deprecated)
+- **Links:** `.brand-links` on a container gives the prose links inside it the brand colour.
+- **Borders:** `.bordered`, `.border-none`
 - **Radius:** `.rounded` (`--f-radius`), `.rounded-small`, `.rounded-none`, `.rounded-full`
 - **Shadows:** `.shadow` (the theme's drop shadow), `.box-shadow-large`, `.no-box-shadow` (`.box-shadow` is a deprecated alias of `.shadow`)
-- **Separators:** `.dot-list` puts a `·` after each child but the last; `.dot-list.dot-before` puts it before each but the first, so a wrapped line starts with it (`.dot-list-dot-before` and `.dot-after` are deprecated)
+- **Separators:** `.dot-list` puts a `·` after each child but the last; `.dot-list.dot-before` puts it before each but the first, so a wrapped line starts with it
 
 ### Interactive
 

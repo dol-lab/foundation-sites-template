@@ -12,6 +12,7 @@
       "devDependencies": {
         "@stylistic/stylelint-plugin": "^4.0.1",
         "browser-sync": "^3.0.4",
+        "foundation-sites": "6.9.0",
         "gulp": "^5.0.1",
         "gulp-plumber": "^1.2.1",
         "marked": "^18.0.4",
@@ -304,6 +305,8 @@
     "for-in": ["for-in@1.0.2", "", {}, "sha512-7EwmXrOjyL+ChxMhmG5lnW9MPt1aIeZEwKhQzoBUdTV0N3zuwWDZYVJatDvZ2OyzPUvdIAZDsCetk3coyMfcnQ=="],
 
     "for-own": ["for-own@1.0.0", "", { "dependencies": { "for-in": "^1.0.1" } }, "sha512-0OABksIGrxKK8K4kynWkQ7y1zounQxP+CWnyclVwj81KW3vlLlGUx57DKGcP/LH216GzqnstnPocF16Nxs0Ycg=="],
+
+    "foundation-sites": ["foundation-sites@6.9.0", "", { "peerDependencies": { "jquery": ">=3.6.0", "motion-ui": "latest", "what-input": ">=5.2.10" } }, "sha512-bZpjL6lxuGViy1UU/NuMddyAAJP0YgJYKNh+8ZtDWhQRtiY1yQISxHmgF4V8EFx7DWHDTdZC1fwFysnMAYkdQg=="],
 
     "fresh": ["fresh@0.5.2", "", {}, "sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q=="],
 

@@ -4,6 +4,8 @@
 @use "../custom-settings";
 
 // Text inputs and select: height and padding, .clear, .help-text, .form-error.
+// A field grows (`flex: 1`) only as a direct child of .input-group or .label-wrapper; in any other flex row
+// it keeps its intrinsic width unless that row's CSS sets `flex` on it.
 
 @mixin styles {
   #{selector.text-inputs()} {

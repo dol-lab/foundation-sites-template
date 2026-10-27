@@ -1,3 +1,4 @@
+<!-- A trimmed capture of a defaultspace Space sidebar: settings and overview menus are details-menu folds (ds_render_accordion()), widgets are .card > details.ds-widget-details (defaultspace styles that summary, so it has no caret here). -->
 <div class="grid-margin-y grid-y">
     <div class="cell">
         <div class="card overflow-initial defaultspace-settings-container">
@@ -54,52 +55,6 @@
                     <ul class="vertical menu icons icon-left">
                         <li class="menu-item card-divider" id="space-user-info">
                             <small>You are a super admin and you can make changes in any space.</small>
-                        </li>
-                        <li class="menu-item" id="space-privacy">
-                            <details class="details-menu">
-                                <summary><i class="fa fa-circle-nodes" aria-hidden="true"></i><span>Space Privacy</span></summary>
-                                <ul class="change-privacy-list p-3 pt-0 radio-accordion icons icon-left success">
-                                    <li class="radio-accordion-item">
-                                        <div class="radio">
-                                            <label class="label-wrapper" for="privacy_spaces_1">
-                                                <i class="fa fa-globe-europe" aria-hidden="true"></i>
-                                                <input type="radio" id="privacy_spaces_1" class="radio-input" name="blog_public" value="1">
-                                                <span>World</span>
-                                                <span class="radio-label ml-auto" aria-hidden="true"></span>
-                                            </label>
-                                        </div>
-                                        <div class="card-section p-0 radio-accordion-content">
-                                            <small>Visible to the world. Allow search engines to index this Space.</small>
-                                        </div>
-                                    </li>
-                                    <li class="radio-accordion-item">
-                                        <div class="radio">
-                                            <label class="label-wrapper" for="privacy_spaces_-1">
-                                                <i class="fa fa-circle-nodes" aria-hidden="true"></i>
-                                                <input type="radio" id="privacy_spaces_-1" class="radio-input" name="blog_public" value="-1" checked>
-                                                <span>Platform Users</span>
-                                                <span class="radio-label ml-auto" aria-hidden="true"></span>
-                                            </label>
-                                        </div>
-                                        <div class="card-section p-0 radio-accordion-content visible">
-                                            <small>Visible only to registered users of the platform.</small>
-                                        </div>
-                                    </li>
-                                    <li class="radio-accordion-item">
-                                        <div class="radio">
-                                            <label class="label-wrapper" for="privacy_spaces_-2">
-                                                <i class="fa fa-lock" aria-hidden="true"></i>
-                                                <input type="radio" id="privacy_spaces_-2" class="radio-input" name="blog_public" value="-2">
-                                                <span>Space Members</span>
-                                                <span class="radio-label ml-auto" aria-hidden="true"></span>
-                                            </label>
-                                        </div>
-                                        <div class="card-section p-0 radio-accordion-content">
-                                            <small>Only members of this Space can read posts. The Space and its description stay visible in public lists.</small>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </details>
                         </li>
                         <li class="menu-item" id="change-appearance">
                             <a href="#wp-admin/customize.php"><i class="fa fa-paint-roller" aria-hidden="true"></i><span>Change Appearance</span></a>

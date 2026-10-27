@@ -5,7 +5,9 @@
 // .button-group: layout, seams and corners (fills and sizes: custom-includes/_s-button-group.scss).
 
 // The group holds the radius; its first and last child inherit the outer corners, so a rule that squares
-// the group's corners (a flush card section) squares theirs too.
+// the group's corners (a flush card section) squares theirs too. No `overflow: hidden`: it clipped the border
+// curve and the focus ring. `.stacked*` switch the flex direction, and with it the overlap axis and the
+// inherited corners. spaces-responses copies the seams for its joined pair.
 @mixin corners($first, $last) {
   > * {
     border-radius: 0;

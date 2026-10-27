@@ -8,6 +8,7 @@
 @use "../custom-settings";
 
 // .card and its parts: .card-header, .card-title, .card-section, .card-divider.
+// `.static` on old Spaces markup is a leftover from when cards were clickable by default: no rule matches it.
 
 @use "sass:map";
 
@@ -58,11 +59,6 @@
 
     &.overflow-auto {
       overflow: auto;
-    }
-
-    // Deprecated: the prototype `.overflow-hidden` does the same.
-    &.overflow-hidden {
-      overflow: hidden;
     }
 
     &.overflow-initial {

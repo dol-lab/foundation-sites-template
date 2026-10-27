@@ -3,7 +3,8 @@
 @use "../custom-includes/s-switch";
 
 // .checkbox and .radio with their .checkbox-label / .radio-label: a <label> for the input,
-// or an aria-hidden <span> when a .label-wrapper is the label (labels must not nest).
+// or an aria-hidden <span> when a .label-wrapper is the label (labels must not nest). Rules key on these
+// classes and the input's state (`input:checked ~ …`), never on `label`, so both forms render alike.
 
 @mixin styles {
   .checkbox,

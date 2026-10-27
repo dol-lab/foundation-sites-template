@@ -10,6 +10,25 @@ $spinner-sizes: (
   large: 1.5rem,
 ) !default;
 
+// `$in` picks the elements, as a compound (no descendant combinator) so the backend build's `.f` scope still matches.
+@mixin reduced($in) {
+  #{$in}:not(.spinner),
+  #{$in}::before,
+  #{$in}::after,
+  #{$in}::details-content {
+    // stylelint-disable-next-line declaration-no-important -- must beat every component's own transition
+    transition-duration: 0.01ms !important;
+    // stylelint-disable-next-line declaration-no-important -- as above
+    transition-delay: 0s !important;
+    // stylelint-disable-next-line declaration-no-important -- as above
+    animation-duration: 0.01ms !important;
+    // stylelint-disable-next-line declaration-no-important -- as above
+    animation-iteration-count: 1 !important;
+    // stylelint-disable-next-line declaration-no-important -- as above
+    scroll-behavior: auto !important;
+  }
+}
+
 @mixin styles {
   .spinner {
     border: 2px solid color-mix(in oklab, var(--f-color-text-0) 83%, transparent);
@@ -68,23 +87,12 @@ $spinner-sizes: (
   // Reduced motion, one rule for all: everything jumps to its end state. Not 0s, which would
   // skip the transitionend/animationend that Foundation's Motion waits for. A spinner keeps
   // turning: frozen, it no longer says "busy". `*` does not match `::details-content`.
+  // `data-motion="reduce"` or `"full"` (a user setting, usually on `<html>`) overrides the device's choice for its subtree.
   @media (prefers-reduced-motion: reduce) {
-    :not(.spinner),
-    ::before,
-    ::after,
-    ::details-content {
-      // stylelint-disable-next-line declaration-no-important -- must beat every component's own transition
-      transition-duration: 0.01ms !important;
-      // stylelint-disable-next-line declaration-no-important -- as above
-      transition-delay: 0s !important;
-      // stylelint-disable-next-line declaration-no-important -- as above
-      animation-duration: 0.01ms !important;
-      // stylelint-disable-next-line declaration-no-important -- as above
-      animation-iteration-count: 1 !important;
-      // stylelint-disable-next-line declaration-no-important -- as above
-      scroll-behavior: auto !important;
-    }
+    @include reduced(':not([data-motion="full"], [data-motion="full"] *)');
   }
+
+  @include reduced(':is([data-motion="reduce"], [data-motion="reduce"] *)');
 
   .highlight-on-load {
     --_f-color-success-soft: color-mix(in oklab, var(--f-color-success) 38%, var(--f-color-bg-1) 62%);

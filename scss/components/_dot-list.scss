@@ -5,10 +5,7 @@
 
 @mixin styles {
   .dot-list:not(.dot-before) > *:not(:last-child)::after,
-  .dot-list.dot-before > *:not(:first-child)::before,
-  // Deprecated: use `.dot-list.dot-before`, and `.dot-list` on the parent of `.dot-after`.
-  .dot-list-dot-before > *:not(:first-child)::before,
-  .dot-after::after {
+  .dot-list.dot-before > *:not(:first-child)::before {
     content: custom-settings.$separator;
     margin: 0 0.5em;
   }

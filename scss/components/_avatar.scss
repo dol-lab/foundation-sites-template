@@ -60,6 +60,7 @@
   // A size class on the avatar, or on any ancestor (`.small .avatar-container`); its own
   // class wins, as the ancestor form is lowered by `:where()`. Not one inheriting custom
   // property: `.avatar` is also WordPress' class on every avatar `<img>`, which would pick it up.
+  // A consumer's `.x .avatar-container { width }` beats the ancestor form whatever the load order.
   @each $size, $_ in custom-settings.$avatar-sizes {
     $width: var(--f-avatar-#{$size});
 

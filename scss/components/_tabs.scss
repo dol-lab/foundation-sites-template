@@ -116,8 +116,10 @@ $-active: ':is(.is-active, [aria-selected="true"], :has(> [aria-selected="true"]
         }
       }
 
-      // One underline anchored to the active tab, so it slides to the next one. Each tab bar
-      // scopes its own anchor; a browser that cannot keeps the underline on the tab above.
+      // One underline anchored to the active tab (the `li`, so React Aria's link-less titles get it too), so it
+      // slides to the next one. Each tab bar scopes its own anchor; a browser that cannot keeps the underline on
+      // the tab above. `anchors-valid` hides it while no tab is active (an unresolved anchor() leaves a full-width
+      // line); `display: block` beats Foundation's clearfix `table`, which shrinks the empty box to 0 wide.
       @supports (anchor-scope: all) {
         position: relative;
         anchor-scope: --f-active-tab;

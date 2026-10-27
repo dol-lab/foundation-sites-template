@@ -3,7 +3,7 @@
 A row that scrolls sideways and snaps each element to its start: `.scroll-snap-container-x` on the parent, `.scroll-snap-element` on the children. Each element is as wide as the row unless a width modifier says otherwise. Spaces uses it for the events widget.
 
 ```html example
-<div class="scroll-snap-container-x width-medium">
+<div class="scroll-snap-container-x width-medium fade-edges">
     <div class="scroll-snap-element"><div class="card"><div class="card-section">Element 1</div></div></div>
     <div class="scroll-snap-element"><div class="card"><div class="card-section">Element 2</div></div></div>
     <div class="scroll-snap-element"><div class="card"><div class="card-section">Element 3</div></div></div>
@@ -19,6 +19,7 @@ All of them go on `.scroll-snap-container-x`.
 - Where an element snaps: start by default, `.snap-align-center` or `.snap-align-end`.
 - Element width, relative: `.width-small` (20%), `.width-medium` (40%), `.width-large` (60%), `.width-xlarge` (80%). Default: 100%.
 - Element width, fixed: `.width-fixed-small` (240px), `.width-fixed-medium` (320px), `.width-fixed-large` (480px).
+- `.fade-edges` fades the row out at its left and right edge (`--f-spacing-3` wide), on any background.
 
 ## Bleeding out of the grid
 

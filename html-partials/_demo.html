@@ -1,4 +1,4 @@
-<!-- Styles and scripts of this page only; nothing here ships in css/ or js/. -->
+<!-- Styles and scripts of this page only, prefixed demo- (ds- is defaultspace's); nothing here ships in css/ or js/. Nothing page-only goes into scss/: the page uses library classes, so a missing style is a gap in the library. -->
 <style>
     /* Breakpoints of this library: medium 30em, large 45em, xlarge 60em, xxlarge 75em. */
     html {
@@ -462,7 +462,7 @@
         if (e.target.closest('a[href="#"]')) e.preventDefault();
     });
 
-    // Space theming on or off (#start), and light, dark or the device's mode (index and avatar menu, kept per browser).
+    // Space theming on or off (#start), light, dark or the device's mode and reduced motion (index), kept per browser.
     document.addEventListener('DOMContentLoaded', () => {
         const root = document.documentElement;
         document.getElementById('themingSwitch').addEventListener('change', (e) => {
@@ -484,6 +484,23 @@
                 apply(radio.value);
                 try { localStorage.setItem('theme-preference', radio.value); } catch {}
             });
+        });
+
+        // Reduced motion: the device's choice until the switch is used, then "reduce" or "full" (data-motion, _motion.scss).
+        const toggle = document.querySelector('[data-reduce-motion]');
+        const device = matchMedia('(prefers-reduced-motion: reduce)');
+        const applyMotion = (motion) => {
+            if (motion) root.dataset.motion = motion;
+            toggle.checked = motion ? motion === 'reduce' : device.matches;
+        };
+        let motion = null;
+        try { motion = localStorage.getItem('motion-preference'); } catch {}
+        applyMotion(motion);
+        device.addEventListener('change', () => applyMotion(root.dataset.motion));
+        toggle.addEventListener('change', () => {
+            const value = toggle.checked ? 'reduce' : 'full';
+            applyMotion(value);
+            try { localStorage.setItem('motion-preference', value); } catch {}
         });
     });
 
@@ -567,7 +584,7 @@
     });
 
     /**
-     * Draws the favicon as an SVG in the current brand color.
+     * Draws the favicon as an SVG in the current brand color (assets/favicon.ico stays the fallback without JS).
      *
      * @return {void}
      */

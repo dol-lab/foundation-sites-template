@@ -3,7 +3,7 @@
 @use "../custom-includes/foundation-spaces/global";
 @use "../custom-includes/foundation-spaces/util/unit";
 
-// .info-chips (the row) and .info-chip (static or clickable chip).
+// .info-chips (the row) and .info-chip (static or clickable chip). Chips have no margin: the row's gap spaces them.
 
 $info-chip-padding: 0.3em 0.6em !default;
 $info-chip-padding-round-x: 0.75em !default;
@@ -157,6 +157,13 @@ $info-chip-shadow-hover:
       & > span:last-child {
         padding-right: $info-chip-padding-round-x;
       }
+    }
+
+    // Hollow is an outline: no fill on any segment and a firm ring. Use it where a tinted
+    // chip would clash (a tinted or colored surface, a tag in an input). The ring sits in
+    // `:where()` so a clickable chip's hover ring still wins.
+    &:where(.hollow) {
+      --_chip-ring: #{$info-chip-ring-hover};
     }
 
     &.hollow {

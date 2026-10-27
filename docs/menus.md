@@ -15,7 +15,7 @@
 
 ## Dropdown menu
 
-Find-in-page opens a closed submenu that holds the match (browsers with `hidden="until-found"`).
+Find-in-page opens a closed submenu that holds the match (browsers with `hidden="until-found"`). Every `<ul>` that is a direct child of a menu item becomes a submenu, so content with its own list (tabs in a header panel) goes into a `<div>`.
 
 ```html example
 <ul class="dropdown menu" data-dropdown-menu>

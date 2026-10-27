@@ -12,7 +12,7 @@
 // `.main-menu-burger`. `.collapse-below-<breakpoint>` collapses the bar below that breakpoint: only
 // `.navbar-icon` entries show, the others are listed again in the burger (`.details-menu` folds), which
 // the consumer opens (the open state lives outside the header, so outside the back-end build's `.f`
-// scope). `.main-menu` is the old name, kept as an alias.
+// scope).
 
 // The bar below the breakpoint.
 @mixin collapsed {
@@ -53,8 +53,7 @@
 }
 
 @mixin styles {
-  .app-header,
-  .main-menu {
+  .app-header {
     --_height: var(--f-avatar-small);
 
     color: var(--f-color-text-1);
@@ -228,7 +227,7 @@
   @each $size in breakpoint.$breakpoint-classes {
     @if $size != breakpoint.$zf-zero-breakpoint {
       @include breakpoint.breakpoint(unit.zf-bp-to-em(map.get(breakpoint.$breakpoints, $size)) - 0.00125 down) {
-        :is(.app-header, .main-menu).collapse-below-#{$size} {
+        .app-header.collapse-below-#{$size} {
           @include collapsed;
         }
       }

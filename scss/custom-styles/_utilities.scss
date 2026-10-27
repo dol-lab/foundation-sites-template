@@ -8,31 +8,8 @@
 @use "sass:map";
 
 @mixin styles {
-  // Deprecated: use `.ml-auto`, `.mr-auto`, `.mx-auto`. Kept while Spaces markup uses them.
-  .flex-spacer-left {
-    margin-left: auto;
-  }
-
-  .flex-spacer-right {
-    margin-right: auto;
-  }
-
-  .flex-spacer-around {
-    margin-inline: auto;
-  }
-
   .width-article {
     width: 640px;
-  }
-
-  // Deprecated: use `.border-none`.
-  .no-border {
-    border: 0;
-  }
-
-  // Deprecated: use `.p-0`.
-  .no-padding {
-    padding: 0;
   }
 
   .disabled {
@@ -194,15 +171,6 @@
 
   .flex-align-center {
     align-items: center;
-  }
-
-  // Deprecated: use Foundation's `.align-left` and `.align-right`.
-  .align-flex-start {
-    justify-content: flex-start;
-  }
-
-  .align-flex-end {
-    justify-content: flex-end;
   }
 
   .flex-wrap {

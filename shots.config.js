@@ -53,4 +53,7 @@ module.exports = {
   "modal-open": {
     click: ['[data-open="demo-modal"]'],
   },
+  "privacy-modal-open": {
+    click: ['[data-open="demo-privacy-modal"]'],
+  },
 };

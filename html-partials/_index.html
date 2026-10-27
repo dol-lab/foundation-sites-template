@@ -6,6 +6,7 @@
                 @@toc
             </div>
         </details>
+        <!-- Color mode (a copy of the avatar menu's, in reach while scrolling, kept in sync in _demo.html) and the demo-only reduced motion. -->
         <div class="card-section demo-index-mode">
             <fieldset class="radio-tabs radio-tabs-icons stretch small hollow" data-color-mode aria-label="Color theme">
                 <label for="demo-mode-light" class="radio-tabs-option" aria-label="Light">
@@ -24,6 +25,13 @@
                     <span>System</span>
                 </label>
             </fieldset>
+            <label class="label-wrapper pt-3" for="demo-reduce-motion">
+                <span class="switch tiny">
+                    <input class="switch-input" role="switch" id="demo-reduce-motion" type="checkbox" data-reduce-motion>
+                    <span class="switch-paddle" aria-hidden="true"></span>
+                </span>
+                <span>Reduce motion</span>
+            </label>
         </div>
     </div>
 </nav>

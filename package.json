@@ -8,6 +8,7 @@
 		"start": "gulp",
 		"build": "gulp sass",
 		"build:html": "bun build-html.js",
+		"build:js": "bun build-js.js",
 		"shots": "bun build-html.js && bun shots.js",
 		"check": "bun check.js",
 		"probe": "bun build-html.js > /dev/null && bun probe.js",
@@ -33,6 +34,7 @@
 	"devDependencies": {
 		"@stylistic/stylelint-plugin": "^4.0.1",
 		"browser-sync": "^3.0.4",
+		"foundation-sites": "6.9.0",
 		"gulp": "^5.0.1",
 		"gulp-plumber": "^1.2.1",
 		"marked": "^18.0.4",

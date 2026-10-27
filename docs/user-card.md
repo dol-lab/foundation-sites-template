@@ -31,7 +31,7 @@
 
 ## Selectable
 
-Where users can be selected, a `.checkbox` before the picture fills the avatar. Hovering the card, focusing the checkbox or `.is-selected` on the card swaps the picture for it.
+Where users can be selected, a `.checkbox` before the picture fills the avatar, and the avatar loses its rounded corners. Hovering the card or focusing the checkbox swaps the picture for it; once ticked, the row shows only the ticked box.
 
 ```html example
 <div class="card card-user small">
@@ -48,7 +48,7 @@ Where users can be selected, a `.checkbox` before the picture fills the avatar. 
         </div>
     </div>
 </div>
-<div class="card card-user small is-selected">
+<div class="card card-user small">
     <div class="user-card-header">
         <div class="avatar-container">
             <div class="checkbox round success">

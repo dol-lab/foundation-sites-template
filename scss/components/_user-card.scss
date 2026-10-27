@@ -3,8 +3,8 @@
 // User card
 // ---------
 // `.card-user`: an avatar and the user's name in a row. Where users can be selected, the
-// avatar holds a `.checkbox` under its picture: hovering the card, focusing the checkbox or
-// ticking it (`.is-selected`) swaps the picture for it.
+// avatar holds a `.checkbox` under its square picture: hovering the card, focusing the checkbox
+// or ticking it swaps the picture for it, so a ticked row shows only the ticked box.
 // `.user-name` takes its size from the size class around it, as the avatar does.
 
 @mixin styles {
@@ -30,6 +30,10 @@
         z-index: 10;
       }
 
+      &:has(> .checkbox) {
+        --f-avatar-radius: 0;
+      }
+
       & .checkbox {
         position: absolute;
         inset: 0;
@@ -48,7 +52,7 @@
 
     &:hover .avatar-container .checkbox ~ .clipped,
     & .avatar-container:has(.checkbox input:focus-visible) .clipped,
-    &.is-selected .checkbox ~ .clipped {
+    & .checkbox:has(input:checked) ~ .clipped {
       pointer-events: none;
       transform: scale(0.5);
       opacity: 0;
