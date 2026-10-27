@@ -139,6 +139,13 @@
       padding: 0 !important;
     }
 
+    // Foundation opens a panel rightward unless it would touch the window edge, so on wide screens
+    // the avatar's panel would hang past the bar.
+    & .menu.dropdown > .avatar > .is-dropdown-submenu {
+      right: 0;
+      left: auto;
+    }
+
     & .is-dropdown-submenu-parent.avatar > a:hover,
     & .is-dropdown-submenu-parent.avatar > a.is-active {
       transform: scale(0.97);
