@@ -1,11 +1,11 @@
-# CSS Variables Reference
+# CSS variables
 
 CSS custom properties are the **source of truth** for theming. There are no Sass
-aliases for the color roles — write `var(--f-color-bg-1)` directly, also in
+aliases for the color roles: write `var(--f-color-bg-1)` directly, also in
 Foundation component settings, so components stay themeable at runtime.
 
 All custom properties are prefixed `--f-*`. Underscore-prefixed ones (`--_f-*`)
-are internal scratch variables — don't depend on them outside their scope.
+are internal scratch variables; don't depend on them outside their scope.
 
 ## 1. Color Roles
 
@@ -21,12 +21,12 @@ switched in one place.
 | `--f-color-text-1`       | Body text                              |
 | `--f-color-text-2`       | Muted text                             |
 | `--f-color-border-0..2`  | Subtle → stronger borders (color-mixed from text) |
-| `--f-color-brand`        | Primary brand accent                   |
+| `--f-color-brand`        | Primary brand accent; `-contrast` is text on it |
 | `--f-color-brand-darker` | Hover/active variant (via `color-mix`) |
 
 ### Palette tokens
 
-Foundation-style semantic palette — each has a `-contrast` (text on top) and
+Foundation-style semantic palette: each has a `-contrast` (text on top) and
 `-darker` (hover) sibling:
 
 `--f-color-primary`, `--f-color-secondary`, `--f-color-success`,
@@ -59,7 +59,7 @@ color produces a coherent palette in both modes.
 <html themed style="--f-color-theme: #975938">
 ```
 
-Per-card tinting works the same way — see the post cards in `index.html`:
+Per-card tinting works the same way; see the post cards in the [Space](space.md) section:
 
 ```html
 <article class="card" themed style="--f-color-theme: #367855;">…</article>
@@ -90,14 +90,14 @@ darker in dark mode).
 
 Exposed at `:root` as `--f-spacing-0` … `--f-spacing-9`. Source map:
 `$spacing-scale` in `scss/_custom-settings.scss`. See
-[HELPER_CLASSES.md](HELPER_CLASSES.md#1-spacing) for the corresponding
+[Helper classes](helper-classes.md#spacing) for the corresponding
 `m-*` / `p-*` utility classes.
 
 ## 5. Layout / Misc
 
 | Variable                              | Purpose                          |
 | ------------------------------------- | -------------------------------- |
-| `--f-radius` (0.5rem)                 | The one radius knob; `-small` (/2), `-xsmall` (x0.4), `-full` (9999px) follow it |
+| `--f-radius` (0.5rem)                 | The one radius knob; `-small` (/2) and `-xsmall` (x0.4) follow it, `-full` (9999px) is a pill |
 | `--f-gutter-small`, `--f-gutter-large`| Grid / inline gutters            |
 | `--f-grid-container-max`              | `.grid-container` max-width (70rem) |
 | `--f-grid-container-padding`          | `.grid-container` padding per side, responsive |
@@ -105,7 +105,7 @@ Exposed at `:root` as `--f-spacing-0` … `--f-spacing-9`. Source map:
 | `--f-menu-padding`                    | Menu item padding                |
 | `--f-transition-short/medium/long`    | 100ms / 250ms / 500ms            |
 | `--f-transition-timing`               | `ease-in-out` (or cubic-bezier)  |
-| `--f-drop-shadow`, `--f-drop-shadow-large` | Standard elevation shadows  |
+| `--f-drop-shadow`, `--f-drop-shadow-large` | Standard elevation shadows, in `--f-color-shadow` (theme-tinted, never text-derived) |
 | `--f-avatar-{xsmall…xxlarge}`         | Avatar sizes (24px … 240px), from `$avatar-sizes` |
 
 ### Grid container

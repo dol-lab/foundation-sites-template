@@ -1,15 +1,17 @@
-// Builds the demo page: every *.src.html in the working directory becomes *.html
-// with its @@include()s inlined and its examples expanded, and index.src.html also
-// becomes llms.txt, the same content as markdown for agents. Needs only `marked`,
-// so it runs without gulp or sass: `bun build-html.js`.
-const { marked } = require("marked");
+// Builds the demo page: every *.src.html in the working directory becomes *.html with its
+// @@include()s inlined. An included docs/<id>.md becomes the section #<id>; its title and intro
+// also go into llms.txt, an index of the docs for agents. The table of contents is built from the
+// sections and the `<!-- group: … -->` comments between them. Needs only `marked`, so it runs
+// without gulp or sass: `bun build-html.js`.
+const { Marked } = require("marked");
 
+const crypto = require("node:crypto");
 const fs = require("node:fs");
 const path = require("node:path");
 
-const INCLUDE_RE = /@@include\((['"])([^'"]+)\1\)/g;
-const EXAMPLE_RE = /<!-- example -->\n?([\s\S]*?)[ \t]*<!-- \/example -->/g;
-const CODE_RE = /<!-- code -->\n?([\s\S]*?)[ \t]*<!-- \/code -->/g;
+const INCLUDE_RE = /@@include\((['"])([^'"]+)\1(?:,\s*(['"])(folded)\3)?\)/g;
+const SECTION_RE =
+  /<!-- group: ([^>]+?) -->|<section class="cell demo-section" id="([^"]+)"[\s\S]*?<h2>([\s\S]*?)<\/h2>/g;
 
 const escapeHtml = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -25,89 +27,105 @@ function dedent(src) {
   return lines.map((l) => l.slice(indent)).join("\n");
 }
 
-// The page's own layout wrapper is left out of the markup shown.
-const DEMO_ROW_RE = /^<div class="demo-row"[^>]*>\n([\s\S]*)\n<\/div>$/;
-
-/**
- * @param {string} body The markup of an example or code block.
- * @return {string} The markup to show: flush left, without the page's own wrapper.
- */
-function shownCode(body) {
-  const code = dedent(body);
-  const row = code.match(DEMO_ROW_RE);
-  return row ? dedent(row[1]) : code;
-}
-
 /**
  * @param {string} body Markup.
  * @return {string} The markup as an escaped, flush-left code block.
  */
 function codeBlock(body) {
-  return `<pre class="code-block"><code>${escapeHtml(shownCode(body))}</code></pre>`;
+  return `<pre class="code-block"><code>${escapeHtml(dedent(body))}</code></pre>`;
 }
 
 /**
- * Renders each <!-- example --> … <!-- /example --> block, followed by its own markup to copy,
- * so the code shown is always the code rendered. A <!-- code --> block is shown, not rendered.
- *
- * @param {string} html A partial.
- * @return {string} The partial with its examples expanded.
+ * Fences: ```html example renders the markup and shows it below (`row` lays it out in a
+ * .demo-row), ```html demo renders page-only markup without showing it, any other is shown only.
  */
-function renderExamples(html) {
-  return html
-    .replace(
-      EXAMPLE_RE,
-      (_m, body) => `<figure class="demo-example">
+const marked = new Marked({
+  walkTokens(token) {
+    if (token.type === "heading") token.depth = Math.min(token.depth + 1, 6);
+  },
+  renderer: {
+    code({ text, lang = "" }) {
+      const [, kind, row] = lang.split(/\s+/);
+      if (kind === "demo") return `${text}\n`;
+      if (kind !== "example") return codeBlock(text);
+      const preview = row ? `<div class="demo-row">\n${text}\n</div>` : text;
+      return `<figure class="demo-example">
 <div class="demo-preview">
-${body}</div>
-<details class="demo-markup"><summary>Code</summary>${codeBlock(body)}</details>
+${preview}
+</div>
+<details class="demo-markup"><summary>Code</summary>${codeBlock(text)}</details>
 </figure>
-`,
-    )
-    .replace(CODE_RE, (_m, body) => codeBlock(body));
+`;
+    },
+    link({ href, title, tokens }) {
+      // A link to another section's .md (as it reads on GitHub) points at that section.
+      const target = href.replace(/^([a-z0-9-]+)\.md(?:#.*)?$/, "#$1");
+      return `<a href="${target}"${title ? ` title="${title}"` : ""}>${this.parser.parseInline(tokens)}</a>`;
+    },
+    codespan({ text }) {
+      // A color value gets a swatch of that color.
+      const color = text.match(/^#[0-9a-f]{3,8}$/i) ? text : text.match(/^--f-color-[a-z0-9-]+$/) ? `var(${text})` : "";
+      return color
+        ? `<code class="has-swatch"><span class="swatch" style="--swatch:${color}"></span>${text}</code>`
+        : `<code>${escapeHtml(text)}</code>`;
+    },
+  },
+});
+
+/**
+ * Splits a section's markdown into its title (the first `# ` line), intro (the paragraph after
+ * it) and the rest.
+ *
+ * @param {string} src Markdown.
+ * @param {string} file The file, for the error.
+ * @return {{title: string, intro: string, body: string}} The parts, as markdown.
+ */
+function parseDoc(src, file) {
+  const match = src.match(/^# (.+)\n+((?:(?!#|```|- |\|).+\n)*)([\s\S]*)$/);
+  if (!match) throw new Error(`${file} must start with "# <title>"`);
+  return { title: match[1], intro: match[2].trim(), body: match[3] };
 }
 
-// Render markdown to HTML, then decorate <code> values that look like colors
-// (hex literals or --f-color-* custom properties) with an inline swatch so the
-// docs visually reflect the color they reference. The sourceName is appended
-// as a "rendered from …" caption so readers know where to edit.
-function renderMarkdown(src, sourceName) {
-  const html = marked.parse(src);
-  const withFoundationClasses = html
-    // Wrap tables so wide ones scroll horizontally instead of overflowing.
-    .replace(/<table>/g, '<div class="table-scroll"><table>')
-    .replace(/<\/table>/g, "</table></div>")
-    // Foundation: .code-block for fenced code
-    .replace(/<pre>/g, '<pre class="code-block">');
-  const swatched = withFoundationClasses
-    .replace(
-      /<code>(#[0-9a-fA-F]{3,8})<\/code>/g,
-      (_m, hex) => `<code class="has-swatch"><span class="swatch" style="--swatch:${hex}"></span>${hex}</code>`,
-    )
-    .replace(
-      /<code>(--f-color-[a-z0-9-]+)<\/code>/g,
-      (_m, name) => `<code class="has-swatch"><span class="swatch" style="--swatch:var(${name})"></span>${name}</code>`,
-    );
-  const caption = sourceName
-    ? `<p class="docs-source"><small>rendered from <code>${sourceName}</code></small></p>`
-    : "";
-  return swatched + caption;
+/**
+ * @param {string} file A docs/<id>.md.
+ * @param {boolean} folded Whether the section starts folded (a long reference).
+ * @return {string} The section #<id>, rendered.
+ */
+function renderSection(file, folded) {
+  const { title, intro, body } = parseDoc(fs.readFileSync(file, "utf8"), file);
+  const id = path.basename(file, ".md");
+  const heading = `<h2>${marked.parseInline(title)}</h2>`;
+  // Wide tables scroll instead of overflowing a phone.
+  const rest = marked
+    .parse(body)
+    .replace(/<table>([\s\S]*?)<\/table>/g, '<div class="table-scroll"><table>$1</table></div>');
+  const content = `${intro && `<p class="demo-intro">${marked.parseInline(intro)}</p>\n`}${rest}`;
+  const card = folded
+    ? `<details class="card static overflow-initial demo-doc">
+<summary class="card-section">${heading}</summary>
+<div class="card-section">
+${content}</div>
+</details>`
+    : `<div class="card static overflow-initial demo-doc">
+<div class="card-section">
+${heading}
+${content}</div>
+</div>`;
+  return `<section class="cell demo-section" id="${id}">\n${card}\n</section>`;
 }
 
-// Recursively inlines partial HTML files referenced with @@include().
-// Files with a .md extension are rendered as markdown to HTML.
-function inlineFile(absPath, stack = []) {
+// Recursively inlines the files referenced with @@include(); a .md file becomes a section.
+function inlineFile(absPath, stack = [], folded = false) {
   const filePath = path.resolve(absPath);
   if (stack.includes(filePath)) {
     const cycle = [...stack, filePath].join(" -> ");
     throw new Error(`Circular include: ${cycle}`);
   }
   const baseDir = path.dirname(filePath);
-  const raw = fs.readFileSync(filePath, "utf8");
-  let html = filePath.endsWith(".md") ? renderMarkdown(raw, path.basename(filePath)) : renderExamples(raw);
-  html = html.replace(INCLUDE_RE, (_m, _q, rel) => {
+  let html = filePath.endsWith(".md") ? renderSection(filePath, folded) : fs.readFileSync(filePath, "utf8");
+  html = html.replace(INCLUDE_RE, (_m, _q, rel, _q2, fold) => {
     const child = path.resolve(baseDir, rel);
-    return inlineFile(child, [...stack, filePath]);
+    return inlineFile(child, [...stack, filePath], Boolean(fold));
   });
   const relPath = path.relative(process.cwd(), filePath);
   const warning = `<!--
@@ -120,81 +138,78 @@ function inlineFile(absPath, stack = []) {
 }
 
 /**
- * Inlines @@include()s without rendering anything; a markdown file is marked as such.
- *
- * @param {string} absPath The file.
- * @return {string} Its source with every include in place.
+ * @param {string} page The rendered page.
+ * @return {{name: string, sections: {id: string, title: string}[]}[]} Its sections by group.
  */
-function rawSource(absPath) {
-  const filePath = path.resolve(absPath);
-  const raw = fs.readFileSync(filePath, "utf8");
-  if (filePath.endsWith(".md")) return `<!-- md -->\n${raw}\n<!-- /md -->`;
-  return raw.replace(INCLUDE_RE, (_m, _q, rel) => rawSource(path.resolve(path.dirname(filePath), rel)));
+function sectionGroups(page) {
+  const groups = [];
+  for (const [, group, id, title] of page.matchAll(SECTION_RE)) {
+    if (group) groups.push({ name: group, sections: [] });
+    else groups.at(-1)?.sections.push({ id, title });
+  }
+  return groups;
 }
 
 /**
- * @param {string} html A fragment of prose.
- * @return {string} Its text, with inline code in backticks.
+ * @param {ReturnType<typeof sectionGroups>} groups The page's sections.
+ * @return {string} The table of contents.
  */
-function toText(html) {
-  return html
-    .replace(/<code[^>]*>([\s\S]*?)<\/code>/g, "`$1`")
-    .replace(/<[^>]+>/g, "")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&amp;/g, "&")
-    .replace(/\s+/g, " ")
-    .trim();
+function toc(groups) {
+  return groups
+    .map(
+      ({ name, sections }) => `<div>
+<h2 class="demo-label">${name}</h2>
+<ul class="menu vertical">
+${sections.map(({ id, title }) => `<li><a href="#${id}">${title}</a></li>`).join("\n")}
+</ul>
+</div>`,
+    )
+    .join("\n");
 }
 
-// In page order: sections, headings, prose, swatches, examples, code and markdown. A
-// .demo-captured (captured markup shown in place, up to the end of its section) is skipped.
-const LLMS_PART_RE = new RegExp(
-  [
-    /<section[^>]*\bid="([^"]+)"/,
-    /<h([234])[^>]*>([\s\S]*?)<\/h\2>/,
-    /<p[^>]*>([\s\S]*?)<\/p>/,
-    /<li>([\s\S]*?)<\/li>/,
-    /<div class="demo-swatch"[^>]*>([\s\S]*?)<\/div>/,
-    /<!-- (?:example|code) -->\n?([\s\S]*?)[ \t]*<!-- \/(?:example|code) -->/,
-    /<!-- md -->\n([\s\S]*?)\n<!-- \/md -->/,
-    /<div class="[^"]*\bdemo-captured\b[^"]*">[\s\S]*?(?=<\/section>)/,
-  ]
-    .map((re) => re.source)
-    .join("|"),
-  "g",
-);
-
 /**
- * The page as markdown: per section its title, id and intro, then each example's
- * heading and markup; the reference docs as they are. Prose between examples is left out.
+ * The docs index for agents (llmstxt.org): per group a link to each section's markdown, with its intro.
  *
- * @param {string} src The page source (index.src.html).
+ * @param {ReturnType<typeof sectionGroups>} groups The page's sections.
  * @return {string} Markdown.
  */
-function llmsText(src) {
-  const page = rawSource(src);
-  const main = page.slice(Math.max(0, page.search(/<main\b/)));
+function llmsText(groups) {
   const out = [
     "# Spaces Design System",
     "",
-    "> The styles of Spaces, a themeable fork of Foundation for Sites 6. Load css/app.css; css/app-backend.css styles only markup inside `.f`. Colors are `--f-color-*` custom properties. Every example below is the markup rendered on index.html.",
+    "> The styles of Spaces, a themeable fork of Foundation for Sites 6. Load css/app.css; css/app-backend.css styles only markup inside `.f`. Colors are `--f-color-*` custom properties.",
+    "",
+    "Each link is one section of index.html as markdown: its prose, and every example's markup in an ```html example``` block (rendered on the page as it is written).",
   ];
-  let id = "";
-  for (const [, section, level, heading, para, item, swatch, code, md] of main.matchAll(LLMS_PART_RE)) {
-    if (section) id = section;
-    else if (level === "2") out.push("", `## ${toText(heading)}`, "", `Section: index.html#${id}`);
-    else if (level) out.push("", `${"#".repeat(Number(level))} ${toText(heading)}`);
-    else if (para) out.push("", toText(para));
-    else if (item || swatch) {
-      if (!out.at(-1).startsWith("- ")) out.push("");
-      out.push(`- ${toText(item || swatch.replace("<small>", ": "))}`);
-    } else if (code !== undefined) out.push("", "```html", shownCode(code), "```");
-    else if (md) out.push("", md.trim().replace(/^#/gm, "###"));
+  for (const { name, sections } of groups) {
+    const docs = sections.filter(({ id }) => fs.existsSync(`docs/${id}.md`));
+    if (!docs.length) continue;
+    out.push("", `## ${name}`, "");
+    for (const { id } of docs) {
+      const { title, intro } = parseDoc(fs.readFileSync(`docs/${id}.md`, "utf8"), id);
+      const notes = intro.replace(/\s+/g, " ").replace(/\]\(([a-z0-9-]+\.md)/g, "](docs/$1");
+      out.push(`- [${title}](docs/${id}.md)${notes && `: ${notes}`}`);
+    }
   }
   return `${out.join("\n")}\n`;
+}
+
+// A local stylesheet or script in a real tag (not in an escaped code example).
+const ASSET_RE = /(<(?:link|script)\b[^>]*?\b(?:href|src)=")((?:css|js|assets)\/[^"?#]+\.(?:css|js))"/g;
+
+/**
+ * Appends a hash of each local stylesheet's and script's content to its URL, so a browser that
+ * gets a new page also fetches the files that changed (GitHub Pages' cache headers are fixed).
+ *
+ * @param {string} html The page.
+ * @return {string} The page with versioned asset URLs.
+ */
+function versionAssets(html) {
+  return html.replace(ASSET_RE, (m, tag, url) => {
+    if (!fs.existsSync(url)) return m;
+    const hash = crypto.createHash("sha1").update(fs.readFileSync(url)).digest("hex").slice(0, 8);
+    return `${tag}${url}?v=${hash}"`;
+  });
 }
 
 /**
@@ -203,17 +218,17 @@ function llmsText(src) {
  * @return {string[]} The files written.
  */
 function buildHtml() {
-  const written = fs
-    .readdirSync(".")
-    .filter((name) => name.endsWith(".src.html"))
-    .map((name) => {
-      const out = name.replace(/\.src\.html$/, ".html");
-      fs.writeFileSync(out, inlineFile(name, [name]));
-      return out;
-    });
-  if (fs.existsSync("index.src.html")) {
-    fs.writeFileSync("llms.txt", llmsText("index.src.html"));
-    written.push("llms.txt");
+  const written = [];
+  for (const name of fs.readdirSync(".").filter((n) => n.endsWith(".src.html"))) {
+    const out = name.replace(/\.src\.html$/, ".html");
+    const page = inlineFile(name, [name]);
+    const groups = sectionGroups(page);
+    fs.writeFileSync(out, versionAssets(page.replace("@@toc", toc(groups))));
+    written.push(out);
+    if (name === "index.src.html") {
+      fs.writeFileSync("llms.txt", llmsText(groups));
+      written.push("llms.txt");
+    }
   }
   return written;
 }

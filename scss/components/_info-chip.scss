@@ -95,7 +95,7 @@
     line-height: 1.3;
     text-align: center;
     cursor: default;
-    box-shadow: custom-settings.$info-border-shadow;
+    box-shadow: custom-settings.$info-chip-ring-shadow;
 
     // A clickable chip is raised: a surface of its own (`bg-1`), a firmer border,
     // and a drop shadow that deepens on hover. The chip stays put -- chips sit in
@@ -129,7 +129,7 @@
 
     // The curve takes room from the outer edges, so only they get more padding.
     &.round {
-      border-radius: 2rem;
+      border-radius: var(--f-radius-full);
 
       & > span:first-child {
         padding-left: custom-settings.$info-chip-padding-round-x;

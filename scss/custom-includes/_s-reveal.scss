@@ -27,11 +27,11 @@ $reveal-max-width: map.get(breakpoint.$breakpoints, large) !default;
 
 /// Default padding inside a modal.
 /// @type Number
-$reveal-padding: global.$global-padding !default;
+$reveal-padding: global.$global-padding * 1.5 !default;
 
-/// Default border around a modal.
+/// Default border around a modal: a hairline, so the edge holds in dark mode where the shadow fades.
 /// @type Number
-$reveal-border: none !default;
+$reveal-border: 1px solid var(--f-color-border-0) !default;
 
 /// Default radius for modal.
 /// @type Number
@@ -84,6 +84,7 @@ $reveal-overlay-background: custom-functions.color-mix-opacity(var(--f-color-tex
   border: $reveal-border;
   border-radius: $reveal-radius;
   background-color: $reveal-background;
+  box-shadow: global.$global-drop-shadow-large;
 
   @include breakpoint.breakpoint(medium) {
     min-height: 0;
@@ -161,6 +162,16 @@ $reveal-overlay-background: custom-functions.color-mix-opacity(var(--f-color-tex
     margin-left: auto;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+
+    // The close button sits in the corner, level with a leading heading, which keeps clear of it.
+    > .close-button {
+      top: $reveal-padding * 0.75;
+      right: $reveal-padding * 0.75;
+    }
+
+    &:has(> .close-button) > :is(h1, h2, h3, h4, h5, h6):first-child {
+      padding-inline-end: 2rem;
+    }
 
     // Remove padding
     &.collapse {

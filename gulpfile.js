@@ -94,7 +94,7 @@ function serve(done) {
         return;
       }
       gulp.watch("scss/**/*.scss", gulp.series("sassFrontend", "sassBackend"));
-      gulp.watch(["*.src.html", "*.md", "html-partials/**/*.html"], gulp.series("html"));
+      gulp.watch(["*.src.html", "docs/*.md", "html-partials/**/*.html"], gulp.series("html"));
       gulp.watch(["*.html", "!*.src.html"]).on("change", browserSync.reload);
       done();
     },

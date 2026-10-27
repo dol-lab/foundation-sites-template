@@ -2,19 +2,16 @@
     <div class="cell">
         <div class="card static overflow-initial">
             <ul id="defaultspace-settings-menu" class="tabs line expanded" data-active-collapse="true"
-                data-tabs="" role="tablist">
-                <li class="tabs-title is-active" role="presentation">
-                    <a href="#overview" role="tab" aria-controls="overview" aria-selected="false"
-                        id="overview-label" tabindex="-1">Overview</a>
+                data-tabs>
+                <li class="tabs-title is-active">
+                    <a href="#overview">Overview</a>
                 </li>
-                <li class="tabs-title " role="presentation">
-                    <a href="#settings" role="tab" aria-controls="settings" aria-selected="false"
-                        id="settings-label" tabindex="-1">Settings</a>
+                <li class="tabs-title">
+                    <a href="#settings">Settings</a>
                 </li>
             </ul>
             <div class="tabs-content" data-tabs-content="defaultspace-settings-menu">
-                <div class="tabs-panel is-active" id="overview" role="tabpanel"
-                    aria-labelledby="overview-label" aria-hidden="true">
+                <div class="tabs-panel is-active" id="overview">
                     <div class="card-divider p-1">
                         <div class="info-chips small round">
                             <a class="info-chip small">
@@ -40,16 +37,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="tabs-panel " id="settings" role="tabpanel" aria-labelledby="settings-label"
-                    aria-hidden="true">
-                    <ul class="vertical menu accordion-menu icons icon-left" data-accordion-menu=""
-                        data-multi-open="false" role="tree" aria-multiselectable="false" data-n="mj6tu1-n">
-                        <li class="card-divider p-3 " id="space-user-info" role="treeitem">
+                <div class="tabs-panel" id="settings">
+                    <ul class="vertical menu accordion-menu icons icon-left" data-accordion-menu
+                        data-multi-open="false">
+                        <li class="card-divider p-3" id="space-user-info">
                             <small>You are a super admin and you can make changes in any
                                 space.</small>
                         </li>
-                        <li class="card-divider p-3 " id="notification-toogle-switch"
-                            role="treeitem">
+                        <li class="card-divider p-3" id="notification-toogle-switch">
                             <label class="icon-left label-wrapper" for="notification-toggle-current_blog">
                                 <i class="fa fa-envelope">
                                 </i>
@@ -63,31 +58,27 @@
                                 </div>
                             </label>
                         </li>
-                        <li class="card-divider p-3 flex-dir-column is-accordion-submenu-parent"
-                            id="space-privacy" role="treeitem" aria-controls="w3ldkb-acc-menu"
-                            aria-expanded="false">
+                        <li class="card-divider p-3 flex-dir-column"
+                            id="space-privacy">
                             <a>
                                 <i class="fa fa fa-graduation-cap privacy-icon">
                                 </i>
                                 <span>Space Privacy</span>
                             </a>
-                            <ul class="radio-accordion icons icon-left success submenu is-accordion-submenu"
-                                aria-labelledby="space-privacy" aria-hidden="true" id="w3ldkb-acc-menu"
-                                style="display: none;">
-                                <li class="radio-accordion-item is-submenu-item is-accordion-submenu-item"
-                                    role="treeitem">
+                            <ul class="radio-accordion icons icon-left success">
+                                <li class="radio-accordion-item">
                                     <div class="radio">
                                         <label class="label-wrapper" for="privacy_spaces_1-59c50eb">
                                             <i class="fa fa-globe-europe">
                                             </i>
                                             <input type="radio" id="privacy_spaces_1-59c50eb"
                                                 class="radio-input" name="blog_public-59c50eb" value="1"
-                                                data-space-settings="">
+                                                data-space-settings>
                                             <span>World</span>
                                             <span class="radio-label flex-spacer-left" aria-hidden="true"></span>
                                         </label>
                                     </div>
-                                    <div class="card-section p-0 radio-accordion-content ">
+                                    <div class="card-section p-0 radio-accordion-content">
                                         <small>
                                             Visible to the world. Allow search engines to index
                                             this
@@ -95,35 +86,33 @@
                                         </small>
                                     </div>
                                 </li>
-                                <li class="radio-accordion-item is-submenu-item is-accordion-submenu-item"
-                                    role="treeitem">
+                                <li class="radio-accordion-item">
                                     <div class="radio">
                                         <label class="label-wrapper" for="privacy_spaces_0-59c50eb">
                                             <i class="fa fa-globe-europe">
                                             </i>
                                             <input type="radio" id="privacy_spaces_0-59c50eb"
                                                 class="radio-input" name="blog_public-59c50eb" value="0"
-                                                data-space-settings="">
+                                                data-space-settings>
                                             <span>World, discourage search engines</span>
                                             <span class="radio-label flex-spacer-left" aria-hidden="true"></span>
                                         </label>
                                     </div>
-                                    <div class="card-section p-0 radio-accordion-content ">
+                                    <div class="card-section p-0 radio-accordion-content">
                                         <small>
                                             Visible to the world. Discourage search engines from
                                             indexing this space.
                                         </small>
                                     </div>
                                 </li>
-                                <li class="radio-accordion-item is-submenu-item is-accordion-submenu-item"
-                                    role="treeitem">
+                                <li class="radio-accordion-item">
                                     <div class="radio">
                                         <label class="label-wrapper" for="privacy_spaces_-1-59c50eb">
                                             <i class="fa fa-graduation-cap">
                                             </i>
                                             <input type="radio" id="privacy_spaces_-1-59c50eb"
                                                 class="radio-input" name="blog_public-59c50eb" value="-1"
-                                                checked="checked" data-space-settings="">
+                                                checked="checked" data-space-settings>
                                             <span>Spaces Community</span>
                                             <span class="radio-label flex-spacer-left" aria-hidden="true"></span>
                                         </label>
@@ -137,8 +126,8 @@
                                             <div class="checkbox small success">
                                                 <input type="checkbox" id="selfregistration-59c50eb"
                                                     class="checkbox-input" name="space_registration-59c50eb"
-                                                    checked="checked" data-space-settings=""
-                                                    data-self-reg="">
+                                                    checked="checked" data-space-settings
+                                                    data-self-reg>
                                                 <span class="checkbox-label" aria-hidden="true"></span>
                                             </div>
                                             <small>Self Registration (if enabled, users can join
@@ -147,20 +136,19 @@
                                         </label>
                                     </div>
                                 </li>
-                                <li class="radio-accordion-item is-submenu-item is-accordion-submenu-item"
-                                    role="treeitem">
+                                <li class="radio-accordion-item">
                                     <div class="radio">
                                         <label class="label-wrapper" for="privacy_spaces_-2-59c50eb">
                                             <i class="fa fa-lock">
                                             </i>
                                             <input type="radio" id="privacy_spaces_-2-59c50eb"
                                                 class="radio-input" name="blog_public-59c50eb" value="-2"
-                                                data-space-settings="">
+                                                data-space-settings>
                                             <span>Space Members</span>
                                             <span class="radio-label flex-spacer-left" aria-hidden="true"></span>
                                         </label>
                                     </div>
-                                    <div class="card-section p-0 radio-accordion-content ">
+                                    <div class="card-section p-0 radio-accordion-content">
                                         <small>
                                             This space is private. Only members of this space
                                             can read
@@ -174,14 +162,14 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="card-divider p-3 " id="change-appearance" role="treeitem">
+                        <li class="card-divider p-3" id="change-appearance">
                             <a href="#wp-admin/customize.php">
                                 <i class="fa fa-eye">
                                 </i>
                                 <span>Change Appearance</span>
                             </a>
                         </li>
-                        <li class="card-divider p-3 " id="goto-backend" role="treeitem">
+                        <li class="card-divider p-3" id="goto-backend">
                             <a
                                 href="#wp-admin/admin.php?page=spaces-blog-options">
                                 <i class="fa fa-sliders-h">
@@ -189,14 +177,14 @@
                                 <span>Go to Backend</span>
                             </a>
                         </li>
-                        <li class="card-divider p-3 " id="network-admin" role="treeitem">
+                        <li class="card-divider p-3" id="network-admin">
                             <a href="#wp-admin/network/site-info.php?id=3435">
                                 <i class="fa fa-sitemap">
                                 </i>
                                 <span>Network Admin</span>
                             </a>
                         </li>
-                        <li class="card-divider p-3 " id="leave-space" role="treeitem">
+                        <li class="card-divider p-3" id="leave-space">
                             <a href="#"
                                 title="Click here to leave this Space." class="alert">Leave Space</a>
                         </li>
@@ -207,23 +195,19 @@
     </div>
     <div class="cell">
         <div class="card static overflow-initial ds-main-menu-container">
-            <ul id="defaultspace-main-menu" class="tabs line expanded" data-tabs="x02mf6-tabs"
-                data-deep-link="true" role="tablist">
-                <li class="tabs-title flex-grow-1 is-active " role="presentation">
+            <ul id="defaultspace-main-menu" class="tabs line expanded" data-tabs
+                data-deep-link="true">
+                <li class="tabs-title flex-grow-1 is-active">
                     <a class="flex-grow-1" data-tabs-target="primary-swap-menu"
-                        data-swap-content="primary-swap-container" group-id="0" role="tab"
-                        aria-controls="primary-swap-menu" aria-selected="true" id="primary-swap-menu-label"
-                        tabindex="0">
+                        data-swap-content="primary-swap-container" group-id="0">
                         <i class="fa fa-fa fa-newspaper" aria-hidden="true">
                         </i>
                         <span>Stream</span>
                     </a>
                 </li>
-                <li class="tabs-title flex-grow-1 not-active menu-is-static" role="presentation">
+                <li class="tabs-title flex-grow-1 not-active menu-is-static">
                     <a class="flex-grow-1" data-tabs-target="secondary-swap-menu"
-                        data-swap-content="secondary-swap-container" group-id="1" role="tab"
-                        aria-controls="secondary-swap-menu" aria-selected="false"
-                        id="secondary-swap-menu-label" tabindex="-1">
+                        data-swap-content="secondary-swap-container" group-id="1">
                         <i class="fa fa-fa fa-book" aria-hidden="true">
                         </i>
                         <span>Book</span>
@@ -231,28 +215,25 @@
                 </li>
             </ul>
             <div class="tabs-content" data-tabs-content="defaultspace-main-menu">
-                <div id="primary-swap-menu" class="tabs-panel is-active " role="tabpanel"
-                    aria-labelledby="primary-swap-menu-label">
-                    <ul id="menu-stream" class="vertical menu accordion-menu" data-transition=""
-                        data-submenu-toggle="true" role="menubar" aria-multiselectable="true"
-                        data-accordion-menu="vge2vp-accordion-menu">
+                <div id="primary-swap-menu" class="tabs-panel is-active">
+                    <ul id="menu-stream" class="vertical menu accordion-menu" data-transition
+                        data-submenu-toggle="true"
+                        data-accordion-menu>
                         <li id="menu-item-3"
                             class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-3">
-                            <a href="#" aria-current="page" role="menuitem">
+                            <a href="#" aria-current="page">
                                 <span>Home</span>
                             </a>
                         </li>
                     </ul>
                 </div>
-                <div id="secondary-swap-menu" class="tabs-panel not-active menu-is-static" role="tabpanel"
-                    aria-labelledby="secondary-swap-menu-label" aria-hidden="true">
+                <div id="secondary-swap-menu" class="tabs-panel not-active menu-is-static">
                     <ul id="menu-book" class="vertical menu accordion-menu"
-                        data-transition="" data-submenu-toggle="true" role="menubar"
-                        aria-multiselectable="true"
-                        data-accordion-menu="vge2vp-accordion-menu">
+                        data-transition data-submenu-toggle="true"
+                        data-accordion-menu>
                         <li id="menu-item-4"
                             class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4">
-                            <a href="#/beispiel-seite/" role="menuitem">
+                            <a href="#/beispiel-seite/">
                                 <span>Beispiel-Seite</span>
                             </a>
                         </li>
@@ -267,7 +248,7 @@
     </div>
     <div class="cell">
         <div class="card accordion overflow-initial" data-accordion data-allow-all-closed="true">
-            <div class="card-section accordion-item p-0 is-active" data-accordion-item="">
+            <div class="card-section accordion-item p-0 is-active" data-accordion-item>
                 <a href="#" class="card-title p-3">
                     Details
                     <span class="badge brand" style="margin-left: .5em;">3</span>
@@ -357,14 +338,11 @@
         </div>
     </div>
     <aside id="" class="widget spaces-widget-listmediafiles cell">
-        <div class="card accordion overflow-initial" data-accordion="i4346r-accordion"
+        <div class="card accordion overflow-initial" data-accordion
             data-allow-all-closed="true">
-            <div class="card-section accordion-item p-0" data-accordion-item="">
-                <a href="#" class="card-title p-3" aria-controls="q54gly-accordion"
-                    id="q54gly-accordion-label" aria-expanded="false">Media</a>
-                <div class="card-divider brand-links p-0 accordion-content"
-                    data-tab-content="" role="region" aria-labelledby="q54gly-accordion-label"
-                    aria-hidden="true" id="q54gly-accordion" style="display: none;">
+            <div class="card-section accordion-item p-0" data-accordion-item>
+                <a href="#" class="card-title p-3">Media</a>
+                <div class="card-divider brand-links p-0 accordion-content" data-tab-content style="display: none;">
                     <div class="card-section brand-links user-generated">
                         <div>
                             <div class="spaces-widget-listmediafiles-body-container">

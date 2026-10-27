@@ -8,12 +8,8 @@
 
 @mixin styles {
   .button {
-    justify-content: center;
-    align-items: center;
-
     &:not(.tiny, .small) {
       min-height: custom-settings.$button-height;
-      line-height: calc(custom-settings.$button-height / 2);
     }
 
     &.expanded {
@@ -36,11 +32,6 @@
   .input,
   .button-group {
     line-height: label.$form-label-line-height;
-
-    &:focus,
-    &:active {
-      outline: none;
-    }
 
     // A last button after another one keeps its margin, or it sits lower than its row.
     &:last-child:not(.button + *) {

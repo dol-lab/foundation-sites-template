@@ -1,6 +1,6 @@
-# Dark theme: troubleshooting
+# Dark theme
 
-For "my component looks broken in dark mode". What exists is in [VARIABLES.md](VARIABLES.md).
+For "my component looks broken in dark mode". What exists is in [CSS variables](variables.md).
 
 ## Checklist
 

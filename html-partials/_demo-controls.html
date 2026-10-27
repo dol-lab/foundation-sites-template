@@ -1,0 +1,39 @@
+<!-- Page controls, right under the header so an image swap stays in view. -->
+<div class="cell">
+    <div class="card static demo-controls-card">
+        <div class="card-section demo-controls" id="demo-controls">
+            <div class="demo-control demo-control-image" id="header-image-choice" role="group" aria-labelledby="header-image-label">
+                <div><span class="demo-label" id="header-image-label">Header image</span></div>
+                <div>
+                    <button type="button" class="demo-thumb is-current" aria-pressed="true" data-color="#975938"><img src="assets/img/img-header--1.png" alt="Image 1"></button>
+                    <button type="button" class="demo-thumb" aria-pressed="false" data-color="#a3c3f3"><img src="assets/img/chris-lutke-RJ0AtWtDlKM-unsplash.jpg" alt="Image 2"></button>
+                    <button type="button" class="demo-thumb" aria-pressed="false" data-color="#A63017"><img src="assets/img/img-header--2.png" alt="Image 3"></button>
+                    <button type="button" class="demo-thumb" aria-pressed="false" data-color="#4A9A6D"><img src="assets/img/img-header--4.png" alt="Image 4"></button>
+                </div>
+            </div>
+            <div class="demo-control">
+                <div>
+                    <label class="demo-label" for="theme-color">Theme</label>
+                    <div class="switch tiny brand m-0">
+                        <input class="switch-input" role="switch" id="themingSwitch" type="checkbox" checked>
+                        <label class="switch-paddle" for="themingSwitch"><span class="show-for-sr">Themed Space</span></label>
+                    </div>
+                </div>
+                <div>
+                    <input type="color" id="theme-color" value="#975938">
+                    <output class="demo-hex" for="theme-color">#975938</output>
+                </div>
+            </div>
+            <div class="demo-control">
+                <div>
+                    <label class="demo-label" for="brand-color">Brand</label>
+                    <button type="button" class="button clear tiny" id="brand-color-reset" hidden>Reset</button>
+                </div>
+                <div>
+                    <input type="color" id="brand-color" value="#db3b01">
+                    <output class="demo-hex" for="brand-color">#db3b01</output>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

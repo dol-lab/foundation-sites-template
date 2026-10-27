@@ -76,7 +76,7 @@ $info-chip-padding-round-x: 0.75em;
 $info-chip-ring: custom-functions.color-mix-opacity(var(--f-color-text-0), 8%, 92%);
 $info-chip-ring-clickable: custom-functions.color-mix-opacity(var(--f-color-text-0), 12%, 88%);
 $info-chip-ring-hover: custom-functions.color-mix-opacity(var(--f-color-text-0), 24%, 76%);
-$info-border-shadow: 0 0 0 1px var(--_chip-ring);
+$info-chip-ring-shadow: 0 0 0 1px var(--_chip-ring);
 
 // On top of the ring, a clickable chip gets a drop shadow. `--f-color-shadow` is
 // the theme's own shadow color (light: black 13%, dark: black 50%), which keeps
@@ -84,10 +84,10 @@ $info-border-shadow: 0 0 0 1px var(--_chip-ring);
 // ring, because black on a near-black card is barely a change -- there the ring
 // is the whole cue.
 $info-chip-shadow:
-  $info-border-shadow,
+  $info-chip-ring-shadow,
   0 1px 2px 0 var(--f-color-shadow);
 $info-chip-shadow-hover:
-  $info-border-shadow,
+  $info-chip-ring-shadow,
   0 2px 6px -1px var(--f-color-shadow),
   0 1px 2px -1px var(--f-color-shadow);
 

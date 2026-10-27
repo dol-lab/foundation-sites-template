@@ -19,7 +19,8 @@
             margin-bottom: 0.25rem;
         }
 
-        & h3 {
+        /* The section's own headings, not those of an example. */
+        & .card-section > :is(h3, h4) {
             margin-top: 1.5rem;
         }
     }
@@ -140,7 +141,7 @@
     /* An example on a dotted stage, its code folded under it in the same frame. */
     .demo-example {
         margin: 1rem 0 1.5rem;
-        border: 1px solid var(--f-color-border-0);
+        border: 1px solid var(--f-color-border-1);
         border-radius: var(--f-radius);
         overflow: clip;
     }
@@ -227,80 +228,120 @@
         font-size: 1em;
     }
 
-    /* Page controls atop #start, starting level with the index's first label. */
-    .demo-controls-card {
-        margin-bottom: 0.75rem;
-    }
-
-    .demo-section > .card > .demo-controls {
-        flex-flow: row wrap;
-        gap: 1rem 2rem;
+    /* Page controls atop #start: one toolbar, a label row (with the control's toggle or reset) over a swatch row. */
+    .demo-controls-card > .demo-controls {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        justify-content: start;
+        gap: 1.25rem 2rem;
         padding: 1.25rem;
 
         @media (min-width: 30em) {
             padding: 1.25rem 2rem;
+        }
+
+        @media (min-width: 60em) {
+            grid-template-columns: repeat(3, auto);
         }
     }
 
     .demo-controls {
         & .demo-control {
             display: grid;
-            align-content: start;
+            grid-template-rows: 1.25rem 2rem;
             gap: 0.5rem;
 
-            & > :last-child {
+            & > * {
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
-                min-height: 2.5rem;
                 margin: 0;
+            }
+
+            /* A hairline between the groups where they sit in one row. */
+            @media (min-width: 60em) {
+                & + .demo-control {
+                    padding-left: 2rem;
+                    box-shadow: inset 1px 0 var(--f-color-border-0);
+                }
+            }
+        }
+
+        & .demo-control-image {
+            grid-column: 1 / -1;
+
+            @media (min-width: 60em) {
+                grid-column: auto;
             }
         }
 
         & .demo-thumb {
-            display: inline-grid;
-            place-items: center;
-            width: 2.75rem;
-            height: 1.75rem;
+            width: 3rem;
+            height: 2rem;
             margin: 0;
             padding: 0;
             overflow: hidden;
             border-radius: var(--f-radius-small);
-            background: var(--f-color-bg-1);
+            background: var(--f-color-bg-2);
             box-shadow: inset 0 0 0 1px var(--f-color-border-1);
-            color: var(--f-color-text-2);
             cursor: pointer;
 
             & img {
+                display: block;
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
             }
 
             &.is-current {
-                box-shadow: 0 0 0 2px var(--f-color-bg-0), 0 0 0 4px var(--f-color-text-0);
+                box-shadow: 0 0 0 2px var(--f-color-bg-1), 0 0 0 4px var(--f-color-brand);
             }
 
             &:focus-visible {
-                outline: 2px solid var(--f-color-brand);
+                outline: 2px solid var(--f-color-text-0);
                 outline-offset: 4px;
             }
         }
 
+        /* The native picker drawn as a round swatch. */
         & input[type="color"] {
-            width: 2.75rem;
-            height: 1.75rem;
+            flex: none;
+            width: 2rem;
+            height: 2rem;
             margin: 0;
             padding: 0;
             border: 0;
-            border-radius: var(--f-radius-small);
+            border-radius: 50%;
             background: none;
+            box-shadow: inset 0 0 0 1px var(--f-color-border-1);
             cursor: pointer;
 
-            &:disabled {
-                opacity: 0.3;
-                cursor: default;
+            &::-webkit-color-swatch-wrapper {
+                padding: 0;
             }
+
+            /* Separate rules: a list with an unknown pseudo-element is dropped as a whole. */
+            &::-webkit-color-swatch {
+                border: 0;
+                border-radius: 50%;
+            }
+
+            &::-moz-color-swatch {
+                border: 0;
+                border-radius: 50%;
+            }
+        }
+
+        & .demo-hex {
+            color: var(--f-color-text-1);
+            font-family: monospace;
+            font-size: 0.8125rem;
+        }
+
+        & .demo-control:has(:disabled) .demo-hex,
+        & input:disabled {
+            opacity: 0.35;
+            cursor: default;
         }
 
         & .button {
@@ -364,8 +405,14 @@
         }
     }
 
-    /* Rendered markdown (HELPER_CLASSES.md, VARIABLES.md, DARK_THEME.md). */
+    /* A section rendered from docs/<id>.md; a long reference starts folded. */
     .demo-doc {
+        /* Links in the prose; .brand-links would also reach the examples' bare links. */
+        & .card-section > :is(p, ul, ol) a,
+        & td a {
+            color: var(--f-color-brand);
+        }
+
         & > summary {
             cursor: pointer;
 
@@ -373,14 +420,6 @@
                 display: inline;
                 margin: 0;
             }
-        }
-
-        & .user-generated > h1:first-child {
-            display: none;
-        }
-
-        & .user-generated > * + :is(h2, h3, h4) {
-            margin-top: 1.25em;
         }
 
         & .table-scroll {
@@ -398,11 +437,6 @@
             border-bottom: 1px solid var(--f-color-border-0);
             text-align: left;
             vertical-align: top;
-        }
-
-        & .docs-source {
-            color: var(--f-color-text-2);
-            text-align: right;
         }
 
         /* Color swatch, added by build-html.js to color values in code. */
@@ -497,4 +531,84 @@
             if (target) observer.observe(target);
         });
     });
+    // Header image, theme and brand color for the whole page. A Space's theme color comes from its
+    // header image, as in Spaces; the picker overrides it until the next image.
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const image = document.getElementById('header-image');
+        const theme = document.getElementById('theme-color');
+        const brand = document.getElementById('brand-color');
+        const brandReset = document.getElementById('brand-color-reset');
+        const thumbs = document.querySelectorAll('#header-image-choice .demo-thumb');
+
+        const showHex = (input) => (input.nextElementSibling.value = input.value);
+        const setTheme = (hex) => {
+            theme.value = hex.toLowerCase();
+            showHex(theme);
+            root.style.setProperty('--f-color-theme', theme.value);
+        };
+
+        thumbs.forEach((thumb) => {
+            thumb.addEventListener('click', () => {
+                thumbs.forEach((t) => {
+                    t.classList.toggle('is-current', t === thumb);
+                    t.setAttribute('aria-pressed', t === thumb);
+                });
+                image.src = thumb.querySelector('img').src;
+                setTheme(thumb.dataset.color);
+            });
+        });
+
+        theme.addEventListener('input', () => setTheme(theme.value));
+
+        brand.addEventListener('input', () => {
+            root.style.setProperty('--f-color-brand-base', brand.value);
+            root.style.setProperty('--f-color-brand-base-contrast', contrastOn(brand.value));
+            brandReset.hidden = false;
+            showHex(brand);
+            paintFavicon();
+        });
+        brandReset.addEventListener('click', () => {
+            root.style.removeProperty('--f-color-brand-base');
+            root.style.removeProperty('--f-color-brand-base-contrast');
+            brand.value = brand.defaultValue;
+            brandReset.hidden = true;
+            showHex(brand);
+            paintFavicon();
+        });
+
+        // The brand color can differ per color mode.
+        document.querySelectorAll('[data-color-mode] input').forEach((radio) => radio.addEventListener('change', paintFavicon));
+        matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paintFavicon);
+        paintFavicon();
+    });
+
+    /**
+     * Draws the favicon as an SVG in the current brand color.
+     *
+     * @return {void}
+     */
+    function paintFavicon() {
+        const probe = document.body.appendChild(document.createElement('i'));
+        probe.style.cssText = 'color: var(--f-color-brand); background-color: var(--f-color-brand-contrast)';
+        const { color, backgroundColor } = getComputedStyle(probe);
+        probe.remove();
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="3" y="3" width="26" height="26" rx="7" transform="rotate(-6 16 16)" fill="${color}"/><text x="16" y="23.5" fill="${backgroundColor}" font-family="system-ui, sans-serif" font-size="20" font-weight="800" text-anchor="middle">S</text></svg>`;
+        const icon = document.querySelector('link[rel~="icon"]');
+        icon.type = 'image/svg+xml';
+        icon.href = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+    }
+
+    /**
+     * @param {string} hex A background color.
+     * @return {string} Black or white, whichever contrasts more (WCAG luminance).
+     */
+    function contrastOn(hex) {
+        const [r, g, b] = [1, 3, 5].map((i) => {
+            const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+            return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+        });
+        const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        return luminance > 0.179 ? 'black' : 'white';
+    }
 </script>

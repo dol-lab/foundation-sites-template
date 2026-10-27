@@ -37,7 +37,7 @@
   // The input is hidden, so its wrapper shows the keyboard focus (as .switch does).
   .checkbox:has(input:focus-visible),
   .radio:has(input:focus-visible) {
-    outline: 2px solid global.$global-focus-color;
+    outline: global.$global-focus;
     outline-offset: 2px;
     border-radius: var(--f-radius-small);
   }
@@ -147,7 +147,7 @@
         content: "";
         box-shadow: inset 0 0 0 2px var(--f-color-text-2);
         transition: all global.$global-transition-medium;
-        border-radius: 1em;
+        border-radius: var(--f-radius-full);
         height: 1em;
         width: 1em;
       }

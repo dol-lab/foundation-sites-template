@@ -19,29 +19,38 @@
 
 			<main class="cell large-9">
 				<div class="grid-x grid-margin-y">
-					@@include('html-partials/_content-start.html')
-					@@include('html-partials/_content-colors.html')
-					@@include('html-partials/_content-typography.html')
+					@@include('html-partials/_demo-controls.html')
 
-					@@include('html-partials/_content-accordion.html')
-					@@include('html-partials/_content-avatars.html')
-					@@include('html-partials/_content-badges.html')
-					@@include('html-partials/_content-breadcrumbs.html')
-					@@include('html-partials/_content-buttons.html')
-					@@include('html-partials/_content-callouts.html')
-					@@include('html-partials/_content-details.html')
-					@@include('html-partials/_content-forms.html')
-					@@include('html-partials/_content-info-chips.html')
-					@@include('html-partials/_content-menus.html')
-					@@include('html-partials/_content-modal.html')
-					@@include('html-partials/_content-pagination.html')
-					@@include('html-partials/_content-progress.html')
-					@@include('html-partials/_content-scroll-snap.html')
-					@@include('html-partials/_content-tabs.html')
+					<!-- group: Start -->
+					@@include('docs/start.md')
+					@@include('docs/colors.md')
+					@@include('docs/typography.md')
 
-					@@include('html-partials/_content-space.html')
+					<!-- group: Components -->
+					@@include('docs/accordion.md')
+					@@include('docs/avatars.md')
+					@@include('docs/badges.md')
+					@@include('docs/breadcrumbs.md')
+					@@include('docs/buttons.md')
+					@@include('docs/callouts.md')
+					@@include('docs/details.md')
+					@@include('docs/forms.md')
+					@@include('docs/info-chips.md')
+					@@include('docs/menus.md')
+					@@include('docs/modal.md')
+					@@include('docs/pagination.md')
+					@@include('docs/progress.md')
+					@@include('docs/scroll-snap.md')
+					@@include('docs/tabs.md')
 
-					@@include('html-partials/_content-reference.html')
+					<!-- group: Spaces -->
+					@@include('docs/space.md')
+					@@include('html-partials/_space.html')
+
+					<!-- group: Reference -->
+					@@include('docs/helper-classes.md', 'folded')
+					@@include('docs/variables.md', 'folded')
+					@@include('docs/dark-theme.md', 'folded')
 				</div>
 			</main>
 		</div>

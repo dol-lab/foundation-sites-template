@@ -3,7 +3,6 @@
 @use "foundation-spaces/global";
 @use "foundation-spaces/util/breakpoint";
 @use "foundation-spaces/util/mixins";
-@use "foundation-spaces/util/value";
 
 // Foundation for Sites
 // https://get.foundation
@@ -21,9 +20,8 @@
 $button-font-family: inherit !default;
 
 /// Font weight for button elements.
-/// Ignored if null (default)
 /// @type Font-Weight
-$button-font-weight: null !default;
+$button-font-weight: 500 !default;
 
 /// Padding inside buttons.
 /// @type List
@@ -97,6 +95,7 @@ $button-opacity-disabled: 0.5 !default;
 /// @type List
 $button-transition:
   background-color global.$global-transition-short global.$global-transition-timing,
+  border-color global.$global-transition-short global.$global-transition-timing,
   color global.$global-transition-short global.$global-transition-timing !default;
 
 /// Additional responsive classes for .expanded
@@ -104,8 +103,12 @@ $button-transition:
 $button-responsive-expanded: false !default;
 
 // TODO: Document button-base() mixin
+// Flex, so the label is centered at any height and an icon beside it gets a gap without a space of its own.
 @mixin button-base {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
   vertical-align: middle;
   margin: $button-margin;
   border: $button-border;
@@ -136,12 +139,12 @@ $button-responsive-expanded: false !default;
 /// @param {Boolean} $expand [true] - Set to `true` to enable the expand behavior. Set to `false` to reverse this behavior.
 @mixin button-expand($expand: true) {
   @if $expand {
-    display: block;
+    display: flex;
     width: 100%;
     margin-right: 0;
     margin-left: 0;
   } @else {
-    display: inline-block;
+    display: inline-flex;
     width: auto;
     margin: $button-margin;
   }
@@ -259,7 +262,7 @@ $button-responsive-expanded: false !default;
   }
 }
 
-/// Sets the visual style of a clear button.
+/// Sets the visual style of a clear button: no surface until hovered.
 /// @param {Color} $color [$button-background] - Text color of the button.
 @mixin button-clear-style($color: $button-background) {
   // Default and disabled states
@@ -275,6 +278,7 @@ $button-responsive-expanded: false !default;
 
   &:hover,
   &:focus {
+    background-color: color-mix(in oklab, $color 8%, transparent);
     color: $color;
   }
 }
@@ -327,6 +331,8 @@ $button-responsive-expanded: false !default;
 
     &:hover,
     &:focus {
+      background-color: color-mix(in oklab, var(--f-color-#{$name}) 10%, transparent);
+
       @include custom-functions.color-mix(color, var(--f-color-#{$name}), 5%, var(--f-color-text-0), 95%);
     }
   }
@@ -339,19 +345,16 @@ $button-responsive-expanded: false !default;
   cursor: not-allowed;
 }
 
-/// Adds a dropdown arrow to a button.
+/// Adds a dropdown arrow to a button, a flex item after the label (the button's gap spaces it).
 /// @param {Number} $size [0.4em] - Size of the arrow. We recommend using an `em` value so the triangle scales when used inside different sizes of buttons.
 /// @param {Color} $color [currentColor] - Color of the arrow. Not `inherit`: it is one value of the `border-color` shorthand, where `inherit` drops the whole declaration.
-/// @param {Number} $offset [$button-padding] - Distance between the arrow and the text of the button. Defaults to whatever the right padding of a button is.
-@mixin button-dropdown($size: 0.4em, $color: currentColor, $offset: value.get-side($button-padding, right)) {
+@mixin button-dropdown($size: 0.4em, $color: currentColor) {
   &::after {
     @include mixins.css-triangle($size, $color, down);
 
     position: relative;
-    top: 0.4em; // Aligns the arrow with the text of the button
+    top: $size * 0.25; // the visible triangle is the box's upper half: this centers it on the label's glyphs
     display: inline-block;
-    float: #{global.$global-right};
-    margin-#{global.$global-left}: $offset;
   }
 }
 
@@ -464,13 +467,6 @@ $button-responsive-expanded: false !default;
           }
         }
       }
-    }
-
-    // Button with dropdown arrow only
-    &.arrow-only::after {
-      top: -0.1em;
-      float: none;
-      margin-#{global.$global-left}: 0;
     }
   }
 

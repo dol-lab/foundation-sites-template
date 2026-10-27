@@ -84,7 +84,7 @@
 
     .switch-paddle::before {
       height: custom-settings.$button-height;
-      border-radius: 20px;
+      border-radius: var(--f-radius-full);
     }
 
     .switch-paddle::after {

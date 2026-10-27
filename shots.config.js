@@ -26,4 +26,7 @@ module.exports = {
     click: ["#buttons .demo-markup > summary"],
     target: "#buttons .demo-example",
   },
+  "modal-open": {
+    click: ['[data-open="demo-modal"]'],
+  },
 };

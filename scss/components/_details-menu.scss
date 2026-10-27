@@ -165,4 +165,15 @@ $ring: 1.5rem;
   .details-menu .details-link:has(> .details-menu[open]) > a {
     padding-inline-start: $padding-x - $offset * 0.5;
   }
+
+  // Keyboard focus is the global inset outline. A link's summary outlines only its caret, since the link covers
+  // the rest of its row.
+  .details-link > .details-menu > summary:focus-visible {
+    outline: none;
+
+    &::after {
+      outline: global.$global-focus;
+      outline-offset: -2px;
+    }
+  }
 }

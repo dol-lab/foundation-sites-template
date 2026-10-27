@@ -110,8 +110,8 @@ $breadcrumbs-item-separator-opacity: 60% !default;
     }
   }
 
-  // Page links
-  a {
+  // Page links (an info chip draws its own)
+  a:where(:not(.info-chip)) {
     color: $breadcrumbs-item-color;
     transition: all var(--f-transition-short) ease-out;
 
@@ -135,6 +135,14 @@ $breadcrumbs-item-separator-opacity: 60% !default;
       &::after {
         opacity: 1 !important;
       }
+    }
+
+    // A path of chips (`ul.breadcrumbs.info-chips`, e.g. a term and its ancestors): the separator
+    // is the `<li>`'s, outside the chip, which clips its content. The row sets the chips' size.
+    &.info-chips li {
+      display: flex;
+      align-items: center;
+      font-size: inherit;
     }
   }
 }

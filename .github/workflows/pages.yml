@@ -29,9 +29,9 @@ jobs:
           bun-version-file: package.json
       - run: bun install --frozen-lockfile
       - run: bun run build:html
-      - run: mkdir _site && cp -r index.html llms.txt css js assets fonts _site/
-      - uses: actions/upload-pages-artifact@v4
+      - run: mkdir _site && cp -r index.html llms.txt docs css js assets fonts _site/
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
       - id: deploy
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

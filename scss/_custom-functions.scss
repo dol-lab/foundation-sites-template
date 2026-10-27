@@ -21,7 +21,6 @@
   11. Function: multiply-list
   12. Function: extract-from-compact
   13. Mixin:    excerpt
-  29. Mixins:   a11y-focus / a11y-focus-inset
 
 ============================================================================== */
 
@@ -380,56 +379,6 @@
 
   /* Fallback for non-webkit */
   font-size: $font-size;
-}
-
-/* ==============================================================================
-  29 - Keyboard focus (Accessibility)
-============================================================================== */
-
-////
-/// Applies accessible focus styles with compatibility fallbacks,
-/// respecting input modality (mouse/touch suppresses focus ring).
-///
-/// @requires $global-focus
-///
-
-/* @mixin a11y-focus {
-  &:active,
-  &:focus {
-    // Set color to transparent to ensure compatibility with high contrast mode
-    outline-color: transparent !important;
-    outline: unset;
-  }
-
-  &:focus-visible {
-    box-shadow: $global-focus;
-  }
-} */
-
-@mixin a11y-focus {
-  // 1. Reset default browser styles for mouse clicks
-  &:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-    box-shadow: none;
-  }
-
-  // 2. Apply styles ONLY for keyboard/assistive technology navigation
-  &:focus-visible {
-    // Visual style (The glow/shadow you want)
-    box-shadow: global.$global-focus;
-  }
-}
-
-////
-/// Inset variant of `a11y-focus`, drawing the focus ring inside the element.
-///
-/// @requires $global-focus
-///
-@mixin a11y-focus-inset {
-  outline: 2px solid transparent;
-  outline-offset: 0;
-  box-shadow: inset global.$global-focus;
 }
 
 /**
