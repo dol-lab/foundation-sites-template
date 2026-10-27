@@ -15,6 +15,8 @@
 
 ## Dropdown menu
 
+Find-in-page opens a closed submenu that holds the match (browsers with `hidden="until-found"`).
+
 ```html example
 <ul class="dropdown menu" data-dropdown-menu>
     <li>

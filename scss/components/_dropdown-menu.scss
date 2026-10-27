@@ -3,6 +3,16 @@
 // .dropdown.menu.
 
 @mixin styles {
+  // A closed submenu marked `hidden="until-found"` (js/app.js) stays rendered, so find-in-page searches it.
+  // The browser skips its content (`content-visibility: hidden`); the clip hides its own border and shadow,
+  // and `fixed` keeps it from widening the page where it would stick out.
+  .dropdown.menu .is-dropdown-submenu[hidden="until-found"] {
+    display: block;
+    position: fixed;
+    inset: 0 auto auto 0;
+    clip-path: inset(50%);
+  }
+
   .dropdown {
     & > li > a {
       display: flex;

@@ -35,6 +35,29 @@
     }
   });
 
+  /**
+   * Find-in-page opens a dropdown menu's submenu. A closed one is `hidden="until-found"`: the browser
+   * searches it and, on a match, removes the attribute and fires `beforematch`, where Foundation opens it.
+   * Without support, `until-found` is plain `hidden`, which the submenu's CSS would override: skip it then.
+   */
+  if ("onbeforematch" in document.documentElement) {
+    $(document).on("init.zf.dropdown-menu show.zf.dropdownMenu hide.zf.dropdownMenu", function (e) {
+      // Not jQuery's attr(): `hidden` is a boolean attribute to it, written as hidden="hidden".
+      $(e.target)
+        .closest("[data-dropdown-menu]")
+        .find(".is-dropdown-submenu")
+        .each(function () {
+          this.classList.contains("js-dropdown-active")
+            ? this.removeAttribute("hidden")
+            : this.setAttribute("hidden", "until-found");
+        });
+    });
+    document.addEventListener("beforematch", function (e) {
+      var $sub = $(e.target).filter(".is-dropdown-submenu");
+      $sub.closest("[data-dropdown-menu]").foundation("_show", $sub);
+    });
+  }
+
   $(function () {
     update_accordion_collapse();
     $(window).on("changed.zf.mediaquery", update_accordion_collapse);
