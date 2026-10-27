@@ -593,7 +593,8 @@
         probe.style.cssText = 'color: var(--f-color-brand); background-color: var(--f-color-brand-contrast)';
         const { color, backgroundColor } = getComputedStyle(probe);
         probe.remove();
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="3" y="3" width="26" height="26" rx="7" transform="rotate(-6 16 16)" fill="${color}"/><text x="16" y="23.5" fill="${backgroundColor}" font-family="system-ui, sans-serif" font-size="20" font-weight="800" text-anchor="middle">S</text></svg>`;
+        // The cube from the Spaces logo.
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 138 151"><path d="M137,98.93V29.08a16.05,16.05,0,0,0-13.39-15.83L56,1.92A26,26,0,0,0,33.29,9.17L8.6,33.87A26,26,0,0,0,1,52.25V122.1a16,16,0,0,0,13.39,15.82L82,149.26A26,26,0,0,0,104.65,142l24.7-24.69A26,26,0,0,0,137,98.93Z" fill="${color}"/><text x="69" y="110" fill="${backgroundColor}" font-family="system-ui, sans-serif" font-size="96" font-weight="800" text-anchor="middle">S</text></svg>`;
         const icon = document.querySelector('link[rel~="icon"]');
         icon.type = 'image/svg+xml';
         icon.href = `data:image/svg+xml,${encodeURIComponent(svg)}`;
