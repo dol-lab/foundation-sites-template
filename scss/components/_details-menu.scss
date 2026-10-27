@@ -32,7 +32,7 @@ $ring: 1.5rem;
       margin: calc(var(--_offset) / 2);
       border-radius: var(--f-radius);
       background: var(--f-color-bg-1);
-      box-shadow: var(--f-drop-shadow);
+      box-shadow: var(--f-drop-shadow-small);
     }
 
     & > summary {

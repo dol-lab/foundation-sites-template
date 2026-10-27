@@ -80,10 +80,12 @@
   --f-color-tint: rgb(from var(--f-color-text-0) r g b / 7%); // hover wash
 }
 
-/// Prints `--f-drop-shadow(-large)` from `--f-color-shadow`. A custom property
-/// resolves where it is declared, so an element that sets `--f-color-shadow`
-/// (`[themed]`) needs these redeclared on itself.
+/// Prints `--f-drop-shadow(-small|-large)` from `--f-color-shadow`. `-small` raises a surface that
+/// stays in the flow (a hovered card, an open fold), the others float above the page. A custom
+/// property resolves where it is declared, so an element that sets `--f-color-shadow` (`[themed]`)
+/// needs these redeclared on itself.
 @mixin drop-shadows {
+  --f-drop-shadow-small: 0 1px 3px var(--f-color-shadow), 0 3px 10px color-mix(in srgb, var(--f-color-shadow) 50%, transparent);
   --f-drop-shadow: 0 5px 20px var(--f-color-shadow), 0 2px 5px color-mix(in srgb, var(--f-color-shadow) 50%, transparent);
   --f-drop-shadow-large: 0 14px 28px var(--f-color-shadow), 0 10px 10px color-mix(in srgb, var(--f-color-shadow) 22%, transparent);
 }

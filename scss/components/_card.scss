@@ -75,7 +75,7 @@
     &.clickable {
       &:hover {
         cursor: pointer;
-        box-shadow: global.$global-drop-shadow;
+        box-shadow: global.$global-drop-shadow-small;
         transition: box-shadow global.$global-transition-short global.$global-transition-timing;
       }
     }
