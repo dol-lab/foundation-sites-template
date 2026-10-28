@@ -1,6 +1,6 @@
 # User card
 
-`.card.card-user`: an avatar and the user's name in a `.user-card-header`, as tall as the avatar. `.user-name` and the avatar take their size from the card's size class (`.small`, `.large`, …). A card that is one link wraps its content in a `.card-anchor`.
+`.card.card-user`: an avatar and the user's name in a `.user-card-header`, as tall as the avatar. The avatar fills the card's left edge: the card rounds its outer corners, its inner ones are square. `.user-name` and the avatar take their size from the card's size class (`.small`, `.large`, …). A card that is one link wraps its content in a `.card-anchor`.
 
 ```html example
 <div class="card card-user small mb-2">

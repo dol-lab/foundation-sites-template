@@ -15,7 +15,10 @@
       display: flex;
       flex-wrap: wrap;
 
+      // The avatar fills the card's left edge: the card clips its outer corners, the inner ones stay square.
       & > .avatar-container {
+        --f-avatar-radius: 0;
+
         align-self: flex-start;
       }
     }
