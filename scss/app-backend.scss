@@ -36,14 +36,6 @@
   :root:not([data-theme="light"]) .f select {
     background-image: var(--_f-chevron-for-light);
   }
-
-  .f .show-for-dark-mode {
-    display: none !important;
-  }
-
-  .f .hide-for-dark-mode {
-    display: block !important;
-  }
 }
 
 :root[data-theme="dark"] .f select {

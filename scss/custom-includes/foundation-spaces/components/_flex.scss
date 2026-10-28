@@ -13,21 +13,13 @@
 ////
 /// Default value for the count of source ordering`
 /// @type Number
-$flex-source-ordering-count: 6 !default;
+$flex-source-ordering-count: 1 !default;
 
 /// Quickly disable/enable Responsive breakpoints for Vanilla Flex Helpers.
 /// @type Boolean
-$flexbox-responsive-breakpoints: true !default;
+$flexbox-responsive-breakpoints: false !default;
 
 @mixin flex-helpers {
-  .flex-container {
-    @include flex.flex;
-  }
-
-  .flex-child-auto {
-    flex: 1 1 auto;
-  }
-
   .flex-child-grow {
     flex: 1 0 auto;
   }
@@ -47,10 +39,6 @@ $flexbox-responsive-breakpoints: true !default;
     @each $size in breakpoint.$breakpoint-classes {
       @include breakpoint.breakpoint($size) {
         @if $size != breakpoint.$zf-zero-breakpoint {
-          .#{$size}-flex-container {
-            @include flex.flex;
-          }
-
           .#{$size}-flex-child-auto {
             flex: 1 1 auto;
           }
@@ -102,13 +90,6 @@ $flexbox-responsive-breakpoints: true !default;
     .align-self-#{$vdir} {
       @include flex.flex-align-self($y: $vdir);
     }
-  }
-
-  // Central alignment of content
-  .align-center-middle {
-    @include flex.flex-align($x: center, $y: middle);
-
-    align-content: center;
   }
 
   // Source ordering

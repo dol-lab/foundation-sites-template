@@ -15,17 +15,11 @@ $prototype-sizing-breakpoints: global.$global-prototype-breakpoints !default;
 
 /// Map containing all the `sizing` classes
 /// @type Map
-$prototype-sizing: (
-  width,
-  height
-) !default;
+$prototype-sizing: (width) !default;
 
 /// Map containing all the sizes.
 /// @type Map
 $prototype-sizes: (
-  25: 25%,
-  50: 50%,
-  75: 75%,
   100: 100%
 ) !default;
 

@@ -15,12 +15,7 @@ $prototype-position-breakpoints: global.$global-prototype-breakpoints !default;
 
 /// Map containing all the `position` classes
 /// @type Map
-$prototype-position: (
-  static,
-  relative,
-  absolute,
-  fixed
-) !default;
+$prototype-position: (relative) !default;
 
 /// z-index for fixed positioning
 /// @type Number
@@ -84,15 +79,6 @@ $prototype-position-z-index: 975 !default;
     .position-#{$position} {
       @include position($position);
     }
-  }
-
-  // Position: Fixed Top, Fixed Bottom
-  .position-fixed-top {
-    @include position-fixed-top;
-  }
-
-  .position-fixed-bottom {
-    @include position-fixed-bottom;
   }
 
   @if $prototype-position-breakpoints {

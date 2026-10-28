@@ -84,8 +84,8 @@
     visibility: visible;
   }
 
-  // Responsive visibility classes
-  @each $size in breakpoint.$breakpoint-classes {
+  // Responsive visibility classes, up to large (the larger ones are unused)
+  @each $size in (small, medium, large) {
     @if $size != breakpoint.$zf-zero-breakpoint {
       .hide-for-#{$size} {
         @include hide-for($size);
@@ -107,90 +107,7 @@
 
   // Screen reader visibility classes
   // Need a "hide-for-sr" class? Add aria-hidden='true' to the element
-  .show-for-sr,
-  .show-on-focus {
+  .show-for-sr {
     @include mixins.element-invisible;
-  }
-
-  // Only display the element when it's focused
-  .show-on-focus {
-    &:active,
-    &:focus {
-      @include mixins.element-invisible-off;
-    }
-  }
-
-  // Landscape and portrait visibility
-  .show-for-landscape,
-  .hide-for-portrait {
-    display: block !important;
-
-    @include breakpoint.breakpoint(landscape) {
-      display: block !important;
-    }
-
-    @include breakpoint.breakpoint(portrait) {
-      display: none !important;
-    }
-  }
-
-  .hide-for-landscape,
-  .show-for-portrait {
-    display: none !important;
-
-    @include breakpoint.breakpoint(landscape) {
-      display: none !important;
-    }
-
-    @include breakpoint.breakpoint(portrait) {
-      display: block !important;
-    }
-  }
-
-  // Dark Mode Visibility
-  .show-for-dark-mode {
-    display: none;
-  }
-
-  .hide-for-dark-mode {
-    display: block;
-  }
-
-  @media screen and (prefers-color-scheme: dark) {
-    .show-for-dark-mode {
-      display: block !important;
-    }
-
-    .hide-for-dark-mode {
-      display: none !important;
-    }
-  }
-
-  // IE10+ Visibility
-  .show-for-ie {
-    display: none;
-  }
-
-  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    .show-for-ie {
-      display: block !important;
-    }
-
-    .hide-for-ie {
-      display: none !important;
-    }
-  }
-
-  // Sticky Visibility
-  .show-for-sticky {
-    display: none;
-  }
-
-  .is-stuck .show-for-sticky {
-    display: block;
-  }
-
-  .is-stuck .hide-for-sticky {
-    display: none;
   }
 }

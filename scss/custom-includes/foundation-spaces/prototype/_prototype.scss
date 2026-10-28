@@ -15,29 +15,17 @@
 // Text utilities
 @use 'text-utilities';
 
-// Text transformation classes
-@use 'text-transformation';
 
-// Text Decoration classes
-@use 'text-decoration';
 
 // Font Styling
 @use 'font-styling';
 
-// List Style type
-@use 'list-style-type';
 
-// Bordered Utility
-@use 'bordered';
 
 // Shadow Utility
 @use 'shadow';
 
-// Arrow Utility
-@use 'arrow';
 
-// Separator Utility
-@use 'separator';
 
 // Overflow helper classes
 @use 'overflow';
@@ -48,8 +36,6 @@
 // Position Helpers
 @use 'position';
 
-// Border box
-@use 'border-box';
 
 // Border none Utilty
 @use 'border-none';
@@ -62,18 +48,11 @@
 
 @mixin foundation-prototype-classes {
   @include text-utilities.foundation-prototype-text-utilities;
-  @include text-transformation.foundation-prototype-text-transformation;
-  @include text-decoration.foundation-prototype-text-decoration;
   @include font-styling.foundation-prototype-font-styling;
-  @include list-style-type.foundation-prototype-list-style-type;
-  @include bordered.foundation-prototype-bordered;
   @include shadow.foundation-prototype-shadow;
-  @include arrow.foundation-prototype-arrow;
-  @include separator.foundation-prototype-separator;
   @include overflow.foundation-prototype-overflow;
   @include display.foundation-prototype-display;
   @include position.foundation-prototype-position;
-  @include border-box.foundation-prototype-border-box;
   @include border-none.foundation-prototype-border-none;
   @include sizing.foundation-prototype-sizing;
   @include spacing.foundation-prototype-spacing;

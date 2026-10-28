@@ -56,20 +56,12 @@ $prototype-font-bold: global.$global-weight-bold !default;
 }
 
 @mixin foundation-prototype-font-styling {
-  .font-wide {
-    @include font-wide;
-  }
-
   .font-normal {
     @include font-normal;
   }
 
   .font-bold {
     @include font-bold;
-  }
-
-  .font-italic {
-    @include font-italic;
   }
 
   @if $prototype-font-breakpoints {

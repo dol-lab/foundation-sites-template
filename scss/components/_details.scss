@@ -38,18 +38,6 @@
       }
 
       padding-block: var(--f-spacing-3);
-      isolation: isolate;
-
-      // The hover tint of .details-menu, widened over the details' padding and the caret.
-      &::before {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        inset: 0 calc(-0.7rem - var(--f-spacing-2)) 0 calc(-1 * var(--f-spacing-2));
-        background-color: var(--_summary-tint, transparent);
-        transition: background-color var(--f-transition-short);
-        pointer-events: none;
-      }
 
       &::after {
         @extend .caret;
@@ -78,8 +66,6 @@
     }
 
     &:hover {
-      --_summary-tint: var(--f-color-tint);
-
       border-left-color: var(--f-color-border-2);
     }
   }
