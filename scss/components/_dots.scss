@@ -32,6 +32,19 @@
       }
     }
 
+    // A bare glyph, often in a borderless corner: a clear button's hover fill reads as a grey blot
+    // that stays while its menu is open, so the glyph darkens instead.
+    &.button.clear {
+      color: var(--f-color-text-2);
+
+      &:hover,
+      &:focus,
+      &[aria-expanded="true"] {
+        background-color: transparent;
+        color: var(--f-color-text-0);
+      }
+    }
+
     .button & {
       margin: -0.5em -0.75em;
     }

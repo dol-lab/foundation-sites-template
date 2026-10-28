@@ -90,6 +90,12 @@
     display: none !important;
   }
 
+  // A closed popover: the browser's `display: none` loses to any component's `display` (`.card`, `.menu`),
+  // which leaves it on screen after a light dismiss. Not `!important`, so an exit transition still runs.
+  [popover]:not(:popover-open, [hidden="until-found"]) {
+    display: none;
+  }
+
   // Grid
   // ---------
 
