@@ -1,9 +1,10 @@
+@use "../../../colors";
 @use "../global";
 @use "../util/breakpoint";
-@use "../util/color";
 @use "../util/mixins";
 @use "../util/unit";
 @use "position";
+@use "sass:map";
 
 // Foundation for Sites
 // https://get.foundation
@@ -31,7 +32,7 @@ $prototype-separator-width: 3rem !default;
 
 /// Default color of a separator.
 /// @type Color
-$prototype-separator-background: color.$primary-color !default;
+$prototype-separator-background: map.get(colors.$foundation-palette, primary) !default;
 
 /// Top Margin of a separator.
 /// @type Number

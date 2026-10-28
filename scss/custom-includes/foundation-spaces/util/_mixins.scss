@@ -1,4 +1,3 @@
-@use "../functions/remove";
 @use "../global";
 @use "breakpoint";
 @use "math" as zf-math;
@@ -131,7 +130,7 @@ $zf-bp-value: null;
   $small: true,
   $auto-insert-breakpoints: true
 ) {
-  @include zf-each-breakpoint-in(auto, value.zf-bool($small), value.zf-bool($auto-insert-breakpoints)) {
+  @include zf-each-breakpoint-in(auto, $small, $auto-insert-breakpoints) {
     @content
   };
 }
@@ -164,10 +163,16 @@ $zf-bp-value: null;
   }
 
   // Add or remove the zero breakpoint according to `$zero-breakpoint`
-  @if $zero-breakpoint == true {
-    $-list: list.join((breakpoint.$zf-zero-breakpoint), remove.sl-remove($-list, breakpoint.$zf-zero-breakpoint));
-  } @else if $zero-breakpoint == false {
-    $-list: remove.sl-remove($-list, breakpoint.$zf-zero-breakpoint);
+  @if $zero-breakpoint != null {
+    $-rest: ();
+
+    @each $bp in $-list {
+      @if $bp != breakpoint.$zf-zero-breakpoint {
+        $-rest: list.append($-rest, $bp);
+      }
+    }
+
+    $-list: if($zero-breakpoint, list.join((breakpoint.$zf-zero-breakpoint), $-rest), $-rest);
   }
 
   // Iterate on breakpoint(s)

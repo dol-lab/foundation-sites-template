@@ -43,7 +43,7 @@ $breakpoints-hidpi: (
 /// @type Keyword
 $print-breakpoint: large !default;
 $zf-zero-breakpoint: small !default;
-$zf-breakpoints-keys: value.map-to-list($breakpoints, 'keys');
+$zf-breakpoints-keys: map.keys($breakpoints);
 
 @if list.nth(map.values($breakpoints), 1) != 0 {
   @error 'The first key in the $breakpoints map must have a value of "0".';

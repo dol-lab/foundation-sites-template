@@ -1,7 +1,7 @@
-@use "../functions/contain";
 @use "../util/breakpoint";
 @use "cell";
 @use "xy-grid";
+@use "sass:list";
 
 // Foundation for Sites
 // https://get.foundation
@@ -41,7 +41,7 @@
 
     // Output new widths to not include gutters
     @each $bp in breakpoint.$breakpoint-classes {
-      @if contain.sl-contain($excluded-bps, $bp) {
+      @if list.index($excluded-bps, $bp) {
         @include breakpoint.breakpoint($min-breakpoint) {
           @for $i from 1 through xy-grid.$grid-columns {
             // Sizing (percentage)

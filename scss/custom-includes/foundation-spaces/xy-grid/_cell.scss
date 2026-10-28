@@ -1,4 +1,3 @@
-@use "../functions/remove";
 @use "../util/breakpoint";
 @use "../util/math";
 @use "../util/mixins";
@@ -228,7 +227,6 @@
 /// Creates a cell for your grid.
 ///
 /// @param {Keyword|Number} $size [full] - The size of your cell. Can be `full` (100% width), `auto` (use all available space), `shrink` (use only the required space) or any fraction (`6`, `50%`, `1 of 2` or `1/2`...).
-/// @param {Boolean} $gutter-output [null] - [DEPRECATED] Whether or not to output gutters.
 /// @param {Number|Map} $gutters [$grid-margin-gutters] - Map or single value for gutters.
 /// @param {Keyword} $gutter-type [margin] - Type of gutter to output. Accepts `margin`, `padding` or `none`.
 /// @param {List} $gutter-position [null] - The position to apply gutters to. Accepts `top`, `bottom`, `left`, `right` in any combination. By default `right left` for horizontal cells and `top bottom` for vertical cells.
@@ -237,7 +235,6 @@
 /// @param {List} $output [(base size gutters)] - Cell parts to output. You will need to generate others parts of the cell seperately, it may not work properly otherwise.
 @mixin xy-cell(
   $size: full,
-  $gutter-output: null,
   $gutters: xy-grid.$grid-margin-gutters,
   $gutter-type: margin,
   $gutter-position: null,
@@ -245,15 +242,6 @@
   $vertical: false,
   $output: (base size gutters)
 ) {
-  // Default for $gutter-output
-  @if $gutter-output != null {
-    @warn 'xy-cell: $gutter-output is deprecated and will be removed. See migration notes at https://git.io/foundation-6-6-0';
-
-    @if $gutter-output == false {
-      $output: remove.sl-remove($output, gutters);
-    }
-  }
-
   @if list.index($output, base) {
     @include xy-cell-base($size);
   }
