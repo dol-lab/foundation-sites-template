@@ -75,33 +75,24 @@ The `themed` attribute plus an inline `--f-color-theme` tints the surfaces and t
 <article class="card" themed style="--f-color-theme: #367855">…</article>
 ```
 
-The same color gives a coherent palette in both modes: light pulls lightness up and chroma far down, dark pulls lightness down and dampens chroma, and the hue stays. The derivations, from `scss/custom-styles/_root-variables.scss`:
+Each color tints both modes: light keeps its hue at a high lightness with little chroma, dark at a low one; text, borders, tint and shadow follow. The formulas are in `scss/custom-styles/_root-variables.scss`.
 
-| Role | Light | Dark |
-| --- | --- | --- |
-| `--f-color-bg-0` | `oklch(from theme 0.96 min(c / 6, 0.01) h)` | `oklch(from theme 0.19 min(c * 0.6, 0.035) h)` |
-| `--f-color-bg-1` | `oklch(from theme 0.995 min(c / 6, 0.01) h)` | `oklch(from theme 0.23 min(c * 0.6, 0.019) h)` |
-| `--f-color-bg-2` | `oklch(from theme 0.97 min(c / 6, 0.012) h)` | `oklch(from theme 0.32 min(c * 0.6, 0.02) h)` |
-| `--f-color-text-0`, `-1`, `-2` | `oklch(from theme 0.4, 0.45, 0.5` at `c / 3`, `c / 6`, `c / 9` `h)` | the dimmed theme mixed into `neutral-700` (12, 18%) and `neutral-600` (20%) |
-| `--f-bg-gradient-color` | `oklch(from theme max(l, 0.83) min(c, 0.12) h)` | `oklch(from theme min(l, 0.3) min(c, 0.15) h)` |
+```html demo
+<div class="demo-tints">
+    <div class="demo-layers" themed style="--f-color-theme: #975938"><code class="has-swatch"><span class="swatch" style="--swatch: var(--f-color-theme)"></span>#975938</code> page<div>card<div>on a card</div></div></div>
+    <div class="demo-layers" themed style="--f-color-theme: #d4b106"><code class="has-swatch"><span class="swatch" style="--swatch: var(--f-color-theme)"></span>#d4b106</code> page<div>card<div>on a card</div></div></div>
+    <div class="demo-layers" themed style="--f-color-theme: #2e9e4f"><code class="has-swatch"><span class="swatch" style="--swatch: var(--f-color-theme)"></span>#2e9e4f</code> page<div>card<div>on a card</div></div></div>
+    <div class="demo-layers" themed style="--f-color-theme: #1798b0"><code class="has-swatch"><span class="swatch" style="--swatch: var(--f-color-theme)"></span>#1798b0</code> page<div>card<div>on a card</div></div></div>
+    <div class="demo-layers" themed style="--f-color-theme: #3b5bdb"><code class="has-swatch"><span class="swatch" style="--swatch: var(--f-color-theme)"></span>#3b5bdb</code> page<div>card<div>on a card</div></div></div>
+    <div class="demo-layers" themed style="--f-color-theme: #c2368f"><code class="has-swatch"><span class="swatch" style="--swatch: var(--f-color-theme)"></span>#c2368f</code> page<div>card<div>on a card</div></div></div>
+</div>
+```
 
-Borders, tint and shadow derive from these, so they follow.
+Inside a `themed` element `--f-color-bg-1` is the tinted card, not the page: pick a role by what it is, not by the color it shows.
 
-## When dark mode looks broken
+## Using the roles
 
-| Symptom | Cause |
-| --- | --- |
-| Light text on a white box | Hard-coded `background: #fff` with no `color` |
-| Dark text on a dark box | Hard-coded `color: #333` with no `background` |
-| Component ignores the theme | Hex values instead of `--f-color-*` roles |
-| Shadow looks like a grey halo | Hard-coded `rgba(0,0,0,…)`; use `var(--f-drop-shadow)` |
-| Borders vanish | Fixed grey; use `--f-color-border-0..2` |
-| Your override loses or breaks dark mode | Specificity, see below |
-| Always light in wp-admin or `ark` | Intended: the backend build is light only |
-
-**The one rule:** never set `background` without `color`, or the reverse. Set both from roles, or neither.
-
-### Use roles and components
+Set `background` and `color` together, both from roles, or neither. One without the other is what breaks dark mode: a hard-coded white box with inherited light text, or dark text on an inherited dark surface.
 
 ```css
 .thing {
@@ -112,17 +103,11 @@ Borders, tint and shadow derive from these, so they follow.
 }
 ```
 
-In PHP or inline styles, add a light fallback for when the stylesheet is absent: `var( --f-color-bg-1, #fff )`.
+In PHP or inline styles, add a light fallback for when the stylesheet is absent: `var( --f-color-bg-1, #fff )`. For a notice use a [callout](callouts.md) with a palette class, not colors of your own.
 
-For a notice use a [callout](callouts.md) with a palette class, not colors of your own.
+### Overriding a component's colors
 
-### Specificity
-
-A fallback rule for a component that also carries theme classes must be less specific than the theme (`.my-notice` at 0,1,0 loses to `.callout.success` at 0,2,0). Source order does not help: a `<style>` printed in the footer comes after the stylesheet and wins at equal specificity. Only colors should yield; layout rules may be as specific as they need.
-
-### Tinted surfaces
-
-Inside a `themed` subtree the surfaces derive from its `--f-color-theme`, so `--f-color-bg-1` there is the tinted card, not the page. Pick a role by meaning, not by the color you saw once.
+If your element also has palette classes, keep your color rule weaker than them, so the palette still applies: `.my-notice` (one class) yields to `.callout.success` (two). Load order does not help, since a `<style>` printed in the footer comes after the stylesheet and wins every tie. Layout rules are not affected and may be as specific as they need.
 
 ### Verifying
 

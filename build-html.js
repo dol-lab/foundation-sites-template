@@ -1,8 +1,9 @@
 // Builds the demo page: every *.src.html in the working directory becomes *.html with its
 // @@include()s inlined. An included docs/<id>.md becomes the section #<id>; its title and intro
 // also go into llms.txt, an index of the docs for agents. The table of contents is built from the
-// sections and the `<!-- group: … -->` comments between them. Needs only `marked`, so it runs
-// without gulp or sass: `bun build-html.js`.
+// sections and the `<!-- group: … -->` comments between them. Needs only `marked` and
+// `highlight.js`, so it runs without gulp or sass: `bun build-html.js`.
+const hljs = require("highlight.js/lib/core");
 const { Marked } = require("marked");
 
 const crypto = require("node:crypto");
@@ -12,6 +13,10 @@ const path = require("node:path");
 const INCLUDE_RE = /@@include\((['"])([^'"]+)\1\)/g;
 const SECTION_RE =
   /<!-- group: ([^>]+?) -->|<section class="cell demo-section" id="([^"]+)"[\s\S]*?<h2>([\s\S]*?)<\/h2>/g;
+
+hljs.registerLanguage("html", require("highlight.js/lib/languages/xml"));
+hljs.registerLanguage("css", require("highlight.js/lib/languages/css"));
+hljs.registerLanguage("js", require("highlight.js/lib/languages/javascript"));
 
 const escapeHtml = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -28,11 +33,14 @@ function dedent(src) {
 }
 
 /**
- * @param {string} body Markup.
- * @return {string} The markup as an escaped, flush-left code block.
+ * @param {string} body Code.
+ * @param {string} lang Its language; one hljs does not know is shown plain.
+ * @return {string} The code as a flush-left code block, highlighted at build time (.hljs-* in _demo.html).
  */
-function codeBlock(body) {
-  return `<pre class="code-block"><code>${escapeHtml(dedent(body))}</code></pre>`;
+function codeBlock(body, lang) {
+  const code = dedent(body);
+  const html = hljs.getLanguage(lang) ? hljs.highlight(code, { language: lang }).value : escapeHtml(code);
+  return `<pre class="code-block"><code>${html}</code></pre>`;
 }
 
 /**
@@ -45,15 +53,15 @@ const marked = new Marked({
   },
   renderer: {
     code({ text, lang = "" }) {
-      const [, kind, row] = lang.split(/\s+/);
+      const [language, kind, row] = lang.split(/\s+/);
       if (kind === "demo") return `${text}\n`;
-      if (kind !== "example") return codeBlock(text);
+      if (kind !== "example") return codeBlock(text, language);
       const preview = row ? `<div class="demo-row">\n${text}\n</div>` : text;
       return `<figure class="demo-example">
 <div class="demo-preview">
 ${preview}
 </div>
-<details class="demo-markup"><summary>Code</summary>${codeBlock(text)}</details>
+<details class="demo-markup"><summary>Code</summary>${codeBlock(text, language)}</details>
 </figure>
 `;
     },

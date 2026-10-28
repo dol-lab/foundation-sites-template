@@ -43,6 +43,35 @@
         white-space: nowrap;
     }
 
+    /* Syntax highlighting: build-html.js marks the tokens up with highlight.js. Fixed hues at a lightness that holds AA on bg-2 in both modes. */
+    .code-block {
+        --demo-hl-tag: light-dark(oklch(0.48 0.13 250), oklch(0.8 0.1 250));
+        --demo-hl-attr: light-dark(oklch(0.48 0.13 300), oklch(0.8 0.1 300));
+        --demo-hl-string: light-dark(oklch(0.48 0.12 150), oklch(0.8 0.12 150));
+        --demo-hl-value: light-dark(oklch(0.5 0.13 50), oklch(0.8 0.1 50));
+
+        & :is(.hljs-tag, .hljs-name, .hljs-keyword, .hljs-selector-tag) {
+            color: var(--demo-hl-tag);
+        }
+
+        & :is(.hljs-attr, .hljs-attribute, .hljs-selector-class, .hljs-selector-id, .hljs-variable, .hljs-title) {
+            color: var(--demo-hl-attr);
+        }
+
+        & :is(.hljs-string, .hljs-regexp) {
+            color: var(--demo-hl-string);
+        }
+
+        & :is(.hljs-number, .hljs-literal, .hljs-built_in, .hljs-meta) {
+            color: var(--demo-hl-value);
+        }
+
+        & .hljs-comment {
+            color: var(--f-color-text-2);
+            font-style: italic;
+        }
+    }
+
     @media (max-width: 44.9375em) {
         .demo-doc :is(p, li, .demo-table td) > code {
             white-space: normal;
@@ -355,12 +384,21 @@
         gap: 0.5rem;
     }
 
+    /* Tinted copies of .demo-layers side by side. */
+    .demo-tints {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
     /* The three backgrounds nested as they are used. */
     .demo-layers {
         padding: 1rem;
         border-radius: var(--f-radius);
         background: var(--f-color-bg-0);
         box-shadow: inset 0 0 0 1px var(--f-color-border-0);
+        color: var(--f-color-text-1);
         font-size: 0.8125rem;
 
         & div {
