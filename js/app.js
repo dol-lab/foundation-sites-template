@@ -1,10 +1,6 @@
-/**
- * todo self host the fonts: https://google-webfonts-helper.herokuapp.com/
- */
-
-!(function (window, document) {
-  // Script animations (a consumer's jQuery slides, the tab panels below) are not CSS, so the
-  // reduced-motion rule misses them. Read per animation, it follows both the device and a `data-motion` setting on <html> (see _motion.scss).
+(() => {
+  // Script animations (a consumer's jQuery slides, the tab panels below) are not CSS, so the reduced-motion rule
+  // misses them. Read per animation, it follows both the device and a `data-motion` setting on <html> (_motion.scss).
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   /** @return {boolean} Whether animations should jump to their end. */
   const motionOff = () => {
@@ -24,9 +20,8 @@
    * and `hidden` and selects the tab the URL's #hash names (also on `hashchange`). Arrow keys, Home and End move
    * between titles and select them.
    * The server marks the initial title and panel `.is-active`, or `data-link-active-class`/`data-panel-active-class`.
-   * `data-active-collapse`: the active
-   * tab's title closes it. `data-deep-link`: a change writes the panel's id to the URL. `data-transition`: the
-   * panels' box eases to its new height. A change fires a bubbling `tabchange` on the `.tabs`,
+   * `data-active-collapse`: the active tab's title closes it. `data-deep-link`: a change writes the panel's id to
+   * the URL. `data-transition`: the panels' box eases to its new height. A change fires a bubbling `tabchange` on the `.tabs`,
    * `detail: { title, panel }` (both null after a collapse).
    */
   const tabs = {
@@ -191,6 +186,7 @@
    */
   const dropdown = {
     item: "[data-dropdown-menu] > li",
+    dialog: 'dialog, [role="dialog"]',
     /** @type {?HTMLElement} The open panel. */
     open: null,
     pinned: false,
@@ -267,14 +263,14 @@
       e.preventDefault();
       dropdown.open === panel && dropdown.pinned ? dropdown.hide() : dropdown.show(panel, true);
     } else if (dropdown.open?.parentElement.contains(e.target)) dropdown.pinned = true;
-    else if (dropdown.open && !e.target.closest?.('dialog, [role="dialog"]')) dropdown.hide();
+    else if (dropdown.open && !e.target.closest?.(dropdown.dialog)) dropdown.hide();
   });
   document.addEventListener("keydown", (e) => {
     const item = dropdown.open?.parentElement;
     if (e.key === " " && e.target.matches?.(`${dropdown.item} > a`) && dropdown.panel(e.target)) {
       e.preventDefault();
       e.target.click();
-    } else if (e.key === "Escape" && item && !e.target.closest?.('dialog, [role="dialog"]')) {
+    } else if (e.key === "Escape" && item && !e.target.closest?.(dropdown.dialog)) {
       dropdown.hide();
       if (item.contains(e.target)) item.querySelector(":scope > :is(a, button)")?.focus();
     }
@@ -282,7 +278,7 @@
   document.addEventListener("focusout", (e) => {
     const item = dropdown.open?.parentElement;
     const to = e.relatedTarget;
-    if (item?.contains(e.target) && to && !item.contains(to) && !to.closest('dialog, [role="dialog"]')) dropdown.hide();
+    if (item?.contains(e.target) && to && !item.contains(to) && !to.closest(dropdown.dialog)) dropdown.hide();
   });
   ready(() =>
     document.querySelectorAll(`${dropdown.item} > [popover]`).forEach((panel) => dropdown.sync(panel, false)),
@@ -401,70 +397,64 @@
     document.addEventListener("scroll", hide, { capture: true, passive: true });
   }
 
-  ready(update_collapse);
-  // Once the user opens a folded disclosure, it is theirs: the next unfold leaves it as they left it.
+  /**
+   * Folds `<details data-collapse="<breakpoint>">` from that breakpoint through the next one, on load and when
+   * the viewport enters or leaves that range. On leaving it reopens only what it folded itself
+   * (`data-collapsed`): what the user closed stays closed. Once the user opens a folded one, it is theirs.
+   * A `<details>` holding the URL's #target stays open: the browser opened it to reveal the target.
+   */
+  const collapse = {
+    // The names of `$breakpoints` in order; their widths are the `--f-breakpoint-<name>` tokens.
+    breakpoints: ["small", "medium", "large", "xlarge", "xxlarge"],
+    /** @type {Object<string, ?MediaQueryList>} */
+    queries: {},
+    /** @type {WeakMap<HTMLDetailsElement, boolean>} Whether update() last folded it, so it acts only on a change. */
+    folded: new WeakMap(),
+
+    /**
+     * The range a breakpoint folds in, created once and watched for changes.
+     * @param {string} name A breakpoint name.
+     * @return {?MediaQueryList} Null for the last breakpoint or an unknown name.
+     */
+    query(name) {
+      if (!(name in collapse.queries)) {
+        const i = collapse.breakpoints.indexOf(name);
+        const width = (bp) =>
+          getComputedStyle(document.documentElement).getPropertyValue(`--f-breakpoint-${bp}`).trim();
+        const end = collapse.breakpoints[i + 2];
+        const query =
+          i < 0 || i === collapse.breakpoints.length - 1
+            ? null
+            : window.matchMedia(`(width >= ${width(name)})` + (end ? ` and (width < ${width(end)})` : ""));
+        query?.addEventListener("change", collapse.update);
+        collapse.queries[name] = query;
+      }
+      return collapse.queries[name];
+    },
+
+    /** @return {void} */
+    update() {
+      const target = document.querySelector(":target");
+      document.querySelectorAll("details[data-collapse]").forEach((details) => {
+        const fold = !!collapse.query(details.dataset.collapse)?.matches;
+        if (collapse.folded.get(details) === fold) return;
+        collapse.folded.set(details, fold);
+        if (fold && details.open && !details.contains(target)) {
+          details.open = false;
+          details.dataset.collapsed = "";
+        } else if (!fold && "collapsed" in details.dataset) {
+          details.open = true;
+          delete details.dataset.collapsed;
+        }
+      });
+    },
+  };
   document.addEventListener(
     "toggle",
-    function (e) {
-      if (e.target.open) {
-        e.target.removeAttribute("data-collapsed");
-      }
+    (e) => {
+      if (e.target.open) delete e.target.dataset?.collapsed;
     },
     true,
   );
-  /**
-   * Folds `[data-collapse="<breakpoint>"]` `<details>` from that breakpoint through the next one. Acts on load and when the viewport enters or leaves
-   * that range; on leaving it reopens only what it folded itself (`data-collapsed`), so what the
-   * user closed stays closed and what they opened stays open.
-   *
-   * A `<details>` holding the URL's #target stays open: the browser opened it to reveal the
-   * target, and that is the reason for the visit.
-   */
-  function update_collapse() {
-    var target = document.querySelector(":target");
-
-    document.querySelectorAll("details[data-collapse]").forEach((details) => {
-      var fold = !!fold_query(details.getAttribute("data-collapse"))?.matches;
-      if (folded.get(details) === fold) {
-        return;
-      }
-      folded.set(details, fold);
-
-      if (fold && details.open && !(target && details.contains(target))) {
-        details.open = false;
-        details.setAttribute("data-collapsed", "");
-      } else if (!fold && details.hasAttribute("data-collapsed")) {
-        details.open = true;
-        details.removeAttribute("data-collapsed");
-      }
-    });
-  }
-
-  // The names of `$breakpoints` in order; their widths are the `--f-breakpoint-<name>` tokens.
-  var breakpoints = ["small", "medium", "large", "xlarge", "xxlarge"];
-  var fold_queries = {};
-  // Whether update_collapse() last folded a `<details>`, so it acts only on a change.
-  var folded = new WeakMap();
-
-  /**
-   * The range a `data-collapse` breakpoint folds in, created once and watched for changes.
-   * @param {string} name A breakpoint name.
-   * @return {?MediaQueryList} Null for the last breakpoint or an unknown name.
-   */
-  function fold_query(name) {
-    if (!(name in fold_queries)) {
-      var i = breakpoints.indexOf(name);
-      var width = (bp) =>
-        getComputedStyle(document.documentElement)
-          .getPropertyValue("--f-breakpoint-" + bp)
-          .trim();
-      var end = breakpoints[i + 2];
-      fold_queries[name] =
-        i < 0 || i === breakpoints.length - 1
-          ? null
-          : window.matchMedia(`(width >= ${width(name)})` + (end ? ` and (width < ${width(end)})` : ""));
-      fold_queries[name]?.addEventListener("change", update_collapse);
-    }
-    return fold_queries[name];
-  }
-})(window, document);
+  ready(collapse.update);
+})();

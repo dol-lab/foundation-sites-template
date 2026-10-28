@@ -62,10 +62,9 @@
    * own now overrides it by simply existing.
    *
    */
-  :where(body .brand-links *:not([data-dropdown]))
+  :where(body .brand-links *)
     a:not(
       :where(
-        [data-dropdown] a,
         [class^="wp-block"],
         .primary,
         .secondary,

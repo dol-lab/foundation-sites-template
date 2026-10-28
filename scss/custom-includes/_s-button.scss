@@ -114,8 +114,7 @@ $button-transition:
 /// @type Boolean
 $button-responsive-expanded: false !default;
 
-// TODO: Document button-base() mixin
-// Flex, so the label is centered at any height and an icon beside it gets a gap without a space of its own.
+// The box every button shares. Flex, so the label is centered at any height and an icon beside it gets a gap without a space of its own.
 @mixin button-base {
   display: inline-flex;
   align-items: center;
@@ -439,21 +438,9 @@ $button-responsive-expanded: false !default;
       @include button-disabled;
     }
 
-    // Dropdown arrow
+    // Dropdown arrow, in the label's color (currentColor).
     &.dropdown {
       @include button-dropdown;
-
-      &.hollow,
-      &.clear {
-        // Palette variants: arrow uses CSS custom properties.
-        @each $name, $color in $button-palette {
-          &.#{"" + $name} {
-            &::after {
-              border-top-color: var(--f-color-#{$name});
-            }
-          }
-        }
-      }
     }
   }
 

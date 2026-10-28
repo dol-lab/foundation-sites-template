@@ -24,6 +24,3 @@
 /// @alias sl-to-list
 ///
 
-@function sl-listify($value) {
-  @return sl-to-list($value);
-}

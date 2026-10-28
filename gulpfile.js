@@ -7,30 +7,6 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { fileURLToPath } = require("node:url");
 
-const includePaths = ["node_modules/foundation-sites/scss", "node_modules/motion-ui/src"];
-
-// Deprecation noise from motion-ui (node_modules), which still uses @import and
-// global built-in functions. scss/ itself compiles without warnings.
-const MUTED_WARNINGS = [
-  "Sass @import rules are deprecated",
-  "Deprecation",
-  "Recommendation",
-  "Global built-in functions are deprecated",
-  "Sass's behavior for declarations that appear after nested",
-];
-
-const sassLogger = {
-  warn: (warning) => {
-    const text = warning && warning.message ? warning.message : String(warning);
-    if (MUTED_WARNINGS.some((muted) => text.includes(muted))) return;
-    console.warn(text);
-  },
-  debug: (message) => {
-    const text = message && message.message ? message.message : String(message);
-    console.debug(text);
-  },
-};
-
 const OUT_DIR = "css";
 
 // Compile one SCSS entry point to css/, with an external sourcemap whose
@@ -41,13 +17,11 @@ async function sassBuild(entry) {
   const mapName = `${cssName}.map`;
 
   const result = await sass.compileAsync(entry, {
-    loadPaths: includePaths,
     style: "compressed",
     // With a charset, Sass counts a BOM in the map that the returned CSS lacks: every mapping is one column off.
     charset: false,
     sourceMap: true,
     sourceMapIncludeSources: true,
-    logger: sassLogger,
   });
 
   const map = {

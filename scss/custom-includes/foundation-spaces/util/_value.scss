@@ -94,20 +94,6 @@
   @return map.get($defaults, $elem);
 }
 
-/// Finds a value in a nested map.
-/// @link https://css-tricks.com/snippets/sass/deep-getset-maps/ Deep Get/Set in Maps
-///
-/// @param {Map} $map - Map to pull a value from.
-/// @param {String} $keys... - Keys to use when looking for a value.
-/// @returns {Mixed} The value found in the map.
-@function map-deep-get($map, $keys...) {
-  @each $key in $keys {
-    $map: map.get($map, $key);
-  }
-
-  @return $map;
-}
-
 /// Casts a map into a list.
 /// @link http://hugogiraudel.com/2014/04/28/casting-map-into-list/
 ///
@@ -167,24 +153,6 @@
   }
 
   @return $ret;
-}
-
-/// Safely return a value from a map.
-///
-/// @param {Map} $map - Map to retrieve a value from.
-/// @param {String} $key - Name of the map key.
-///
-/// @returns {List} Found value.
-@function map-safe-get($map, $key) {
-  @if meta.type-of($map) == 'map' or (meta.type-of($map) == 'list' and list.length($map) == 0) {
-    @if map.has-key($map, $key) {
-      @return map.get($map, $key);
-    } @else {
-      @error 'Key: `#{$key}` is not available in `#{$map}`';
-    }
-  } @else {
-    @error '`#{$map}` is not a valid map';
-  }
 }
 
 /// Convert the given `$val` to a Boolean. Empty values are considered as false.

@@ -25,17 +25,9 @@ $global-width: 70rem !default; // 1120px
 $global-lineheight: 1.4 !default;
 
 
-/// Color used for light gray UI items.
-/// @type Color
-$light-gray: #e6e6e6 !default;
-
 /// Color used for medium gray UI items.
 /// @type Color
 $medium-gray: #cacaca !default;
-
-/// Color used for dark gray UI items.
-/// @type Color
-$dark-gray: #8a8a8a !default;
 
 /// Color used for black ui items.
 /// @type Color
@@ -45,21 +37,9 @@ $black: #0a0a0a !default;
 /// @type Color
 $white: #fefefe !default;
 
-/// Background color of the body.
-/// @type Color
-$body-background: var(--f-color-bg-0) !default;
-
-/// Text color of the body.
-/// @type Color
-$body-font-color: var(--f-color-text-0) !default;
-
 /// Font stack of the body.
 /// @type List
 $body-font-family: "Roboto", helvetica, arial, sans-serif !default;
-
-/// Set to `true` to enable safe padding on the body for non-rectangular devices (i.e. phones with notches)
-/// @type Boolean
-$body-safe-padding: false !default;
 
 /// Set to `true` to enable antialiased type, using the `-webkit-font-smoothing` and `-moz-osx-font-smoothing` CSS properties.
 /// @type Boolean

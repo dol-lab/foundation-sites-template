@@ -28,6 +28,3 @@
 /// @alias sl-remove
 ///
 
-@function sl-without($list, $value) {
-  @return sl-remove($list, $value);
-}

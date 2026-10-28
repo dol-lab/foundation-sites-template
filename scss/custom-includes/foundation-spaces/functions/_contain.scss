@@ -28,6 +28,3 @@
 /// @alias sl-contain
 ///
  
-@function sl-include($list, $value) {
-  @return sl-contain($list, $value);
-}

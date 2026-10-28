@@ -32,10 +32,6 @@ $breadcrumbs-item-color-current: var(--f-color-text-1) !default;
 /// @type Color
 $breadcrumbs-item-color-disabled: var(--f-color-text-2) !default;
 
-/// Opacity of disabled breadcrumb links.
-/// @type Number
-$breadcrumbs-item-opacity-disabled: 40% !default;
-
 /// Margin between breadcrumb items.
 /// @type Number
 $breadcrumbs-item-margin: 0.5rem !default;

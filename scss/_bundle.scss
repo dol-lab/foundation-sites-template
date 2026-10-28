@@ -17,10 +17,6 @@
 @use "custom-styles";
 
 ///
-///  Motion UI from node_modules (still on Sass imports inside), loaded as one module.
-@use "motion-ui";
-
-///
 ///  Every component rule, in cascade order. `@content` is where app.scss puts
 ///  the light/dark palette; the backend sets its tokens outside `.f`.
 @mixin styles {
@@ -33,6 +29,4 @@
 
   ///  Our styling, comes late to overwrite foundation styles.
   @include custom-styles.styles;
-  @include motion-ui.motion-ui-transitions;
-  @include motion-ui.motion-ui-animations;
 }

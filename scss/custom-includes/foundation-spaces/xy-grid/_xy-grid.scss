@@ -44,10 +44,6 @@ $grid-container-padding: (
   xxlarge: 2 * global.$global-gutter-large
 ) !default;
 
-/// The maximum width to apply to a grid container
-/// @type Number
-$grid-container-max: global.$global-width !default;
-
 /// The maximum number of cells in an XY block grid.
 /// @type Number
 $xy-block-grid-max: 8 !default;

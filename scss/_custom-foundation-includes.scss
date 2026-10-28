@@ -1,17 +1,10 @@
 @use "custom-includes/foundation-spaces/components/card";
 @use "custom-includes/foundation-spaces/components/close-button";
-@use "custom-includes/foundation-spaces/components/drilldown";
 @use "custom-includes/foundation-spaces/components/dropdown-menu";
 @use "custom-includes/foundation-spaces/components/flex";
-@use "custom-includes/foundation-spaces/components/float";
-@use "custom-includes/foundation-spaces/components/media-object";
-@use "custom-includes/foundation-spaces/components/menu-icon";
-@use "custom-includes/foundation-spaces/components/off-canvas";
 @use "custom-includes/foundation-spaces/components/pagination";
 @use "custom-includes/foundation-spaces/components/responsive-embed";
 @use "custom-includes/foundation-spaces/components/thumbnail";
-@use "custom-includes/foundation-spaces/components/title-bar";
-@use "custom-includes/foundation-spaces/components/top-bar";
 @use "custom-includes/foundation-spaces/components/visibility";
 @use "custom-includes/foundation-spaces/forms/forms";
 @use "custom-includes/foundation-spaces/prototype/prototype";
@@ -30,32 +23,14 @@
 @use "custom-includes/s-switch";
 @use "custom-includes/s-tabs";
 
-///
-/// Global include file.
-/// These includes are necessary, as every foundation component is designed to live inside a mixin.
-/// spaces-* mixins are adaptations of foundation components.
-///
-
-// Foundation components the platform does not use (index.html demos top-bar and drilldown).
-// A project turns one on before loading the entry: `@use "…/scss/custom-foundation-includes" with ($include-top-bar: true);`
-$include-media-object: false !default; // .media-object, .media-object-section, .stack-for-*
-$include-drilldown-menu: false !default; // .is-drilldown, .drilldown, .js-drilldown-back
-$include-off-canvas: false !default; // .off-canvas(-wrapper, -content, -absolute), .js-off-canvas-overlay, .reveal-for-*, .in-canvas-for-*
-$include-title-bar: false !default; // .title-bar, .title-bar-left, -right, -title
-$include-top-bar: false !default; // .top-bar, .top-bar-left, -right, -title, .stacked-for-*
-$include-float-classes: false !default; // .float-left, .float-right, .float-center, .clearfix
-
-///  Global styles
-///
-
-// @include foundation-global-styles; // don't include. check app.scss
+//  Foundation's components (forked in foundation-spaces/, `s-*` ones read our settings), in cascade order.
+//  Foundation's table is left out: it fights Gutenberg's table styles.
 
 @mixin styles {
   @include forms.spaces-forms;
   @include typography.foundation-typography;
 
   // Grid class groups nothing uses, neither the platform nor index.html.
-  // Flip one back on if a project needs it.
   @include classes.foundation-xy-grid-classes(
     $collapse: false, // .small-margin-collapse, .small-padding-collapse
     $frame-grid: false, // .grid-frame, .cell-block
@@ -63,9 +38,7 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
     $offset: false, // .small-offset-2
   );
 
-  ///  Generic components
-  ///
-
+  // Components
   @include s-button.spaces-button;
   @include s-button-group.spaces-button-group;
   @include close-button.foundation-close-button;
@@ -73,66 +46,20 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
   @include s-progress-bar.spaces-progress-bar;
   @include s-switch.spaces-switch;
   @include s-radio-tabs.spaces-radio-tabs;
-
-  // @include foundation-table; // removed, as interferes with Gutenberg default table styles.
-
-  ///  Basic components
-  ///
-
   @include s-badge.spaces-badge;
   @include s-breadcrumbs.spaces-breadcrumbs;
   @include s-callout.spaces-callout;
   @include card.foundation-card;
   @include pagination.foundation-pagination;
-
-  ///  Containers
-  ///
-
-  @if $include-media-object {
-    @include media-object.foundation-media-object;
-  }
-
   @include responsive-embed.foundation-responsive-embed;
   @include s-tabs.spaces-tabs;
   @include thumbnail.foundation-thumbnail;
-
-  ///  Menu-based containers
-  ///
-
   @include s-menu.spaces-menu;
-  @include menu-icon.foundation-menu-icon;
-
-  @if $include-drilldown-menu {
-    @include drilldown.foundation-drilldown-menu;
-  }
-
   @include dropdown-menu.foundation-dropdown-menu;
-
-  ///  Layout components
-  ///
-
-  @if $include-off-canvas {
-    @include off-canvas.foundation-off-canvas;
-  }
-
   @include s-reveal.spaces-reveal;
 
-  // @include foundation-sticky;
-  @if $include-title-bar {
-    @include title-bar.foundation-title-bar;
-  }
-
-  @if $include-top-bar {
-    @include top-bar.foundation-top-bar;
-  }
-
-  ///  Helpers
-  ///
+  // Helpers
   @include visibility.foundation-visibility-classes;
   @include prototype.foundation-prototype-classes;
   @include flex.foundation-flex-classes;
-
-  @if $include-float-classes {
-    @include float.foundation-float-classes;
-  }
 }

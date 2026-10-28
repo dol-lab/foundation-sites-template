@@ -37,6 +37,3 @@
 /// @alias sl-purge
 ///
  
-@function sl-clean($list) {
-  @return sl-purge($list);
-}

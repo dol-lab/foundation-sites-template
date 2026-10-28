@@ -10,10 +10,6 @@
 /// @group menu
 ////
 
-/// Margin of a menu.
-/// @type Number
-$menu-margin: 0 !default;
-
 /// Left-hand margin of a nested menu.
 /// @type Number
 $menu-nested-margin: global.$global-menu-nested-margin !default;
