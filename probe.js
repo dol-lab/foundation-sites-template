@@ -1,7 +1,10 @@
 // What styles an element of the demo page, as JSON: box, computed values and the CSS rules
 // that match it, with their SCSS source line (via css/*.map) or their line in index.html.
-// `bun run probe '<selector>' [property…] [--width=375[,800…]] [--state=<shots.config.js name>] [--click=<selector|x,y>…] [--scheme=dark]`.
-// `--click` (repeatable) clicks after the state, in order; "x,y" clicks viewport coordinates (light dismiss).
+// `bun run probe '<selector>' [property…] [--width=375[,800…]] [--state=<shots.config.js name>] [--hover=<selector>…] [--click=<selector|x,y>…] [--scheme=dark] [--browser=firefox]`.
+// `bun run probe --overflow ['<scope>'] [--width=…]` lists instead, per width, whether the page scrolls sideways and the visible
+// elements in scope (default: the whole page) wider than their box: "<element> <scrollWidth> > <clientWidth> <overflow-x> (in <parent>)".
+// `--hover` and `--click` (repeatable) run after the state, in the order given; "x,y" clicks viewport coordinates (light dismiss).
+// Firefox has no DevTools protocol: it prints the box and computed values without rules.
 // With properties, only rules declaring them are listed, for inheriting ones also on ancestors.
 // Several widths resize the same page in turn (state applied once) and list one entry per width under `widths`.
 const fs = require("node:fs");
@@ -97,11 +100,14 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
     .filter((a) => a.startsWith("--"))
     .map((a) => /^--([^=]*)=?(.*)$/s.exec(a).slice(1));
   const opts = Object.fromEntries(flags);
-  const clicks = flags.filter(([name]) => name === "click").map(([, value]) => value);
-  const [selector, ...props] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+  const steps = flags.filter(([name]) => name === "hover" || name === "click");
+  const positional = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+  const overflow = "overflow" in opts;
+  const [selector = overflow ? "html" : undefined, ...props] = positional;
   if (!selector) {
     console.error(
-      "usage: bun run probe '<selector>' [property…] [--width=375[,800…]] [--state=<name>] [--click=<selector|x,y>…] [--scheme=dark]",
+      "usage: bun run probe '<selector>' [property…] [--width=375[,800…]] [--state=<name>] [--hover=<selector>…] [--click=<selector|x,y>…] [--scheme=dark] [--browser=firefox]\n" +
+        "       bun run probe --overflow ['<scope>'] [--width=…] [--state=…] […]",
     );
     process.exit(2);
   }
@@ -111,11 +117,17 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
   }
 
   const widths = (opts.width || "1280").split(",").map(Number);
-  const browser = await launch();
+  const firefox = opts.browser === "firefox";
+  const browser = await launch(opts.browser);
   try {
     const page = await openDemo(browser, widths[0], opts.scheme);
+    const resize = async (width) => {
+      await page.setViewportSize({ width, height: HEIGHT });
+      // The demo throttles its resize handlers.
+      await page.waitForTimeout(300);
+    };
     if (opts.state) await applyState(page, STATES[opts.state]);
-    if (clicks.length) await applyState(page, { click: clicks });
+    for (const [name, value] of steps) await applyState(page, { [name]: [value] });
     const el = page.locator(selector);
     const count = await el.count();
     if (!count) {
@@ -123,22 +135,32 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
       process.exit(1);
     }
 
+    if (overflow) {
+      const results = [];
+      for (const [i, width] of widths.entries()) {
+        if (i) await resize(width);
+        results.push({ width, ...(await overflowing(el)) });
+      }
+      console.log(
+        JSON.stringify({ scope: selector, ...(results.length > 1 ? { widths: results } : results[0]) }, null, 2),
+      );
+      return;
+    }
+
     // Matched rules come from the DevTools protocol, which knows their stylesheet and position.
-    const cdp = await page.context().newCDPSession(page);
+    const cdp = firefox ? null : await page.context().newCDPSession(page);
     const sheets = {};
-    cdp.on("CSS.styleSheetAdded", ({ header }) => (sheets[header.styleSheetId] = header));
-    await cdp.send("DOM.enable");
-    await cdp.send("CSS.enable");
+    if (cdp) {
+      cdp.on("CSS.styleSheetAdded", ({ header }) => (sheets[header.styleSheetId] = header));
+      await cdp.send("DOM.enable");
+      await cdp.send("CSS.enable");
+    }
     const marker = "data-probe-target";
     await el.first().evaluate((node, m) => node.setAttribute(m, ""), marker);
 
     const results = [];
     for (const [i, width] of widths.entries()) {
-      if (i) {
-        await page.setViewportSize({ width, height: HEIGHT });
-        // The demo throttles its resize handlers.
-        await page.waitForTimeout(300);
-      }
+      if (i) await resize(width);
       results.push({ width, ...(await probe(cdp, sheets, el, marker)) });
     }
     const out = results.length > 1 ? { widths: results } : results[0];
@@ -148,7 +170,32 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
   }
 
   /**
-   * @param {object} cdp The page's DevTools session.
+   * @param {object} el Locator of the scope.
+   * @return {Promise<object>} Whether the page scrolls sideways and the visible elements wider than their box.
+   */
+  async function overflowing(el) {
+    return el.first().evaluate((scope) => {
+      const doc = document.documentElement;
+      const name = (e) =>
+        e.localName +
+        (e.id ? "#" + e.id : "") +
+        [...e.classList]
+          .slice(0, 3)
+          .map((c) => "." + c)
+          .join("");
+      // clientWidth > 1 skips inline boxes and visually hidden (sr-only) text. Inside a box that scrolls or clips
+      // (listed itself, with its overflow-x), wider content is that box's business, so it is left out.
+      const elements = [scope, ...scope.querySelectorAll("*")]
+        .filter((e) => e.clientWidth > 1 && e.scrollWidth > e.clientWidth && e.checkVisibility())
+        .map((e) => ({ e, x: getComputedStyle(e).overflowX }))
+        .filter(({ e }, _, all) => !all.some((a) => a.x !== "visible" && a.e !== e && a.e.contains(e)))
+        .map(({ e, x }) => `${name(e)} ${e.scrollWidth} > ${e.clientWidth} ${x} (in ${name(e.parentElement)})`);
+      return { pageScrollsX: doc.scrollWidth > doc.clientWidth, pageWidth: doc.scrollWidth, elements };
+    });
+  }
+
+  /**
+   * @param {object|null} cdp The page's DevTools session, null in Firefox.
    * @param {object} sheets Stylesheet headers by id.
    * @param {object} el Locator of the element.
    * @param {string} marker Attribute set on it.
@@ -165,6 +212,7 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
         computed: Object.fromEntries(names.map((n) => [n, cs.getPropertyValue(n)])),
       };
     }, shown);
+    if (!cdp) return info;
 
     const { root } = await cdp.send("DOM.getDocument", { depth: 0 });
     const { nodeId } = await cdp.send("DOM.querySelector", { nodeId: root.nodeId, selector: `[${marker}]` });

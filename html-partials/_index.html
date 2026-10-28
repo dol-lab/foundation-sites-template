@@ -6,7 +6,7 @@
                 @@toc
             </div>
         </details>
-        <!-- Demo settings, in reach while scrolling: color mode (a copy of the avatar menu's, kept in sync in _demo.html), the Space theme and the demo-only reduced motion. -->
+        <!-- Demo settings, in reach while scrolling: color mode (a copy of the avatar menu's, kept in sync in _demo.html), the Space theme, the brand color and the demo-only reduced motion. -->
         <div class="card-section demo-index-settings">
             <fieldset class="radio-tabs radio-tabs-icons stretch small hollow" data-color-mode aria-label="Color theme">
                 <label for="demo-mode-light" class="radio-tabs-option" aria-label="Light">
@@ -25,7 +25,7 @@
                     <span>System</span>
                 </label>
             </fieldset>
-            <div class="demo-index-theme pt-3">
+            <div class="demo-index-rows">
                 <label class="label-wrapper" for="themingSwitch">
                     <span class="switch tiny brand">
                         <input class="switch-input" role="switch" id="themingSwitch" type="checkbox" checked>
@@ -35,14 +35,22 @@
                 </label>
                 <input type="color" id="theme-color" value="#975938" aria-label="Theme color">
                 <output class="demo-hex" for="theme-color">#975938</output>
-            </div>
-            <label class="label-wrapper pt-3" for="demo-reduce-motion">
-                <span class="switch tiny">
-                    <input class="switch-input" role="switch" id="demo-reduce-motion" type="checkbox" data-reduce-motion>
-                    <span class="switch-paddle" aria-hidden="true"></span>
+
+                <span class="demo-index-brand">
+                    <label for="brand-color">Brand</label>
+                    <button type="button" class="button clear tiny" id="brand-color-reset" hidden>Reset</button>
                 </span>
-                <span>Reduce motion</span>
-            </label>
+                <input type="color" id="brand-color" value="#db3b01">
+                <output class="demo-hex" for="brand-color">#db3b01</output>
+
+                <label class="label-wrapper" for="demo-reduce-motion">
+                    <span class="switch tiny">
+                        <input class="switch-input" role="switch" id="demo-reduce-motion" type="checkbox" data-reduce-motion>
+                        <span class="switch-paddle" aria-hidden="true"></span>
+                    </span>
+                    <span>Reduce motion</span>
+                </label>
+            </div>
         </div>
     </div>
 </nav>

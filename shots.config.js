@@ -55,9 +55,14 @@ module.exports = {
   "header-avatar": {
     click: ["#app-header li.avatar > a"],
   },
-  "demo-controls": {
+  "demo-settings": {
     click: [],
-    target: "#demo-controls",
+    target: "#contents .demo-index-settings",
+    widths: [1280],
+  },
+  "demo-header": {
+    click: [],
+    target: ".feature-image.large",
   },
   "markup-open": {
     click: ["#buttons .demo-markup > summary"],

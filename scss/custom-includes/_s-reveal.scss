@@ -5,8 +5,6 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
-@use "sass:map";
-
 ////
 /// @group reveal
 ////
@@ -19,9 +17,10 @@ $reveal-background: var(--f-color-bg-1) !default;
 /// @type String
 $reveal-width: calc(100% - 2 * #{global.$global-gutter-large}) !default;
 
-/// Default maximum width of a modal.
+/// Default maximum width of a modal: a large-8 cell of the grid container (Spaces' feed column), so
+/// `.prose-layout` gets the columns it has in a post card.
 /// @type Number
-$reveal-max-width: map.get(breakpoint.$breakpoints, large) !default;
+$reveal-max-width: calc((var(--f-grid-container-max) - #{global.$global-gutter-large}) * 2 / 3 - #{global.$global-gutter-large}) !default;
 
 /// Default padding inside a modal.
 /// @type Number
@@ -115,6 +114,11 @@ $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, trans
       padding-inline-end: 2rem;
     }
 
+    // `.prose-layout` brings its own side columns, so it spans the padding, as in a post card.
+    &:not(.collapse) > .prose-layout {
+      margin-inline: -$reveal-padding;
+    }
+
     // Remove padding
     &.collapse {
       padding: 0;
@@ -123,7 +127,7 @@ $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, trans
     // Sizing classes
     &.tiny  { @include reveal-modal-width(30%); }
     &.small { @include reveal-modal-width(50%); }
-    &.large { @include reveal-modal-width(90%); }
+    &.large { @include reveal-modal-width(90%, var(--f-grid-container-max)); }
 
     // Full-screen mode
     &.full {

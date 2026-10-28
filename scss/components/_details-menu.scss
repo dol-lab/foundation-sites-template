@@ -29,7 +29,11 @@ $ring: 1.5rem;
       margin: calc(var(--_offset) / 2);
       border-radius: var(--f-radius);
       background: var(--f-color-bg-1);
-      box-shadow: var(--f-drop-shadow-small);
+
+      // Dark mode barely shows a shadow: a hairline keeps each nested level apart.
+      box-shadow:
+        0 0 0 1px light-dark(transparent, var(--f-color-border-1)),
+        var(--f-drop-shadow-small);
     }
 
     & > summary {

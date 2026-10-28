@@ -65,9 +65,10 @@ ${preview}
     codespan({ text }) {
       // A color value gets a swatch of that color.
       const color = text.match(/^#[0-9a-f]{3,8}$/i) ? text : text.match(/^--f-color-[a-z0-9-]+$/) ? `var(${text})` : "";
-      return color
-        ? `<code class="has-swatch"><span class="swatch" style="--swatch:${color}"></span>${text}</code>`
-        : `<code>${escapeHtml(text)}</code>`;
+      if (color) return `<code class="has-swatch"><span class="swatch" style="--swatch:${color}"></span>${text}</code>`;
+      // A value with spaces wraps between its words only (see .demo-word).
+      const words = text.split(" ").map(escapeHtml);
+      return `<code>${words.length > 1 ? words.map((w) => `<span class="demo-word">${w}</span>`).join(" ") : words[0]}</code>`;
     },
   },
 });
@@ -94,10 +95,15 @@ function renderSection(file) {
   const { title, intro, body } = parseDoc(fs.readFileSync(file, "utf8"), file);
   const id = path.basename(file, ".md");
   const heading = `<h2>${marked.parseInline(title)}</h2>`;
-  // Wide tables scroll instead of overflowing a phone.
-  const rest = marked
-    .parse(body)
-    .replace(/<table>([\s\S]*?)<\/table>/g, '<div class="table-scroll"><table class="table">$1</table></div>');
+  // Each cell carries its column's label, shown when a phone stacks the table (.demo-table).
+  const rest = marked.parse(body).replace(/<table>([\s\S]*?)<\/table>/g, (_m, table) => {
+    const labels = [...table.matchAll(/<th[^>]*>([\s\S]*?)<\/th>/g)].map((m) => m[1].replace(/<[^>]+>|"/g, ""));
+    const rows = table.replace(/<tr>([\s\S]*?)<\/tr>/g, (_r, cells) => {
+      let i = 0;
+      return `<tr>${cells.replace(/<td/g, () => `<td data-label="${labels[i++]}"`)}</tr>`;
+    });
+    return `<div class="table-scroll"><table class="table demo-table">${rows}</table></div>`;
+  });
   const content = `${intro && `<p class="demo-intro">${marked.parseInline(intro)}</p>\n`}${rest}`;
   const card = `<div class="card static overflow-initial demo-doc">
 <div class="card-section">

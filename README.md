@@ -26,7 +26,7 @@ Each section is written in `docs/<id>.md` and becomes `<section id="<id>">` wher
 
 A link to another section is written `[details](details.md)`, which works on GitHub and points at `#details` on the page. A `--f-color-*` or hex value in backticks gets a swatch.
 
-`build-html.js` builds the table of contents from the sections and the `<!-- group: … -->` comments between them in `index.src.html`, and writes `llms.txt`: an index (llmstxt.org) linking each section's `.md` with its intro. `html-partials/` holds only the page frame (`_head-contents`, `_main-nav`, `_space-header`, `_index`, `_demo`, `_demo-controls`) and the markup captured from Spaces (`_space*.html`, shown in place after `docs/space.md`, a `.demo-captured` marker without style). `index.html` and `llms.txt` are gitignored and built by the Pages workflow, which also publishes `docs/`.
+`build-html.js` builds the table of contents from the sections and the `<!-- group: … -->` comments between them in `index.src.html`, and writes `llms.txt`: an index (llmstxt.org) linking each section's `.md` with its intro. `html-partials/` holds only the page frame (`_head-contents`, `_main-nav`, `_space-header`, `_index`, `_demo`) and the markup captured from Spaces (`_space*.html`, shown in place after `docs/space.md`, a `.demo-captured` marker without style). `index.html` and `llms.txt` are gitignored and built by the Pages workflow, which also publishes `docs/`.
 
 ## Files
 
