@@ -206,22 +206,22 @@
 					<li><a class="submenu-element" href="#">My Profile</a></li>
 					<li class="pt-3 pb-3 px-4">
 						<span class="pb-1" style="display: inline-block;">Color theme</span>
-						<fieldset class="radio-tabs radio-tabs-icons stretch small mx-auto hollow" data-color-mode>
-							<button class="radio-tabs-option">
+						<fieldset class="radio-tabs radio-tabs-icons stretch small mx-auto hollow" data-color-mode aria-label="Color theme">
+							<label for="theme-light" class="radio-tabs-option" aria-label="Light">
 								<i class="fa-solid fa-sun"></i>
 								<input type="radio" name="theme_choice" id="theme-light" value="light">
-								<label for="theme-light">Light</label>
-							</button>
-							<button class="radio-tabs-option">
+								<span>Light</span>
+							</label>
+							<label for="theme-dark" class="radio-tabs-option" aria-label="Dark">
 								<i class="fa-solid fa-moon"></i>
 								<input type="radio" name="theme_choice" id="theme-dark" value="dark">
-								<label for="theme-dark">Dark</label>
-							</button>
-							<button class="radio-tabs-option">
+								<span>Dark</span>
+							</label>
+							<label for="theme-auto" class="radio-tabs-option" aria-label="System">
 								<i class="fa-solid fa-desktop"></i>
 								<input type="radio" name="theme_choice" id="theme-auto" value="auto">
-								<label for="theme-auto">System</label>
-							</button>
+								<span>System</span>
+							</label>
 						</fieldset>
 						<small class="pt-3" style="display: inline-block;">Pick light, dark, or automatic to follow your device.</small>
 					</li>
