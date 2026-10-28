@@ -80,6 +80,29 @@ module.exports = {
     target: "#button-group .demo-example:has(.hollow)",
     widths: [1280],
   },
+  "icon-dots-focus": {
+    click: [],
+    focus: "#buttons .demo-row > .dots",
+    target: "#buttons .demo-preview:has(.icon-button)",
+    widths: [1280],
+  },
+  "icon-link-focus": {
+    click: [],
+    focus: "#buttons .demo-row > .icon-button",
+    target: "#buttons .demo-preview:has(.icon-button)",
+    widths: [1280],
+  },
+  "icon-close-focus": {
+    click: [],
+    focus: "#buttons .demo-row > .close-button",
+    target: "#buttons .demo-preview:has(.icon-button)",
+    widths: [1280],
+  },
+  "tooltip-rich": {
+    click: [],
+    focus: '[data-tooltip-content="tip-roles"]',
+    widths: [1280],
+  },
   "popover-open": {
     click: ['[popovertarget="demo-popover"]'],
   },

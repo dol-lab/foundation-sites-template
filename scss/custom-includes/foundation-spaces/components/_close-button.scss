@@ -26,18 +26,18 @@ $closebutton-z-index: 10 !default;
 /// @see $closebutton-offset-vertical
 $closebutton-default-size: medium !default;
 
-/// Right (or left) offset(s) for a close button.
+/// Right (or left) offset(s) for a close button. Medium keeps the glyph of its square box (`components/_dots.scss`) where it was.
 /// @type Number|Map
 $closebutton-offset-horizontal: (
   small: 1rem,
-  medium: 0.75rem,
+  medium: 0.125rem,
 ) !default;
 
 /// Top (or bottom) offset(s) for a close button.
 /// @type Number|Map
 $closebutton-offset-vertical: (
   small: 1rem,
-  medium: 0.5rem,
+  medium: 0.25rem,
 ) !default;
 
 /// Size(s) of the close button. Used to generate sizing modifiers.

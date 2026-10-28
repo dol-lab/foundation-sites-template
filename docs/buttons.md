@@ -53,9 +53,9 @@ Padding is in `em` and each size has its own height, so the proportions hold. De
 </div>
 ```
 
-## Dots and close
+## Icon buttons
 
-Icon buttons on a card (`.dots`, an `.icon-button` link around an icon) take `--f-icon-color`, darker on hover, keyboard focus or while their menu is open.
+`.dots` (a menu), `.icon-button` (a link around an icon) and `.close-button` share one square box, an inset focus ring and `--f-icon-color`, darker on hover, keyboard focus or while their menu is open. `.close-button` sits in the top right corner of its positioned parent: a callout, a modal, here the preview.
 
 ```html example row
 <button class="button p-0 m-0 clear dots" type="button" aria-label="More"></button>

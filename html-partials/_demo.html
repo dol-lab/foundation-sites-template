@@ -30,17 +30,19 @@
         max-width: 42rem;
     }
 
-    /* Inline code is a name: keep it on one line. A docs code with spaces (a value) comes split into .demo-word spans (build-html.js), so it wraps between its words but never at a hyphen; on a phone a one-word docs code may break anywhere rather than overflow. */
+    /* Inline code is a name: it moves to the next line whole. One longer than the line breaks between its words (build-html.js wraps each in a .demo-word); a name in a table never breaks. */
     :not(pre) > code {
-        white-space: nowrap;
+        display: inline-block;
+        max-width: 100%;
     }
 
-    .demo-doc code:has(> .demo-word) {
-        white-space: normal;
-    }
-
+    td > code,
     .demo-word {
         white-space: nowrap;
+    }
+
+    td > code:has(> .demo-word) {
+        white-space: normal;
     }
 
     /* Syntax highlighting: build-html.js marks the tokens up with highlight.js. Fixed hues at a lightness that holds AA on bg-2 in both modes. */
@@ -232,6 +234,7 @@
     }
 
     .demo-preview {
+        position: relative;
         padding: 1.5rem 1.25rem;
         background: radial-gradient(color-mix(in oklch, var(--f-color-border-0) 60%, transparent) 1px, transparent 1px) 0 0 / 1rem 1rem, light-dark(var(--f-color-bg-2), color-mix(in oklch, var(--f-color-bg-1), var(--f-color-bg-0)));
 
@@ -696,8 +699,16 @@
         probe.style.cssText = 'color: var(--f-color-brand); background-color: var(--f-color-brand-contrast)';
         const { color, backgroundColor } = getComputedStyle(probe);
         probe.remove();
+        // The tab bar follows the system's color scheme, not the page's. A brand below 3:1 against it gets a rim.
+        const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+        const ctx = document.createElement('canvas').getContext('2d');
+        ctx.fillStyle = color;
+        ctx.fillRect(0, 0, 1, 1);
+        const brand = luminance([...ctx.getImageData(0, 0, 1, 1).data.slice(0, 3)]);
+        const bar = dark ? 0.016 : 0.75; // Chrome's and Firefox's tab bars, about #202124 and #dee1e6
+        const rim = (Math.max(brand, bar) + 0.05) / (Math.min(brand, bar) + 0.05) < 3 ? (dark ? 'white' : 'black') : 'none';
         // The cube from the Spaces logo.
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 138 151"><path d="M137,98.93V29.08a16.05,16.05,0,0,0-13.39-15.83L56,1.92A26,26,0,0,0,33.29,9.17L8.6,33.87A26,26,0,0,0,1,52.25V122.1a16,16,0,0,0,13.39,15.82L82,149.26A26,26,0,0,0,104.65,142l24.7-24.69A26,26,0,0,0,137,98.93Z" fill="${color}"/><text x="69" y="110" fill="${backgroundColor}" font-family="system-ui, sans-serif" font-size="96" font-weight="800" text-anchor="middle">S</text></svg>`;
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 154 167"><path d="M137,98.93V29.08a16.05,16.05,0,0,0-13.39-15.83L56,1.92A26,26,0,0,0,33.29,9.17L8.6,33.87A26,26,0,0,0,1,52.25V122.1a16,16,0,0,0,13.39,15.82L82,149.26A26,26,0,0,0,104.65,142l24.7-24.69A26,26,0,0,0,137,98.93Z" fill="${color}" stroke="${rim}" stroke-width="16" paint-order="stroke"/><text x="69" y="110" fill="${backgroundColor}" font-family="system-ui, sans-serif" font-size="96" font-weight="800" text-anchor="middle">S</text></svg>`;
         const icon = document.querySelector('link[rel~="icon"]');
         icon.type = 'image/svg+xml';
         icon.href = `data:image/svg+xml,${encodeURIComponent(svg)}`;
@@ -708,11 +719,18 @@
      * @return {string} Black or white, whichever contrasts more (WCAG luminance).
      */
     function contrastOn(hex) {
-        const [r, g, b] = [1, 3, 5].map((i) => {
-            const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+        return luminance([1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16))) > 0.179 ? 'black' : 'white';
+    }
+
+    /**
+     * @param {number[]} rgb Red, green and blue, 0 to 255.
+     * @return {number} The WCAG relative luminance.
+     */
+    function luminance(rgb) {
+        const [r, g, b] = rgb.map((v) => {
+            const c = v / 255;
             return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
         });
-        const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-        return luminance > 0.179 ? 'black' : 'white';
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
     }
 </script>

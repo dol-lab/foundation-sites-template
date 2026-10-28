@@ -1,14 +1,31 @@
 @use "../custom-includes/foundation-spaces/global";
 @use "../custom-settings";
 
-// .dots and .add: icon buttons drawn with a pseudo-element. WordPress' pagination prints its gap as
-// `span.page-numbers.dots` with its own "…", so that one is left alone (at `.dots` specificity).
+// Icon buttons: `.dots` and `.add` (drawn with a pseudo-element), `.icon-button` (a link around an icon) and
+// `.close-button`. WordPress' pagination prints its gap as `span.page-numbers.dots` with its own "…", so that
+// one is left alone (at `.dots` specificity).
 
 @mixin styles {
+  // One square box and one ring for all of them. The ring is inset: they sit in corners, which may clip.
+  .dots:not(:where(.page-numbers)),
+  .add,
+  .icon-button,
+  .close-button {
+    --f-focus-offset: var(--f-focus-inset);
+  }
+
+  .icon-button,
+  .close-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: custom-settings.$button-height;
+    height: custom-settings.$button-height;
+    border-radius: var(--f-radius);
+  }
+
   .dots:not(:where(.page-numbers)),
   .add {
-    --f-focus-offset: var(--f-focus-inset); // they sit in card corners, which clip
-
     cursor: pointer;
     z-index: 50;
     width: custom-settings.$button-height;
@@ -45,11 +62,12 @@
     }
   }
 
-  // Icon buttons on a card (a dot menu, a `.add`, `.icon-button`): as light as WCAG 1.4.11 allows at
-  // rest, darker on hover, keyboard focus or an open menu. No surface: a clear button's grey box would
-  // stay while its menu is open. Two tokens, so a consumer's own icon buttons can match.
+  // As light as WCAG 1.4.11 allows at rest, darker on hover, keyboard focus or an open menu. No surface:
+  // a clear button's grey box would stay while its menu is open. Two tokens, so a consumer's own icon
+  // buttons can match.
   :is(.dots:not(:where(.page-numbers)), .add).button.clear,
-  .icon-button {
+  .icon-button,
+  .close-button {
     color: var(--f-icon-color);
 
     &:hover,

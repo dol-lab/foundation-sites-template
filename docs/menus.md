@@ -15,7 +15,12 @@
 
 ## Dropdown menu
 
-A top-level item's `popover="manual"` child is its panel, opened below it by `js/app.js` (no init, so menus added later work). Hovering the item opens it and leaving closes it, unless it was opened by a click or clicked inside; a click on the item's link toggles it (its `href` is not followed), and Escape, a click outside or focus leaving the item close it. One panel is open at a time. Its link gets `aria-expanded`, and find-in-page opens a closed panel that holds the match (browsers with `hidden="until-found"`). A panel fires `toggle` (listen with capture, it does not bubble); scripts open one with `showPopover()`. Keyboard: Enter or Space on the item's link opens its panel, Tab walks into it in document order, Escape closes it and returns focus to the link, tabbing out of the item closes it.
+A top-level item's `popover="manual"` child is its panel, opened below it by `js/app.js` (delegated, so menus added later work). One panel is open at a time.
+
+- Pointer: hovering the item opens it, leaving closes it unless it was opened by a click or clicked inside; a click on the item's link toggles it (its `href` is not followed).
+- Keyboard: Enter or Space on the item's link opens it, Tab walks into it in document order, Escape closes it and returns focus to the link, tabbing out closes it.
+- Escape, a click outside or focus leaving the item close it. The link gets `aria-expanded`; find-in-page opens a closed panel that holds the match (browsers with `hidden="until-found"`).
+- Scripts: `showPopover()` opens one; it fires `toggle`, which does not bubble (listen with capture).
 
 ```html example
 <ul class="dropdown menu" data-dropdown-menu>

@@ -106,8 +106,8 @@ $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, trans
 
     // The close button sits in the corner, level with a leading heading, which keeps clear of it.
     > .close-button {
-      top: $reveal-padding * 0.75;
-      right: $reveal-padding * 0.75;
+      top: $reveal-padding * 0.75 - 0.25rem;
+      right: $reveal-padding * 0.75 - 0.75rem;
     }
 
     &:has(> .close-button) > :is(h1, h2, h3, h4, h5, h6):first-child {
