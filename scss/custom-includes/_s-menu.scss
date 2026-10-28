@@ -73,7 +73,7 @@ $menu-icons-back-compat: true !default;
     flex-wrap: wrap;
   }
 
-  &:not(.dropdown, .accordion-menu) {
+  &:not(.dropdown) {
     li {
       // A .details-link item also holds its caret and its open fold: its link hovers on its own (_details-menu.scss).
       &:not(.menu-text, .details-link):hover > a:not([role="tab"]),

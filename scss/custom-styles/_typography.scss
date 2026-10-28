@@ -77,17 +77,18 @@
         [role="menuitem"]
       )
     ) {
-    color: var(--f-color-brand);
+    color: var(--f-color-brand-text);
 
     // Spelled out rather than left to inherit from the line above: at this weight the reset's
     // own `a:focus { color: inherit }` would otherwise take the color off a focused link.
     &:focus {
-      color: var(--f-color-brand);
+      color: var(--f-color-brand-text);
     }
 
+    // Dark mode moves away from the page instead of toward it.
     &:hover,
     &:visited {
-      color: var(--f-color-brand-darker);
+      color: light-dark(var(--f-color-brand-darker), oklch(from var(--f-color-brand) 0.88 c h));
     }
   }
 

@@ -1,9 +1,9 @@
 @use "../custom-includes/foundation-spaces/global";
 
-// .dropdown-pane and .popover.
+// .popover: a pane of rows. A native `[popover]` one sits below the element whose `anchor-name` its
+// `position-anchor` names, right edges aligned; without anchor positioning the browser centers it.
 
 @mixin styles {
-  .dropdown-pane,
   .popover {
     max-width: 100%;
     box-shadow: global.$global-drop-shadow;
@@ -15,8 +15,16 @@
       font-size: 0.875rem;
     }
 
-    &.is-open {
-      z-index: var(--f-z-dropdown);
+    &[popover] {
+      padding: 0;
+      color: inherit;
+
+      @supports (position-area: bottom) {
+        inset: auto;
+        margin: 2px 0 0;
+        position-area: bottom span-left;
+        position-try-fallbacks: flip-block;
+      }
     }
 
     .card-divider,

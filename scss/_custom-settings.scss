@@ -64,12 +64,11 @@ $avatar-sizes: (
 $avatar-default-size: medium; // a key of $avatar-sizes
 
 // Page layers, emitted as `--f-z-<layer>`. Stacking inside one component keeps
-// small literal numbers; these only order things across the page. A dropdown
-// tops a modal so a menu opened inside one shows.
+// small literal numbers; these only order things across the page. Modals,
+// popovers and the tooltip are in the top layer, above all of them.
 $z-index: (
   header: 1000,
   overlay: 1005,
-  modal: 1006,
   dropdown: 2000,
 );
 

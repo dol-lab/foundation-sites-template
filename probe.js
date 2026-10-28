@@ -133,7 +133,7 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
     for (const [i, width] of widths.entries()) {
       if (i) {
         await page.setViewportSize({ width, height: HEIGHT });
-        // Foundation and the demo throttle their resize handlers.
+        // The demo throttles its resize handlers.
         await page.waitForTimeout(300);
       }
       results.push({ width, ...(await probe(cdp, sheets, el, marker)) });

@@ -35,51 +35,19 @@ $reveal-border: 1px solid var(--f-color-border-0) !default;
 /// @type Number
 $reveal-radius: global.$global-radius !default;
 
-/// Background color of modal overlays.
+/// Background color of the backdrop.
 /// @type Color
 $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, transparent) !default;
 
 
-// Placeholder selector for medium-and-up modals
-// Prevents duplicate CSS when defining multiple Reveal sizes
-// This should be in the same breakpoint then `@mixin reveal-modal-width`
-@include breakpoint.breakpoint(medium) {
-  %reveal-centered {
-    right: auto;
-    left: auto;
-    margin: 0 auto;
-  }
-}
-
-
-/// Adds styles for a modal overlay.
-/// @param {Color} $background [$reveal-overlay-background] - Background color of the overlay.
-@mixin reveal-overlay($background: $reveal-overlay-background) {
-  position: fixed;
-  inset: 0;
-  z-index: var(--f-z-overlay);
-  display: none;
-  background-color: $background;
-  overflow-y: auto;
-  backdrop-filter: blur(5px);
-}
-
 /// Adds base styles for a modal.
 @mixin reveal-modal-base {
-  z-index: var(--f-z-modal);
-
-  // Workaround android browser z-index bug
-  backface-visibility: hidden;
-  display: none;
   padding: $reveal-padding;
   border: $reveal-border;
   border-radius: $reveal-radius;
   background-color: $reveal-background;
   box-shadow: global.$global-drop-shadow-large;
-
-  @include breakpoint.breakpoint(medium) {
-    min-height: 0;
-  }
+  color: inherit;
 
   // Make sure rows don't have a min-width on them
   .column {
@@ -92,16 +60,13 @@ $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, trans
   }
 }
 
-/// Adjusts the width of a modal.
+/// Adjusts the width of a modal from medium up.
 /// @param {Number} $width - Width of the modal. Generally a percentage.
 /// @param {Number} $max-width [$reveal-max-width] - Maximum width of the modal.
 @mixin reveal-modal-width(
   $width: $reveal-width,
   $max-width: $reveal-max-width
 ) {
-  // Extends must be made outside of breakpoints for compatibility with newer Sass versions (libsass v3.5)
-  @extend %reveal-centered;
-
   @include breakpoint.breakpoint(medium) {
     width: $width;
     max-width: $max-width;
@@ -110,47 +75,35 @@ $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, trans
 
 /// Creates a full-screen modal, which stretches the full width and height of the window.
 @mixin reveal-modal-fullscreen {
-  inset: 0;
   width: 100%;
   max-width: none;
   height: 100%;
-  min-height: 100%;
-  margin-left: 0;
+  max-height: none;
+  margin: 0;
   border: 0;
   border-radius: 0;
 }
 
 @mixin spaces-reveal {
-  /// Disables the scroll when Reveal is shown to prevent the background from shifting
-  html.is-reveal-open {
-    position: fixed;
-    width: 100%;
-    overflow-y: hidden;
-
-    &.zf-has-scroll {
-      overflow-y: scroll;
-    }
-
-    body {
-      overflow-y: hidden;
-    }
+  // The page behind an open modal does not scroll.
+  html:has(dialog.reveal:modal) {
+    overflow: hidden;
   }
 
-  // Overlay
-  .reveal-overlay {
-    @include reveal-overlay;
-  }
-
-  // Modal container
+  // A `<dialog>` opened with showModal(): the browser puts it in the top layer and brings the backdrop,
+  // Escape and the focus handling; `js/app.js` adds `data-open`, `data-close` and the backdrop click.
   .reveal {
     @include reveal-modal-base;
     @include reveal-modal-width($reveal-width);
 
-    position: relative;
-    top: 100px;
-    margin-right: auto;
-    margin-left: auto;
+    max-height: calc(100% - 150px);
+    margin: 100px auto auto;
     overflow-y: auto;
+
+    &::backdrop {
+      background-color: $reveal-overlay-background;
+      backdrop-filter: blur(5px);
+    }
 
     // The close button sits in the corner, level with a leading heading, which keeps clear of it.
     > .close-button {
@@ -179,10 +132,6 @@ $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, trans
 
     @include breakpoint.breakpoint(breakpoint.$zf-zero-breakpoint only) {
       @include reveal-modal-fullscreen;
-    }
-
-    &.without-overlay {
-      position: fixed;
     }
   }
 }

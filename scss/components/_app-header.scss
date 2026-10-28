@@ -60,6 +60,7 @@
     background: linear-gradient(to bottom, var(--f-color-bg-1-untinted), var(--f-color-bg-1) 120%);
     position: relative;
     z-index: var(--f-z-header);
+    anchor-scope: --app-header-bar;
 
     & .menu {
       font-size: 0.875rem;
@@ -67,6 +68,7 @@
 
     & .menu.dropdown {
       flex-wrap: nowrap;
+      anchor-name: --app-header-bar;
     }
 
     & .menu.dropdown > li > :is(a, span, button) {
@@ -80,12 +82,10 @@
       color: inherit;
     }
 
-    & .menu li.menu-main-expand {
-      position: static;
-    }
-
-    & .menu li.menu-main-expand .menu {
-      width: 100%;
+    & .menu.dropdown > li.menu-main-expand > [popover] {
+      position-anchor: --app-header-bar;
+      position-area: bottom;
+      width: anchor-size(width);
     }
 
     & .menu li.no-arrow > a {
@@ -130,24 +130,22 @@
       width: 1.125rem;
     }
 
-    & .is-dropdown-submenu-parent.avatar {
+    & .avatar:has(> [popover]) {
       width: initial;
       margin-left: var(--f-gutter-small);
     }
 
-    & .is-dropdown-submenu-parent.avatar > a {
+    & .avatar:has(> [popover]) > a {
       padding: 0 !important;
     }
 
-    // Foundation opens a panel rightward unless it would touch the window edge, so on wide screens
-    // the avatar's panel would hang past the bar.
-    & .menu.dropdown > .avatar > .is-dropdown-submenu {
-      right: 0;
-      left: auto;
+    // The avatar's panel would hang past the bar.
+    & .menu.dropdown > .avatar > [popover] {
+      position-area: bottom span-left;
     }
 
-    & .is-dropdown-submenu-parent.avatar > a:hover,
-    & .is-dropdown-submenu-parent.avatar > a.is-active {
+    & .avatar:has(> [popover]) > a:hover,
+    & .avatar:has(> [popover]) > a.is-active {
       transform: scale(0.97);
     }
 
@@ -164,48 +162,48 @@
       margin-left: auto;
     }
 
-    & .is-dropdown-submenu-parent.is-active .menu-anchor,
+    & li:has(> :popover-open) > .menu-anchor,
     & .dropdown .menu-anchor:hover {
       background: var(--f-color-bg-2);
       color: var(--f-color-text-0);
     }
 
     & > * > .dropdown {
-      & .submenu {
+      & > li > [popover] {
         border-top: 1px solid var(--f-color-border-0);
         border-radius: 0 0 var(--f-radius) var(--f-radius);
         box-shadow: var(--f-drop-shadow);
         z-index: 1;
       }
 
-      & .submenu a {
+      & [popover] a {
         border-right: none;
       }
 
       // Foundation's menu line height of 1 crams an entry that wraps.
-      & .submenu .submenu-element {
+      & [popover] .submenu-element {
         line-height: 1.3;
       }
 
-      & .submenu li > :is(.menu-anchor, .submenu-element):hover {
+      & [popover] li > :is(.menu-anchor, .submenu-element):hover {
         background: var(--f-color-bg-2);
         color: var(--f-color-text-0);
       }
 
-      & .submenu .is-submenu-item:first-child a.submenu-element {
+      & [popover] > li:first-child a.submenu-element {
         padding-top: 1rem;
       }
 
-      & .submenu .is-submenu-item:last-child {
+      & [popover] > li:last-child {
         border-radius: 0 0 var(--f-radius) var(--f-radius);
       }
 
-      & .submenu .is-submenu-item:last-child a.submenu-element {
+      & [popover] > li:last-child a.submenu-element {
         padding-bottom: 1rem;
       }
 
-      & .submenu .is-submenu-item:last-child > *,
-      & .submenu .is-submenu-item:last-child .submenu-element > * {
+      & [popover] > li:last-child > *,
+      & [popover] > li:last-child .submenu-element > * {
         border-radius: 0 0 var(--f-radius) var(--f-radius);
       }
 

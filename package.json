@@ -8,7 +8,6 @@
 		"start": "gulp",
 		"build": "gulp sass",
 		"build:html": "bun build-html.js",
-		"build:js": "bun build-js.js",
 		"shots": "bun build-html.js && bun shots.js",
 		"check": "bun check.js",
 		"probe": "bun build-html.js > /dev/null && bun probe.js",
@@ -27,7 +26,6 @@
 		"node": ">=18.0"
 	},
 	"dependencies": {
-		"jquery": "^3.7.1",
 		"motion-ui": "^2.0.8",
 		"what-input": "^5.2.12"
 	},

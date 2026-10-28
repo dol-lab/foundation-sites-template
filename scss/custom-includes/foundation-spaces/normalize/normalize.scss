@@ -282,12 +282,13 @@
     display: none;
   }
 
-  // Disable outline when intent is clearly mouse and touch
+  // Hide a :focus outline after a mouse or touch interaction, never a :focus-visible one: what-input
+  // keeps intent "mouse" while keys go into a field, so Tab out of it would show no ring.
   [data-whatintent="mouse"],
   [data-whatintent="touch"],
   [data-whatinput="mouse"],
   [data-whatinput="touch"] {
-    *, *:focus {
+    & :focus:not(:focus-visible) {
       outline: none;
     }
   }

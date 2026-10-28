@@ -2,8 +2,8 @@
 // The popover sits in the top layer: no `overflow: hidden` ancestor clips it and it tops an open modal.
 
 @mixin styles {
-  .has-tip,
-  [data-tooltip] {
+  // Zero specificity: a component that carries a tooltip (a chip, a button) keeps its own display, weight and cursor.
+  :where(.has-tip, [data-tooltip]) {
     position: relative;
     display: inline-block;
     font-weight: normal;

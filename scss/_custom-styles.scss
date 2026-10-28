@@ -19,7 +19,7 @@
 @use "components/box-shadow";
 @use "components/card-item";
 @use "components/avatar-stack";
-@use "components/dropdown-pane";
+@use "components/popover";
 @use "components/info-chip";
 @use "components/label-wrapper";
 @use "components/switch";
@@ -35,7 +35,6 @@
 @use "components/edit-bar";
 @use "components/menu";
 @use "components/caret";
-@use "components/accordion-menu";
 @use "components/dropdown-menu";
 @use "components/icons";
 @use "components/sandwich-icon";
@@ -67,7 +66,7 @@
   @include box-shadow.styles;
   @include card-item.styles;
   @include avatar-stack.styles;
-  @include dropdown-pane.styles;
+  @include popover.styles;
   @include info-chip.styles;
   @include label-wrapper.styles;
   @include switch.styles;
@@ -83,7 +82,6 @@
   @include edit-bar.styles;
   @include menu.styles;
   @include caret.styles;
-  @include accordion-menu.styles;
   @include dropdown-menu.styles;
   @include icons.styles;
   @include sandwich-icon.styles;

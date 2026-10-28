@@ -2,13 +2,7 @@
 
 @use "custom-includes/foundation-spaces/normalize/normalize";
 @use "custom-includes/foundation-spaces/global";
-@use "custom-includes/foundation-spaces/util/breakpoint";
 @include normalize.foundation-normalize;
-
-// These styles are applied to a <meta> tag, which is read by the Foundation JavaScript
-.foundation-mq {
-  font-family: "#{breakpoint.zf-bp-serialize(breakpoint.$breakpoints)}";
-}
 
 // Who owns the box model, and who inherits it. app-backend.scss narrows both
 // to its `.f` wrapper: that build is loaded into pages we do not own, and

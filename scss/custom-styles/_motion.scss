@@ -85,7 +85,7 @@ $spinner-sizes: (
   }
 
   // Reduced motion, one rule for all: everything jumps to its end state. Not 0s, which would
-  // skip the transitionend/animationend that Foundation's Motion waits for. A spinner keeps
+  // skip the transitionend/animationend that scripts wait for. A spinner keeps
   // turning: frozen, it no longer says "busy". `*` does not match `::details-content`.
   // `data-motion="reduce"` or `"full"` (a user setting, usually on `<html>`) overrides the device's choice for its subtree.
   @media (prefers-reduced-motion: reduce) {

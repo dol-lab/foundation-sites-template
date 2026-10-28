@@ -45,6 +45,8 @@ Each color has `-contrast` (text on it, AA 4.5:1 in both modes) and `-darker` (h
 </div>
 ```
 
+Brand-colored text on the page takes `--f-color-brand-text` (prose links in `.brand-links`): the brand in light mode, lifted to `hollow-label()`'s lightness in dark mode, where the brand itself is below AA.
+
 Override the brand at runtime with `--f-color-brand-base` and `--f-color-brand-base-contrast`, on `:root` or inline on a `themed` element. `--f-color-brand` resolves where it is declared, so only those two redeclare it.
 
 ```css

@@ -50,14 +50,16 @@
   }
 }
 
-/// Prints `--f-color-brand(-contrast, -darker)` from `--f-color-brand-base(-contrast)`.
+/// Prints `--f-color-brand(-contrast, -darker, -text)` from `--f-color-brand-base(-contrast)`.
 /// A custom property resolves where it is declared, so an element that sets
 /// `-base` needs these redeclared on itself (see `[themed]` in _root-variables).
-/// The brand is not lightened in dark mode: its label would drop below AA.
+/// The brand is not lightened in dark mode: its label would drop below AA. Brand-colored text
+/// on the page (`-text`) is lightened instead, to `hollow-label()`'s dark lightness.
 @mixin brand-colors {
   --f-color-brand: var(--f-color-brand-base, #{map.get(colors.$foundation-palette, "brand")});
   --f-color-brand-contrast: var(--f-color-brand-base-contrast, #{map.get(colors.$foundation-palette-contrast, "brand")});
   --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
+  --f-color-brand-text: light-dark(var(--f-color-brand), oklch(from var(--f-color-brand) 0.82 c h));
 }
 
 /// Prints the borders and the hover wash, from `--f-color-text-0`. An element

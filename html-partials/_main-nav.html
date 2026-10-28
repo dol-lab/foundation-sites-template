@@ -1,8 +1,7 @@
 <!-- The Spaces header as spaces-core prints it, cut down to the parts this library styles. -->
 <nav class="app-header collapse-below-large" id="app-header">
 	<div class="grid-container">
-		<ul class="menu grid-margin-x dropdown" data-dropdown-menu data-click-open="true"
-			data-close-on-click-inside="false">
+		<ul class="menu grid-margin-x dropdown" data-dropdown-menu>
 			<li class="navbar-icon">
 				<a href="#" class="menu-anchor" aria-label="Go to the home Space">
 					<svg class="spaces-logo" style="margin-inline-end: .5em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136 148.1">
@@ -19,9 +18,8 @@
 						<path d="M136,97.37V27.51a16,16,0,0,0-13.39-15.82L55,.36A26,26,0,0,0,32.31,7.61L7.61,32.31A26,26,0,0,0,0,50.69v69.85a16,16,0,0,0,13.39,15.82L81,147.69a26,26,0,0,0,22.66-7.25l24.7-24.69A26,26,0,0,0,136,97.37Z" />
 					</svg>
 				</a>
-				<ul class="vertical menu">
+				<ul class="vertical menu" popover="manual">
 					<li>
-						<!-- A <ul> right inside a menu item would become a submenu. -->
 						<div>
 							<ul class="tabs line" data-tabs id="spaces-tabs">
 								<li class="tabs-title is-active"><a href="#spaces-mine" aria-selected="true">My Spaces</a></li>
@@ -128,7 +126,7 @@
 			</li>
 			<li>
 				<a href="#" class="menu-anchor">Study</a>
-				<ul class="vertical menu">
+				<ul class="vertical menu" popover="manual">
 					<li><a class="submenu-element" href="#">Course Selection</a></li>
 					<li><a class="submenu-element" href="#">About Courses</a></li>
 					<li><hr></li>
@@ -140,7 +138,7 @@
 			</li>
 			<li class="menu-main-expand">
 				<a href="#" class="menu-anchor">Labs</a>
-				<ul class="vertical menu">
+				<ul class="vertical menu" popover="manual">
 					<li>
 						<div class="auto-grid gap-3 p-4" style="--f-auto-grid-min-width: 200px">
 							<div class="card">
@@ -204,7 +202,7 @@
 						<div class="clipped square"><img alt="" src="assets/img/pb-3.png"></div>
 					</div>
 				</a>
-				<ul class="vertical menu">
+				<ul class="vertical menu" popover="manual">
 					<li><a class="submenu-element" href="#">My Profile</a></li>
 					<li class="pt-3 pb-3 px-4">
 						<span class="pb-1" style="display: inline-block;">Color theme</span>

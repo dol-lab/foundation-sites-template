@@ -1,7 +1,6 @@
 @use "custom-includes/foundation-spaces/components/card";
 @use "custom-includes/foundation-spaces/components/close-button";
 @use "custom-includes/foundation-spaces/components/drilldown";
-@use "custom-includes/foundation-spaces/components/dropdown";
 @use "custom-includes/foundation-spaces/components/dropdown-menu";
 @use "custom-includes/foundation-spaces/components/flex";
 @use "custom-includes/foundation-spaces/components/float";
@@ -18,7 +17,6 @@
 @use "custom-includes/foundation-spaces/prototype/prototype";
 @use "custom-includes/foundation-spaces/typography/typography";
 @use "custom-includes/foundation-spaces/xy-grid/classes";
-@use "custom-includes/s-accordion-menu";
 @use "custom-includes/s-badge";
 @use "custom-includes/s-breadcrumbs";
 @use "custom-includes/s-button";
@@ -85,7 +83,6 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
   @include s-breadcrumbs.spaces-breadcrumbs;
   @include s-callout.spaces-callout;
   @include card.foundation-card;
-  @include dropdown.foundation-dropdown;
   @include pagination.foundation-pagination;
 
   ///  Containers
@@ -104,7 +101,6 @@ $include-float-classes: false !default; // .float-left, .float-right, .float-cen
 
   @include s-menu.spaces-menu;
   @include menu-icon.foundation-menu-icon;
-  @include s-accordion-menu.spaces-accordion-menu;
 
   @if $include-drilldown-menu {
     @include drilldown.foundation-drilldown-menu;
