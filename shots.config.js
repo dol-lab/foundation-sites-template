@@ -2,6 +2,7 @@
 // The selectors are clicked in order on a fresh page (Playwright syntax, `:text-is()` works),
 // then `focus` gets keyboard focus, then `target` is shot, or the viewport (900px high) without one. `widths` limits the state
 // to some of 375 and 1280, e.g. for items that only show in the large-screen header.
+// A click entry may also be `"x,y"`: a click at that viewport point, e.g. outside a popover.
 module.exports = {
   "header-spaces": {
     click: ["#app-header li.menu-main-expand.navbar-icon > a"],

@@ -21,6 +21,8 @@
     border-radius: var(--f-focus-radius);
   }
 
+  // A click into a text field matches `:focus-visible` too: after a mouse or touch interaction its focus border is enough.
+  :is([data-whatintent="mouse"], [data-whatintent="touch"]) :is(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"], [type="button"], [type="submit"], [type="reset"]), textarea, [contenteditable]):focus-visible,
   .card > .card-anchor:focus-visible,
   .details-link > .details-menu > summary:focus-visible {
     outline: none;

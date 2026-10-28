@@ -21,12 +21,12 @@
     --f-radius-xsmall: calc(var(--f-radius) * 0.4);
     --f-radius-full: 9999px;
 
-    // Keyboard focus ring (`_focus.scss`). `--f-focus-color` is unset: it falls back to the local text color.
+    // Keyboard focus ring (`_focus.scss`). `--f-focus-color` is set with the brand (`brand-colors()`).
     // A container that clips its children sets `--f-focus-offset: var(--f-focus-inset)` to draw the ring inside.
     --f-focus-width: 2px;
     --f-focus-offset: 2px;
     --f-focus-inset: calc(-1 * var(--f-focus-width));
-    --f-focus-radius: var(--f-radius-xsmall);
+    --f-focus-radius: var(--f-radius);
     --f-opacity-disabled: 0.5;
     --f-gutter-small: #{global.$global-gutter-small};
     --f-transition-short: 100ms;

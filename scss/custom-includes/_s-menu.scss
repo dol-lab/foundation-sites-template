@@ -1,6 +1,7 @@
 @use "foundation-spaces/global";
 @use "foundation-spaces/util/breakpoint";
 @use "foundation-spaces/util/mixins";
+@use "s-button";
 
 // Foundation for Sites
 // https://get.foundation
@@ -83,12 +84,33 @@ $menu-icons-back-compat: true !default;
   .button {
     line-height: 1;
     text-decoration: none;
-    display: block;
+    display: flex;
     padding: $menu-items-padding;
 
     &.small {
       padding-block: 0.5rem;
     }
+
+    // `.p-0` alone loses to `.menu a`.
+    &.p-0 {
+      padding: 0;
+    }
+  }
+
+  .button {
+    padding: s-button.$button-padding;
+  }
+
+  li {
+    &[role="menuitem"],
+    &[role="treeitem"] {
+      list-style: none;
+    }
+  }
+
+  // A divider between items: the items' own padding already spaces it.
+  li > hr {
+    margin-block: 0;
   }
 
   // Reset styles of inner elements
@@ -500,6 +522,21 @@ $menu-icons-back-compat: true !default;
 
     .menu-text {
       @include menu-text;
+    }
+  }
+
+  li {
+    & > label,
+    & > span,
+    & > a {
+      .menu.icon-left > &,
+      .menu.icon-right > & {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: flex-start;
+      }
     }
   }
 

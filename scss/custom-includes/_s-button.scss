@@ -1,4 +1,6 @@
 @use "../colors";
+@use "../custom-settings";
+@use "foundation-spaces/forms/label";
 @use "foundation-spaces/global";
 @use "foundation-spaces/util/breakpoint";
 @use "foundation-spaces/util/mixins";
@@ -129,7 +131,6 @@ $button-responsive-expanded: false !default;
   font-size: map.get($button-sizes, default);
   font-weight: $button-font-weight;
   appearance: none;
-  line-height: 1;
   text-align: center;
   cursor: pointer;
 
@@ -150,6 +151,7 @@ $button-responsive-expanded: false !default;
 @mixin button-expand($expand: true) {
   @if $expand {
     display: flex;
+    box-sizing: border-box;
     width: 100%;
     margin-right: 0;
     margin-left: 0;
@@ -376,9 +378,14 @@ $button-responsive-expanded: false !default;
   }
 }
 
+// .button, and what .button, .input and .button-group share (focus, corners inside card sections).
 @mixin spaces-button {
   .button {
     @include button($style: none);
+
+    &:not(.tiny, .small) {
+      min-height: custom-settings.$button-height;
+    }
 
     // Sizes
     @each $size, $value in map.remove($button-sizes, default) {
@@ -448,6 +455,50 @@ $button-responsive-expanded: false !default;
     &:hover,
     &:focus {
       text-decoration: none;
+    }
+  }
+
+  .button.load {
+    transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+    color: var(--f-color-success-contrast) !important;
+    background-color: var(--f-color-success);
+    animation: background-pulse 2s global.$global-transition-timing-cubic-bezier infinite;
+  }
+
+  .button,
+  .input,
+  .button-group {
+    line-height: label.$form-label-line-height;
+
+    // A last button after another one keeps its margin, or it sits lower than its row.
+    &:last-child:not(.button + *) {
+      margin-bottom: 0;
+    }
+
+    .card-section.flush:not(:first-child) > &,
+    .card-divider.flush:not(:first-child) > & {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    .card-section.flush:not(:last-child) > &,
+    .card-divider.flush:not(:last-child) > & {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  @keyframes background-pulse {
+    0% {
+      background-color: var(--f-color-success);
+    }
+
+    50% {
+      background-color: color-mix(in oklab, var(--f-color-success) 51%, transparent);
+    }
+
+    100% {
+      background-color: var(--f-color-success);
     }
   }
 }

@@ -1,6 +1,5 @@
 @use "../global";
 @use "../util/breakpoint";
-@use "../util/mixins";
 @use "../util/unit";
 
 // Foundation for Sites
@@ -88,11 +87,11 @@ $pagination-arrow-next: '\00BB' !default;
   $padding: $pagination-item-padding,
   $background-hover: $pagination-item-background-hover
 ) {
+  display: flex;
+  justify-content: left;
   margin-#{global.$global-left}: 0;
 
   margin-bottom: $margin-bottom;
-
-  @include mixins.clearfix;
 
   // List item
   li {

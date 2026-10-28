@@ -319,6 +319,8 @@
    * Delegated, so markup added later needs no init. On first contact the `title` moves to `data-tooltip`
    * (and `aria-description`), so the browser's own tooltip does not show as well. Without popover
    * support nothing moves and the browser's tooltip stays.
+   * Rich content: `data-tooltip-content="<id>"` names a `hidden` element whose children the tooltip
+   * shows instead; it becomes the trigger's `aria-describedby` unless that is set.
    */
   if ("showPopover" in HTMLElement.prototype) {
     const tip = document.createElement("div");
@@ -327,6 +329,12 @@
     tip.setAttribute("aria-hidden", "true");
     let trigger = null;
     let timer = 0;
+
+    /**
+     * @param {?Element} el A tooltip trigger.
+     * @return {?Element} The element holding its rich content, if it names one.
+     */
+    const content = (el) => (el?.dataset.tooltipContent ? document.getElementById(el.dataset.tooltipContent) : null);
 
     /**
      * @param {EventTarget} target An event's target.
@@ -340,7 +348,9 @@
         if (el.getAttribute("aria-label") !== el.dataset.tooltip)
           el.setAttribute("aria-description", el.dataset.tooltip);
       }
-      return el?.dataset.tooltip ? el : null;
+      if (el?.dataset.tooltipContent && !el.hasAttribute("aria-describedby"))
+        el.setAttribute("aria-describedby", el.dataset.tooltipContent);
+      return el?.dataset.tooltip || content(el) ? el : null;
     };
 
     /** @return {void} */
@@ -359,7 +369,10 @@
       if (el === trigger) return;
       hide();
       trigger = el;
-      tip.textContent = el.dataset.tooltip;
+      const src = content(el);
+      tip.classList.toggle("has-content", !!src);
+      if (src) tip.replaceChildren(...[...src.childNodes].map((node) => node.cloneNode(true)));
+      else tip.textContent = el.dataset.tooltip;
       if (!tip.isConnected) document.body.append(tip);
       tip.showPopover();
       const r = el.getBoundingClientRect();

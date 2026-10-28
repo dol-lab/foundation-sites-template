@@ -57,6 +57,15 @@ $callout-default-token: primary !default;
   background-color: color-mix(in oklab, var(--_callout-color) $callout-background-tint, var(--f-color-bg-1));
   color: color-mix(in oklab, var(--_callout-color) $callout-text-tint, var(--f-color-text-0));
 
+  // Last in its container: no gap below (a grid `.cell` keeps its gutter).
+  &:not(.cell):last-child {
+    margin-bottom: 0;
+  }
+
+  p {
+    line-height: global.$global-lineheight;
+  }
+
   // Respect the padding, fool.
   > :first-child {
     margin-top: 0;

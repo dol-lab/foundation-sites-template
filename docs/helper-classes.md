@@ -95,35 +95,3 @@ Used by the grid columns and the visibility classes.
 | `large-`   | 720px     |
 | `xlarge-`  | 960px     |
 | `xxlarge-` | 1200px    |
-
-## Common patterns
-
-**Card**
-
-```html example
-<div class="card p-3 shadow">
-  <h3 class="mb-2">Title</h3>
-  <p class="mb-0 text-truncate">A description that is cut off with an ellipsis once it is wider than the card it sits in.</p>
-</div>
-```
-
-**Flex header**
-
-```html example
-<header class="flex flex-justify-between flex-align-center gap-2 p-3">
-  <h3 class="mb-0">Logo</h3>
-  <div class="flex gap-2">
-    <button class="button">Login</button>
-    <button class="button primary">Sign Up</button>
-  </div>
-</header>
-```
-
-**Sidebar layout**
-
-```html example
-<div class="flex">
-  <aside class="flex-child-shrink p-4 show-for-medium">Sidebar, from medium up</aside>
-  <main class="flex-child-grow p-4">Main content</main>
-</div>
-```

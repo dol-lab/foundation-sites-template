@@ -6,3 +6,10 @@
 <button class="button hollow" type="button" data-tooltip title="Saved 3 minutes ago">Save</button>
 <span data-tooltip tabindex="0" title="August 8, 2025">3 weeks ago</span>
 ```
+
+For more than a line of text, `data-tooltip-content="<id>"` names a `hidden` element whose children the tooltip shows instead of the `title`; unless the trigger has an `aria-describedby`, it gets one pointing at that element, so screen readers read the same text. The content is copied on each show and cannot be clicked (the tooltip has `pointer-events: none`): no links or buttons in it.
+
+```html example row
+<button class="button hollow" type="button" data-tooltip data-tooltip-content="tip-roles">Roles</button>
+<div hidden id="tip-roles"><p><strong>Authors</strong></p><ul><li>write posts</li><li>upload files</li></ul></div>
+```

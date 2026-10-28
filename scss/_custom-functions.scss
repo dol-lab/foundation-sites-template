@@ -60,6 +60,9 @@
   --f-color-brand-contrast: var(--f-color-brand-base-contrast, #{map.get(colors.$foundation-palette-contrast, "brand")});
   --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
   --f-color-brand-text: light-dark(var(--f-color-brand), oklch(from var(--f-color-brand) 0.82 c h));
+
+  // The keyboard focus ring: brand-text at the lightest alpha that keeps 3:1 on bg-0 to bg-2 in both modes (Spaces red).
+  --f-focus-color: rgb(from var(--f-color-brand-text) r g b / 70%);
 }
 
 /// Prints the borders and the hover wash, from `--f-color-text-0`. An element

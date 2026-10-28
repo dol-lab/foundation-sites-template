@@ -1,5 +1,8 @@
+@use "../../../components/caret";
+@use "../../../custom-settings";
 @use "../global";
 @use "../typography/base";
+@use "../util/breakpoint";
 @use "../util/mixins";
 
 // Foundation for Sites
@@ -31,13 +34,13 @@ $dropdownmenu-arrow-padding: 1.5rem !default;
 /// @type Length
 $dropdownmenu-min-width: 200px !default;
 
-/// Background color for top level items.
+/// Background color for top level items. Inherits the menu's, so an item does not cut off shadows.
 /// @type Color
-$dropdownmenu-background: var(--f-color-text-0) !default;
+$dropdownmenu-background: inherit !default;
 
 /// Background color for dropdowns.
 /// @type Color
-$dropdownmenu-submenu-background: $dropdownmenu-background !default;
+$dropdownmenu-submenu-background: var(--f-color-bg-1) !default;
 
 /// Padding for top level items.
 /// @type Number
@@ -72,8 +75,24 @@ $dropdown-menu-item-background-active: var(--f-color-bg-2) !default;
 
     // Top-level item
     > li > a {
-      background: $dropdownmenu-background;
+      display: flex;
+      align-items: center;
+      height: custom-settings.$touch-target;
+      box-sizing: border-box;
+      background-color: $dropdownmenu-background;
       padding: $dropdownmenu-padding;
+
+      @include breakpoint.breakpoint(medium down) {
+        padding: 0.5rem;
+      }
+    }
+
+    > li > a.p-0 {
+      padding: 0 !important;
+    }
+
+    > li img.avatar {
+      padding: 0;
     }
 
     // Top-level item active state
@@ -88,8 +107,15 @@ $dropdown-menu-item-background-active: var(--f-color-bg-2) !default;
         padding-#{global.$global-right}: $dropdownmenu-arrow-padding;
       }
 
+      > li:has(> [popover]):not(.no-arrow) > a {
+        @include breakpoint.breakpoint(medium down) {
+          padding-#{global.$global-right}: 1.25rem;
+        }
+      }
+
       > li:has(> [popover]) > a::after {
         @include mixins.css-triangle($dropdownmenu-arrow-size, $dropdownmenu-arrow-color, down);
+        @extend .caret;
 
         position: absolute;
         top: 50%;
@@ -97,6 +123,8 @@ $dropdown-menu-item-background-active: var(--f-color-bg-2) !default;
         #{global.$global-left}: auto;
 
         margin-top: -1 * ($dropdownmenu-arrow-size * 0.5);
+        margin-right: 0.75rem;
+        line-height: 0.75;
       }
     }
 
@@ -120,7 +148,16 @@ $dropdown-menu-item-background-active: var(--f-color-bg-2) !default;
       }
     }
 
-    > li > :where([popover]) a {
+    // A closed panel marked `hidden="until-found"` (js/app.js) stays rendered, so find-in-page searches it.
+    // The browser skips its content (`content-visibility: hidden`); the clip hides its own border and shadow.
+    // Not a scroll container (the popover's own `overflow: auto`): Firefox makes one a tab stop.
+    > li > [popover][hidden="until-found"] {
+      display: block;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    > li > :where([popover]) a:where(:not(.p-0)) {
       padding: $dropdownmenu-submenu-padding;
     }
   }

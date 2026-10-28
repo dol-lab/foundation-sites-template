@@ -10,6 +10,7 @@
 		"build:html": "bun build-html.js",
 		"shots": "bun build-html.js && bun shots.js",
 		"check": "bun check.js",
+		"css-diff": "bun css-diff.js",
 		"probe": "bun build-html.js > /dev/null && bun probe.js",
 		"outline": "bun outline.js",
 		"lint": "stylelint '**/*.scss' && prettier --check '*.js' 'js/*.js' 'lib/*.js'",

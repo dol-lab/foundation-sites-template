@@ -1,6 +1,7 @@
 // What styles an element of the demo page, as JSON: box, computed values and the CSS rules
 // that match it, with their SCSS source line (via css/*.map) or their line in index.html.
-// `bun run probe '<selector>' [property…] [--width=375[,800…]] [--state=<shots.config.js name>] [--scheme=dark]`.
+// `bun run probe '<selector>' [property…] [--width=375[,800…]] [--state=<shots.config.js name>] [--click=<selector|x,y>…] [--scheme=dark]`.
+// `--click` (repeatable) clicks after the state, in order; "x,y" clicks viewport coordinates (light dismiss).
 // With properties, only rules declaring them are listed, for inheriting ones also on ancestors.
 // Several widths resize the same page in turn (state applied once) and list one entry per width under `widths`.
 const fs = require("node:fs");
@@ -90,16 +91,17 @@ function sourceOf(cssFile, line, col) {
 const declares = (name, props) => props.some((p) => name === p || name.startsWith(p + "-") || p.startsWith(name + "-"));
 
 (async () => {
-  const opts = Object.fromEntries(
-    process.argv
-      .slice(2)
-      .filter((a) => a.startsWith("--"))
-      .map((a) => a.slice(2).split("=")),
-  );
+  // Split at the first "=" only: selectors contain them.
+  const flags = process.argv
+    .slice(2)
+    .filter((a) => a.startsWith("--"))
+    .map((a) => /^--([^=]*)=?(.*)$/s.exec(a).slice(1));
+  const opts = Object.fromEntries(flags);
+  const clicks = flags.filter(([name]) => name === "click").map(([, value]) => value);
   const [selector, ...props] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
   if (!selector) {
     console.error(
-      "usage: bun run probe '<selector>' [property…] [--width=375[,800…]] [--state=<name>] [--scheme=dark]",
+      "usage: bun run probe '<selector>' [property…] [--width=375[,800…]] [--state=<name>] [--click=<selector|x,y>…] [--scheme=dark]",
     );
     process.exit(2);
   }
@@ -113,6 +115,7 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
   try {
     const page = await openDemo(browser, widths[0], opts.scheme);
     if (opts.state) await applyState(page, STATES[opts.state]);
+    if (clicks.length) await applyState(page, { click: clicks });
     const el = page.locator(selector);
     const count = await el.count();
     if (!count) {

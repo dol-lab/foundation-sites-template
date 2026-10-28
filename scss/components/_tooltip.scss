@@ -39,5 +39,21 @@
     @starting-style {
       opacity: 0;
     }
+
+    // Rich content (`data-tooltip-content`): its source indentation is not text, and page rules for `p`,
+    // `li` and the like are for the page's background and size, not the tooltip's.
+    &.has-content {
+      white-space: normal;
+
+      * {
+        color: inherit;
+        font-size: inherit;
+        line-height: inherit;
+      }
+
+      > :last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 }

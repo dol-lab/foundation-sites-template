@@ -1,5 +1,4 @@
 @use "foundation-spaces/global";
-@use "foundation-spaces/util/mixins";
 
 // Foundation for Sites
 // https://get.foundation
@@ -73,14 +72,14 @@ $breadcrumbs-item-separator-opacity: 60% !default;
 
 /// Adds styles for a breadcrumbs container, along with the styles for the `<li>` and `<a>` elements inside of it.
 @mixin breadcrumbs-container {
-  @include mixins.clearfix;
-
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   margin: $breadcrumbs-margin;
   list-style: none;
 
   // Item wrapper
   li {
-    float: #{global.$global-left};
     font-size: $breadcrumbs-item-font-size;
     color: $breadcrumbs-item-color-current;
     cursor: default;

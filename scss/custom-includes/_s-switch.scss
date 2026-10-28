@@ -1,5 +1,7 @@
 @use "foundation-spaces/global";
 @use "foundation-spaces/util/unit";
+@use "../custom-functions";
+@use "../custom-settings";
 
 // Foundation for Sites
 // https://get.foundation
@@ -216,11 +218,52 @@ $switch-cursor-disabled: not-allowed !default;
     @include switch-container;
 
     height: $switch-height;
+
+    // Spaces' look: a line with a round knob that fills with the palette color when checked.
+    .icon-left & {
+      margin-left: auto;
+    }
+
+    .switch-paddle {
+      padding: 0;
+      display: flex;
+      align-items: center;
+      border-radius: 0;
+      height: 100%;
+      background: none;
+
+      &::before {
+        content: "";
+        background: color-mix(in oklab, var(--f-color-text-0) 22%, var(--f-color-bg-1) 78%);
+        height: 2px;
+        width: 100%;
+      }
+
+      &::after {
+        content: "";
+        top: initial;
+        left: 0;
+        border-radius: var(--f-radius-full);
+        box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--f-color-text-0) 22%, var(--f-color-bg-1) 78%);
+      }
+    }
+
+    input:checked ~ .switch-paddle {
+      background: none;
+
+      &::after {
+        box-shadow: inset 0 0 0 2em currentcolor;
+      }
+    }
+
+    @include custom-functions.foundation-palette($child: "input:checked ~ .switch-paddle");
   }
 
   // <input> element
   .switch-input {
     @include switch-input;
+
+    pointer-events: none;
   }
 
   // <label>, or <span> inside a label
@@ -266,4 +309,84 @@ $switch-cursor-disabled: not-allowed !default;
   .switch.large {
     @include switch-size(unit.rem-calc(16), $switch-height-large, $switch-paddle-offset);
   }
+
+  .switch-with-labels {
+    margin-right: 0.25rem;
+    height: auto;
+    align-items: flex-start;
+
+    .switch-paddle {
+      width: 4rem;
+      flex: 0 0 4rem;
+      margin: 0;
+    }
+
+    input:checked {
+      ~ .switch-paddle::after {
+        left: 2rem;
+      }
+
+      ~ .switch-paddle .switch-label-left {
+        color: var(--f-color-bg-1);
+      }
+
+      ~ .switch-paddle .switch-label-right {
+        color: var(--f-color-text-0);
+        scale: 1;
+      }
+
+      ~ .switch-label-description-left {
+        display: none;
+      }
+
+      ~ .switch-label-description-right {
+        display: block;
+      }
+    }
+
+    .switch-paddle::before {
+      height: custom-settings.$button-height;
+      border-radius: var(--f-radius-full);
+    }
+
+    // `input ~` matches the specificity of the checked fill in `.switch`, so the ring stays when checked.
+    input ~ .switch-paddle::after {
+      width: custom-settings.$button-height;
+      height: custom-settings.$button-height;
+      box-shadow: inset 0 0 0 2px var(--f-color-text-2);
+    }
+
+    // Above the knob, which is the paddle's `::after` and so paints after them. `scale`, not `zoom`: no reflow.
+    .switch-label-left,
+    .switch-label-right {
+      position: absolute;
+      z-index: 1;
+      color: var(--f-color-bg-1);
+      scale: 0.9;
+      transition: scale 0.5s;
+    }
+
+    .switch-label-left {
+      left: 0.5rem;
+      transform-origin: left;
+      color: var(--f-color-text-0);
+      scale: 1;
+    }
+
+    .switch-label-right {
+      right: 0.5rem;
+      transform-origin: right;
+    }
+
+    .switch-label-description-right {
+      display: none;
+    }
+
+    .switch-label-description-left,
+    .switch-label-description-right {
+      color: var(--f-color-text-0);
+      margin-left: 10px;
+    }
+  }
+
 }
