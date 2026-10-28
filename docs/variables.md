@@ -10,7 +10,7 @@ The Sass globals (`$global-radius`, `$global-radius-xsmall`, `$global-transition
 | `--f-radius` | `0.5rem` | The one radius knob: `-small` (half) and `-xsmall` (0.4) follow it, `-full` (`9999px`) is a pill (use it, not a large fixed radius) |
 | `--f-avatar-radius` | `--f-radius` | An avatar's corner; `.avatar-stack` sets it to `-full` |
 | `--f-gutter-small` | `8px` | Inline gutter, mirrors `$global-gutter-small`, which the grid compiles in |
-| `--f-grid-container-max` | `75rem` | `.grid-container`'s max width |
+| `--f-grid-container-max` | `75rem` | `.grid-container`'s max width, from `$global-width` (1200px, the xxlarge breakpoint) |
 | `--f-grid-container-padding` | `0.5rem`, `0.75rem` from large | `.grid-container`'s padding per side |
 | `--f-transition-short`, `-medium`, `-long` | `100ms`, `250ms`, `500ms` | Durations |
 | `--f-transition-timing` | `ease-in-out` | Easing |
@@ -19,8 +19,9 @@ The Sass globals (`$global-radius`, `$global-radius-xsmall`, `$global-transition
 | `--f-avatar-xsmall` … `-xxlarge` | `24px` … `240px` | Avatar sizes, from `$avatar-sizes` |
 | `--f-focus-color` | `--f-color-brand-text` at 70% | The focus ring's color, set with the brand (`brand-colors()`), so a brand set on an element follows. 70% is the lightest alpha with 3:1 on bg-0 to bg-2 in both modes for the Spaces red; a lighter brand needs more |
 | `--f-focus-width`, `--f-focus-offset`, `--f-focus-radius` | `2px`, `2px`, `--f-radius` | The keyboard focus ring, an outline on `:focus-visible`. The radius applies where the element has none of its own. A container that clips its children sets `--f-focus-offset: var(--f-focus-inset)` (the negative width), so the rings inside it are drawn inside the element |
+| `--f-icon-color`, `--f-icon-hover-color` | `text-2` mixed 75% into `bg-1`; `text-0` mixed 40% toward black (white in dark) | Icon buttons on a card (`.icon-button`, `.dots`, `.add`): at rest the lightest color with 3:1 on `bg-1`, on hover, keyboard focus or an open menu close to `text-0`. Follow `themed`; a consumer's own icon buttons use them to match |
 | `--f-opacity-disabled` | `0.5` | A disabled control, `.disabled`, `$button-opacity-disabled`, `$switch-opacity-disabled` |
-| `--f-z-header`, `-overlay`, `-modal`, `-dropdown` | `1000`, `1005`, `1006`, `2000` | Page layers, from `$z-index`: the app header, a modal's backdrop, the modal, and dropdowns (above a modal, so one opened inside it shows). Stacking inside a component keeps small numbers |
+| `--f-z-header`, `-overlay`, `-dropdown` | `1000`, `1005`, `2000` | Page layers, from `$z-index`: the app header, an overlay above it, and dropdowns. Modals, popovers and the tooltip are in the top layer, above all of them. Stacking inside a component keeps small numbers |
 | `--f-breakpoint-small` … `-xxlarge` | `0em` … `75em` | Breakpoint widths, from `$breakpoints`, for scripts to build a `matchMedia` query. Read-only (a media query cannot use a custom property) |
 
 These are read with a fallback and not declared, so set them where they apply:

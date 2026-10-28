@@ -65,13 +65,18 @@
   --f-focus-color: rgb(from var(--f-color-brand-text) r g b / 70%);
 }
 
-/// Prints the borders and the hover wash, from `--f-color-text-0`. An element
+/// Prints the borders, the hover wash and the icon button colors, from the text roles. An element
 /// that sets the text color (`[themed]`) needs these redeclared on itself.
 @mixin text-tints {
   --f-color-border-0: rgb(from var(--f-color-text-0) r g b / 7%);
   --f-color-border-1: rgb(from var(--f-color-text-0) r g b / 12%);
   --f-color-border-2: rgb(from var(--f-color-text-0) r g b / 16%);
   --f-color-tint: rgb(from var(--f-color-text-0) r g b / 7%); // hover wash
+
+  // Icon buttons (`.icon-button`, `.dots`): at rest as light as WCAG 1.4.11 allows on bg-1 (3:1; 3.5
+  // light, 3.9 dark), on hover close to text-0.
+  --f-icon-color: color-mix(in oklab, var(--f-color-text-2) 75%, var(--f-color-bg-1));
+  --f-icon-hover-color: color-mix(in oklab, var(--f-color-text-0) 60%, light-dark(black, white));
 }
 
 /// Prints `--f-drop-shadow(-small|-large)` from `--f-color-shadow`. `-small` raises a surface that

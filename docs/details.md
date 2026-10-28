@@ -18,7 +18,7 @@ A native `<details>` is unstyled until it asks: `.details` for the look and the 
 
 ## Folding by breakpoint
 
-`data-collapse="<breakpoint>"` on a `<details>` folds it on load from that breakpoint through the next one (`small`: below large), unless it holds the URL's target (`js/app.js`).
+`data-collapse="<breakpoint>"` on a `<details>` folds it from that breakpoint through the next one (`small`: below large), on load and when the viewport enters that range, and reopens what it folded on leaving it; one the user opened, or that holds the URL's target, stays open (`js/app.js`).
 
 ```html example
 <details class="details" data-collapse="small" open>

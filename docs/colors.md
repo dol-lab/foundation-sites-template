@@ -1,6 +1,6 @@
 # Colors
 
-Custom properties are the source of truth. Use the roles, never a literal, so Space theming and dark mode reach every component. Pick a Space color above the header to see the surfaces follow it.
+Custom properties are the source of truth. Use the roles, never a literal, so Space theming and dark mode reach every component. The settings below the index change the Space color and the brand, the button on the header image cycles images with their Space colors: the surfaces follow.
 
 ## Surfaces
 

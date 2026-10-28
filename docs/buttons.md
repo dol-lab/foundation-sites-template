@@ -43,7 +43,10 @@ A plain `.button` is a soft neutral fill; use `.secondary` for a dark solid one.
 
 ## Dots and close
 
+Icon buttons on a card (`.dots`, an `.icon-button` link around an icon) take `--f-icon-color`, darker on hover, keyboard focus or while their menu is open.
+
 ```html example row
 <button class="button p-0 m-0 clear dots" type="button" aria-label="More"></button>
+<a class="icon-button" href="#" aria-label="Edit"><i class="far fa-edit" aria-hidden="true"></i></a>
 <button class="close-button" type="button" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 ```

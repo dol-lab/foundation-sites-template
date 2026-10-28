@@ -62,11 +62,6 @@
     --f-color-text-0: light-dark(oklch(from var(--f-color-theme) 0.4 calc(c / 3) h), color-mix(in oklab, var(--_f-color-theme-dark) 12%, var(--f-color-neutral-700)));
     --f-color-text-1: light-dark(oklch(from var(--f-color-theme) 0.45 calc(c / 6) h), color-mix(in oklab, var(--_f-color-theme-dark) 18%, var(--f-color-neutral-700)));
     --f-color-text-2: light-dark(oklch(from var(--f-color-theme) 0.5 calc(c / 9) h), color-mix(in oklab, var(--_f-color-theme-dark) 20%, var(--f-color-neutral-600)));
-
-    // Icon buttons (`.icon-button`, `.dots`): at rest as light as WCAG 1.4.11 allows on bg-1 (3:1; 3.5
-    // light, 3.9 dark), on hover close to text-0.
-    --f-icon-color: color-mix(in oklab, var(--f-color-text-2) 75%, var(--f-color-bg-1));
-    --f-icon-hover-color: color-mix(in oklab, var(--f-color-text-0) 60%, light-dark(black, white));
     --f-bg-gradient-color: light-dark(oklch(from var(--f-color-theme) max(l, 0.83) min(c, 0.12) h), oklch(from var(--f-color-theme) min(l, 0.3) min(c, 0.15) h));
     --f-color-shadow: light-dark(color-mix(in oklab, oklch(from var(--f-color-theme) 0.3 min(c, 0.12) h), transparent 80%), color-mix(in oklab, oklch(from var(--f-color-theme) 0.06 min(c, 1) h), transparent 45%));
 
