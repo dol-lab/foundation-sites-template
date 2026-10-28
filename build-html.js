@@ -9,7 +9,7 @@ const crypto = require("node:crypto");
 const fs = require("node:fs");
 const path = require("node:path");
 
-const INCLUDE_RE = /@@include\((['"])([^'"]+)\1(?:,\s*(['"])(folded)\3)?\)/g;
+const INCLUDE_RE = /@@include\((['"])([^'"]+)\1\)/g;
 const SECTION_RE =
   /<!-- group: ([^>]+?) -->|<section class="cell demo-section" id="([^"]+)"[\s\S]*?<h2>([\s\S]*?)<\/h2>/g;
 
@@ -88,10 +88,9 @@ function parseDoc(src, file) {
 
 /**
  * @param {string} file A docs/<id>.md.
- * @param {boolean} folded Whether the section starts folded (a long reference).
  * @return {string} The section #<id>, rendered.
  */
-function renderSection(file, folded) {
+function renderSection(file) {
   const { title, intro, body } = parseDoc(fs.readFileSync(file, "utf8"), file);
   const id = path.basename(file, ".md");
   const heading = `<h2>${marked.parseInline(title)}</h2>`;
@@ -100,13 +99,7 @@ function renderSection(file, folded) {
     .parse(body)
     .replace(/<table>([\s\S]*?)<\/table>/g, '<div class="table-scroll"><table class="table">$1</table></div>');
   const content = `${intro && `<p class="demo-intro">${marked.parseInline(intro)}</p>\n`}${rest}`;
-  const card = folded
-    ? `<details class="card static overflow-initial demo-doc">
-<summary class="card-section">${heading}</summary>
-<div class="card-section">
-${content}</div>
-</details>`
-    : `<div class="card static overflow-initial demo-doc">
+  const card = `<div class="card static overflow-initial demo-doc">
 <div class="card-section">
 ${heading}
 ${content}</div>
@@ -115,17 +108,17 @@ ${content}</div>
 }
 
 // Recursively inlines the files referenced with @@include(); a .md file becomes a section.
-function inlineFile(absPath, stack = [], folded = false) {
+function inlineFile(absPath, stack = []) {
   const filePath = path.resolve(absPath);
   if (stack.includes(filePath)) {
     const cycle = [...stack, filePath].join(" -> ");
     throw new Error(`Circular include: ${cycle}`);
   }
   const baseDir = path.dirname(filePath);
-  let html = filePath.endsWith(".md") ? renderSection(filePath, folded) : fs.readFileSync(filePath, "utf8");
-  html = html.replace(INCLUDE_RE, (_m, _q, rel, _q2, fold) => {
+  let html = filePath.endsWith(".md") ? renderSection(filePath) : fs.readFileSync(filePath, "utf8");
+  html = html.replace(INCLUDE_RE, (_m, _q, rel) => {
     const child = path.resolve(baseDir, rel);
-    return inlineFile(child, [...stack, filePath], Boolean(fold));
+    return inlineFile(child, [...stack, filePath]);
   });
   const relPath = path.relative(process.cwd(), filePath);
   const warning = `<!--

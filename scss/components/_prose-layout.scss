@@ -1,7 +1,12 @@
 // .prose-layout: a readable center column (max 70ch) with .alignwide and .alignfull.
+// Images in what members write (.user-generated) get rounded corners, except .alignfull ones.
 
 // NOTE: This can not contain naked text (text in no container).
 @mixin styles {
+  .user-generated figure img {
+    border-radius: var(--f-radius);
+  }
+
   .prose-layout {
     display: grid;
 

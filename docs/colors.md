@@ -68,7 +68,7 @@ The backend build is always light: it prints the palette with `foundation-apply-
 
 ## Tinting with --f-color-theme
 
-The `themed` attribute plus an inline `--f-color-theme` tints the surfaces and text of an element toward that hue. The rule matches the `style` attribute, so a value set from a stylesheet does not tint. On `<html>` the body also gets a radial gradient in `--f-bg-gradient-color`; a card is tinted the same way (see the post cards in [Space](space.md)).
+The `themed` attribute plus an inline `--f-color-theme` tints the surfaces and text of an element toward that hue. The rule matches the `style` attribute, so a value set from a stylesheet does not tint. On `<html>` the body also gets a radial gradient in `--f-bg-gradient-color`. Spaces themes only `<html>` (the Space's color); any other element can be tinted the same way, apart from the page's theme.
 
 ```html
 <html themed style="--f-color-theme: #975938">
