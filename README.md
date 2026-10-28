@@ -38,7 +38,7 @@ A link to another section is written `[details](details.md)`, which works on Git
 - `scss/_custom-styles.scss`: the include list for `components/` and `custom-styles/`, in cascade order.
 - `scss/_custom-foundation-includes.scss`: which Foundation components are emitted, with opt-in flags.
 - `scss/_colors.scss`: the palettes. `_custom-settings.scss`: our Sass settings. `_custom-functions.scss`: mixins, including `foundation-apply-theme()`.
-- `js/foundation.js`: picks the plugins of the `foundation-sites` package (6.9.0, pinned) that `assets/foundation.min.js` ships, only those Spaces uses; a `data-<plugin>` attribute of any other (Orbit, Sticky, Abide, …) silently does nothing until it is added back there. jQuery stays the page's global. `js/app.js` is the demo page's script and ships to Spaces (tabs transitions, find-in-page, closables, `data-collapse`, tooltips).
+- `js/foundation.js`: picks the plugins of the `foundation-sites` package (6.9.0, pinned) that `assets/foundation.min.js` ships, only those Spaces uses; a `data-<plugin>` attribute of any other (Orbit, Sticky, Abide, …) silently does nothing until it is added back there. jQuery stays the page's global. `js/app.js` is the demo page's script and ships to Spaces (tabs, find-in-page, closables, `data-collapse`, tooltips).
 - `docs/`: the demo page's sections; among them `colors.md` (color roles, light and dark, tinting, dark-mode troubleshooting), `variables.md` (every other `--f-*` custom property) and `helper-classes.md` (utility classes).
 
 ## Adding a component

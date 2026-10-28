@@ -1,6 +1,6 @@
 # Tabs
 
-Foundation's tabs: `.tabs` with `data-tabs` and an id, and a `.tabs-content` naming that id. Each `.tabs-title` links to its `.tabs-panel` by id (or names it in `data-tabs-target`). Mark the initial title and panel `.is-active`. Once initialised, the active title is styled by its link's `aria-selected`, which Foundation sets whatever the active class: a tab bar inside a dropdown menu sets `data-link-active-class` and `data-panel-active-class` to `is-active-tab`, since the menu strips `li.is-active` when it closes.
+Tabs are `.tabs` with `data-tabs` and an id, and a `.tabs-content` naming that id. Each `.tabs-title` links to its `.tabs-panel` by id (or names it in `data-tabs-target`). Mark the initial title and panel `.is-active`. `js/app.js` adds the ARIA roles, moves between titles with the arrow keys, opens the tab whose panel the URL's `#hash` names (on load and on `hashchange`) and fires a bubbling `tabchange` event on the `.tabs` with `detail: { title, panel }` (both `null` after a collapse). Clicks are delegated, so tabs added later work; they get their roles on the first click. Options on the `.tabs`: `data-active-collapse` (the active title closes its panel), `data-deep-link` (a change writes the panel's id to the URL), `data-transition` (the panels' box eases to its new height). Once initialised, the active title is styled by its link's `aria-selected` and the inactive panels are `hidden`, whatever the active class: a tab bar inside a dropdown menu sets `data-link-active-class` and `data-panel-active-class` to `is-active-tab`, since the menu strips `li.is-active` when it closes.
 
 ```html example
 <ul class="tabs line" data-tabs id="demo-tabs">
@@ -23,7 +23,7 @@ Foundation's tabs: `.tabs` with `data-tabs` and an id, and a `.tabs-content` nam
 
 ## Styles
 
-The examples below show the titles only: they switch, but have no `.tabs-content`. Plain `.tabs` underline the active tab, and the underline slides to the next one on a change (a jump under reduced motion). `.line` adds a hairline above the panel, `.bar` fills the active title instead, separates the titles and suits a card's top edge, `.expanded` spreads them over the width. The active title is `.is-active` or carries `aria-selected` (Foundation sets it on the link, React Aria on the title).
+The examples below show the titles only: they switch, but have no `.tabs-content`. Plain `.tabs` underline the active tab, and the underline slides to the next one on a change (a jump under reduced motion). `.line` adds a hairline above the panel, `.bar` fills the active title instead, separates the titles and suits a card's top edge, `.expanded` spreads them over the width. The active title is `.is-active` or carries `aria-selected` (`js/app.js` sets it on the link, React Aria on the title).
 
 ```html example
 <ul class="tabs line expanded" data-tabs id="demo-tabs-line">

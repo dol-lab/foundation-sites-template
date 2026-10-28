@@ -17,7 +17,6 @@ import { AccordionMenu } from "foundation-sites/js/foundation.accordionMenu";
 import { Dropdown } from "foundation-sites/js/foundation.dropdown";
 import { DropdownMenu } from "foundation-sites/js/foundation.dropdownMenu";
 import { Reveal } from "foundation-sites/js/foundation.reveal";
-import { Tabs } from "foundation-sites/js/foundation.tabs";
 
 Foundation.addToJquery($);
 
@@ -49,7 +48,6 @@ const plugins = {
   Dropdown,
   DropdownMenu,
   Reveal,
-  Tabs,
 };
 for (const [name, plugin] of Object.entries(plugins)) Foundation.plugin(plugin, name);
 

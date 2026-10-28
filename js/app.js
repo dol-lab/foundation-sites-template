@@ -3,34 +3,170 @@
  */
 
 !(function (window, document, $) {
-  // jQuery's slides (Foundation's accordion menu, the tabs below) are not CSS, so the reduced-motion rule misses them.
-  // A getter, read per animation, follows both the device and a `data-motion` setting on <html> (see _motion.scss).
+  // Script animations (jQuery's slides in Foundation's accordion menu, the tab panels below) are not CSS, so the
+  // reduced-motion rule misses them. Read per animation, it follows both the device and a `data-motion` setting on <html> (see _motion.scss).
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  Object.defineProperty($.fx, "off", {
-    configurable: true,
-    get: () => {
-      const setting = document.documentElement.dataset.motion;
-      return setting === "reduce" || (setting !== "full" && reducedMotion.matches);
-    },
-  });
+  /** @return {boolean} Whether animations should jump to their end. */
+  const motionOff = () => {
+    const setting = document.documentElement.dataset.motion;
+    return setting === "reduce" || (setting !== "full" && reducedMotion.matches);
+  };
+  Object.defineProperty($.fx, "off", { configurable: true, get: motionOff });
 
+  /**
+   * Tabs: `.tabs[data-tabs]` with an id, whose `.tabs-title` links name their `.tabs-panel` by `href="#id"` or
+   * `data-tabs-target`. Delegated; init (on DOM ready, or the first click for a later one) adds the ARIA roles
+   * and `hidden` and selects the tab the URL's #hash names (also on `hashchange`). Arrow keys move between titles.
+   * The server marks the initial title and panel `.is-active`, or `data-link-active-class`/`data-panel-active-class`
+   * (a tab bar in a Foundation dropdown menu: it strips `li.is-active` on close). `data-active-collapse`: the active
+   * tab's title closes it. `data-deep-link`: a change writes the panel's id to the URL. `data-transition`: the
+   * panels' box eases to its new height. A change fires a bubbling `tabchange` on the `.tabs`,
+   * `detail: { title, panel }` (both null after a collapse).
+   */
+  const tabs = {
+    /**
+     * @param {Element} title A `.tabs-title`.
+     * @return {?HTMLAnchorElement} Its link.
+     */
+    link: (title) => title.querySelector("a"),
+
+    /**
+     * @param {Element} title A `.tabs-title`.
+     * @return {?Element} The panel its link names.
+     */
+    panel: (title) => {
+      const a = tabs.link(title);
+      const id = a?.dataset.tabsTarget || a?.hash.slice(1);
+      return id ? document.getElementById(id) : null;
+    },
+
+    /**
+     * @param {Element} list A `.tabs[data-tabs]`.
+     * @return {string[]} Its title and panel active classes.
+     */
+    classes: (list) => [list.dataset.linkActiveClass || "is-active", list.dataset.panelActiveClass || "is-active"],
+
+    /**
+     * Sets a title and its panel active or not.
+     * @param {Element} list The `.tabs`.
+     * @param {Element} title One of its `.tabs-title`.
+     * @param {boolean} on Active.
+     * @return {void}
+     */
+    mark: (list, title, on) => {
+      const [titleClass, panelClass] = tabs.classes(list);
+      const a = tabs.link(title);
+      const panel = tabs.panel(title);
+      title.classList.toggle(titleClass, on);
+      a?.setAttribute("aria-selected", on);
+      a?.setAttribute("tabindex", on ? 0 : -1);
+      panel?.classList.toggle(panelClass, on);
+      if (panel) panel.hidden = !on;
+    },
+
+    /**
+     * Adds the roles and the state the server marked.
+     * @param {Element} list A `.tabs[data-tabs]`.
+     * @return {void}
+     */
+    init: (list) => {
+      const titleClass = tabs.classes(list)[0];
+      list.setAttribute("role", "tablist");
+      list.querySelectorAll(".tabs-title").forEach((title) => {
+        const a = tabs.link(title);
+        const panel = tabs.panel(title);
+        if (!a) return;
+        title.setAttribute("role", "presentation");
+        a.setAttribute("role", "tab");
+        if (panel) {
+          a.id ||= panel.id + "-label";
+          a.setAttribute("aria-controls", panel.id);
+          panel.setAttribute("role", "tabpanel");
+          panel.setAttribute("aria-labelledby", a.id);
+        }
+        tabs.mark(list, title, title.classList.contains(titleClass));
+      });
+    },
+
+    /**
+     * Activates a title, or collapses it when it is active and its list allows that.
+     * @param {Element} title A `.tabs-title`.
+     * @param {boolean} [fromHash] The URL's hash asked for it: never collapse, no history write.
+     * @return {void}
+     */
+    select: (title, fromHash = false) => {
+      const list = title.closest(".tabs[data-tabs]");
+      const panel = tabs.panel(title);
+      if (!list) return;
+      if (!list.hasAttribute("role")) tabs.init(list); // Added after DOM ready.
+      const titleClass = tabs.classes(list)[0];
+      const active = title.classList.contains(titleClass);
+      const collapse = active && !fromHash && list.hasAttribute("data-active-collapse");
+      if (active && !collapse) return;
+
+      const box = panel?.parentElement;
+      const from = box?.offsetHeight;
+      list.querySelectorAll(`.tabs-title.${titleClass}`).forEach((t) => tabs.mark(list, t, false));
+      if (collapse) tabs.link(title)?.setAttribute("tabindex", 0);
+      else tabs.mark(list, title, true);
+
+      if (panel && list.dataset.deepLink && !fromHash && !collapse) {
+        history.replaceState(history.state, "", "#" + panel.id);
+      }
+      if (box && list.hasAttribute("data-transition") && !motionOff()) {
+        box.animate(
+          { blockSize: [from + "px", box.offsetHeight + "px"], overflow: ["clip", "clip"] },
+          { duration: 250, easing: "ease-out" },
+        );
+      }
+      list.dispatchEvent(
+        new CustomEvent("tabchange", {
+          bubbles: true,
+          detail: collapse ? { title: null, panel: null } : { title, panel },
+        }),
+      );
+    },
+
+    /**
+     * Selects the tab whose panel the URL's hash names.
+     * @return {void}
+     */
+    fromHash: () => {
+      const panel = document.getElementById(location.hash.slice(1)); // null without a hash
+      if (!panel?.matches(".tabs-panel")) return;
+      const title = [...document.querySelectorAll(".tabs[data-tabs] .tabs-title")].find((t) => tabs.panel(t) === panel);
+      if (title) tabs.select(title, true);
+    },
+  };
+
+  document.addEventListener("click", (e) => {
+    const title = e.target.closest?.(".tabs[data-tabs] .tabs-title");
+    if (!title || !tabs.link(title)) return;
+    e.preventDefault();
+    tabs.select(title);
+  });
+  document.addEventListener("keydown", (e) => {
+    const title = e.target.closest?.(".tabs[data-tabs] .tabs-title");
+    if (!title || e.altKey || e.ctrlKey || e.metaKey) return;
+    // Enter and Space, on the link or on a title made focusable.
+    if ((e.key === "Enter" || e.key === " ") && (e.target === title || e.target === tabs.link(title))) {
+      e.preventDefault();
+      tabs.select(title);
+      return;
+    }
+    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (!step) return;
+    const titles = [...title.parentElement.children].filter((t) => t.matches(".tabs-title") && tabs.link(t));
+    const next = titles[(titles.indexOf(title) + step + titles.length) % titles.length];
+    if (!next || next === title) return;
+    e.preventDefault();
+    tabs.link(next).focus();
+    tabs.select(next);
+  });
+  window.addEventListener("hashchange", tabs.fromHash);
   $(function () {
-    $(".tabs[data-transition]").map(function () {
-      var el = $(`.tabs-content[data-tabs-content=${this.id}]`);
-      el.attr("data-transition", true);
-      el.find(`.tabs-panel.${$(this).data("panelActiveClass") || "is-active"}`).show();
-    });
-  });
-  // Foundation's events, not a click: keyboard (Enter, Space, arrows) and selectTab() switch tabs without one.
-  // A bubbling native `change` (an input in the bar) reaches these handlers too, without the arguments.
-  $(document).on("change.zf.tabs", ".tabs[data-transition]", function (_e, _$title, $panel) {
-    if (!$panel) return;
-    $panel.siblings(".tabs-panel").slideUp(250, "swing");
-    $panel.slideDown(250, "swing");
-  });
-  $(document).on("collapse.zf.tabs", ".tabs[data-transition]", function (_e, $title) {
-    if (!$title) return;
-    $("#" + $title.find('[role="tab"]').attr("aria-controls")).slideUp(250, "swing");
+    document.querySelectorAll(".tabs[data-tabs]").forEach(tabs.init);
+    tabs.fromHash();
   });
 
   /**

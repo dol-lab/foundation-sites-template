@@ -6,7 +6,7 @@
 @use "sass:list";
 @use "../custom-settings";
 
-// The server marks the initial tab `.is-active`; once initialised, Foundation sets `aria-selected` on its link
+// The server marks the initial tab `.is-active`; once initialised, js/app.js sets `aria-selected` on its link
 // whatever `data-link-active-class` says (a tab bar in a dropdown menu needs another class: the menu strips `li.is-active`).
 // React Aria sets `aria-selected` on the title itself.
 $-active: ':is(.is-active, [aria-selected="true"], :has(> [aria-selected="true"]))';
@@ -170,9 +170,5 @@ $-active: ':is(.is-active, [aria-selected="true"], :has(> [aria-selected="true"]
 
   .tabs-content {
     border: none;
-
-    &[data-transition] .tabs-panel {
-      display: none;
-    }
   }
 }

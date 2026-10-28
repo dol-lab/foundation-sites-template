@@ -134,12 +134,13 @@ $tab-content-padding: 0 !default;
 }
 
 /// Adds styles for an individual tab content panel within the tab content container.
+/// Before js/app.js initialises the tabs, the class says which panel shows; after, `hidden` does, whatever the active class.
 @mixin tabs-panel($padding: $tab-content-padding) {
-  display: none;
   padding: $padding;
 
-  &.is-active {
-    display: block;
+  &:not(.is-active, [role="tabpanel"]),
+  &[hidden] {
+    display: none;
   }
 }
 
