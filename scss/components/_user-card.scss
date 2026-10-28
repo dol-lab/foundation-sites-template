@@ -35,9 +35,10 @@
       }
 
       & .checkbox {
+        --f-focus-offset: var(--f-focus-inset); // the card clips an outer ring
+
         position: absolute;
         inset: 0;
-        outline-offset: -2px; // the card clips an outer outline
 
         & ~ .clipped {
           transition: global.$global-transition-medium;

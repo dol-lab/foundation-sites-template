@@ -1,17 +1,17 @@
 # Modal
 
-Foundation's reveal: `.reveal` with `data-reveal`, opened by any element with `data-open="<id>"`, closed by `data-close`.
+A `<dialog class="reveal">`, opened by any element with `data-open="<id>"` (or `showModal()`), closed by a `data-close` button inside it, Escape or a click on the backdrop. Scripts listen for the dialog's `close` event. Keyboard (native `showModal()`): opening focuses the first focusable element in the dialog (or the one with `autofocus`), Tab stays inside it and the page behind is inert, Escape closes it, and focus returns to the element that opened it.
 
 ```html example
 <button class="button" type="button" data-open="demo-modal">Open modal</button>
-<div class="reveal" id="demo-modal" data-reveal>
-    <h2>Modal title</h2>
+<dialog class="reveal" id="demo-modal" aria-labelledby="demo-modal-title">
+    <h2 id="demo-modal-title">Modal title</h2>
     <p class="lead">A short lead.</p>
     <p>The content of the modal.</p>
     <button class="close-button" data-close aria-label="Close" type="button">
         <span aria-hidden="true">&times;</span>
     </button>
-</div>
+</dialog>
 ```
 
 ## Space privacy
@@ -20,8 +20,8 @@ The Space details modal lets managers pick the Space's privacy from a `.radio-ac
 
 ```html example
 <button class="button" type="button" data-open="demo-privacy-modal">Space Privacy</button>
-<div class="reveal" id="demo-privacy-modal" data-reveal>
-    <h2>Space Privacy</h2>
+<dialog class="reveal" id="demo-privacy-modal" aria-labelledby="demo-privacy-title">
+    <h2 id="demo-privacy-title">Space Privacy</h2>
     <ul class="change-privacy-list p-3 pt-0 radio-accordion icons icon-left success">
         <li class="radio-accordion-item">
             <div class="radio">
@@ -66,5 +66,5 @@ The Space details modal lets managers pick the Space's privacy from a `.radio-ac
     <button class="close-button" data-close aria-label="Close" type="button">
         <span aria-hidden="true">&times;</span>
     </button>
-</div>
+</dialog>
 ```

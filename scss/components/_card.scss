@@ -23,6 +23,11 @@
     overflow: clip;
     color: var(--f-color-text-1);
 
+    // Full-width controls touch the clipped edge: their ring goes inside.
+    & > :is(a, button, details, summary) {
+      --f-focus-offset: var(--f-focus-inset);
+    }
+
     .card-anchor {
       color: inherit;
       text-decoration: none !important;
@@ -31,17 +36,6 @@
       padding: 0 !important;
 
       @include custom-functions.foundation-palette;
-
-      &:focus-visible {
-        outline: none;
-      }
-    }
-
-    // A card that is one link shows keyboard focus around the card: the anchor's own inset outline
-    // lies under its positioned `.clipped` image.
-    &:has(> .card-anchor:focus-visible) {
-      outline: global.$global-focus;
-      outline-offset: 0;
     }
 
     // Media as a card's first child follows the card's top corners. The card clips them itself

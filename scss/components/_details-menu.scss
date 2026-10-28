@@ -2,7 +2,7 @@
 @use "../custom-includes/foundation-spaces/typography/base";
 @use "sass:list";
 
-// .details-menu: a <details> that folds a menu, the look of .accordion-menu without its JS. A flat row
+// .details-menu: a <details> that folds a menu. A flat row
 // while closed, a raised card inset by --_offset while open (no header fill: it fought the shadow). The
 // summary paints a --_toggle-tint layer, so every state hovers the same way.
 
@@ -17,6 +17,8 @@ $ring: 1.5rem;
 @mixin styles {
   .details-menu {
     --_offset: #{$offset};
+    --f-focus-offset: var(--f-focus-inset); // clipped
+
 
     width: 100%;
     overflow: hidden;
@@ -157,16 +159,5 @@ $ring: 1.5rem;
   // Nested, an open summary gives half the offset back at its start (above): so does the link.
   .details-menu .details-link:has(> .details-menu[open]) > a {
     padding-inline-start: $padding-x - $offset * 0.5;
-  }
-
-  // Keyboard focus is the global inset outline. A link's summary outlines only its caret, since the link covers
-  // the rest of its row.
-  .details-link > .details-menu > summary:focus-visible {
-    outline: none;
-
-    &::after {
-      outline: global.$global-focus;
-      outline-offset: -2px;
-    }
   }
 }

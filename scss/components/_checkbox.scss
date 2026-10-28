@@ -35,14 +35,6 @@
     }
   }
 
-  // The input is hidden, so its wrapper shows the keyboard focus (as .switch does).
-  .checkbox:has(input:focus-visible),
-  .radio:has(input:focus-visible) {
-    outline: global.$global-focus;
-    outline-offset: 2px;
-    border-radius: var(--f-radius-small);
-  }
-
   // A disabled input fades its drawn control, and in a wrapping label the row's text too
   // (the switch paddle: _s-switch.scss).
   label > :disabled ~ *,

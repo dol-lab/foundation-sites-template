@@ -2,8 +2,8 @@
  * todo self host the fonts: https://google-webfonts-helper.herokuapp.com/
  */
 
-!(function (window, document, $) {
-  // Script animations (jQuery's slides in Foundation's accordion menu, the tab panels below) are not CSS, so the
+!(function (window, document) {
+  // Script animations (a consumer's jQuery slides, the tab panels below) are not CSS, so the
   // reduced-motion rule misses them. Read per animation, it follows both the device and a `data-motion` setting on <html> (see _motion.scss).
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   /** @return {boolean} Whether animations should jump to their end. */
@@ -11,14 +11,20 @@
     const setting = document.documentElement.dataset.motion;
     return setting === "reduce" || (setting !== "full" && reducedMotion.matches);
   };
-  Object.defineProperty($.fx, "off", { configurable: true, get: motionOff });
+  if (window.jQuery) Object.defineProperty(window.jQuery.fx, "off", { configurable: true, get: motionOff });
+  /** @param {Function} fn Runs once the DOM is parsed, and never before the rest of this file. */
+  const ready = (fn) =>
+    document.readyState === "loading"
+      ? document.addEventListener("DOMContentLoaded", fn, { once: true })
+      : queueMicrotask(fn);
 
   /**
    * Tabs: `.tabs[data-tabs]` with an id, whose `.tabs-title` links name their `.tabs-panel` by `href="#id"` or
    * `data-tabs-target`. Delegated; init (on DOM ready, or the first click for a later one) adds the ARIA roles
-   * and `hidden` and selects the tab the URL's #hash names (also on `hashchange`). Arrow keys move between titles.
-   * The server marks the initial title and panel `.is-active`, or `data-link-active-class`/`data-panel-active-class`
-   * (a tab bar in a Foundation dropdown menu: it strips `li.is-active` on close). `data-active-collapse`: the active
+   * and `hidden` and selects the tab the URL's #hash names (also on `hashchange`). Arrow keys, Home and End move
+   * between titles and select them.
+   * The server marks the initial title and panel `.is-active`, or `data-link-active-class`/`data-panel-active-class`.
+   * `data-active-collapse`: the active
    * tab's title closes it. `data-deep-link`: a change writes the panel's id to the URL. `data-transition`: the
    * panels' box eases to its new height. A change fires a bubbling `tabchange` on the `.tabs`,
    * `detail: { title, panel }` (both null after a collapse).
@@ -86,6 +92,9 @@
         }
         tabs.mark(list, title, title.classList.contains(titleClass));
       });
+      // Without an active tab (collapsed) the first one keeps the list reachable by Tab.
+      if (!list.querySelector(`.tabs-title.${titleClass}`))
+        list.querySelector(".tabs-title a")?.setAttribute("tabindex", 0);
     },
 
     /**
@@ -155,47 +164,158 @@
       return;
     }
     const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
-    if (!step) return;
+    if (!step && e.key !== "Home" && e.key !== "End") return;
     const titles = [...title.parentElement.children].filter((t) => t.matches(".tabs-title") && tabs.link(t));
-    const next = titles[(titles.indexOf(title) + step + titles.length) % titles.length];
+    const next = step
+      ? titles[(titles.indexOf(title) + step + titles.length) % titles.length]
+      : titles.at(e.key === "Home" ? 0 : -1);
     if (!next || next === title) return;
     e.preventDefault();
     tabs.link(next).focus();
     tabs.select(next);
   });
   window.addEventListener("hashchange", tabs.fromHash);
-  $(function () {
+  ready(() => {
     document.querySelectorAll(".tabs[data-tabs]").forEach(tabs.init);
     tabs.fromHash();
   });
 
   /**
-   * Find-in-page opens a dropdown menu's submenu. A closed one is `hidden="until-found"`: the browser
-   * searches it and, on a match, removes the attribute and fires `beforematch`, where Foundation opens it.
-   * Without support, `until-found` is plain `hidden`, which the submenu's CSS would override: skip it then.
-   * A consumer's handler on Foundation's show/hide must not return false: jQuery would stop the event this syncs on.
+   * Dropdown menus: in a `[data-dropdown-menu]`, a top-level item's `[popover]` child is its panel. Hovering
+   * the item opens it after a moment and leaving closes it, unless it was opened by a click or clicked inside.
+   * A click on the item's link toggles it; Escape, a click outside and focus leaving the item close it, not
+   * while in a dialog (one opened from the panel). One panel is open at a time; its link has `aria-expanded`.
+   * A closed panel is `hidden="until-found"` where supported, so find-in-page opens the one holding a match.
+   * Delegated; panels are manual popovers, so other popovers and modals leave them alone. Listen for `toggle`
+   * on a panel (capture: it does not bubble).
    */
-  if ("onbeforematch" in document.documentElement) {
-    $(document).on("init.zf.dropdown-menu show.zf.dropdownMenu hide.zf.dropdownMenu", function (e) {
-      // Not jQuery's attr(): `hidden` is a boolean attribute to it, written as hidden="hidden".
-      $(e.target)
-        .closest("[data-dropdown-menu]")
-        .find(".is-dropdown-submenu")
-        .each(function () {
-          this.classList.contains("js-dropdown-active")
-            ? this.removeAttribute("hidden")
-            : this.setAttribute("hidden", "until-found");
-        });
-    });
-    document.addEventListener("beforematch", function (e) {
-      var $sub = $(e.target).filter(".is-dropdown-submenu");
-      $sub.closest("[data-dropdown-menu]").foundation("_show", $sub);
-    });
-  }
+  const dropdown = {
+    item: "[data-dropdown-menu] > li",
+    /** @type {?HTMLElement} The open panel. */
+    open: null,
+    pinned: false,
+    timer: 0,
+    /**
+     * @param {EventTarget} target An event's target.
+     * @return {?HTMLElement} The panel of the item around target.
+     */
+    panel: (target) => target.closest?.(dropdown.item)?.querySelector(":scope > [popover]"),
+    /**
+     * @param {HTMLElement} panel A panel.
+     * @param {boolean} pin Whether it stays open when the pointer leaves.
+     */
+    show(panel, pin) {
+      clearTimeout(dropdown.timer);
+      if (dropdown.open !== panel) {
+        dropdown.hide();
+        panel.showPopover();
+        // Without (scoped) anchor positioning, below the item and inside the window.
+        if (!CSS.supports("anchor-scope", "all")) {
+          const r = panel.parentElement.getBoundingClientRect();
+          panel.style.positionArea = "none";
+          panel.style.top = `${r.bottom}px`;
+          panel.style.left = `${Math.max(0, Math.min(r.left, document.documentElement.clientWidth - panel.offsetWidth))}px`;
+        }
+      }
+      dropdown.pinned ||= pin;
+    },
+    hide() {
+      clearTimeout(dropdown.timer);
+      dropdown.open?.hidePopover();
+    },
+    /**
+     * @param {HTMLElement} panel A panel.
+     * @param {boolean} open Its new state.
+     */
+    sync(panel, open) {
+      panel.parentElement.querySelector(":scope > :is(a, button)")?.setAttribute("aria-expanded", open);
+      if (!("onbeforematch" in panel)) return;
+      open ? panel.removeAttribute("hidden") : panel.setAttribute("hidden", "until-found");
+    },
+  };
+  document.addEventListener(
+    "beforetoggle",
+    (e) => {
+      if (!e.target.matches?.(`${dropdown.item} > [popover]`)) return;
+      const open = e.newState === "open";
+      if (open) dropdown.open = e.target;
+      else if (dropdown.open === e.target) Object.assign(dropdown, { open: null, pinned: false });
+      dropdown.sync(e.target, open);
+    },
+    true,
+  );
+  document.addEventListener("beforematch", (e) => {
+    if (e.target.matches(`${dropdown.item} > [popover]`)) dropdown.show(e.target, true);
+  });
+  document.addEventListener("pointerover", (e) => {
+    const panel = e.pointerType === "mouse" && dropdown.panel(e.target);
+    if (!panel) return;
+    clearTimeout(dropdown.timer);
+    if (panel !== dropdown.open && !dropdown.pinned)
+      dropdown.timer = setTimeout(() => dropdown.show(panel, false), 100);
+  });
+  document.addEventListener("pointerout", (e) => {
+    const item = e.pointerType === "mouse" && e.target.closest?.(dropdown.item);
+    if (!item || item.contains(e.relatedTarget)) return;
+    clearTimeout(dropdown.timer);
+    if (dropdown.open && !dropdown.pinned) dropdown.timer = setTimeout(dropdown.hide, 500);
+  });
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest?.(`${dropdown.item} > :is(a, button)`);
+    const panel = link && dropdown.panel(link);
+    if (panel) {
+      e.preventDefault();
+      dropdown.open === panel && dropdown.pinned ? dropdown.hide() : dropdown.show(panel, true);
+    } else if (dropdown.open?.parentElement.contains(e.target)) dropdown.pinned = true;
+    else if (dropdown.open && !e.target.closest?.('dialog, [role="dialog"]')) dropdown.hide();
+  });
+  document.addEventListener("keydown", (e) => {
+    const item = dropdown.open?.parentElement;
+    if (e.key === " " && e.target.matches?.(`${dropdown.item} > a`) && dropdown.panel(e.target)) {
+      e.preventDefault();
+      e.target.click();
+    } else if (e.key === "Escape" && item && !e.target.closest?.('dialog, [role="dialog"]')) {
+      dropdown.hide();
+      if (item.contains(e.target)) item.querySelector(":scope > :is(a, button)")?.focus();
+    }
+  });
+  document.addEventListener("focusout", (e) => {
+    const item = dropdown.open?.parentElement;
+    const to = e.relatedTarget;
+    if (item?.contains(e.target) && to && !item.contains(to) && !to.closest('dialog, [role="dialog"]')) dropdown.hide();
+  });
+  ready(() =>
+    document.querySelectorAll(`${dropdown.item} > [popover]`).forEach((panel) => dropdown.sync(panel, false)),
+  );
 
-  // A `[data-close]` button removes its `[data-closable]` box (a reveal's `data-close` still goes to Foundation).
-  document.addEventListener("click", function (e) {
-    e.target.closest("[data-close]")?.closest("[data-closable]")?.remove();
+  // Escape closes the innermost open `.details-menu` around the focus and focuses its summary. Capture, so a
+  // dropdown panel or dialog around it stays open.
+  document.addEventListener(
+    "keydown",
+    (e) => {
+      const menu = e.key === "Escape" && e.target.closest?.("details.details-menu[open]");
+      if (!menu) return;
+      e.preventDefault();
+      e.stopPropagation();
+      menu.open = false;
+      menu.querySelector(":scope > summary")?.focus();
+    },
+    true,
+  );
+
+  /**
+   * Modals are `<dialog class="reveal">`: `[data-open="<id>"]` opens one; a click on its backdrop (the dialog
+   * itself is the target, outside its box) closes it. Scripts call `showModal()`/`close()` and listen for the
+   * native `close` event. A `[data-close]` button closes its modal or removes its `[data-closable]` box.
+   */
+  document.addEventListener("click", (e) => {
+    const target = document.getElementById(e.target.closest("[data-open]")?.dataset.open);
+    if (target?.matches("dialog.reveal:not([open])")) return target.showModal();
+    const box = e.target.closest("[data-close]")?.closest("[data-closable], dialog.reveal");
+    if (box) return box.matches("dialog") ? box.close() : box.remove();
+    if (!e.target.matches("dialog.reveal[open]")) return;
+    const r = e.target.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) e.target.close();
   });
 
   /**
@@ -281,9 +401,7 @@
     document.addEventListener("scroll", hide, { capture: true, passive: true });
   }
 
-  $(function () {
-    update_collapse();
-  });
+  ready(update_collapse);
   // Once the user opens a folded disclosure, it is theirs: the next unfold leaves it as they left it.
   document.addEventListener(
     "toggle",
@@ -305,19 +423,19 @@
   function update_collapse() {
     var target = document.querySelector(":target");
 
-    $("details[data-collapse]").each(function () {
-      var fold = !!fold_query(this.getAttribute("data-collapse"))?.matches;
-      if ($(this).data("folded") === fold) {
+    document.querySelectorAll("details[data-collapse]").forEach((details) => {
+      var fold = !!fold_query(details.getAttribute("data-collapse"))?.matches;
+      if (folded.get(details) === fold) {
         return;
       }
-      $(this).data("folded", fold);
+      folded.set(details, fold);
 
-      if (fold && this.open && !(target && this.contains(target))) {
-        this.open = false;
-        this.setAttribute("data-collapsed", "");
-      } else if (!fold && this.hasAttribute("data-collapsed")) {
-        this.open = true;
-        this.removeAttribute("data-collapsed");
+      if (fold && details.open && !(target && details.contains(target))) {
+        details.open = false;
+        details.setAttribute("data-collapsed", "");
+      } else if (!fold && details.hasAttribute("data-collapsed")) {
+        details.open = true;
+        details.removeAttribute("data-collapsed");
       }
     });
   }
@@ -325,6 +443,8 @@
   // The names of `$breakpoints` in order; their widths are the `--f-breakpoint-<name>` tokens.
   var breakpoints = ["small", "medium", "large", "xlarge", "xxlarge"];
   var fold_queries = {};
+  // Whether update_collapse() last folded a `<details>`, so it acts only on a change.
+  var folded = new WeakMap();
 
   /**
    * The range a `data-collapse` breakpoint folds in, created once and watched for changes.
@@ -347,4 +467,4 @@
     }
     return fold_queries[name];
   }
-})(window, document, jQuery);
+})(window, document);

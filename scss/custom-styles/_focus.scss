@@ -1,14 +1,28 @@
 @use "../custom-includes/foundation-spaces/global";
 
-// Keyboard focus.
+// Keyboard focus: one ring for everything, set by the `--f-focus-*` tokens (`_root-tokens.scss`).
 
 @mixin styles {
-  // One rule for every element: an inset outline in the text color. Unlike a box-shadow ring, it is not clipped
-  // by an `overflow: hidden` parent nor replaced by the element's own shadow. A consumer's `:focus { outline: none }`
-  // beats it (more specific), so the outline is never reset on `:focus`; text fields keep their own focus style
-  // this way on purpose. With `transition: all` the outline animates too: a script reads it a frame later.
-  :focus-visible {
+  // An outline, not a box-shadow: the element's own shadow does not replace it. It follows the border radius,
+  // so elements without one get the focus radius (zero specificity, a component's own radius wins). A consumer's
+  // `:focus { outline: none }` beats this rule, so the outline is never reset on `:focus`.
+  :focus-visible,
+  // Hidden inputs: the visible wrapper shows the ring.
+  :is(.checkbox, .radio, .switch, .radio-tabs-option):has(input:focus-visible),
+  // A card that is one link: around the card, since its positioned `.clipped` image covers the anchor.
+  .card:has(> .card-anchor:focus-visible),
+  // A link's summary: only its caret, since the link covers the rest of its row.
+  .details-link > .details-menu > summary:focus-visible::after {
     outline: global.$global-focus;
-    outline-offset: -2px;
+    outline-offset: var(--f-focus-offset);
+  }
+
+  :where(:focus-visible, :is(.checkbox, .radio, .switch, .radio-tabs-option):has(input:focus-visible)) {
+    border-radius: var(--f-focus-radius);
+  }
+
+  .card > .card-anchor:focus-visible,
+  .details-link > .details-menu > summary:focus-visible {
+    outline: none;
   }
 }

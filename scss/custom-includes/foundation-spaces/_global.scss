@@ -135,13 +135,9 @@ $global-drop-shadow-small: var(--f-drop-shadow-small);
 /// @type String
 $global-drop-shadow-large: var(--f-drop-shadow-large);
 
-/// Custom: Keyboard focus color.
-/// @type Color
-$global-focus-color: var(--f-color-text-0) !default;
-
-/// Custom: Keyboard focus outline (an `outline` value, drawn inset by the global `:focus-visible` rule).
+/// Custom: Keyboard focus ring, an `outline` value built from the `--f-focus-*` tokens.
 /// @type String
-$global-focus: 2px solid $global-focus-color !default;
+$global-focus: var(--f-focus-width) solid var(--f-focus-color, var(--f-color-text-0)) !default;
 
 /// Custom: Paragraph font size.
 /// @type Number

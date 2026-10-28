@@ -127,6 +127,8 @@
             }
 
             & details {
+                --f-focus-offset: var(--f-focus-inset);
+
                 flex: 0 1 auto;
                 min-height: 0;
                 overflow-y: auto;
@@ -154,6 +156,7 @@
         border: 1px solid var(--f-color-border-1);
         border-radius: var(--f-radius);
         overflow: clip;
+        overflow-clip-margin: calc(var(--f-focus-offset) + var(--f-focus-width)); /* the focus ring of a full-width child */
     }
 
     .demo-preview {
@@ -305,8 +308,7 @@
             }
 
             &:focus-visible {
-                outline: 2px solid var(--f-color-text-0);
-                outline-offset: 4px;
+                outline-offset: 4px; /* outside the current one's ring */
             }
         }
 
@@ -467,7 +469,7 @@
         markup.append(button);
     }, true);
 
-    // Placeholder links (href="#") would jump to the top. Foundation's own handlers still run.
+    // Placeholder links (href="#") would jump to the top. Other handlers still run.
     document.addEventListener('click', (e) => {
         if (e.target.closest('a[href="#"]')) e.preventDefault();
     });

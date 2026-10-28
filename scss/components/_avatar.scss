@@ -5,6 +5,8 @@
 
 @mixin styles {
   .avatar-container {
+    --f-focus-offset: var(--f-focus-inset); // it may clip
+
     z-index: 20;
     width: var(--f-avatar-#{custom-settings.$avatar-default-size});
     min-width: var(--f-avatar-#{custom-settings.$avatar-default-size});

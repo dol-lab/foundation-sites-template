@@ -126,7 +126,6 @@ $form-button-radius: global.$global-radius !default;
 
   // Focus state
   &:focus {
-    outline: none;
     border: $input-border-focus;
     background-color: $input-background-focus;
     box-shadow: $input-shadow-focus;

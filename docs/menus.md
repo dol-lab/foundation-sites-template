@@ -1,6 +1,6 @@
 # Menus and dropdowns
 
-`.menu` is a row of links, `.vertical` a column. `.details-menu` folds a menu into a native `<details>`, `data-dropdown-menu` opens nested menus on hover, `.dropdown-pane` is a panel opened by a toggle.
+`.menu` is a row of links, `.vertical` a column. `.details-menu` folds a menu into a native `<details>`, `data-dropdown-menu` opens panels on hover or click, `.popover` is a pane of rows opened by a button.
 
 ## Menu
 
@@ -15,13 +15,13 @@
 
 ## Dropdown menu
 
-Find-in-page opens a closed submenu that holds the match (browsers with `hidden="until-found"`). Every `<ul>` that is a direct child of a menu item becomes a submenu, so content with its own list (tabs in a header panel) goes into a `<div>`.
+A top-level item's `popover="manual"` child is its panel, opened below it by `js/app.js` (no init, so menus added later work). Hovering the item opens it and leaving closes it, unless it was opened by a click or clicked inside; a click on the item's link toggles it (its `href` is not followed), and Escape, a click outside or focus leaving the item close it. One panel is open at a time. Its link gets `aria-expanded`, and find-in-page opens a closed panel that holds the match (browsers with `hidden="until-found"`). A panel fires `toggle` (listen with capture, it does not bubble); scripts open one with `showPopover()`. Keyboard: Enter or Space on the item's link opens its panel, Tab walks into it in document order, Escape closes it and returns focus to the link, tabbing out of the item closes it.
 
 ```html example
 <ul class="dropdown menu" data-dropdown-menu>
     <li>
         <a href="#">Item 1</a>
-        <ul class="menu">
+        <ul class="vertical menu" popover="manual">
             <li><a href="#">Item 1A</a></li>
             <li><a href="#">Item 1B</a></li>
             <li><a href="#">Item 1C</a></li>
@@ -32,13 +32,15 @@ Find-in-page opens a closed submenu that holds the match (browsers with `hidden=
 </ul>
 ```
 
-## Dropdown pane
+## Popover
 
-Opened here by `.dots`, the button Spaces puts in the corner of a card. Spaces' own context menus (post, comment, profile, avatar) are not dropdown panes: spaces-markup builds them (`includes/Menu.php`, `assets/js/menu.js`) on a `.card`.
+A native `popover` opened by `popovertarget`, here by `.dots`, the button Spaces puts in the corner of a card. The button's `anchor-name` and the pane's `position-anchor` tie the two, so the pane sits below it; the browser closes it on Escape or a click outside. Keyboard: Enter or Space on the button opens it, Tab walks into it (the browser puts it right after the button), Escape closes it and returns focus to the button. Spaces' own context menus (post, comment, profile, avatar) are not these: spaces-markup builds them (`includes/Menu.php`, `assets/js/menu.js`) on a `.card`.
 
 ```html example
-<button class="button p-0 m-0 clear dots" type="button" aria-label="Actions" data-toggle="demo-dropdown-pane"></button>
-<ul class="dropdown-pane card" id="demo-dropdown-pane" data-dropdown data-position="bottom" data-alignment="left">
+<div class="flex align-right">
+    <button class="button p-0 m-0 clear dots" type="button" aria-label="Actions" popovertarget="demo-popover" style="anchor-name: --demo-popover"></button>
+</div>
+<ul class="popover card" id="demo-popover" popover style="position-anchor: --demo-popover">
     <li class="card-divider p-3"><a href="#">Edit</a></li>
     <li class="card-divider p-3"><a href="#">Share</a></li>
     <li class="card-divider p-3"><a href="#" class="alert">Delete</a></li>
@@ -47,7 +49,7 @@ Opened here by `.dots`, the button Spaces puts in the corner of a card. Spaces' 
 
 ## Details menu
 
-A `.details-menu` is a flat row while closed and a raised card while open; nested ones keep their carets in one column. No JS: find-in-page opens it, `name="…"` makes a group exclusive. Spaces folds the member list, a member's "Change role to" and the header's burger this way.
+A `.details-menu` is a flat row while closed and a raised card while open; nested ones keep their carets in one column. Find-in-page opens it, `name="…"` makes a group exclusive. Enter or Space on the summary toggles it; Escape closes the innermost open one around the focus and focuses its summary (`js/app.js`, before a dropdown panel or dialog around it sees the key). Spaces folds the member list, a member's "Change role to" and the header's burger this way.
 
 A parent that is also a link sits in `li.details-link`: the `<a>` comes before the `<details>` and lies over its row, the summary only folds (a link inside a summary would be nested in a button). The summary repeats the title in an `aria-hidden` span so the row wraps as the link does, and is named by `aria-label`. Spaces' main menu in the sidebar is built this way.
 

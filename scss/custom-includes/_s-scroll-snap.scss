@@ -9,6 +9,8 @@
   .scroll-snap-container-x {
     @include grid.xy-grid($direction: horizontal, $wrap: false);
 
+    --f-focus-offset: var(--f-focus-inset); // clipped
+
     position: relative;
     overflow: auto hidden;
     scroll-snap-type: x mandatory;

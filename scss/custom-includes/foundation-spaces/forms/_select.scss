@@ -80,7 +80,6 @@ $select-radius: global.$global-radius !default;
 
   // Focus state
   &:focus {
-    outline: none;
     border: text.$input-border-focus;
     background-color: text.$input-background-focus;
     box-shadow: text.$input-shadow-focus;

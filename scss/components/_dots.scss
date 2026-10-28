@@ -7,6 +7,8 @@
 @mixin styles {
   .dots:not(:where(.page-numbers)),
   .add {
+    --f-focus-offset: var(--f-focus-inset); // they sit in card corners, which clip
+
     cursor: pointer;
     z-index: 50;
     width: custom-settings.$button-height;

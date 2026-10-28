@@ -13,6 +13,8 @@ $-active: ':is(.is-active, [aria-selected="true"], :has(> [aria-selected="true"]
 
 @mixin styles {
   .tabs {
+    --f-focus-offset: var(--f-focus-inset); // clipped, as are its titles
+
     display: flex;
     overflow: hidden;
     font-size: global.$paragraph-font-size;

@@ -19,6 +19,30 @@ module.exports = {
     target: "#user-card .demo-preview:has(#demo-user-1)",
     widths: [1280],
   },
+  "tabs-focus": {
+    click: [],
+    focus: "#demo-tabs > .is-active > a",
+    target: "#tabs .demo-preview:has(#demo-tabs)",
+    widths: [1280],
+  },
+  "details-menu-focus": {
+    click: [],
+    focus: "#menus .details-menu[open] > summary",
+    target: "#menus .demo-preview:has(.details-menu[open])",
+    widths: [1280],
+  },
+  "forms-focus": {
+    click: [],
+    focus: '#forms input[placeholder="Placeholder"]',
+    target: '#forms .demo-preview:has([placeholder="Placeholder"])',
+    widths: [1280],
+  },
+  "switch-focus": {
+    click: [],
+    focus: "#demo-switch-1",
+    target: "#forms .demo-preview:has(#demo-switch-1)",
+    widths: [1280],
+  },
   "header-study": {
     click: ['#app-header a.menu-anchor:text-is("Study")'],
     widths: [1280],
@@ -49,6 +73,9 @@ module.exports = {
     focus: "#button-group .button-group.hollow > :nth-child(2)",
     target: "#button-group .demo-example:has(.hollow)",
     widths: [1280],
+  },
+  "popover-open": {
+    click: ['[popovertarget="demo-popover"]'],
   },
   "modal-open": {
     click: ['[data-open="demo-modal"]'],

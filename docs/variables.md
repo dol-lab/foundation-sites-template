@@ -26,6 +26,7 @@ The Sass globals (`$global-radius`, `$global-radius-xsmall`, `$global-transition
 | `--f-transition-timing-cubic-bezier` | `cubic-bezier(0.8, 0, 0.2, 1.2)` | Easing that overshoots slightly |
 | `--f-drop-shadow-small`, `--f-drop-shadow`, `--f-drop-shadow-large` | | Elevation, drawn in `--f-color-shadow`: change the color, not the shadows. `-small` for surfaces in the flow (hovered `.card.clickable`, open `.details-menu`), the others for layers above the page |
 | `--f-avatar-xsmall` … `-xxlarge` | `24px` … `240px` | Avatar sizes, from `$avatar-sizes` |
+| `--f-focus-width`, `--f-focus-offset`, `--f-focus-radius` | `2px`, `2px`, `--f-radius-xsmall` | The keyboard focus ring, an outline on `:focus-visible`. The radius applies where the element has none of its own. A container that clips its children sets `--f-focus-offset: var(--f-focus-inset)` (the negative width), so the rings inside it are drawn inside the element |
 | `--f-opacity-disabled` | `0.5` | A disabled control, `.disabled`, `$button-opacity-disabled`, `$switch-opacity-disabled` |
 | `--f-z-header`, `-overlay`, `-modal`, `-dropdown` | `1000`, `1005`, `1006`, `2000` | Page layers, from `$z-index`: the app header, a modal's backdrop, the modal, and dropdowns (above a modal, so one opened inside it shows). Stacking inside a component keeps small numbers |
 | `--f-breakpoint-small` … `-xxlarge` | `0em` … `75em` | Breakpoint widths, from `$breakpoints`, for scripts to build a `matchMedia` query. Read-only (a media query cannot use a custom property) |
@@ -34,6 +35,7 @@ These are read with a fallback and not declared, so set them where they apply:
 
 | Variable | Default | Role |
 | --- | --- | --- |
+| `--f-focus-color` | `--f-color-text-0` | The focus ring's color, read where the ring is drawn |
 | `--f-avatar-stack-overlap` | `0.6rem` | How far avatars in an `.avatar-stack` overlap |
 | `--f-auto-grid-min-width` | `250px` | `.auto-grid`'s minimum column width |
 | `--f-prose-offset-left` | `clamp(0.75rem, 2vw, 2rem)` | `.prose-layout`'s left column target width |

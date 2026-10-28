@@ -1,5 +1,3 @@
-@use "foundation-spaces/global";
-
 /* ==============================================================================
   Radio Tabs
 ============================================================================== */
@@ -117,12 +115,6 @@
         color: var(--f-color-text-0);
       }
     }
-  }
-
-  // Highlight the label when its input is focused
-  .radio-tabs-option:has(input[type="radio"]:focus-visible) {
-    outline: global.$global-focus;
-    outline-offset: 2px;
   }
 
   // Smooth color transitions (labels and FA pseudo-elements)

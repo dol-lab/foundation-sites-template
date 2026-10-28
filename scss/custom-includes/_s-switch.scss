@@ -216,12 +216,6 @@ $switch-cursor-disabled: not-allowed !default;
     @include switch-container;
 
     height: $switch-height;
-
-    &:has(input[type="checkbox"]:focus-visible) {
-      outline: global.$global-focus;
-      outline-offset: 2px;
-      border-radius: var(--f-radius-small);
-    }
   }
 
   // <input> element
