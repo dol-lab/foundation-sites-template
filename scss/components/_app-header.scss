@@ -114,6 +114,18 @@
       height: var(--_height);
     }
 
+    // A counter sits on the icon's upper right corner, ringed in the bar's color, so the icon stays whole.
+    & .menu > li > .menu-anchor:has(> .badge) {
+      position: relative;
+    }
+
+    & .menu > li > .menu-anchor > .badge {
+      position: absolute;
+      top: 0;
+      left: calc(50% + 0.125rem);
+      box-shadow: 0 0 0 2px var(--f-color-bg-1);
+    }
+
     & .menu > li.submenu .fa,
     & .menu > li .submenu-element .fa {
       font-size: inherit;

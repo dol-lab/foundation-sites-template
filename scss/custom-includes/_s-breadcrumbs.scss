@@ -125,10 +125,10 @@ $breadcrumbs-item-separator-opacity: 60% !default;
   .breadcrumbs {
     @include breadcrumbs-container;
 
+    // Text, not an inactive control, so it needs 4.5:1: the muted color alone, not the global `.disabled` fade too.
     .disabled {
       color: $breadcrumbs-item-color-disabled;
-
-      // color: color-mix(in oklab, $breadcrumbs-item-color-disabled (100% - $breadcrumbs-item-opacity-disabled), transparent $breadcrumbs-item-opacity-disabled);
+      opacity: 1;
       cursor: not-allowed;
 
       &::after {
