@@ -9,12 +9,22 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:list";
 @use "sass:map";
-@use "sass:meta";
 
 ////
 /// @group button
 ////
+
+// Three weights, so one main action stands out on a page of buttons, plus two lighter fills:
+// - neutral, a plain `.button`: the card surface, a hairline border and a light shadow;
+// - solid, a color of `$button-solid-colors` or any color with `.solid`: the color itself, flat (a darker edge
+//   or a shadow muddies a light color such as warning);
+// - soft, the other colors or any color with `.soft`: a tint with the label in the color.
+// `.hollow` is an outline (no fill, border and label in the color), `.clear` has no surface until hovered. A color class sets `--_c`, a fill class picks the weight, and one
+// rule applies the result. The setters weigh one class (`:where()`), so the last in the cascade decides:
+// a group's color, the button's color, the group's fill, the button's fill. Disabled weighs two and beats
+// them all. Nothing moves on hover or press, only colors change.
 
 /// Font family for button elements.
 /// @type Font
@@ -24,81 +34,76 @@ $button-font-family: inherit !default;
 /// @type Font-Weight
 $button-font-weight: 500 !default;
 
-/// Padding inside buttons.
+/// Padding of menu items and card links that look like buttons.
 /// @type List
 $button-padding: 0.5rem 0.75rem !default;
 
-/// Sizes for buttons.
+/// Inline padding of a button, in em so it scales with the size.
+/// @type Number
+$button-padding-inline: 0.85em !default;
+
+/// Font size of each button size.
 /// @type Map
 $button-sizes: (
-  tiny: 0.625rem,
+  tiny: 0.75rem,
   small: 0.8rem,
   default: 0.9rem,
   large: 1rem,
+) !default;
+
+/// Height of each button size; the default matches an input's.
+/// @type Map
+$button-heights: (
+  tiny: 1.6rem,
+  small: 2rem,
+  default: custom-settings.$button-height,
+  large: 2.75rem,
 ) !default;
 
 /// Margin around buttons.
 /// @type List
 $button-margin: 0 0 map.get($button-sizes, default) 0 !default;
 
-/// Default fill for buttons. Can either be `solid` or `hollow`.
-/// @type Keyword
-$button-fill: solid !default;
-
-/// Default background color for buttons: a soft neutral fill, so a page of plain buttons stays calm
-/// (`.secondary` is the dark solid one). Mixed into bg-1, so it holds AA with text-0 in both modes.
-/// @type Color
-$button-background: color-mix(in oklab, var(--f-color-text-0) 8%, var(--f-color-bg-1)) !default;
-
-/// Background color on hover for buttons.
-/// @type Color
-$button-background-hover: color-mix(in oklab, var(--f-color-text-0) 14%, var(--f-color-bg-1)) !default;
-
-/// Default font color for buttons, also the label of a plain `.clear` button.
+/// Colors that are solid by default; the others are soft.
 /// @type List
-$button-color: var(--f-color-text-0) !default;
+$button-solid-colors: brand, primary, secondary !default;
 
-/// A hollow button's label: the color's hue at about text-0's lightness, so it is AA on bg-0, bg-1 and the
-/// palette's 10% fill in both modes. Not mixed into text-0: a warm theme tint cancels a blue to grey.
+/// A soft or hollow button's label: the color's hue at about text-0's lightness, so it is AA on bg-0, bg-1 and its
+/// own tint in both modes. Not mixed into text-0: a warm theme tint cancels a blue to grey.
 /// @param {Color} $color - The color to take hue and chroma from.
 /// @return {Color}
 @function hollow-label($color) {
   @return light-dark(oklch(from #{$color} 0.42 c h), oklch(from #{$color} 0.82 c h));
 }
 
-/// Label and border of a plain `.hollow` button.
-/// @type Color
-$button-hollow-color: hollow-label(var(--f-color-primary)) !default;
+/// A soft button's surface: the color's hue at a fixed lightness. Not mixed into bg-1: a warm theme tint greys
+/// it out. Chroma grows with the square of the color's, so a muted color (primary) gives a cool grey rather
+/// than a pastel, and a strong one (warning) a clear tint.
+/// @param {Color} $color - The color to take hue and chroma from.
+/// @param {Number} $shift [0] - Lightness toward the text, for hover and the border.
+/// @return {Color}
+@function soft-surface($color, $shift: 0) {
+  @return light-dark(
+    oklch(from #{$color} #{0.94 - $shift} min(c * c * 2, 0.06) h),
+    oklch(from #{$color} #{0.3 + $shift} min(c * c * 2.4, 0.07) h)
+  );
+}
+
+/// The lift of a neutral button: an unblurred line under its border, so the edge stays crisp.
+/// @type Shadow
+$button-shadow: 0 1px 0 color-mix(in srgb, var(--f-color-shadow) 50%, transparent) !default;
 
 /// Border radius for buttons, defaulted to global-radius.
 /// @type Number
 $button-radius: global.$global-radius !default;
 
-/// Border for buttons, transparent by default
-/// @type List
-$button-border: 1px solid transparent !default;
-
-/// Border width for hollow outline buttons
+/// Border width of every button; a button group overlaps its buttons by it.
 /// @type Number
 $button-hollow-border-width: 1px !default;
 
 /// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, and so on.
 /// @type Map
 $button-palette: colors.$foundation-palette !default;
-
-/// opacity for a disabled button.
-/// @type List
-$button-opacity-disabled: var(--f-opacity-disabled) !default;
-
-/// Background color lightness on hover for buttons.
-/// @type Number
-/// @obsolete Replaced by CSS variable `--f-color-<name>-darker`
-// $button-background-hover-lightness: -20% !default;
-
-/// Color lightness on hover for hollow buttons.
-/// @type Number
-/// @obsolete Replaced by CSS variable `--f-color-<name>-darker`
-// $button-hollow-hover-lightness: -50% !default;
 
 // Internal: flip from margin-right to margin-left for defaults
 @if global.$global-text-direction == "rtl" {
@@ -116,36 +121,6 @@ $button-transition:
 /// @type Boolean
 $button-responsive-expanded: false !default;
 
-// The box every button shares. Flex, so the label is centered at any height and an icon beside it gets a gap without a space of its own.
-@mixin button-base {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5em;
-  vertical-align: middle;
-  margin: $button-margin;
-  border: $button-border;
-  border-radius: $button-radius;
-  transition: $button-transition;
-  font-family: $button-font-family;
-  font-size: map.get($button-sizes, default);
-  font-weight: $button-font-weight;
-  appearance: none;
-  text-align: center;
-  cursor: pointer;
-
-  @if meta.type-of($button-padding) == "map" {
-    @each $size, $padding in $button-padding {
-      @include breakpoint.breakpoint($size) {
-        padding: $padding;
-      }
-    }
-  } @else {
-    padding: $button-padding;
-  }
-
-}
-
 /// Expands a button to make it full-width.
 /// @param {Boolean} $expand [true] - Set to `true` to enable the expand behavior. Set to `false` to reverse this behavior.
 @mixin button-expand($expand: true) {
@@ -162,187 +137,6 @@ $button-responsive-expanded: false !default;
   }
 }
 
-/// Sets the base styles of a hollow or clear button filling according to `$fill`.
-/// See mixin `button-fill-style` for the filling styles.
-/// @param {Keyword} $fill [$button-fill] - Type of filling between `hollow` and `clear`. `solid` has no effects.
-@mixin button-fill($fill: $button-fill) {
-  @if $fill == hollow {
-    @include button-hollow;
-  } @else if $fill == clear {
-    @include button-clear;
-  }
-}
-
-/// Sets the visual styles of a solid/hollow/clear button filling according to `$fill`.
-/// See mixins `button-style`, `button-hollow-style` and `button-clear-style` for effects of visual styling parameters.
-/// @param {Keyword} $fill [$button-fill] - Type of filling between `hollow` and `clear`.
-/// @param {Color} $background [$button-background] - -
-/// @param {Color} $background-hover [$button-background-hover] - -
-/// @param {Color} $color [$button-color] - -
-@mixin button-fill-style(
-  $fill: $button-fill,
-  $background: $button-background,
-  $background-hover: $button-background-hover,
-  $color: $button-color
-) {
-  @if $fill == solid {
-    @include button-style($background, $background-hover, $color);
-  } @else if $fill == hollow {
-    @include button-hollow-style;
-  } @else if $fill == clear {
-    @include button-clear-style($color);
-  }
-}
-
-/// Sets the visual style of a button.
-/// @param {Color} $background [$button-background] - Background color of the button.
-/// @param {Color} $background-hover [$button-background-hover] - Background color of the button on hover.
-/// @param {Color} $color [$button-color] - Text color of the button.
-@mixin button-style(
-  $background: $button-background,
-  $background-hover: $button-background-hover,
-  $color: $button-color
-) {
-  // Default and disabled states
-  &,
-  &.disabled,
-  &[disabled],
-  &.disabled:hover,
-  &[disabled]:hover,
-  &.disabled:focus,
-  &[disabled]:focus {
-    background-color: $background;
-    color: $color;
-  }
-
-  &:hover,
-  &:focus {
-    background-color: $background-hover;
-    color: $color;
-  }
-}
-
-/// Sets the base styles of a hollow button.
-/// See mixin `button-hollow-style` for the filling styles.
-@mixin button-hollow {
-  &,
-  &.disabled,
-  &[disabled] {
-    &,
-    &:hover,
-    &:focus {
-      background-color: transparent;
-    }
-  }
-}
-
-/// Sets the visual style of a hollow button.
-/// @param {Color} $color [$button-hollow-color] - Text and border color of the button.
-/// @param {Color} $border-width [$button-hollow-border-width] - Border width of the button.
-@mixin button-hollow-style($color: $button-hollow-color, $border-width: $button-hollow-border-width) {
-  // Default and disabled states
-  &,
-  &.disabled,
-  &[disabled],
-  &.disabled:hover,
-  &[disabled]:hover,
-  &.disabled:focus,
-  &[disabled]:focus {
-    border: $border-width solid color-mix(in oklab, $color 50%, transparent);
-    color: $color;
-  }
-
-  &:hover,
-  &:focus {
-    border-color: $color;
-    color: $color;
-  }
-}
-
-/// Sets the base styles of a clear button.
-/// See mixin `button-clear-style` for the filling styles.
-@mixin button-clear {
-  &,
-  &.disabled,
-  &[disabled] {
-    &,
-    &:hover,
-    &:focus {
-      border-color: transparent;
-      background-color: transparent;
-    }
-  }
-}
-
-/// Sets the visual style of a clear button: no surface until hovered.
-/// @param {Color} $color [$button-color] - Text color of the button.
-@mixin button-clear-style($color: $button-color) {
-  // Default and disabled states
-  &,
-  &.disabled,
-  &[disabled],
-  &.disabled:hover,
-  &[disabled]:hover,
-  &.disabled:focus,
-  &[disabled]:focus {
-    color: $color;
-  }
-
-  &:hover,
-  &:focus {
-    background-color: color-mix(in oklab, $color 8%, transparent);
-    color: $color;
-  }
-}
-
-/// Sets the visual styles of a solid/hollow/clear button using predefined CSS variables.
-/// Expects tokens like `--f-color-<name>`, `--f-color-<name>-darker`, `--f-color-<name>-contrast`,
-/// `--f-color-bg-contrast`, and `--f-color-text`.
-/// @param {Keyword} $fill [$button-fill] - Type of filling between `hollow` and `clear`.
-/// @param {Keyword} $name - Palette key name that maps to your CSS variables (e.g. `primary`, `secondary`).
-@mixin button-fill-style-from-css-vars($fill: $button-fill, $name) {
-  @if $fill == solid {
-    background-color: var(--f-color-#{$name});
-    color: var(--f-color-#{$name}-contrast);
-
-    &:hover,
-    &:focus {
-      background-color: var(--f-color-#{$name}-darker);
-      color: var(--f-color-#{$name}-contrast);
-    }
-  } @else if $fill == hollow {
-    border: $button-hollow-border-width solid var(--f-color-#{$name});
-    border-color: color-mix(in oklab, var(--f-color-#{$name}) 15%, transparent);
-    border-width: $button-hollow-border-width;
-    color: hollow-label(var(--f-color-#{$name}));
-    background-color: color-mix(in oklab, var(--f-color-#{$name}) 10%, var(--f-color-bg-1));
-
-    &:hover,
-    &:focus {
-      border-color: color-mix(in oklab, var(--f-color-#{$name}-darker) 15%, transparent);
-      color: hollow-label(var(--f-color-#{$name}));
-      background-color: color-mix(in oklab, var(--f-color-#{$name}) 25%, var(--f-color-bg-1));
-    }
-  } @else if $fill == clear {
-    border-color: transparent;
-    background-color: transparent;
-    color: color-mix(in oklab, var(--f-color-#{$name}) 10%, var(--f-color-text-0));
-
-    &:hover,
-    &:focus {
-      background-color: color-mix(in oklab, var(--f-color-#{$name}) 10%, transparent);
-      color: color-mix(in oklab, var(--f-color-#{$name}) 5%, var(--f-color-text-0));
-    }
-  }
-}
-
-/// Adds disabled styles to a button by fading the element and reseting the cursor.
-/// @param {Number} $opacity [$button-opacity-disabled] - Opacity of the disabled button.
-@mixin button-disabled($opacity: $button-opacity-disabled) {
-  opacity: $opacity;
-  cursor: not-allowed;
-}
-
 /// Adds a dropdown arrow to a button, a flex item after the label (the button's gap spaces it).
 /// @param {Number} $size [0.4em] - Size of the arrow. We recommend using an `em` value so the triangle scales when used inside different sizes of buttons.
 /// @param {Color} $color [currentColor] - Color of the arrow. Not `inherit`: it is one value of the `border-color` shorthand, where `inherit` drops the whole declaration.
@@ -356,42 +150,94 @@ $button-responsive-expanded: false !default;
   }
 }
 
-/// Adds all styles for a button. For more granular control over styles, use the individual button mixins.
-/// @param {Boolean} $expand [false] - Set to `true` to make the button full-width.
-/// @param {Color} $background [$button-background] - Background color of the button.
-/// @param {Color} $background-hover [$button-background-hover] - Background color of the button on hover.
-/// @param {Color} $color [$button-color] - Text color of the button.
-/// @param {Keyword} $style [solid] - Set to `hollow` to create a hollow button. The color defined in `$background` will be used as the primary color of the button.
-@mixin button(
-  $expand: false,
-  $background: $button-background,
-  $background-hover: $button-background-hover,
-  $color: $button-color,
-  $style: $button-fill
-) {
-  @include button-base;
-  @include button-fill($style);
-  @include button-fill-style($style, $background, $background-hover, $color);
+/// The color a fill is made from.
+/// @param {String} $name - Palette key.
+@mixin button-color($name) {
+  --_c: var(--f-color-#{$name});
+  --_c-darker: var(--f-color-#{$name}-darker);
+  --_c-contrast: var(--f-color-#{$name}-contrast);
+}
 
-  @if $expand {
-    @include button-expand;
+/// One of the fills (see the top of this file): `neutral`, `solid`, `soft`, `hollow` or `clear`.
+/// @param {Keyword} $fill - The weight.
+@mixin button-fill($fill) {
+  @if $fill == neutral {
+    --_bg: var(--f-color-bg-1);
+    --_bg-hover: color-mix(in oklab, var(--f-color-text-0) 5%, var(--f-color-bg-1));
+    --_fg: var(--f-color-text-0);
+
+    // Opaque, like every border here: a translucent one blurs into the shadow.
+    --_border: color-mix(in oklab, var(--f-color-text-0) 15%, var(--f-color-bg-1));
+    --_seam: var(--_border);
+    --_shadow: #{$button-shadow};
+  } @else if $fill == solid {
+    --_bg: var(--_c);
+    --_bg-hover: var(--_c-darker);
+    --_fg: var(--_c-contrast);
+    --_border: var(--_c);
+    --_seam: color-mix(in oklab, var(--_c-contrast) 30%, var(--_c));
+    --_shadow: none;
+  } @else if $fill == soft {
+    // A tinted surface (a callout) sets the knobs, or the button's own tint would vanish on it.
+    --_bg: var(--f-button-soft-background, #{soft-surface(var(--_c))});
+    --_bg-hover: #{soft-surface(var(--_c), 0.05)};
+    --_fg: #{hollow-label(var(--_c))};
+
+    // Opaque: a translucent border reads as a blur over the tint, like a shadow.
+    --_border: var(--f-button-soft-border, #{soft-surface(var(--_c), 0.06)});
+    --_seam: #{soft-surface(var(--_c), 0.12)};
+    --_shadow: none;
+  } @else if $fill == hollow {
+    --_bg: transparent;
+    --_bg-hover: #{soft-surface(var(--_c))};
+    --_fg: #{hollow-label(var(--_c))};
+    --_border: light-dark(oklch(from var(--_c) 0.72 calc(c * 0.7) h), oklch(from var(--_c) 0.5 calc(c * 0.7) h));
+    --_seam: var(--_border);
+    --_shadow: none;
+  } @else if $fill == clear {
+    --_bg: transparent;
+    --_bg-hover: color-mix(in oklab, var(--_c) 10%, transparent);
+    --_fg: color-mix(in oklab, var(--_c) 10%, var(--f-color-text-0));
+    --_border: transparent;
+    --_seam: var(--_border);
+    --_shadow: none;
   }
 }
 
 // .button, and what .button, .input and .button-group share (focus, corners inside card sections).
 @mixin spaces-button {
   .button {
-    @include button($style: none);
+    --_c: var(--f-color-text-0);
+    --_c-darker: color-mix(in oklab, var(--f-color-text-0) 85%, var(--f-color-bg-1));
+    --_c-contrast: var(--f-color-bg-1);
 
-    &:not(.tiny, .small) {
-      min-height: custom-settings.$button-height;
-    }
+    @include button-fill(neutral);
 
-    // Sizes
-    @each $size, $value in map.remove($button-sizes, default) {
-      &.#{$size} {
-        font-size: $value;
-      }
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    vertical-align: middle;
+    min-height: map.get($button-heights, default);
+    margin: $button-margin;
+    padding: 0.25em $button-padding-inline;
+    border: $button-hollow-border-width solid var(--_border);
+    border-radius: $button-radius;
+    box-shadow: var(--_shadow);
+    background-color: var(--_bg);
+    color: var(--_fg);
+    transition: $button-transition;
+    font-family: $button-font-family;
+    font-size: map.get($button-sizes, default);
+    font-weight: $button-font-weight;
+    appearance: none;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--_bg-hover);
+      color: var(--_fg);
     }
 
     &.expanded {
@@ -422,32 +268,57 @@ $button-responsive-expanded: false !default;
       }
     }
 
-    // Solid, hollow & clear styles
-    @each $filling in (solid hollow clear) {
-      $selector: if($button-fill == $filling, null, ".#{$filling}");
-
-      &#{$selector} {
-        @include button-fill($filling);
-        @include button-fill-style($filling);
-
-        // Palette variants: use CSS custom properties for colors.
-        @each $name, $color in $button-palette {
-          &.#{"" + $name} {
-            @include button-fill-style-from-css-vars($filling, $name);
-          }
-        }
-      }
-    }
-
-    // Disabled state
-    &.disabled,
-    &[disabled] {
-      @include button-disabled;
-    }
-
     // Dropdown arrow, in the label's color (currentColor).
     &.dropdown {
       @include button-dropdown;
+    }
+  }
+
+  // Sizes, on the button or its group.
+  @each $size, $value in map.remove($button-sizes, default) {
+    :where(.button-group.#{$size}) > .button,
+    .button:where(.#{$size}) {
+      min-height: map.get($button-heights, $size);
+      font-size: $value;
+    }
+  }
+
+  // Colors with their default weight, then fills: the group's first each time, so the button's own class wins.
+  @each $scope in (group, button) {
+    @each $name, $color in $button-palette {
+      #{if($scope == group, ":where(.button-group.#{$name}) > .button", ".button:where(.#{$name})")} {
+        @include button-color($name);
+
+        @if list.index($button-solid-colors, $name) {
+          @include button-fill(solid);
+        } @else {
+          @include button-fill(soft);
+        }
+      }
+    }
+  }
+
+  @each $scope in (group, button) {
+    @each $fill in (solid, soft, hollow, clear) {
+      #{if($scope == group, ":where(.button-group.#{$fill}) > .button", ".button:where(.#{$fill})")} {
+        @include button-fill($fill);
+      }
+    }
+  }
+
+  // A neutral fill with muted text, not a fade: a faded color turns muddy. Opacity 1 undoes the global `.disabled`.
+  .button:is(.disabled, [disabled]) {
+    --_bg: color-mix(in oklab, var(--f-color-text-0) 6%, var(--f-color-bg-1));
+    --_bg-hover: var(--_bg);
+    --_fg: var(--f-color-text-2);
+    --_border: transparent;
+    --_shadow: none;
+
+    opacity: 1;
+    cursor: not-allowed;
+
+    &.clear {
+      --_bg: transparent;
     }
   }
 

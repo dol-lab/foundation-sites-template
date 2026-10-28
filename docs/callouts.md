@@ -1,6 +1,6 @@
 # Callouts
 
-`.callout` sets a message apart from the text around it. Takes a palette color; a button inside takes the same one. Text, headings and links share one color that meets WCAG AA on the tint (links are underlined), and a hollow button sits on the page background so it stays visible.
+`.callout` sets a message apart from the text around it. Takes a palette color; a button inside takes the same one. Text, headings and links share one color that meets WCAG AA on the tint (links are underlined), and a soft button sits on the page background so it stays visible (a hollow one is see-through anyway). Success, warning and alert buttons are soft by default: the main action takes `.solid`.
 
 The palette classes are `primary`, `secondary`, `success`, `warning` and `alert` (the error variant; a wrong name silently falls back to the default). Do not override a callout's colors inline: the box then stops following the theme while its text still does.
 
@@ -32,19 +32,19 @@ The palette classes are `primary`, `secondary`, `success`, `warning` and `alert`
 <div class="callout success">
     <h3>Success</h3>
     <p>Something worked. <a href="#">A link</a>.</p>
-    <a class="button success" href="#">Action</a>
+    <a class="button success solid" href="#">Action</a>
     <a class="button hollow success" href="#">Later</a>
 </div>
 <div class="callout warning">
     <h3>Warning</h3>
     <p>Something needs attention. <a href="#">A link</a>.</p>
-    <a class="button warning" href="#">Action</a>
+    <a class="button warning solid" href="#">Action</a>
     <a class="button hollow warning" href="#">Later</a>
 </div>
 <div class="callout alert">
     <h3>Alert</h3>
     <p>Something went wrong. <a href="#">A link</a>.</p>
-    <a class="button alert" href="#">Action</a>
+    <a class="button alert solid" href="#">Action</a>
     <a class="button hollow alert" href="#">Later</a>
 </div>
 ```

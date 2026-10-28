@@ -45,9 +45,12 @@ $callout-default-token: primary !default;
 
 // A palette class only sets `--_callout-color`; everything else reads it. Text, headings and
 // links take one color (links are told apart by their underline), so all of it meets AA on the
-// tinted background in both color modes. A hollow button's own tint would vanish on it, so it sits
+// tinted background in both color modes. A soft button's own tint would vanish on it, so it sits
 // on the page background with a visible border.
 @mixin callout-base() {
+  --f-button-soft-background: var(--f-color-bg-1);
+  --f-button-soft-border: color-mix(in oklab, var(--_callout-color) 60%, var(--f-color-bg-1));
+
   position: relative;
   margin: $callout-margin;
   padding: map.get($callout-sizes, default);
@@ -92,10 +95,6 @@ $callout-default-token: primary !default;
     }
   }
 
-  .button.hollow:not(:hover, :focus) {
-    border-color: color-mix(in oklab, var(--_callout-color) 60%, var(--f-color-bg-1));
-    background-color: var(--f-color-bg-1);
-  }
 }
 
 @mixin callout-size($padding) {

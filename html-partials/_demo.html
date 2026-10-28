@@ -297,6 +297,20 @@
             font-size: 0.8125rem;
         }
 
+        & code[contenteditable] {
+            display: block;
+            cursor: text;
+
+            /* Focus shows as a field's border does, for mouse and keyboard alike: a ring would frame every click. */
+            &:focus-visible {
+                outline: none;
+            }
+        }
+
+        & .code-block:has(> code:focus) {
+            box-shadow: inset 0 0 0 1px var(--f-color-text-2);
+        }
+
         & .demo-copy {
             position: absolute;
             right: 0.75rem;
@@ -514,7 +528,44 @@
             setTimeout(() => (button.textContent = 'Copy'), 1500);
         });
         markup.append(button);
+        markup.querySelector('code').setAttribute('contenteditable', 'plaintext-only');
+        markup.querySelector('code').spellcheck = false;
     }, true);
+
+    // Editing an example's code re-renders its preview; leaving the code highlights it again. Highlighting is
+    // only color: without highlight.js (loaded from the CDN on the first edit) the code stays plain.
+    let rerender;
+    document.addEventListener('input', (e) => {
+        const code = e.target.closest?.('.demo-markup code');
+        if (!code) return;
+        clearTimeout(rerender);
+        rerender = setTimeout(() => {
+            const preview = code.closest('.demo-example').querySelector('.demo-preview');
+            (preview.querySelector(':scope > .demo-row') ?? preview).innerHTML = code.textContent;
+        }, 300);
+        loadHighlighter().catch(() => {});
+    });
+    document.addEventListener('focusout', async (e) => {
+        const code = e.target.closest?.('.demo-markup code');
+        const hljs = code && (await loadHighlighter().catch(() => null));
+        if (hljs) code.innerHTML = hljs.highlight(code.textContent, { language: 'html' }).value;
+    });
+
+    /**
+     * Loads highlight.js once.
+     *
+     * @return {Promise<object>} The hljs global.
+     */
+    function loadHighlighter() {
+        loadHighlighter.promise ??= new Promise((resolve, reject) => {
+            document.head.append(Object.assign(document.createElement('script'), {
+                src: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js',
+                onload: () => resolve(window.hljs),
+                onerror: reject,
+            }));
+        });
+        return loadHighlighter.promise;
+    }
 
     // Placeholder links (href="#") would jump to the top. Other handlers still run.
     document.addEventListener('click', (e) => {

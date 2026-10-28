@@ -13,7 +13,6 @@
 @use "custom-includes/s-badge";
 @use "custom-includes/s-breadcrumbs";
 @use "custom-includes/s-button";
-@use "custom-includes/s-button-group";
 @use "custom-includes/s-callout";
 @use "custom-includes/s-label";
 @use "custom-includes/s-menu";
@@ -40,7 +39,6 @@
 
   // Components
   @include s-button.spaces-button;
-  @include s-button-group.spaces-button-group;
   @include close-button.foundation-close-button;
   @include s-label.spaces-label;
   @include s-progress-bar.spaces-progress-bar;

@@ -47,7 +47,8 @@
     @include custom-functions.foundation-palette($hover: false);
   }
 
-  a {
+  // A button's color classes are its own (custom-includes/_s-button.scss).
+  a:not(.button) {
     @include custom-functions.foundation-palette;
     @include custom-functions.foundation-palette($selector: "li", $child: ">&");
     @include s-button.button-sizes;

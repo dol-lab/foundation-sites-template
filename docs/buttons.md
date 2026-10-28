@@ -1,8 +1,14 @@
 # Buttons
 
-`.button` plus a palette color, a fill (`.hollow`, `.clear`) and a size (`.tiny`, `.small`, `.large`). Join buttons with a [button group](button-group.md).
+`.button` plus a palette color, a fill (`.solid`, `.soft`, `.hollow`, `.clear`) and a size (`.tiny`, `.small`, `.large`). Join buttons with a [button group](button-group.md).
 
-A plain `.button` is a soft neutral fill; use `.secondary` for a dark solid one. Hollow labels take their color's hue (plain: primary's) at the text's lightness, so they stay AA in both modes.
+Three weights, so the main action stands out:
+
+- **Neutral**, a plain `.button`: the card surface with a hairline border and a line of shadow. Most buttons.
+- **Solid**, `.brand`, `.primary`, `.secondary` (or any color with `.solid`): the main action.
+- **Soft**, `.success`, `.warning`, `.alert` (or any color with `.soft`): a tint with the label in the color's hue at the text's lightness, AA in both modes. A muted color (primary) gives a cool grey, not a pastel.
+
+`.hollow` is an outline, for a secondary action next to a solid one; `.clear` has no surface until hovered. Hover darkens the surface; nothing moves. A disabled button (`.disabled` with `aria-disabled="true"`, or `[disabled]`) turns neutral with muted text instead of fading.
 
 ## Colors
 
@@ -22,7 +28,11 @@ A plain `.button` is a soft neutral fill; use `.secondary` for a dark solid one.
 
 ```html example
 <div>
-    <a href="#" class="button primary hollow">Hollow</a>
+    <a href="#" class="button soft">Soft</a>
+    <a href="#" class="button primary soft">Primary soft</a>
+    <a href="#" class="button hollow">Hollow</a>
+    <a href="#" class="button primary hollow">Primary hollow</a>
+    <a href="#" class="button alert solid">Alert solid</a>
     <a href="#" class="button primary clear">Clear</a>
     <a href="#" class="button primary disabled" aria-disabled="true">Disabled</a>
     <button type="button" class="button primary dropdown">Dropdown</button>
@@ -30,6 +40,8 @@ A plain `.button` is a soft neutral fill; use `.secondary` for a dark solid one.
 ```
 
 ## Sizes
+
+Padding is in `em` and each size has its own height, so the proportions hold. Default matches an input's height.
 
 ```html example
 <div>

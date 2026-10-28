@@ -1,8 +1,8 @@
 # Button group
 
-`.button-group` joins buttons (and a `select` or `input`) into one control: only its outer corners are rounded. Solid fills are parted by a 1px gap, hollow ones overlap so their borders collapse into one line. Fill, color and size classes on the group apply to every button in it.
+`.button-group` joins buttons (and a `select` or `input`) into one control: only its outer corners are rounded, and the buttons overlap so their borders collapse into one line. Fill, color and size classes on the group apply to every button in it; a button's own class beats the group's.
 
-## Solid
+## Neutral and solid
 
 ```html example
 <div class="button-group">
@@ -13,14 +13,14 @@
 <div class="button-group secondary small">
     <a href="#" class="button">One</a>
     <a href="#" class="button">Two</a>
-    <a href="#" class="button alert">Delete</a>
+    <a href="#" class="button alert solid">Delete</a>
 </div>
 ```
 
-## Hollow
+## Soft and hollow
 
 ```html example
-<div class="button-group hollow">
+<div class="button-group soft">
     <a href="#" class="button">One</a>
     <a href="#" class="button">Two</a>
     <a href="#" class="button">Three</a>

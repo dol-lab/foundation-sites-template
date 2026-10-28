@@ -2,7 +2,12 @@
 @use "../custom-includes/foundation-spaces/util/breakpoint";
 @use "../custom-includes/s-button";
 
-// .button-group: layout, seams and corners (fills and sizes: custom-includes/_s-button-group.scss).
+// .button-group: layout, seams and corners. A fill, color or size class on the group reaches its buttons
+// through custom-includes/_s-button.scss.
+
+/// Margin below a button group.
+/// @type Number
+$buttongroup-margin: 0.9rem !default;
 
 // The group holds the radius; its first and last child inherit the outer corners, so a rule that squares
 // the group's corners (a flush card section) squares theirs too. No `overflow: hidden`: it clipped the border
@@ -26,15 +31,20 @@
   }
 }
 
-// Hollow buttons overlap by their border along the axis, so two borders read as one line.
+// Buttons overlap by their border along the axis, so two borders read as one line: the later button's, in
+// its `--_seam` color (a solid button's border is its fill, so its seam is lighter).
 @mixin direction($direction, $overlap, $first, $last) {
   flex-direction: $direction;
 
   @include corners($first, $last);
 
-  &.hollow > * + * {
+  > * + * {
     margin: 0;
     margin-#{$overlap}-start: -(s-button.$button-hollow-border-width);
+  }
+
+  > .button + .button {
+    border-#{$overlap}-start-color: var(--_seam);
   }
 }
 
@@ -52,7 +62,7 @@
     flex-wrap: wrap;
     flex-grow: 1;
     align-items: stretch;
-    gap: 1px;
+    margin-bottom: $buttongroup-margin;
     border-radius: global.$global-radius;
 
     @include direction(row, inline, start-start end-start, start-end end-end);
@@ -71,11 +81,6 @@
     > select,
     > input {
       width: auto;
-    }
-
-    &.hollow,
-    &.no-gaps {
-      gap: 0;
     }
 
     &.expanded > *,
