@@ -104,15 +104,12 @@ function renderSection(file) {
   const { title, intro, body } = parseDoc(fs.readFileSync(file, "utf8"), file);
   const id = path.basename(file, ".md");
   const heading = `<h2>${marked.parseInline(title)}</h2>`;
-  // Each cell carries its column's label, shown when a phone stacks the table (.demo-table).
-  const rest = marked.parse(body).replace(/<table>([\s\S]*?)<\/table>/g, (_m, table) => {
-    const labels = [...table.matchAll(/<th[^>]*>([\s\S]*?)<\/th>/g)].map((m) => m[1].replace(/<[^>]+>|"/g, ""));
-    const rows = table.replace(/<tr>([\s\S]*?)<\/tr>/g, (_r, cells) => {
-      let i = 0;
-      return `<tr>${cells.replace(/<td/g, () => `<td data-label="${labels[i++]}"`)}</tr>`;
-    });
-    return `<div class="table-scroll"><table class="table demo-table">${rows}</table></div>`;
-  });
+  const rest = marked
+    .parse(body)
+    .replace(
+      /<table>([\s\S]*?)<\/table>/g,
+      '<div class="table-scroll"><table class="table demo-table">$1</table></div>',
+    );
   const content = `${intro && `<p class="demo-intro">${marked.parseInline(intro)}</p>\n`}${rest}`;
   const card = `<div class="card static overflow-initial demo-doc">
 <div class="card-section">

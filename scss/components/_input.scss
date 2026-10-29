@@ -1,4 +1,6 @@
+@use "../custom-functions";
 @use "../custom-includes/foundation-spaces/forms/label";
+@use "../custom-includes/foundation-spaces/global";
 @use "../custom-includes/foundation-spaces/util/selector";
 @use "../custom-includes/s-label";
 @use "../custom-settings";
@@ -6,6 +8,20 @@
 // Text inputs and select: height and padding, .clear, .help-text, .form-error.
 // A field grows (`flex: 1`) only as a direct child of .input-group or .label-wrapper; in any other flex row
 // it keeps its intrinsic width unless that row's CSS sets `flex` on it.
+
+// A range knob, drawn like a switch: a round knob on a 2px line, filled up to the knob in its color (text or palette).
+// Chromium has no fill pseudo-element, so the line is the knob's border-image, reaching out 100vw on both sides and
+// clipped by the input; the input's height leaves room for the hover halo and the focus ring around the knob.
+@mixin range-thumb {
+  width: var(--range-knob);
+  height: var(--range-knob);
+  border: 0;
+  border-radius: var(--f-radius-full);
+  background: currentcolor;
+  border-image: linear-gradient(90deg, currentcolor 50%, color-mix(in oklab, var(--f-color-text-0) 22%, var(--f-color-bg-1) 78%) 0) 0 1 / calc(50% - 1px) 100vw / 0 100vw;
+  transition: box-shadow global.$global-transition-short global.$global-transition-timing;
+  appearance: none;
+}
 
 @mixin styles {
   #{selector.text-inputs()} {
@@ -22,8 +38,55 @@
   }
 
   [type="range"] {
+    --range-knob: 1rem;
+    --range-ring: calc(var(--f-focus-offset) + var(--f-focus-width));
+
     width: 100%;
-    accent-color: var(--f-color-text-1);
+    height: calc(var(--range-knob) + 2 * var(--range-ring));
+    margin: 0;
+    padding: 0 var(--range-ring);
+    overflow: hidden;
+    color: var(--f-color-text-1);
+    background: none;
+    cursor: pointer;
+    appearance: none;
+
+    &::-webkit-slider-thumb {
+      @include range-thumb;
+    }
+
+    &::-moz-range-thumb {
+      @include range-thumb;
+    }
+
+    &:is(:hover, :active)::-webkit-slider-thumb {
+      box-shadow: 0 0 0 var(--f-focus-offset) color-mix(in oklab, currentcolor 20%, transparent);
+    }
+
+    &:is(:hover, :active)::-moz-range-thumb {
+      box-shadow: 0 0 0 var(--f-focus-offset) color-mix(in oklab, currentcolor 20%, transparent);
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:focus-visible::-webkit-slider-thumb {
+      outline: global.$global-focus;
+      outline-offset: var(--f-focus-offset);
+    }
+
+    &:focus-visible::-moz-range-thumb {
+      outline: global.$global-focus;
+      outline-offset: var(--f-focus-offset);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: var(--f-opacity-disabled);
+    }
+
+    @include custom-functions.foundation-palette($hover: "false");
   }
 
   select {

@@ -17,11 +17,11 @@
 ////
 
 // Three weights, so one main action stands out on a page of buttons, plus two lighter fills:
-// - neutral, a plain `.button`: the card surface, a hairline border and a light shadow;
-// - solid, a color of `$button-solid-colors` or any color with `.solid`: the color itself, flat (a darker edge
-//   or a shadow muddies a light color such as warning);
+// - neutral, a plain `.button`: the card surface;
+// - solid, a color of `$button-solid-colors` or any color with `.solid`: the color itself;
 // - soft, the other colors or any color with `.soft`: a tint with the label in the color.
-// `.hollow` is an outline (no fill, border and label in the color), `.clear` has no surface until hovered. A color class sets `--_c`, a fill class picks the weight, and one
+// `.hollow` is an outline (no fill, label in the color), `.clear` has no surface until hovered. Every button with
+// a surface has a `ring()` around it, so a row of mixed fills keeps one size. A color class sets `--_c`, a fill class picks the weight, and one
 // rule applies the result. The setters weigh one class (`:where()`), so the last in the cascade decides:
 // a group's color, the button's color, the group's fill, the button's fill. Disabled weighs two and beats
 // them all. Nothing moves on hover or press, only colors change.
@@ -32,7 +32,7 @@ $button-font-family: inherit !default;
 
 /// Font weight for button elements.
 /// @type Font-Weight
-$button-font-weight: 500 !default;
+$button-font-weight: 400 !default;
 
 /// Padding of menu items and card links that look like buttons.
 /// @type List
@@ -89,9 +89,12 @@ $button-solid-colors: brand, primary, secondary !default;
   );
 }
 
-/// The lift of a neutral button: an unblurred line under its border, so the edge stays crisp.
-/// @type Shadow
-$button-shadow: 0 1px 0 color-mix(in srgb, var(--f-color-shadow) 50%, transparent) !default;
+/// A button's border: its surface a step toward the text. Opaque: a translucent border blurs into what lies below.
+/// @param {Color} $surface - The surface it surrounds.
+/// @return {Color}
+@function ring($surface) {
+  @return color-mix(in oklab, #{$surface} 85%, var(--f-color-text-0));
+}
 
 /// Border radius for buttons, defaulted to global-radius.
 /// @type Number
@@ -165,42 +168,35 @@ $button-responsive-expanded: false !default;
     --_bg: var(--f-color-bg-1);
     --_bg-hover: color-mix(in oklab, var(--f-color-text-0) 5%, var(--f-color-bg-1));
     --_fg: var(--f-color-text-0);
-
-    // Opaque, like every border here: a translucent one blurs into the shadow.
-    --_border: color-mix(in oklab, var(--f-color-text-0) 15%, var(--f-color-bg-1));
+    --_border: #{ring(var(--f-color-bg-1))};
     --_seam: var(--_border);
-    --_shadow: #{$button-shadow};
   } @else if $fill == solid {
     --_bg: var(--_c);
     --_bg-hover: var(--_c-darker);
     --_fg: var(--_c-contrast);
-    --_border: var(--_c);
+    --_border: #{ring(var(--_c))};
     --_seam: color-mix(in oklab, var(--_c-contrast) 30%, var(--_c));
-    --_shadow: none;
   } @else if $fill == soft {
     // A tinted surface (a callout) sets the knobs, or the button's own tint would vanish on it.
     --_bg: var(--f-button-soft-background, #{soft-surface(var(--_c))});
     --_bg-hover: #{soft-surface(var(--_c), 0.05)};
     --_fg: #{hollow-label(var(--_c))};
-
-    // Opaque: a translucent border reads as a blur over the tint, like a shadow.
-    --_border: var(--f-button-soft-border, #{soft-surface(var(--_c), 0.06)});
+    --_border: var(--f-button-soft-border, #{ring(soft-surface(var(--_c)))});
     --_seam: #{soft-surface(var(--_c), 0.12)};
-    --_shadow: none;
   } @else if $fill == hollow {
     --_bg: transparent;
     --_bg-hover: #{soft-surface(var(--_c))};
     --_fg: #{hollow-label(var(--_c))};
-    --_border: light-dark(oklch(from var(--_c) 0.72 calc(c * 0.7) h), oklch(from var(--_c) 0.5 calc(c * 0.7) h));
+
+    // The ring of a soft button in its color: an outline of the same weight.
+    --_border: #{ring(soft-surface(var(--_c)))};
     --_seam: var(--_border);
-    --_shadow: none;
   } @else if $fill == clear {
     --_bg: transparent;
     --_bg-hover: color-mix(in oklab, var(--_c) 10%, transparent);
     --_fg: color-mix(in oklab, var(--_c) 10%, var(--f-color-text-0));
     --_border: transparent;
     --_seam: var(--_border);
-    --_shadow: none;
   }
 }
 
@@ -220,10 +216,11 @@ $button-responsive-expanded: false !default;
     vertical-align: middle;
     min-height: map.get($button-heights, default);
     margin: $button-margin;
-    padding: 0.25em $button-padding-inline;
+
+    // Roboto's ascent outweighs its descent, so a centered line box leaves capitals about 0.08em high.
+    padding: 0.33em $button-padding-inline 0.17em;
     border: $button-hollow-border-width solid var(--_border);
     border-radius: $button-radius;
-    box-shadow: var(--_shadow);
     background-color: var(--_bg);
     color: var(--_fg);
     transition: $button-transition;
@@ -233,6 +230,11 @@ $button-responsive-expanded: false !default;
     appearance: none;
     text-align: center;
     cursor: pointer;
+
+    // An icon is centered by its own box, so it takes back the label's shift.
+    & > :is(i, svg) {
+      margin-top: -0.16em;
+    }
 
     &:hover,
     &:focus-visible {
@@ -311,14 +313,14 @@ $button-responsive-expanded: false !default;
     --_bg: color-mix(in oklab, var(--f-color-text-0) 6%, var(--f-color-bg-1));
     --_bg-hover: var(--_bg);
     --_fg: var(--f-color-text-2);
-    --_border: transparent;
-    --_shadow: none;
+    --_border: #{ring(var(--_bg))};
 
     opacity: 1;
     cursor: not-allowed;
 
     &.clear {
       --_bg: transparent;
+      --_border: transparent;
     }
   }
 

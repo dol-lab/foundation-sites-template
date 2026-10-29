@@ -114,10 +114,16 @@ With a visible label, a `.label-wrapper` is the label, as for checkboxes, and th
 
 ## Range
 
-A native `<input type="range">`, tinted like a switch (`accent-color`).
+A native `<input type="range">`, drawn like a switch: a round knob on a line that fills up to it. It takes a palette color.
 
 ```html example
 <label>Volume
     <input type="range" min="0" max="100" value="40">
+</label>
+<label>Brightness
+    <input class="primary" type="range" min="0" max="100" value="70">
+</label>
+<label>Disabled
+    <input type="range" min="0" max="100" value="20" disabled>
 </label>
 ```

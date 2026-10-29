@@ -6,6 +6,13 @@
         scroll-padding-top: 1rem;
     }
 
+    /* Room for the index bar fixed at the bottom. */
+    @media (max-width: 44.9375em) {
+        body {
+            padding-bottom: 5rem;
+        }
+    }
+
     .demo-section {
         & > .card > .card-section {
             padding: 1.25rem;
@@ -23,11 +30,20 @@
         & .card-section > :is(h3, h4) {
             margin-top: 1.5rem;
         }
+
+        /* A readable measure for the prose; examples, code and tables are other elements and keep the full width. */
+        & .card-section > :is(p, ul, ol) {
+            max-width: 85ch;
+        }
+
+        /* A demo block (swatches, a table) keeps the distance of an example from the text below. */
+        & .card-section > div {
+            margin-bottom: 1.5rem;
+        }
     }
 
     .demo-intro {
         color: var(--f-color-text-2);
-        max-width: 42rem;
     }
 
     /* Inline code is a name: it moves to the next line whole. One longer than the line breaks between its words (build-html.js wraps each in a .demo-word); a name in a table never breaks. */
@@ -79,6 +95,26 @@
             white-space: normal;
             overflow-wrap: anywhere;
         }
+
+        /* A table of names (variables, classes) has no room for a column of them: each name gets a line of its own and the other cells share the one below, the last (the description) widest. */
+        .demo-table:has(td:first-child > code) tr {
+            display: flex;
+            flex-wrap: wrap;
+
+            & > :first-child {
+                flex-basis: 100%;
+                padding-bottom: 0;
+                border-bottom: 0;
+            }
+
+            & > :not(:first-child) {
+                flex: 1 1 0;
+            }
+
+            & > :last-child:not(:first-child) {
+                flex-grow: 2;
+            }
+        }
     }
 
     /* Small uppercase label: the index's groups. */
@@ -92,8 +128,9 @@
         text-transform: uppercase;
     }
 
-    /* Table of contents: stacked above the content below large, folded there (data-collapse) with
-       its groups side by side; from large a sticky rail whose active link follows the scroll. */
+    /* Table of contents: below large a bar fixed at the bottom (the summary and the color mode), folded there
+       (data-collapse), its groups opening side by side in a sheet above it; from large a sticky rail whose
+       active link follows the scroll. */
     .demo-index {
         & summary {
             font-weight: 500;
@@ -175,6 +212,69 @@
                     border-left-color: var(--f-color-brand);
                     background: var(--f-color-bg-2);
                 }
+            }
+        }
+
+        /* In thumb reach wherever the page is scrolled. The settings section dissolves into the card's grid:
+           summary and color mode share the bottom row, the other settings show above it while the sheet is open. */
+        @media (max-width: 44.9375em) {
+            position: fixed;
+            inset: auto 0.5rem 0.5rem;
+            z-index: var(--f-z-header);
+
+            /* Out of the grid: its gutters (.grid-margin-x > .cell) would shift the bar. */
+            &.cell {
+                width: auto;
+                margin: 0;
+            }
+
+            & .card {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                align-items: center;
+                gap: 0 0.75rem;
+                margin: 0;
+                padding: 0.5rem 0.5rem 0.5rem 1rem;
+                box-shadow: var(--f-drop-shadow);
+            }
+
+            & details {
+                grid-row: 2;
+                padding: 0;
+            }
+
+            & summary {
+                padding: 0.5rem 0;
+            }
+
+            & .demo-index-settings {
+                display: contents;
+            }
+
+            & fieldset {
+                grid-row: 2;
+            }
+
+            & .demo-index-rows {
+                grid-column: 1 / -1;
+                padding: 0.5rem 0 1rem;
+            }
+
+            &:not(:has(details[open])) .demo-index-rows {
+                display: none;
+            }
+
+            & .demo-index-groups {
+                position: absolute;
+                inset: auto 0 calc(100% + 0.5rem);
+                max-height: min(60dvh, 100dvh - 15rem);
+                margin: 0;
+                padding: 1rem;
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                border-radius: var(--f-radius);
+                background: var(--f-color-bg-1);
+                box-shadow: var(--f-drop-shadow);
             }
         }
 
@@ -406,7 +506,6 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
         gap: 0.75rem;
-        margin-bottom: 1rem;
     }
 
     /* The three backgrounds nested as they are used. */
@@ -419,7 +518,7 @@
         font-size: 0.8125rem;
 
         & div {
-            margin-top: 0.75rem;
+            margin-top: 1rem;
             padding: 1rem;
             border-radius: var(--f-radius-small);
             background: var(--f-color-bg-1);
@@ -487,35 +586,6 @@
         }
     }
 
-    /* A phone stacks a docs table: one block per row, each later cell under its column's label. */
-    @media (max-width: 44.9375em) {
-        .demo-table {
-            & thead {
-                display: none;
-            }
-
-            & :is(tbody, tr, td) {
-                display: block;
-            }
-
-            & tr {
-                padding: 0.4rem 0;
-                border-bottom: 1px solid var(--f-color-border-0);
-            }
-
-            & td {
-                padding: 0.1rem 0;
-                border: 0;
-            }
-
-            & td:not(:first-child)::before {
-                content: attr(data-label);
-                display: block;
-                color: var(--f-color-text-2);
-                font-size: 0.8rem;
-            }
-        }
-    }
 </style>
 
 <script>
@@ -617,6 +687,20 @@
             const value = toggle.checked ? 'reduce' : 'full';
             applyMotion(value);
             try { localStorage.setItem('motion-preference', value); } catch {}
+        });
+    });
+
+    // Below large the index's list is a sheet over the page: a link in it, a click outside or Escape folds it.
+    document.addEventListener('DOMContentLoaded', () => {
+        const index = document.querySelector('#contents details');
+        const sheet = matchMedia('(width < 45em)');
+        document.addEventListener('click', (e) => {
+            if (sheet.matches && index.open && (e.target.closest('.demo-index-groups a') || !e.target.closest('#contents'))) index.open = false;
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape' || !sheet.matches || !index.open) return;
+            index.open = false;
+            index.querySelector('summary').focus();
         });
     });
 

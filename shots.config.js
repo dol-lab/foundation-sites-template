@@ -44,6 +44,16 @@ module.exports = {
     target: "#forms .demo-preview:has(#demo-switch-1)",
     widths: [1280],
   },
+  range: {
+    click: [],
+    target: '#forms .demo-preview:has([type="range"])',
+  },
+  "range-focus": {
+    click: [],
+    focus: '#forms [type="range"]',
+    target: '#forms .demo-preview:has([type="range"])',
+    widths: [1280],
+  },
   "header-study": {
     click: ['#app-header a.menu-anchor:text-is("Study")'],
     widths: [1280],
@@ -59,6 +69,14 @@ module.exports = {
     click: [],
     target: "#contents .demo-index-settings",
     widths: [1280],
+  },
+  "demo-index-bar": {
+    click: [],
+    widths: [375],
+  },
+  "demo-index-sheet": {
+    click: ["#contents summary"],
+    widths: [375],
   },
   "demo-header": {
     click: [],

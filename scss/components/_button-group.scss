@@ -38,14 +38,18 @@ $buttongroup-margin: 0.9rem !default;
 
   @include corners($first, $last);
 
-  > * + * {
+  > * {
     margin: 0;
+  }
+
+  > * + * {
     margin-#{$overlap}-start: -(s-button.$button-hollow-border-width);
   }
 
   > .button + .button {
     border-#{$overlap}-start-color: var(--_seam);
   }
+
 }
 
 @mixin stack {
@@ -69,7 +73,6 @@ $buttongroup-margin: 0.9rem !default;
 
     > * {
       flex: 0 0 auto;
-      margin: 0;
 
       // The hovered or focused button lies on top: its border and focus ring are not covered by a neighbour.
       &:hover,
