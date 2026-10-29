@@ -1,6 +1,6 @@
 # Typography
 
-Roboto in four weights. Headings take `--f-color-text-0`, body text `--f-color-text-1`. Text written by members sits in `.user-generated` (Spaces adds `.brand-links` for links in the brand color).
+Roboto in four weights, body text in `--f-color-text-1`. Headings grow from phone width up to the large breakpoint. Text written by members sits in `.user-generated`, where h1 and h4 to h6 are normal weight and h4 to h6 take `--f-color-text-0`, h6 also italic (Spaces adds `.brand-links` for links in the brand color).
 
 ```html example
 <div class="user-generated brand-links">

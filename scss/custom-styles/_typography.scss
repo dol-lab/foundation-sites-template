@@ -10,6 +10,21 @@
 // that class on a post's outer .card-divider (title inside) and opens .page-content with a hidden h1.reader-only. The demo spaces its markdown headings in _demo.html.
 
 @mixin styles {
+  // What members write: a lighter h1, and h4 to h6 set apart by color (h6 also by slant) rather than size.
+  .user-generated {
+    & :is(h1, h4, h5, h6) {
+      font-weight: global.$global-weight-normal;
+    }
+
+    & :is(h4, h5, h6) {
+      color: var(--f-color-text-0);
+    }
+
+    & h6 {
+      font-style: italic;
+    }
+  }
+
   p {
     font-size: global.$paragraph-font-size;
     color: var(--f-color-text-1);
@@ -121,9 +136,11 @@
     }
   }
 
+  // Line height: tight, so a padded inline-block code stays within its paragraph's line.
   code {
     border-radius: global.$global-radius-xsmall;
     font-size: 0.85em;
+    line-height: 1.2;
     position: relative;
     top: -0.08em;
     padding: 0.15em 0.4em;

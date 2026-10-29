@@ -64,30 +64,26 @@ $header-margin-bottom: 0.5rem !default;
 /// @type Map
 $header-styles: (
   small: (
-    'h1': ('font-size': 23 * 0.8, 'font-weight': 400),
-    'h2': ('font-size': 21 * 0.8, 'font-weight': 500),
-    'h3': ('font-size': 19 * 0.8, 'font-weight': 500),
-    'h4': ('font-size': 19 * 0.8, 'color': var(--f-color-text-0), 'font-weight': 400),
-    'h5': ('font-size': 17 * 0.8, 'color': var(--f-color-text-0), 'font-weight': 400),
-    'h6': ('font-size': 17 * 0.8, 'color': var(--f-color-text-0), 'font-style': italic, 'font-weight': 400),
-  ),
-  medium: (
-    'h1': ('font-size': 23 * 0.9, 'font-weight': 400),
-    'h2': ('font-size': 21 * 0.9, 'font-weight': 500),
-    'h3': ('font-size': 19 * 0.9, 'font-weight': 500),
-    'h4': ('font-size': 19 * 0.9, 'color': var(--f-color-text-0), 'font-weight': 400),
-    'h5': ('font-size': 17 * 0.9, 'color': var(--f-color-text-0), 'font-weight': 400),
-    'h6': ('font-size': 17 * 0.9, 'color': var(--f-color-text-0), 'font-style': italic, 'font-weight': 400),
+    'h1': ('font-size': 23 * 0.8),
+    'h2': ('font-size': 21 * 0.8),
+    'h3': ('font-size': 19 * 0.8),
+    'h4': ('font-size': 19 * 0.8),
+    'h5': ('font-size': 17 * 0.8),
+    'h6': ('font-size': 17 * 0.8),
   ),
   large: (
-    'h1': ('font-size': 23, 'font-weight': 400),
-    'h2': ('font-size': 21, 'font-weight': 500),
-    'h3': ('font-size': 19, 'font-weight': 500),
-    'h4': ('font-size': 19, 'color': var(--f-color-text-0), 'font-weight': 400),
-    'h5': ('font-size': 17, 'color': var(--f-color-text-0), 'font-weight': 400),
-    'h6': ('font-size': 17, 'color': var(--f-color-text-0), 'font-style': italic, 'font-weight': 400),
+    'h1': ('font-size': 23),
+    'h2': ('font-size': 21),
+    'h3': ('font-size': 19),
+    'h4': ('font-size': 19),
+    'h5': ('font-size': 17),
+    'h6': ('font-size': 17),
   ),
 ) !default;
+
+/// Viewport width at which the fluid heading sizes start growing from the first breakpoint's size.
+/// @type Number
+$header-fluid-min-width: 375px !default;
 
 // $header-styles map is built from $header-sizes in order to ensure downward compatibility
 // when $header-sizes is depreciated, $header-styles needs to get !default values like settings.scss
@@ -126,21 +122,21 @@ $header-styles: (
   @return map.get($defs, font-size) or map.get($defs, fs);
 }
 
-/// Font size of a heading level as one value: a clamp() that runs through the
-/// sizes of the last two breakpoints in `$header-styles` at their widths, and
-/// is floored by the first breakpoint's size and capped by the last one's.
+/// Font size of a heading level as one value: a clamp() that grows from the first
+/// breakpoint's size in `$header-styles` at `$header-fluid-min-width` to the last one's at
+/// that breakpoint's width, and stays at either size outside.
 /// @param {String} $header - Heading level, e.g. `h1`.
 /// @return {Number|String} rem size, or a clamp() when the sizes differ.
 @function header-font-size($header) {
   $sizes: ();
-  $widths: ();
+  $max-width: null;
 
   @each $breakpoint, $headers in $header-styles {
     $size: -header-size-at($breakpoint, $header);
 
     @if $size != null {
       $sizes: list.append($sizes, math.div(unit.rem-calc($size), 1rem) * 16px);
-      $widths: list.append($widths, math.div(unit.zf-bp-to-em(map.get(breakpoint.$breakpoints, $breakpoint)), 1em) * 16px);
+      $max-width: math.div(unit.zf-bp-to-em(map.get(breakpoint.$breakpoints, $breakpoint)), 1em) * 16px;
     }
   }
 
@@ -157,10 +153,8 @@ $header-styles: (
     @return unit.rem-calc($max);
   }
 
-  $w1: list.nth($widths, $count - 1);
-  $w2: list.nth($widths, $count);
-  $slope: math.div($max - list.nth($sizes, $count - 1), $w2 - $w1);
-  $intercept: $max - $slope * $w2;
+  $slope: math.div($max - $min, $max-width - $header-fluid-min-width);
+  $intercept: $max - $slope * $max-width;
 
   @return clamp(#{unit.rem-calc($min)}, #{unit.rem-calc($intercept)} + #{$slope * 100}vw, #{unit.rem-calc($max)});
 }
