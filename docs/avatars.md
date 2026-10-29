@@ -26,9 +26,9 @@ Lists the newest last; each avatar wears a ring in the card color.
 
 ```html example
 <ul class="avatar-stack small no-bullet flex mb-0">
-    <li class="avatar-container" style="z-index: 4;"><a href="#" class="clipped square"><img alt="" src="assets/img/pb-4.png"></a></li>
-    <li class="avatar-container" style="z-index: 3;"><a href="#" class="clipped square"><img alt="" src="assets/img/pb-1.png"></a></li>
-    <li class="avatar-container" style="z-index: 2;"><a href="#" class="clipped square"><img alt="" src="assets/img/pb-2.png"></a></li>
-    <li class="avatar-container" style="z-index: 1;"><a href="#" class="clipped square"><img alt="" src="assets/img/pb-3.png"></a></li>
+    <li class="avatar-container" style="z-index: 4;"><a href="#" class="clipped square"><img alt="Ada Lovelace" src="assets/img/pb-4.png"></a></li>
+    <li class="avatar-container" style="z-index: 3;"><a href="#" class="clipped square"><img alt="Grace Hopper" src="assets/img/pb-1.png"></a></li>
+    <li class="avatar-container" style="z-index: 2;"><a href="#" class="clipped square"><img alt="Alan Turing" src="assets/img/pb-2.png"></a></li>
+    <li class="avatar-container" style="z-index: 1;"><a href="#" class="clipped square"><img alt="Hedy Lamarr" src="assets/img/pb-3.png"></a></li>
 </ul>
 ```

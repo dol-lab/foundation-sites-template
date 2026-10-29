@@ -1,10 +1,17 @@
 // .prose-layout: a readable center column (max 70ch) with .alignwide and .alignfull.
-// Images in what members write (.user-generated) get rounded corners, except .alignfull ones.
+// Images in what members write (.user-generated) get rounded corners, except .alignfull ones; its
+// links in running text are underlined, since their color alone does not set them apart (WCAG 1.4.1).
 
 // NOTE: This can not contain naked text (text in no container).
 @mixin styles {
   .user-generated figure img {
     border-radius: var(--f-radius);
+  }
+
+  :where(.user-generated :is(p, li, blockquote, td, figcaption)) a:not(:where(.button)) {
+    text-decoration: underline;
+    text-decoration-thickness: from-font;
+    text-underline-offset: 0.15em;
   }
 
   .prose-layout {

@@ -35,12 +35,13 @@ function dedent(src) {
 /**
  * @param {string} body Code.
  * @param {string} lang Its language; one hljs does not know is shown plain.
+ * @param {boolean} [focusable] A tab stop, so a keyboard can scroll it (an example's code is editable instead).
  * @return {string} The code as a flush-left code block, highlighted at build time (.hljs-* in _demo.html).
  */
-function codeBlock(body, lang) {
+function codeBlock(body, lang, focusable = false) {
   const code = dedent(body);
   const html = hljs.getLanguage(lang) ? hljs.highlight(code, { language: lang }).value : escapeHtml(code);
-  return `<pre class="code-block"><code>${html}</code></pre>`;
+  return `<pre class="code-block"${focusable ? ' tabindex="0"' : ""}><code>${html}</code></pre>`;
 }
 
 /**
@@ -55,7 +56,7 @@ const marked = new Marked({
     code({ text, lang = "" }) {
       const [language, kind, row] = lang.split(/\s+/);
       if (kind === "demo") return `${text}\n`;
-      if (kind !== "example") return codeBlock(text, language);
+      if (kind !== "example") return codeBlock(text, language, true);
       const preview = row ? `<div class="demo-row">\n${text}\n</div>` : text;
       return `<figure class="demo-example">
 <div class="demo-preview">

@@ -21,7 +21,7 @@ Roboto in four weights. Headings take `--f-color-text-0`, body text `--f-color-t
         <li>An ordered list</li>
         <li>with two items</li>
     </ol>
-    <pre class="code-block"><code>.card { background: var(--f-color-bg-1); }</code></pre>
+    <pre class="code-block" tabindex="0"><code>.card { background: var(--f-color-bg-1); }</code></pre>
 </div>
 ```
 

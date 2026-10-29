@@ -462,10 +462,13 @@
 
     /* A section rendered from docs/<id>.md. */
     .demo-doc {
-        /* Links in the prose; .brand-links would also reach the examples' bare links. */
+        /* Links in the prose; .brand-links would also reach the examples' bare links. Underlined: next to text, their color alone does not set them apart (WCAG 1.4.1). */
         & .card-section > :is(p, ul, ol) a,
         & td a {
-            color: var(--f-color-brand);
+            color: var(--f-color-brand-text);
+            text-decoration: underline;
+            text-decoration-thickness: from-font;
+            text-underline-offset: 0.15em;
         }
 
         /* Color swatch, added by build-html.js to color values in code. */
