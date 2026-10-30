@@ -27,13 +27,22 @@ $ring: 1.5rem;
     &[open] {
       width: calc(100% - var(--_offset));
       margin: calc(var(--_offset) / 2);
-      border-radius: var(--f-radius);
-      background: var(--f-color-bg-1);
+      border-radius: calc(var(--f-radius) - var(--_offset) / 2); // concentric with the card it is inset in
 
-      // Dark mode barely shows a shadow: a hairline keeps each nested level apart.
-      box-shadow:
-        0 0 0 1px light-dark(transparent, var(--f-color-border-1)),
-        var(--f-drop-shadow-small);
+      // Dark mode barely shows a shadow: a translucent wash raises each level by lightness instead, and
+      // adds up, so a nested level is lighter than its parent.
+      background: light-dark(var(--f-color-bg-1), rgb(from var(--f-color-text-0) r g b / 4%));
+      box-shadow: var(--f-drop-shadow-small);
+    }
+
+    // Inset once more: concentric would be about 0, which reads as a sharp corner.
+    & .details-menu[open] {
+      border-radius: max(calc(var(--f-radius) - var(--_offset)), 2px);
+    }
+
+    // The last fold of a list:its shadow falls down, a half offset would let it meet the parent's edge.
+    & li:last-child > .details-menu[open] {
+      margin-block-end: var(--_offset);
     }
 
     & > summary {
