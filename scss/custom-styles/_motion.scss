@@ -30,11 +30,16 @@ $spinner-sizes: (
 }
 
 @mixin styles {
+  // Usually a <span>: inline-block so it takes its size; flex: none so a tight flex row cannot squeeze it
+  // into an ellipse. Turns with `rotate`, not `transform`, so a consumer's centering translate survives.
   .spinner {
-    border: 2px solid color-mix(in oklab, var(--f-color-text-0) 83%, transparent);
+    display: inline-block;
+    flex: none;
+    vertical-align: middle;
+    border: 2px solid color-mix(in oklab, var(--f-color-text-0) 15%, transparent);
+    border-top-color: var(--f-color-primary);
     border-radius: var(--f-radius-full);
-    border-top: 2px solid var(--f-color-primary);
-    animation: spin 0.875s infinite cubic-bezier(0.9, 0.3, 0.3, 0.7);
+    animation: spin 0.875s infinite linear;
     width: 1.5rem;
     height: 1.5rem;
 
@@ -55,12 +60,8 @@ $spinner-sizes: (
   }
 
   @keyframes spin {
-    0% {
-      transform: rotate(-20deg);
-    }
-
-    100% {
-      transform: rotate(340deg);
+    to {
+      rotate: 1turn;
     }
   }
 
