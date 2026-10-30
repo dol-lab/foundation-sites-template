@@ -12,7 +12,7 @@ const path = require("node:path");
 
 const INCLUDE_RE = /@@include\((['"])([^'"]+)\1\)/g;
 const SECTION_RE =
-  /<!-- group: ([^>]+?) -->|<section class="cell demo-section" id="([^"]+)"[\s\S]*?<h2>([\s\S]*?)<\/h2>/g;
+  /<!-- group: ([^>]+?) -->|<section class="cell demo-section" id="([^"]+)"[\s\S]*?<h1 class="page-title">([\s\S]*?)<\/h1>/g;
 
 hljs.registerLanguage("html", require("highlight.js/lib/languages/xml"));
 hljs.registerLanguage("css", require("highlight.js/lib/languages/css"));
@@ -49,9 +49,6 @@ function codeBlock(body, lang, focusable = false) {
  * .demo-row), ```html demo renders page-only markup without showing it, any other is shown only.
  */
 const marked = new Marked({
-  walkTokens(token) {
-    if (token.type === "heading") token.depth = Math.min(token.depth + 1, 6);
-  },
   renderer: {
     code({ text, lang = "" }) {
       const [language, kind, row] = lang.split(/\s+/);
@@ -98,23 +95,26 @@ function parseDoc(src, file) {
 
 /**
  * @param {string} file A docs/<id>.md.
- * @return {string} The section #<id>, rendered.
+ * @return {string} The section #<id>, rendered as defaultspace prints a page (content-page.php, page-section.handlebars).
  */
 function renderSection(file) {
   const { title, intro, body } = parseDoc(fs.readFileSync(file, "utf8"), file);
   const id = path.basename(file, ".md");
-  const heading = `<h2>${marked.parseInline(title)}</h2>`;
   const rest = marked
     .parse(body)
     .replace(
       /<table>([\s\S]*?)<\/table>/g,
-      '<div class="table-scroll"><table class="table demo-table">$1</table></div>',
+      '<div class="table-scroll alignwide"><table class="table demo-table">$1</table></div>',
     );
   const content = `${intro && `<p class="demo-intro">${marked.parseInline(intro)}</p>\n`}${rest}`;
-  const card = `<div class="card static overflow-initial demo-doc">
-<div class="card-section">
-${heading}
+  const card = `<div class="card page-card overflow-initial demo-doc">
+<div class="card-divider page-section p-0">
+<div class="card-section page-header pb-0">
+<h1 class="page-title">${marked.parseInline(title)}</h1>
+</div>
+<div class="page-content prose-layout">
 ${content}</div>
+</div>
 </div>`;
   return `<section class="cell demo-section" id="${id}">\n${card}\n</section>`;
 }

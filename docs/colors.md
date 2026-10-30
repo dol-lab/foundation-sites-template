@@ -32,7 +32,7 @@ More roles: `--f-color-border-1` (between the two), `--f-color-bg-1-untinted` (`
 
 ## Palette
 
-Each color has `-contrast` (text on it, AA 4.5:1 in both modes; success 4:1, AA for large text only, for a friendlier green) and `-darker` (hover, a `color-mix` with black). They are defined in `scss/_colors.scss` and printed by `foundation-apply-theme()` in `scss/_custom-functions.scss`. The same values serve both modes, so as small text on a dark page they fall below 4.5; a runtime brand needs a contrast pair of its own that passes.
+Each color has `-contrast` (text on it, AA 4.5:1 in both modes) and `-darker` (hover, a `color-mix` with black). They are defined in `scss/_colors.scss` and printed by `foundation-apply-theme()` in `scss/_custom-functions.scss`. The same values serve both modes, so as small text on a dark page they fall below 4.5; a runtime brand needs a contrast pair of its own that passes.
 
 ```html demo
 <div class="demo-swatches">
@@ -45,7 +45,7 @@ Each color has `-contrast` (text on it, AA 4.5:1 in both modes; success 4:1, AA 
 </div>
 ```
 
-Brand-colored text on the page takes `--f-color-brand-text` (prose links in `.brand-links`): the brand in light mode, lifted to `hollow-label()`'s lightness in dark mode, where the brand itself is below AA.
+Brand-colored text on the page takes `--f-color-brand-text` (prose links in `.brand-links`): the brand in light mode, darkened to at most oklch lightness 0.5 so it keeps 5:1 on every light surface, and lifted to `hollow-label()`'s lightness in dark mode, where the brand itself is below AA.
 
 Override the brand at runtime with `--f-color-brand-base` and `--f-color-brand-base-contrast`, on `:root` or inline on a `themed` element. `--f-color-brand` resolves where it is declared, so only those two redeclare it.
 

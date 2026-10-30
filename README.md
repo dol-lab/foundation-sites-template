@@ -18,7 +18,7 @@ The demo page is published to GitHub Pages on every push to `master` (`.github/w
 
 ## The demo page
 
-Each section is written in `docs/<id>.md` and becomes `<section id="<id>">` where `index.src.html` includes it (`@@include('docs/<id>.md')`). The `# ` title becomes the section's heading, the paragraph under it its intro, `##` a subheading. Fences:
+Each section is written in `docs/<id>.md` and becomes `<section id="<id>">` where `index.src.html` includes it (`@@include('docs/<id>.md')`), laid out as defaultspace prints a page (`.page-card`, the text in a `.prose-layout` column, tables `.alignwide`). The `# ` title becomes the page's `h1`, the paragraph under it its intro, `##` an `h2`. Fences:
 
 - ` ```html example ` renders the markup and shows the same markup below it, so the code shown is the code rendered; ` ```html example row ` lays it out in a `.demo-row`.
 - ` ```html demo ` renders page-only markup (swatches) without showing it.

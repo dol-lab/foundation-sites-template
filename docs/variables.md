@@ -32,6 +32,7 @@ These are read with a fallback and not declared, so set them where they apply:
 | `--f-avatar-stack-overlap` | `0.6rem` | How far avatars in an `.avatar-stack` overlap |
 | `--f-auto-grid-min-width` | `250px` | `.auto-grid`'s minimum column width |
 | `--f-prose-offset-left` | `clamp(0.75rem, 2vw, 2rem)` | `.prose-layout`'s left column target width |
+| `--f-paragraph-font-size` | `0.9375rem`, `1rem` in `.prose-layout` | Size of `p` and `ul` |
 | `--f-prose-ch-factor` | `1` | Scales `.prose-layout`'s 70ch column for a font with a narrow or wide `0` |
 
 A narrower or wider `.grid-container` needs no rebuild. The tokens are seeded from `$grid-container` and `$grid-container-padding` (`scss/custom-includes/foundation-spaces/xy-grid/_xy-grid.scss`); `.grid-container.full` keeps `padding: 0`, and Sass math on the cell gutters (`_s-scroll-snap.scss`, `custom-styles/_utilities.scss`) does not follow a runtime override.

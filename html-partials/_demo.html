@@ -13,31 +13,28 @@
         }
     }
 
-    .demo-section {
-        & > .card > .card-section {
-            padding: 1.25rem;
-
-            @media (min-width: 30em) {
-                padding: 2rem;
-            }
+    /* A section is a page as defaultspace prints it; these two rules are its ds-main.css for .page-card: a centered column, a light title. */
+    .demo-doc {
+        & .prose-layout {
+            --f-prose-offset-left: 1fr;
         }
 
-        /* The section's own headings, not those of an example. */
-        & .card-section > h2 {
-            margin-bottom: 0.25rem;
+        & .page-title {
+            font-weight: normal;
         }
 
-        & .card-section > :is(h3, h4) {
+        /* An example shows a component's own text size, not the prose's. */
+        & .demo-example {
+            --f-paragraph-font-size: initial;
+        }
+
+        /* Headings of the markdown, not those of an example. */
+        & .page-content > :is(h2, h3, h4) {
             margin-top: 1.5rem;
         }
 
-        /* A readable measure for the prose; examples, code and tables are other elements and keep the full width. */
-        & .card-section > :is(p, ul, ol) {
-            max-width: 85ch;
-        }
-
         /* A demo block (swatches, a table) keeps the distance of an example from the text below. */
-        & .card-section > div {
+        & .page-content > div {
             margin-bottom: 1.5rem;
         }
     }
@@ -561,13 +558,18 @@
 
     /* A section rendered from docs/<id>.md. */
     .demo-doc {
-        /* Links in the prose; .brand-links would also reach the examples' bare links. Underlined: next to text, their color alone does not set them apart (WCAG 1.4.1). */
-        & .card-section > :is(p, ul, ol) a,
+        /* Links in the prose, as .brand-links and .user-generated style them; those would also reach the examples' bare links. */
+        & .page-content > :is(p, ul, ol) a,
         & td a {
             color: var(--f-color-brand-text);
             text-decoration: underline;
             text-decoration-thickness: from-font;
             text-underline-offset: 0.15em;
+            text-decoration-color: color-mix(in srgb, currentcolor 40%, transparent);
+
+            &:hover {
+                text-decoration-color: currentcolor;
+            }
         }
 
         /* Color swatch, added by build-html.js to color values in code. */
