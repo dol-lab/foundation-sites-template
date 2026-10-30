@@ -3,7 +3,7 @@
 @use "sass:list";
 
 // .details-menu: a <details> that folds a menu. A flat row
-// while closed, a raised card inset by --_offset while open (no header fill: it fought the shadow). The
+// while closed, a raised card inset by --_offset while open (its header only faintly filled: a stronger fill fought the shadow). The
 // summary paints a --_toggle-tint layer, so every state hovers the same way.
 
 $offset: 0.5rem;
@@ -27,7 +27,7 @@ $ring: 1.5rem;
     &[open] {
       width: calc(100% - var(--_offset));
       margin: calc(var(--_offset) / 2);
-      border-radius: calc(var(--f-radius) - var(--_offset) / 2); // concentric with the card it is inset in
+      border-radius: calc(var(--f-radius) - var(--_offset) / 4); // a step below the card it is inset in
 
       // Dark mode barely shows a shadow: a translucent wash raises each level by lightness instead, and
       // adds up, so a nested level is lighter than its parent.
@@ -35,9 +35,9 @@ $ring: 1.5rem;
       box-shadow: var(--f-drop-shadow-small);
     }
 
-    // Inset once more: concentric would be about 0, which reads as a sharp corner.
+    // Strictly concentric radii shrink to a sharp corner by the second level: each level steps down by less.
     & .details-menu[open] {
-      border-radius: max(calc(var(--f-radius) - var(--_offset)), 2px);
+      border-radius: calc(var(--f-radius) - var(--_offset) / 2);
     }
 
     // The last fold of a list:its shadow falls down, a half offset would let it meet the parent's edge.
@@ -97,7 +97,9 @@ $ring: 1.5rem;
       }
     }
 
+    // A faint fill sets the header apart in light mode (the hover tint layers over it); dark mode's wash does that.
     &[open] > summary {
+      background-color: light-dark(rgb(from var(--f-color-text-0) r g b / 1.2%), transparent);
       box-shadow: inset 0 -1px var(--f-color-border-0);
 
       &::after {
