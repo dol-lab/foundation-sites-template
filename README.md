@@ -22,6 +22,7 @@ Each section is written in `docs/<id>.md` and becomes `<section id="<id>">` wher
 
 - ` ```html example ` renders the markup and shows the same markup below it, so the code shown is the code rendered; ` ```html example row ` lays it out in a `.demo-row`.
 - ` ```html demo ` renders page-only markup (swatches) without showing it.
+- `wide` after `example` or `demo` spans it across the card (`.alignwide`), for a row or grid of several things (Space cards, swatches); prose and single components stay in the column.
 - Any other fence is shown, not rendered.
 
 An example's code is editable once opened: the preview follows the edit, and highlight.js (from cdnjs, loaded on the first edit) colors the code again on leaving it. Without it the code stays plain; a reload restores the example.

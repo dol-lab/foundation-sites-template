@@ -18,7 +18,7 @@ The backgrounds are layers: the page, a card on it, and a surface on the card (r
 
 ## Text, borders
 
-```html demo
+```html demo wide
 <div class="demo-swatches">
     <div class="demo-swatch" style="--swatch: var(--f-color-text-0)"><code>--f-color-text-0</code><small>headings</small></div>
     <div class="demo-swatch" style="--swatch: var(--f-color-text-1)"><code>--f-color-text-1</code><small>body</small></div>
@@ -34,7 +34,7 @@ More roles: `--f-color-border-1` (between the two), `--f-color-bg-1-untinted` (`
 
 Each color has `-contrast` (text on it, AA 4.5:1 in both modes) and `-darker` (hover, a `color-mix` with black). They are defined in `scss/_colors.scss` and printed by `foundation-apply-theme()` in `scss/_custom-functions.scss`. The same values serve both modes, so as small text on a dark page they fall below 4.5; a runtime brand needs a contrast pair of its own that passes.
 
-```html demo
+```html demo wide
 <div class="demo-swatches">
     <div class="demo-swatch" style="--swatch: var(--f-color-brand)"><code>brand</code></div>
     <div class="demo-swatch" style="--swatch: var(--f-color-primary)"><code>primary</code></div>
@@ -77,7 +77,7 @@ The `themed` attribute plus an inline `--f-color-theme` tints the surfaces and t
 
 Each color tints both modes: light keeps its hue at a high lightness with little chroma, dark at a low one; text, borders, tint and shadow follow. The formulas are in `scss/custom-styles/_root-variables.scss`.
 
-```html demo
+```html demo wide
 <div class="demo-tints">
     <div class="demo-layers" themed style="--f-color-theme: #975938"><code class="has-swatch"><span class="swatch" style="--swatch: var(--f-color-theme)"></span>#975938</code> page<div>card<div>on a card</div></div></div>
     <div class="demo-layers" themed style="--f-color-theme: #d4b106"><code class="has-swatch"><span class="swatch" style="--swatch: var(--f-color-theme)"></span>#d4b106</code> page<div>card<div>on a card</div></div></div>

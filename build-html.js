@@ -47,15 +47,17 @@ function codeBlock(body, lang, focusable = false) {
 /**
  * Fences: ```html example renders the markup and shows it below (`row` lays it out in a
  * .demo-row), ```html demo renders page-only markup without showing it, any other is shown only.
+ * `wide` spans an example or demo across the card (.alignwide in .prose-layout).
  */
 const marked = new Marked({
   renderer: {
     code({ text, lang = "" }) {
-      const [language, kind, row] = lang.split(/\s+/);
-      if (kind === "demo") return `${text}\n`;
+      const [language, kind, ...flags] = lang.split(/\s+/);
+      const wide = flags.includes("wide");
+      if (kind === "demo") return wide ? `<div class="alignwide">\n${text}\n</div>\n` : `${text}\n`;
       if (kind !== "example") return codeBlock(text, language, true);
-      const preview = row ? `<div class="demo-row">\n${text}\n</div>` : text;
-      return `<figure class="demo-example">
+      const preview = flags.includes("row") ? `<div class="demo-row">\n${text}\n</div>` : text;
+      return `<figure class="demo-example${wide ? " alignwide" : ""}">
 <div class="demo-preview">
 ${preview}
 </div>

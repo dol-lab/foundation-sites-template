@@ -2,7 +2,7 @@
 
 A row that scrolls sideways and snaps each element to its start: `.scroll-snap-container-x` on the parent, `.scroll-snap-element` on the children. Each element is as wide as the row unless a width modifier says otherwise. Spaces uses it for the events widget. A row of links scrolls as Tab moves through them. A row of plain content is scrolled with the arrow keys once focused: Chromium and Firefox focus such a scroller themselves, Safari needs `tabindex="0"` on it (then also `role="region"` and an `aria-label`, as below).
 
-```html example
+```html example wide
 <div class="scroll-snap-container-x width-medium fade-edges" tabindex="0" role="region" aria-label="Elements">
     <div class="scroll-snap-element"><div class="card"><div class="card-section">Element 1</div></div></div>
     <div class="scroll-snap-element"><div class="card"><div class="card-section">Element 2</div></div></div>
