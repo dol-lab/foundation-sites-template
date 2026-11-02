@@ -46,3 +46,21 @@
     <a href="#" class="button">Decline</a>
 </div>
 ```
+
+## In a card
+
+A `.card-divider.flush` (or `.card-section.flush`) drops its padding, so a group in it spans the card. The group's corners toward a neighbouring section are squared; those on the card's edge keep the card's radius.
+
+```html example
+<div class="card">
+    <div class="card-section">
+        <p>Save the changes to this profile?</p>
+    </div>
+    <div class="card-divider flush">
+        <div class="button-group expanded">
+            <button class="button primary clear" type="button">Cancel</button>
+            <button class="button primary" type="button">Save</button>
+        </div>
+    </div>
+</div>
+```
