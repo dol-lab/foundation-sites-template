@@ -241,7 +241,8 @@ $card-margin-bottom: 0 !default;
     & > a {
       text-decoration: none;
 
-      &:only-child:hover {
+      // A row link gets a tint; a button keeps its own hover colors.
+      &:only-child:not(.button):hover {
         background: var(--f-color-bg-2);
       }
     }
