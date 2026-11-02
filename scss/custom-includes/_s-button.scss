@@ -217,8 +217,9 @@ $button-responsive-expanded: false !default;
     min-height: map.get($button-heights, default);
     margin: $button-margin;
 
-    // Roboto's ascent outweighs its descent, so a centered line box leaves capitals about 0.08em high.
-    padding: 0.33em $button-padding-inline 0.17em;
+    // Roboto's ascent outweighs its descent: a centered line box leaves capitals about 0.13em high. The label moves
+    // down 0.1em, not 0.13em: the baseline snaps to whole pixels, and 0.09em to 0.12em puts every size closest to center.
+    padding: 0.35em $button-padding-inline 0.15em;
     border: $button-hollow-border-width solid var(--_border);
     border-radius: $button-radius;
     background-color: var(--_bg);
@@ -233,7 +234,7 @@ $button-responsive-expanded: false !default;
 
     // An icon is centered by its own box, so it takes back the label's shift.
     & > :is(i, svg) {
-      margin-top: -0.16em;
+      margin-top: -0.2em;
     }
 
     &:hover,
