@@ -24,7 +24,7 @@ $label-radius: global.$global-radius !default;
 
 /// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, etc.
 /// @type Map
-$label-palette: colors.$foundation-palette !default;
+$label-palette: colors.$status-palette !default;
 
 /// Base value for label background
 $label-background-default: var(--f-color-text-1) !default;

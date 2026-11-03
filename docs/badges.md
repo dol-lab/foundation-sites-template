@@ -11,6 +11,8 @@ A `.badge` is a round counter, a `.label` a short tag (Spaces: a member's status
 <span class="badge success">3</span>
 <span class="badge warning">B</span>
 <span class="badge alert">A</span>
+<span class="badge activity">4</span>
+<span class="badge activity">12</span>
 ```
 
 ## Labels
@@ -22,5 +24,6 @@ A `.badge` is a round counter, a `.label` a short tag (Spaces: a member's status
 <span class="label success">Success</span>
 <span class="label warning">Warning</span>
 <span class="label alert">Alert</span>
+<span class="label activity">New</span>
 <span class="label warning"><i class="fas fa-sticky-note"></i> 2</span>
 ```

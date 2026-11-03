@@ -24,7 +24,7 @@ $badge-color: var(--f-color-bg-1) !default;
 
 /// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, and so on.
 /// @type Map
-$badge-palette: colors.$foundation-palette !default;
+$badge-palette: colors.$status-palette !default;
 
 /// Maximum height of a badge.
 /// @type Number
@@ -58,6 +58,8 @@ $badge-rounding: 2 !default;
 @mixin badge-small {
   &.small {
     font-size: $badge-font-size;
+    padding-block: 0;
+    padding-inline: $badge-padding * 0.6; // A single digit keeps it round.
     height: $badge-height * 0.85;
     min-width: $badge-height * 0.85;
 

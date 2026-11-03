@@ -50,7 +50,7 @@
   }
 }
 
-/// Prints `--f-color-brand(-contrast, -darker, -text)` from `--f-color-brand-base(-contrast)`.
+/// Prints `--f-color-brand(-contrast, -darker, -text)` and `--f-color-activity(-contrast)` from `--f-color-brand-base(-contrast)`.
 /// A custom property resolves where it is declared, so an element that sets
 /// `-base` needs these redeclared on itself (see `[themed]` in _root-variables).
 /// The brand is not lightened in dark mode: its label would drop below AA. Brand-colored text
@@ -67,6 +67,10 @@
 
   // The keyboard focus ring: brand-text at the lightest alpha that keeps 3:1 on bg-0 to bg-2 in both modes (Spaces red).
   --f-focus-color: rgb(from var(--f-color-brand-text) r g b / 70%);
+
+  // What marks news: `.badge.activity`, `.label.activity`, dots. Point these two lines elsewhere to recolor all of it.
+  --f-color-activity: var(--f-color-brand);
+  --f-color-activity-contrast: var(--f-color-brand-contrast);
 }
 
 /// Prints the borders, the hover wash and the icon button colors, from the text roles. An element

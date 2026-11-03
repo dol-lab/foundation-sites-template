@@ -31,6 +31,14 @@ $foundation-palette-contrast: (
   alert: hsl(0deg 0% 100%),
 );
 
+// The classes of a badge or label: the palette, plus `activity`, a role of the brand (brand-colors()).
+$status-palette: map.merge(
+  $foundation-palette,
+  (
+    activity: var(--f-color-activity),
+  )
+);
+
 // Dark-mode palette: a key in the second map overrides the light value; empty, so both
 // modes use the same palette colors.
 $foundation-palette-darktheme: map.merge($foundation-palette, ());

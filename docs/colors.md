@@ -47,6 +47,8 @@ Each color has `-contrast` (text on it, AA 4.5:1 in both modes) and `-darker` (h
 
 Brand-colored text on the page takes `--f-color-brand-text` (prose links in `.brand-links`): the brand in light mode, darkened to at most oklch lightness 0.5 so it keeps 5:1 on every light surface, and lifted to `hollow-label()`'s lightness in dark mode, where the brand itself is below AA.
 
+News takes `--f-color-activity` and `--f-color-activity-contrast`: counters, dots and "New" labels (`.badge.activity`, `.label.activity`). They default to the brand; to recolor all of it, change their two lines in `brand-colors()`, because `[themed]` redeclares them, so a value set on `:root` does not reach a themed page.
+
 Override the brand at runtime with `--f-color-brand-base` and `--f-color-brand-base-contrast`, on `:root` or inline on a `themed` element. `--f-color-brand` resolves where it is declared, so only those two redeclare it.
 
 ```css
