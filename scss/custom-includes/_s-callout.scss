@@ -1,10 +1,12 @@
 @use "../colors";
+@use "s-button";
 @use "foundation-spaces/global";
 
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
 
+@use "sass:list";
 @use "sass:map";
 
 ////
@@ -118,5 +120,27 @@ $callout-default-token: primary !default;
         @include callout-size($padding);
       }
     }
+  }
+
+  // A button without a color takes the callout's, solid unless it has a fill: the neutral card surface would
+  // read as a hole in the tint. `:where()` keeps one class of weight, so a disabled button still wins.
+  $colors: ();
+
+  @each $name, $_ in colors.$foundation-palette {
+    $colors: list.append($colors, ".#{$name}", comma);
+  }
+
+  :where(.callout) > .button:where(:not(#{$colors})) {
+    @include s-button.button-color($callout-default-token);
+  }
+
+  @each $name, $_ in colors.$foundation-palette {
+    :where(.callout.#{$name}) > .button:where(:not(#{$colors})) {
+      @include s-button.button-color($name);
+    }
+  }
+
+  :where(.callout) > .button:where(:not(#{$colors}, .solid, .soft, .hollow, .clear)) {
+    @include s-button.button-fill(solid);
   }
 }

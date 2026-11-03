@@ -5,8 +5,8 @@
 Three weights, so the main action stands out:
 
 - **Neutral**, a plain `.button`: the card surface with a hairline border and a line of shadow. Most buttons.
-- **Solid**, `.brand`, `.primary`, `.secondary` (or any color with `.solid`): the main action.
-- **Soft**, `.success`, `.warning`, `.alert` (or any color with `.soft`): a tint with the label in the color's hue at the text's lightness, AA in both modes. A muted color (primary) gives a cool grey, not a pastel.
+- **Solid**, every palette color (or any color with `.solid`): the main action. A light label gets a faint dark shade behind it.
+- **Soft**, any color with `.soft`: a tint with the label in the color's hue at the text's lightness, AA in both modes. A muted color (primary) gives a cool grey, not a pastel.
 
 `.hollow` is an outline, for a secondary action next to a solid one; `.clear` has no surface until hovered. Hover darkens the surface; nothing moves. A disabled button (`.disabled` with `aria-disabled="true"`, or `[disabled]`) turns neutral with muted text instead of fading.
 

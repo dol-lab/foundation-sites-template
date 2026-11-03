@@ -1,6 +1,12 @@
+// Roboto's hhea metrics, the ones Chromium uses, pinned: unpinned, Firefox on Linux set text up to 2px lower,
+// so labels centered in Chromium (buttons) sat low.
+
 // roboto-300 - latin
 @font-face {
   font-display: swap;
+  ascent-override: 92.77%;
+  descent-override: 24.41%;
+  line-gap-override: 0%;
   font-family: Roboto;
   font-style: normal;
   font-weight: 300;
@@ -10,6 +16,9 @@
 // roboto-regular - latin
 @font-face {
   font-display: swap;
+  ascent-override: 92.77%;
+  descent-override: 24.41%;
+  line-gap-override: 0%;
   font-family: Roboto;
   font-style: normal;
   font-weight: 400;
@@ -19,6 +28,9 @@
 // roboto-500 - latin
 @font-face {
   font-display: swap;
+  ascent-override: 92.77%;
+  descent-override: 24.41%;
+  line-gap-override: 0%;
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
@@ -28,6 +40,9 @@
 // roboto-700 - latin
 @font-face {
   font-display: swap;
+  ascent-override: 92.77%;
+  descent-override: 24.41%;
+  line-gap-override: 0%;
   font-family: Roboto;
   font-style: normal;
   font-weight: 700;

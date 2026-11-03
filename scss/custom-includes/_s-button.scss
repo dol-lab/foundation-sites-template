@@ -19,7 +19,7 @@
 // Three weights, so one main action stands out on a page of buttons, plus two lighter fills:
 // - neutral, a plain `.button`: the card surface;
 // - solid, a color of `$button-solid-colors` or any color with `.solid`: the color itself;
-// - soft, the other colors or any color with `.soft`: a tint with the label in the color.
+// - soft, a color left out of `$button-solid-colors` or any color with `.soft`: a tint with the label in the color.
 // `.hollow` is an outline (no fill, label in the color), `.clear` has no surface until hovered. Every button with
 // a surface has a `ring()` around it, so a row of mixed fills keeps one size. A color class sets `--_c`, a fill class picks the weight, and one
 // rule applies the result. The setters weigh one class (`:where()`), so the last in the cascade decides:
@@ -66,7 +66,7 @@ $button-margin: 0 0 map.get($button-sizes, default) 0 !default;
 
 /// Colors that are solid by default; the others are soft.
 /// @type List
-$button-solid-colors: brand, primary, secondary !default;
+$button-solid-colors: brand, primary, secondary, success, warning, alert !default;
 
 /// A soft or hollow button's label: the color's hue at about text-0's lightness, so it is AA on bg-0, bg-1 and its
 /// own tint in both modes. Not mixed into text-0: a warm theme tint cancels a blue to grey.
@@ -170,12 +170,16 @@ $button-responsive-expanded: false !default;
     --_fg: var(--f-color-text-0);
     --_border: #{ring(var(--f-color-bg-1))};
     --_seam: var(--_border);
+    --_halo: none;
   } @else if $fill == solid {
     --_bg: var(--_c);
     --_bg-hover: var(--_c-darker);
     --_fg: var(--_c-contrast);
     --_border: #{ring(var(--_c))};
     --_seam: color-mix(in oklab, var(--_c-contrast) 30%, var(--_c));
+
+    // A faint shade behind a light label lifts it off a light color (success, alert); a dark label gets none.
+    --_halo: 0 0 0.3em oklch(from var(--_c-contrast) 0 0 0 / calc(l * 0.5));
   } @else if $fill == soft {
     // A tinted surface (a callout) sets the knobs, or the button's own tint would vanish on it.
     --_bg: var(--f-button-soft-background, #{soft-surface(var(--_c))});
@@ -183,6 +187,7 @@ $button-responsive-expanded: false !default;
     --_fg: #{hollow-label(var(--_c))};
     --_border: var(--f-button-soft-border, #{ring(soft-surface(var(--_c)))});
     --_seam: #{soft-surface(var(--_c), 0.12)};
+    --_halo: none;
   } @else if $fill == hollow {
     --_bg: transparent;
     --_bg-hover: #{soft-surface(var(--_c))};
@@ -191,12 +196,14 @@ $button-responsive-expanded: false !default;
     // The ring of a soft button in its color: an outline of the same weight.
     --_border: #{ring(soft-surface(var(--_c)))};
     --_seam: var(--_border);
+    --_halo: none;
   } @else if $fill == clear {
     --_bg: transparent;
     --_bg-hover: color-mix(in oklab, var(--_c) 10%, transparent);
     --_fg: color-mix(in oklab, var(--_c) 10%, var(--f-color-text-0));
     --_border: transparent;
     --_seam: var(--_border);
+    --_halo: none;
   }
 }
 
@@ -217,13 +224,14 @@ $button-responsive-expanded: false !default;
     min-height: map.get($button-heights, default);
     margin: $button-margin;
 
-    // Roboto's ascent outweighs its descent: a centered line box leaves capitals about 0.13em high. The label moves
-    // down 0.1em, not 0.13em: the baseline snaps to whole pixels, and 0.09em to 0.12em puts every size closest to center.
-    padding: 0.35em $button-padding-inline 0.15em;
+    // A centered line box leaves Roboto's capitals a little high. The label moves down 0.06em: Firefox snaps the
+    // baseline about a pixel lower than Chromium, and 0.06em keeps every size within half a pixel of center in both.
+    padding: 0.31em $button-padding-inline 0.19em;
     border: $button-hollow-border-width solid var(--_border);
     border-radius: $button-radius;
     background-color: var(--_bg);
     color: var(--_fg);
+    text-shadow: var(--_halo);
     transition: $button-transition;
     font-family: $button-font-family;
     font-size: map.get($button-sizes, default);
@@ -234,7 +242,7 @@ $button-responsive-expanded: false !default;
 
     // An icon is centered by its own box, so it takes back the label's shift.
     & > :is(i, svg) {
-      margin-top: -0.2em;
+      margin-top: -0.12em;
     }
 
     &:hover,
@@ -315,6 +323,7 @@ $button-responsive-expanded: false !default;
     --_bg-hover: var(--_bg);
     --_fg: var(--f-color-text-2);
     --_border: #{ring(var(--_bg))};
+    --_halo: none;
 
     opacity: 1;
     cursor: not-allowed;

@@ -1,6 +1,6 @@
 # Callouts
 
-`.callout` sets a message apart from the text around it. Takes a palette color; a button inside takes the same one. Text, headings and links share one color that meets WCAG AA on the tint (links are underlined), and a soft button sits on the page background so it stays visible (a hollow one is see-through anyway). Success, warning and alert buttons are soft by default: the main action takes `.solid`.
+`.callout` sets a message apart from the text around it. Takes a palette color; a button directly inside without a color of its own takes the same one, solid unless it has a fill (a neutral button would look like a hole in the tint). Text, headings and links share one color that meets WCAG AA on the tint (links are underlined), and a soft button sits on the page background so it stays visible (a hollow one is see-through anyway). Add `.soft` to a secondary button so the main action stands out.
 
 The palette classes are `primary`, `secondary`, `success`, `warning` and `alert` (the error variant; a wrong name silently falls back to the default). Do not override a callout's colors inline: the box then stops following the theme while its text still does.
 
