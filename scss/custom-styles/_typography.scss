@@ -63,8 +63,9 @@
     @include custom-functions.foundation-palette($hover: false);
   }
 
-  // A button's color classes are its own (custom-includes/_s-button.scss).
-  a:not(.button) {
+  // A button's and a label's color classes are their own (_s-button.scss, _s-label.scss):
+  // on a link label this rule would paint the text in the label's background color.
+  a:not(.button, .label) {
     @include custom-functions.foundation-palette;
     @include custom-functions.foundation-palette($selector: "li", $child: ">&");
     @include s-button.button-sizes;
