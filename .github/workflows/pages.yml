@@ -1,5 +1,5 @@
-# Publishes the demo page to GitHub Pages. css/ and llms.txt are committed, so only the HTML
-# is built here: the page shows exactly the files that consumers load.
+# Publishes the demo page to GitHub Pages. css/ is committed, so only the HTML and llms.txt are
+# built here: the page shows exactly the styles that consumers load.
 name: Pages
 
 on:
@@ -29,7 +29,6 @@ jobs:
           bun-version-file: package.json
       - run: bun install --frozen-lockfile
       - run: bun run build:html
-      - run: git restore -- llms.txt # build:html rewrites it; publish the committed copy
       - run: mkdir _site && cp -r index.html llms.txt docs css js assets fonts _site/
       - uses: actions/upload-pages-artifact@v5
         with:
