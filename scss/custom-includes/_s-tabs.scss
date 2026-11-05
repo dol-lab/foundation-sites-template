@@ -41,7 +41,7 @@ $tab-item-background-hover: var(--f-color-bg-2) !default;
 
 /// Default padding of a tab item.
 /// @type Number
-$tab-item-padding: 0.25rem 0.5rem !default;
+$tab-item-padding: var(--f-spacing-1) var(--f-spacing-2) !default;
 
 /// Default background color of tab content.
 /// @type Color

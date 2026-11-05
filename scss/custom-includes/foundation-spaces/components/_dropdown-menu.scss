@@ -48,7 +48,7 @@ $dropdownmenu-padding: global.$global-menu-padding !default;
 
 /// Padding for sub-menu items.
 /// @type Number
-$dropdownmenu-submenu-padding: 0.75rem 0.9rem !default;
+$dropdownmenu-submenu-padding: var(--f-spacing-3) var(--f-spacing-4) !default;
 
 /// Border for dropdown sub-menus.
 /// @type List

@@ -193,7 +193,7 @@ $switch-transition: global.$global-transition-short global.$global-transition-ti
 
   // A two-sided switch with an icon on each end, drawn as a ring knob on a filled track (nav-menus screen).
   .switch-with-labels {
-    margin-right: 0.25rem;
+    margin-right: var(--f-spacing-1);
     height: auto;
     align-items: flex-start;
 

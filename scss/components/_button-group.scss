@@ -7,7 +7,7 @@
 
 /// Margin below a button group.
 /// @type Number
-$buttongroup-margin: 0.9rem !default;
+$buttongroup-margin: var(--f-spacing-4) !default;
 
 // The group holds the radius; its first and last child inherit the outer corners, so a rule that squares
 // the group's corners (a flush card section) squares theirs too. No `overflow: hidden`: it clipped the border
