@@ -30,8 +30,8 @@
       position: relative;
       cursor: pointer;
       align-items: center;
-      gap: 1rem;
-      width: calc(100% - 0.7rem);
+      gap: 1em;
+      width: calc(100% - 0.7em);
 
       &::marker {
         content: none;
@@ -43,7 +43,7 @@
         @extend .caret;
 
         position: absolute;
-        right: -0.7rem;
+        right: -1.12em; // 0.7em of the summary (the caret is 0.625em)
         top: 1.7em;
         margin-left: auto;
         display: inline-block;
