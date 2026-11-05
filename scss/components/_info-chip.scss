@@ -88,7 +88,6 @@ $info-chip-shadow-hover:
       }
 
       & .info-chip span:last-child {
-        border-color: var(--f-c);
         background: var(--f-c);
         color: var(--f-c-contrast);
       }
@@ -108,6 +107,7 @@ $info-chip-shadow-hover:
 
     text-decoration: none !important;
     display: flex;
+    max-width: 100%;
     background: var(--_chip-bg);
     color: var(--f-color-text-0);
     padding: 0 !important;
@@ -209,11 +209,13 @@ $info-chip-shadow-hover:
       }
     }
 
+    // Each segment truncates, but icon and key carry the identifying part, so the value gives
+    // way first when the row is narrow. The seam sits on the following segment, so a chip that
+    // hides its value (Spaces' taxonomy chips) or leaves it out has no line at its edge.
     & > span {
       display: inline-block;
       padding: $info-chip-padding;
       align-self: center;
-      border-right: 1px solid var(--_chip-separator);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -223,19 +225,22 @@ $info-chip-shadow-hover:
         border-bottom-left-radius: global.$global-radius;
       }
 
-      &:last-child {
-        &:is(#{custom-functions.palette-selector()}) {
-          border-color: var(--f-c);
-          background: var(--f-c);
-          color: var(--f-c-contrast);
-        }
-
-        border-right: none;
+      & + span {
+        border-left: 1px solid var(--_chip-separator);
       }
 
       &:nth-child(2) {
         background: var(--_chip-key-bg);
       }
+
+      &:last-child:is(#{custom-functions.palette-selector()}) {
+        background: var(--f-c);
+        color: var(--f-c-contrast);
+      }
+    }
+
+    & > :is(.tag-icon, .key) {
+      flex-shrink: 0;
     }
 
     & > .icon {
