@@ -4,7 +4,7 @@ Rules for coding agents in this repo. How the build, the demo page and the files
 
 ## Reading
 
-- Do not read `index.html`, `llms.txt`, `css/*.css(.map)` or `node_modules/`: they are built (`.ignore` keeps them out of ripgrep; never commit a second copy of a build output). `css/*.css` is one line, so grep it only with `-o` and a short pattern (`grep -bo` gives the cascade order).
+- Do not read `index.html`, `llms.txt`, `css/*.css(.map)` or `node_modules/`: they are built (`.ignore` keeps them out of ripgrep; never commit a second copy of a build output; `css/*.css` and `llms.txt` are committed on purpose, for consumers). `css/*.css` is one line, so grep it only with `-o` and a short pattern (`grep -bo` gives the cascade order).
 - `html-partials/_main-nav.html` and `_space-sidebar.html`: grep, never read whole. `bun run outline <partial>` replaces reading a large partial.
 - A change may already exist: grep README `## Notes` and `git log -S'<key string>'` for its subject first.
 
@@ -22,22 +22,7 @@ Rules for coding agents in this repo. How the build, the demo page and the files
 
 ## Checking in Spaces
 
-Consumer pages are checked with `wpb glance` from the spaces-kisd site root (its `docs/dev-environment.md`). Never the bare `glance` (also on `PATH`), never edit the glance repo; tooling changes go into `scripts/wpb`.
-
-- Before and after an edit: `wpb glance shot <url> -s <sel> [-d "<steps>"]` (`text` for labels and names); open an image only if it reports a change. Hidden UI needs its clicks in `-d`, member-only UI `--user <member>`, Firefox `--browser firefox` (any command; Firefox makes every `overflow: auto` box a tab stop).
-- Values instead of pictures: `wpb glance style <url> -d "<steps>; style <sel> <prop…>"` prints one line per `style` step (repeat it around a `hover`/`press`); `wpb glance probe <url> [-d …] -f <js-file>` prints the file's last expression (string as is, else JSON), no shot.
-- Audits: `wpb glance focus <url> [-s scope] [-d …]` (missing, weak, clipped rings; an open main-menu panel: `-s ':popover-open'`), `wpb glance contrast <url> [selector] [--fail] [--dark] [-d …]`. For a global rule, print one computed value per matching element (`text -d "eval …map(e => id + '=' + value).join(' ')"`) before and after and `diff`.
-- `-d` steps: `eval` takes one expression, no `;` (not even in an arrow body), no `const`; anything longer goes in a scratch file run with `eval-file <file>` (path relative to the working directory). A keyboard state needs a key press after the last click (`press Shift+Tab; press Tab`), or what-input stays on `mouse`. Tab walk: repeat `press Tab; eval-file rec.js` (pushes a description of `document.activeElement` onto `globalThis.__rec`), then `-f` a file with `globalThis.__rec.join('\n')`, written with `printf '%s'` (zsh's `echo` expands `\n`).
-- Traps: `hover`/`click` on a selector whose first match is hidden times out, add `:visible` (`>> nth=1` for another); an element shot crops its shadow, shoot the viewport; `insertAdjacentText('afterbegin')` shifts the page, read rects first or use `beforeend`; cards in other swiper slides are `inert` (`focus()` silently stays on `body`), pick with `.find(a => a.offsetParent && !a.closest('[inert],[hidden]'))`; `wpb where` prints a table, not a URL; never loop `wpb sh 'wp … --url=$u'` over all sites (times out).
-- Before changing a selector's specificity: print the stylesheet load order once (`eval [...document.styleSheets].map(s => (s.href || '').split('/').pop())`) and grep consumers for rules on that selector. Class audits: `grep -rn --include='*.php' --exclude-dir=node_modules --exclude-dir=build …` with globs quoted (zsh aborts on unquoted ones).
-
-Known spots (add the ones you had to search for):
-
-- `/home/`: settings menu tabs `#defaultspace-settings-menu` (one tab stop; keyboard: `-d "eval document.querySelector('#defaultspace-settings-menu a[tabindex=\"0\"]').focus(); press Shift+Tab; press Tab; press Enter; wait 600"`); main menu `-d "click .menu-title-my-spaces > a; wait 800"` (tabs `ul[data-link-active-class]`, Space cards); burger `-w 375 -d "click button.sandwich-icon; wait 800"`, panel `nav.main-menu`; `.prose-layout` posts (`.post-content`); activities modal `-d "click .activities-modal-trigger button; wait 2500"`, `.spaces-activities-tabs`; events widget `.event-items-container` (wait 2500; scroll snap below medium only); card hover `-d "hover .post-card.clickable:visible >> nth=1; wait 600"` (collapsed cards are `.card.clickable`); tooltip focus `-d "wait 1500; eval (e => (e.tabIndex = 0, e.focus()))([...document.querySelectorAll('[data-tooltip]')].find(e => e.offsetParent && !e.closest('[inert],[hidden]'))); wait 300"`, read with `document.querySelector('.tooltip:popover-open')?.textContent`.
-- CKEditor (`--user 1`, `.ck-editor__main`): post editor on `/home/` `-d "wait 2000; click .spaces-editor-post-title; wait 4000"`; its dot menu `click button.dots[popovertarget]; wait 600`; add-event modal `eval document.querySelector('.ds-add-event-modal-trigger').click(); wait 2500` (`#ds-eo-add-event-modal`, scheduler `click #ds-eo-add-event-modal .ds-open-scheduler-modal; wait 2500`); comment editor `click .spaces-editor-comment-form` on the comments page.
-- Comments: `/2022/08/22/neue-community-features-und-bugfixes-update-18-august/` (`/home/` shows none). Delete modal on any feed page: `eval document.querySelector('#ds-delete-confirm-modal').showModal()`.
-- `/template-courses/` (`--user 1`): swap menu, deep link `#secondary-swap-menu`. `/cognitiveaerobics/`: members page `#people-tabs` (`.card-user` cards need `--user 1`); every single post there shows the members page, use a profile blog such as `/julianabach/`. Settings sidebar: `click [aria-controls=settings]`, folds `#invitation-settings`, `#features`, `#advanced`.
-- Profile `/people/?user-profile=admin`: form `click .edit-profile; wait 1200`, avatar modal then `click .avatar-edit; wait 1200` (`#avatar-modal`, file without a dialog: `upload .avatar-input=<png>`; Save overwrites admin's avatar, back up `web/app/uploads/avatars/admin/` and its `spaces_users.profile_image` first). Calendar `&profile-section=calendar` (hollow `.scf-cal-navlink`, settings `click .scf-settings-toggle; wait 800`). Plain `.button`s are rare in Spaces; use the demo for them.
+Pages that use this library are checked from a Spaces site root with `wpb glance`: its `docs/testing.md`, "Checking a UI change".
 
 ## Writing
 

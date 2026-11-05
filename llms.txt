@@ -1,0 +1,41 @@
+# Spaces Design System
+
+> The styles of Spaces, a themeable fork of Foundation for Sites 6. Load css/app.css; css/app-backend.css styles only markup inside `.f`. Colors are `--f-color-*` custom properties.
+
+Each link is one section of index.html as markdown: its prose, and every example's markup in an ```html example``` block (rendered on the page as it is written).
+
+## Start
+
+- [Getting started](docs/start.md): The styles of [Spaces](https://spaces.kisd.de): a themeable fork of [Foundation for Sites 6](https://get.foundation/sites/docs/). Every component on this page shows its markup below it. The source is on [GitHub](https://github.com/dol-lab/foundation-sites-template).
+- [Colors](docs/colors.md): Custom properties are the source of truth. Use the roles, never a literal, so Space theming and dark mode reach every component. The settings below the index change the Space color and the brand, the button on the header image cycles images with their Space colors: the surfaces follow.
+- [Typography](docs/typography.md): Roboto in four weights, body text in `--f-color-text-1`. Headings grow from phone width up to the large breakpoint. Text written by members sits in `.user-generated`, where h1 and h4 to h6 are normal weight and h4 to h6 take `--f-color-text-0`, h6 also italic (Spaces adds `.brand-links` for links in the brand color).
+
+## Components
+
+- [Avatars](docs/avatars.md): `.avatar-container` with a size around a `.clipped.square`. The corner comes from `--f-avatar-radius` (default `--f-radius`, round in an `.avatar-stack`).
+- [Badges and labels](docs/badges.md): A `.badge` is a round counter, a `.label` a short tag (Spaces: a member's status, a post's editor notes with an icon). Both take a palette color.
+- [Breadcrumbs](docs/breadcrumbs.md): `.breadcrumbs` is a path from parent to child, its links separated by a chevron; the last item is the current page, `.disabled` one that cannot be visited. A plain list of siblings (post meta, a row of names) is a `.dot-list` and keeps the dot.
+- [Buttons](docs/buttons.md): `.button` plus a palette color, a fill (`.solid`, `.soft`, `.hollow`, `.clear`) and a size (`.tiny`, `.small`, `.large`). Join buttons with a [button group](docs/button-group.md).
+- [Button group](docs/button-group.md): `.button-group` joins buttons (and a `select` or `input`) into one control: only its outer corners are rounded, and the buttons overlap so their borders collapse into one line. Fill, color and size classes on the group apply to every button in it; a button's own class beats the group's (Week and Delete below).
+- [Callouts](docs/callouts.md): `.callout` sets a message apart from the text around it. Takes a palette color; a button directly inside without a color of its own takes the same one, solid unless it has a fill (a neutral button would look like a hole in the tint). Text, headings and links share one color that meets WCAG AA on the tint (links are underlined), and a soft button sits on the page background so it stays visible (a hollow one is see-through anyway). Add `.soft` to a secondary button so the main action stands out.
+- [Details](docs/details.md): A native `<details>` is unstyled until it asks: `.details` for the look and the open animation, `.details-animated` for the animation only. Inside `.user-generated` every `<details>` is styled. Find-in-page opens them, and one holding the URL's `:target` starts open.
+- [Forms](docs/forms.md): Wrap a field in its `<label>`. Fields stretch to the width of their cell.
+- [Info chips](docs/info-chips.md): A static chip is flat: a hairline ring, no fill. A clickable one gets a surface and a shadow, and its markup has to say so: `[href]`, `<button>`, or `.clickable` when the handler is in JS. A chip inside a link stays flat, because the row is the click target. Spaces prints every chip as an `<a>`, with an `href` only when it links, in an `.info-chips.small`.
+- [Menus and dropdowns](docs/menus.md): `.menu` is a row of links, `.vertical` a column. `.details-menu` folds a menu into a native `<details>`, `data-dropdown-menu` opens panels on hover or click, `.popover` is a pane of rows opened by a button.
+- [Modal](docs/modal.md): A `<dialog class="reveal">`, opened by any element with `data-open="<id>"` (or `showModal()`), closed by a `data-close` button inside it, Escape or a click on the backdrop. Scripts listen for the dialog's `close` event. Keyboard (native `showModal()`): opening focuses the first focusable element in the dialog (or the one with `autofocus`), Tab stays inside it and the page behind is inert, Escape closes it, and focus returns to the element that opened it.
+- [Pagination](docs/pagination.md): The markup WordPress' `paginate_links()` prints, inside a `.pagination` (defaultspace's copy, `ds_paginate_links()`, adds the screen reader labels).
+- [Progress](docs/progress.md): `.progress` with a `.progress-meter` whose width is the value. Takes a palette color. Give it `role="progressbar"`, the `aria-value*` attributes and a label.
+- [Scroll snap](docs/scroll-snap.md): A row that scrolls sideways and snaps each element to its start: `.scroll-snap-container-x` on the parent, `.scroll-snap-element` on the children. Each element is as wide as the row unless a width modifier says otherwise. Spaces uses it for the events widget. A row of links scrolls as Tab moves through them. A row of plain content is scrolled with the arrow keys once focused: Chromium and Firefox focus such a scroller themselves, Safari needs `tabindex="0"` on it (then also `role="region"` and an `aria-label`, as below).
+- [Space card](docs/space-card.md): `.card` with a `.card-anchor` around a `.clipped.feature-image`: the Space's header image cropped to 80px, its name in a frosted `.clipped-title`, an icon (privacy) before the name. Without an image the frame shows a pattern in the surface colors. Keyboard focus outlines the whole card. The same frame with `.large` is a Space's own header (200px, two lines of title).
+- [Tabs](docs/tabs.md): `.tabs` with `data-tabs` and an id, and a `.tabs-content` naming that id. Each `.tabs-title` links to its `.tabs-panel` by id (or names it in `data-tabs-target`); mark the initial title and panel `.is-active`. `js/app.js` runs them, delegated, so tabs added later work (they get their ARIA roles on the first click):
+- [Tooltip](docs/tooltip.md): `data-tooltip` with a `title` shows the title in a popover above the element (below it without room) on hover, keyboard focus and tap; Escape, a click elsewhere or scrolling hides it. On first contact `js/app.js` moves the `title` to `data-tooltip` and `aria-description`, so the browser's own tooltip stays hidden. Keyboard users reach only a trigger that takes focus (a link, a button or `tabindex="0"`); one inside a link or button never does.
+- [User card](docs/user-card.md): `.card.card-user`: an avatar and the user's name in a `.user-card-header`, as tall as the avatar. The avatar fills the card's left edge: the card rounds its outer corners, its inner ones are square. `.user-name` and the avatar take their size from the card's size class (`.small`, `.large`, …). A card that is one link wraps its content in a `.card-anchor`.
+
+## Spaces
+
+- [A Space](docs/space.md): A post and the sidebar, laid out as defaultspace prints a Space. A post is a `.card` with an avatar, a header, the content and a footer of chips and avatars. The sidebar holds tabs, the main menu and accordions of `<details>`. Their layout comes from this library, some details from defaultspace's own CSS.
+
+## Reference
+
+- [Helper classes](docs/helper-classes.md): Utility classes from `scss/custom-styles/_utilities.scss` and Foundation's prototype and flex helpers. They are not responsive: only the visibility classes take a breakpoint.
+- [CSS variables](docs/variables.md): Public custom properties start with `--f-`, a component's knob is `--f-<component>-…`; private ones start with `--_` (`--_f-*` on `:root`, short names such as `--_offset` inside a component) and are not for use outside their scope. The color roles are in [Colors](docs/colors.md).

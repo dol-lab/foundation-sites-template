@@ -9,7 +9,6 @@ node_modules/**
 
 # don't include these generated files.
 index.html
-llms.txt
 
 css/**
 !css/*.css

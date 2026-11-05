@@ -10,6 +10,8 @@ Utility classes from `scss/custom-styles/_utilities.scss` and Foundation's proto
 - **Side:** `t` (top), `b` (bottom), `l` (left), `r` (right), `x` (horizontal), `y` (vertical), *(blank)* (all)
 - **Auto margins:** `m-auto`, `mx-auto`, `my-auto`, `mt-auto`, `mr-auto`, `mb-auto`, `ml-auto`
 
+The class names follow Tailwind, the values do not (Tailwind's `p-8` is 2rem, here it is 2.5rem): read the table below.
+
 A side beats an axis, an axis beats all sides: `pl-1` overrides `p-2`. `.p-0` also empties a `.menu` or dropdown-menu link. A `.card-section` or `.card-divider` whose content should fill it edge to edge (borderless fields, buttons squared toward the neighbouring sections) takes `.flush` instead.
 
 | Size  | Value     | Pixels |

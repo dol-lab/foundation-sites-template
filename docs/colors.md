@@ -32,6 +32,8 @@ More roles: `--f-color-border-1` (between the two), `--f-color-bg-1-untinted` (`
 
 ## Palette
 
+`.brand` is the main action color (the Space's color). `.primary` is a muted slate for secondary emphasis, despite its name: use `.brand` for the main action.
+
 Each color has `-contrast` (text on it, AA 4.5:1 in both modes, except the lighter primary 3.8:1, alert 3.7:1 and success 3.1:1; a solid button shades the label) and `-darker` (hover, a `color-mix` with black). They are defined in `scss/_colors.scss` and printed by `foundation-apply-theme()` in `scss/_custom-functions.scss`. The same values serve both modes, so as small text on a dark page they fall below 4.5; a runtime brand needs a contrast pair of its own that passes.
 
 ```html demo wide
