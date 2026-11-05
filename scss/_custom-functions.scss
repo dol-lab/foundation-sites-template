@@ -18,7 +18,11 @@
 @mixin foundation-palette($selector: "&", $child: "", $property: "color", $hover: "true") {
   @each $color-name, $color in colors.$foundation-palette {
     #{$selector}.#{$color-name} #{$child} {
-      #{$property}: var(--f-color-#{$color-name});
+      @if $property == "color" {
+        color: var(--f-color-#{$color-name}-text);
+      } @else {
+        #{$property}: var(--f-color-#{$color-name});
+      }
 
       @if $property == "background" {
         color: var(--f-color-#{$color-name}-contrast);
@@ -26,11 +30,24 @@
 
       @if $hover == "true" {
         &:hover {
-          #{$property}: var(--f-color-#{$color-name}-darker);
+          @if $property == "color" {
+            // Toward the body text, so hover raises the contrast in both modes.
+            color: color-mix(in oklab, var(--f-color-#{$color-name}-text) 75%, var(--f-color-text-0));
+          } @else {
+            #{$property}: var(--f-color-#{$color-name}-darker);
+          }
         }
       }
     }
   }
+}
+
+/// A palette color as text on the page (`--f-color-<name>-text`): in light mode darkened to at most 0.5
+/// lightness, which keeps 5:1 on every light surface for any hue; in dark mode lightened to 0.82.
+/// @param {Color} $color - The palette color.
+/// @return {Color}
+@function palette-text($color) {
+  @return light-dark(oklch(from #{$color} min(l, 0.5) c h), oklch(from #{$color} 0.82 c h));
 }
 
 ////
@@ -54,16 +71,12 @@
 /// A custom property resolves where it is declared, so an element that sets
 /// `-base` needs these redeclared on itself (see `[themed]` in _root-variables).
 /// The brand is not lightened in dark mode: its label would drop below AA. Brand-colored text
-/// on the page (`-text`) is lightened instead, to `hollow-label()`'s dark lightness; in light mode it
-/// is darkened to at most 0.5 lightness, which keeps 5:1 on every light surface for any hue.
+/// on the page (`-text`, `palette-text()`) is lightened instead.
 @mixin brand-colors {
   --f-color-brand: var(--f-color-brand-base, #{map.get(colors.$foundation-palette, "brand")});
   --f-color-brand-contrast: var(--f-color-brand-base-contrast, #{map.get(colors.$foundation-palette-contrast, "brand")});
   --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
-  --f-color-brand-text: light-dark(
-    oklch(from var(--f-color-brand) min(l, 0.5) c h),
-    oklch(from var(--f-color-brand) 0.82 c h)
-  );
+  --f-color-brand-text: #{palette-text(var(--f-color-brand))};
 
   // The keyboard focus ring: brand-text at the lightest alpha that keeps 3:1 on bg-0 to bg-2 in both modes (Spaces red).
   --f-focus-color: rgb(from var(--f-color-brand-text) r g b / 70%);
@@ -145,6 +158,7 @@
 
   @each $color-name, $color in map.remove(colors.$foundation-palette, "brand") {
     --f-color-#{$color-name}-darker: color-mix(in oklab, var(--f-color-#{$color-name}) 88%, black 12%);
+    --f-color-#{$color-name}-text: #{palette-text(var(--f-color-#{$color-name}))};
   }
 
   @include text-tints;

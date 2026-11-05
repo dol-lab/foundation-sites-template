@@ -22,7 +22,7 @@ $abide-labels: true !default;
 /// @type String
 $input-background-invalid: var(--f-color-alert) !default;
 $form-label-color-invalid: var(--f-color-alert) !default;
-$input-error-color: var(--f-color-alert) !default;
+$input-error-color: var(--f-color-alert-text) !default;
 
 /// Default font size for form error text.
 /// @type Number
