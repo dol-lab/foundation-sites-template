@@ -34,8 +34,8 @@ Set a size from the scale, not a literal; a size relative to the element's own t
 | `--f-font-size-xs` | 0.75rem (12px) | Badges, progress, form errors, small chips |
 | `--f-font-size-sm` | 0.8125rem (13px) | `small`, `.small`, tooltips, help text |
 | `--f-font-size-md` | 0.875rem (14px) | Menus, tabs, breadcrumbs, inputs, user names |
-| `--f-font-size-base` | 0.9375rem (15px) | Paragraphs (`--f-paragraph-font-size` defaults to it) |
-| `--f-font-size-lg` | 1rem (16px) | Card titles, large chips, prose paragraphs |
+| `--f-font-size-base` | 0.96875rem (15.5px) | Paragraphs, also in `.prose-layout` |
+| `--f-font-size-lg` | 1rem (16px) | Card titles, large chips |
 | `--f-font-size-xl` | 1.25rem (20px) | `.lead`, clipped titles |
 | `--f-font-size-2xl` | 1.5rem (24px) | Large user names |
 

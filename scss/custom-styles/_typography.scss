@@ -25,9 +25,8 @@
     }
   }
 
-  // --f-paragraph-font-size: running text, larger in .prose-layout.
   p {
-    font-size: var(--f-paragraph-font-size, var(--f-font-size-base));
+    font-size: var(--f-font-size-base);
     color: var(--f-color-text-1);
 
     &.small {
@@ -123,7 +122,7 @@
   }
 
   ul {
-    font-size: var(--f-paragraph-font-size, var(--f-font-size-base));
+    font-size: var(--f-font-size-base);
   }
 
   small {
