@@ -1,6 +1,6 @@
 # Typography
 
-Roboto in four weights, body text in `--f-color-text-1`. Headings grow from phone width up to the large breakpoint. Text written by members sits in `.user-generated`, where h1 and h4 to h6 are normal weight and h4 to h6 take `--f-color-text-0`, h6 also italic (Spaces adds `.brand-links` for links in the brand color).
+Roboto as one variable font (any weight from 100 to 900; latin and latin-ext, the latter loaded only when a page needs it), body text in `--f-color-text-1`. Headings grow from phone width up to the large breakpoint. Text written by members sits in `.user-generated`, where h1 and h4 to h6 are normal weight and h4 to h6 take `--f-color-text-0`, h6 also italic (Spaces adds `.brand-links` for links in the brand color).
 
 ```html example
 <div class="user-generated brand-links">
