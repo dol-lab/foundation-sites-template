@@ -7,6 +7,21 @@
 // .clipped-title: a frosted label over that image, the Space's name.
 
 @mixin styles {
+  // .cube-grid: a pattern of cubes in the palette's surface colors, the placeholder of a missing
+  // image (a .feature-image has it). --f-cube-size is a cube's width.
+  .cube-grid,
+  .clipped.feature-image {
+    --_s: var(--f-cube-size, 75px);
+    --_c1: var(--f-color-bg-2);
+    --_c2: var(--f-color-bg-0);
+    --_c3: var(--f-color-bg-1);
+
+    background:
+      repeating-conic-gradient(from 30deg, transparent 0 120deg, var(--_c3) 0 50%) calc(var(--_s) / 2) calc(var(--_s) * 0.5774 / 2),
+      repeating-conic-gradient(from 30deg, var(--_c1) 0 60deg, var(--_c2) 0 120deg, var(--_c3) 0 50%);
+    background-size: var(--_s) calc(var(--_s) * 0.5774);
+  }
+
   .clipped {
     position: relative;
     display: flex;
@@ -99,19 +114,9 @@
       }
     }
 
-    // Without an image it shows a pattern in the palette's surface colors.
     &.feature-image {
-      --_s: 75px;
-      --_c1: var(--f-color-bg-2);
-      --_c2: var(--f-color-bg-0);
-      --_c3: var(--f-color-bg-1);
-
       align-items: center;
       height: 80px;
-      background:
-        repeating-conic-gradient(from 30deg, transparent 0 120deg, var(--_c3) 0 50%) calc(var(--_s) / 2) calc(var(--_s) * 0.5774 / 2),
-        repeating-conic-gradient(from 30deg, var(--_c1) 0 60deg, var(--_c2) 0 120deg, var(--_c3) 0 50%);
-      background-size: var(--_s) calc(var(--_s) * 0.5774);
 
       &.large {
         height: 200px;

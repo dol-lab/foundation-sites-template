@@ -1,6 +1,6 @@
 # Space card
 
-`.card` with a `.card-anchor` around a `.clipped.feature-image`: the Space's header image cropped to 80px, its name in a frosted `.clipped-title`, an icon (privacy) before the name. Without an image the frame shows a pattern in the surface colors. Keyboard focus outlines the whole card. The same frame with `.large` is a Space's own header (200px, two lines of title).
+`.card` with a `.card-anchor` around a `.clipped.feature-image`: the Space's header image cropped to 80px, its name in a frosted `.clipped-title`, an icon (privacy) before the name. Without an image the frame shows the `.cube-grid` pattern (helper classes) in the surface colors. Keyboard focus outlines the whole card. The same frame with `.large` is a Space's own header (200px, two lines of title).
 
 ```html example wide
 <div class="auto-grid gap-3" style="--f-auto-grid-min-width: 200px">

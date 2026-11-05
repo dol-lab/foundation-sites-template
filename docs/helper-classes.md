@@ -77,6 +77,7 @@ Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile)
 - **Radius:** `.rounded` (`--f-radius`), `.rounded-small`, `.rounded-none`, `.rounded-full`
 - **Shadows:** `.shadow` (the theme's drop shadow), `.box-shadow-large`, `.no-box-shadow` (`.box-shadow` is a deprecated alias of `.shadow`)
 - **Separators:** `.dot-list` puts a `·` after each child but the last; `.dot-list.dot-before` puts it before each but the first, so a wrapped line starts with it
+- **Placeholder pattern:** `.cube-grid` fills the element with a pattern of cubes in the surface colors (a missing image; a `.clipped.feature-image` has it already). `--f-cube-size` sets a cube's width (default 75px).
 
 ### Interactive
 
