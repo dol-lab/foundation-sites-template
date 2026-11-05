@@ -1,66 +1,42 @@
-@use "foundation-spaces/global";
-@use "foundation-spaces/util/unit";
+@use "sass:map";
+@use "../colors";
 @use "../custom-functions";
 @use "../custom-settings";
+@use "foundation-spaces/global";
 
-// Foundation for Sites
-// https://get.foundation
-// Licensed under MIT Open Source
+// .switch: an outlined pill with a solid knob when off, a filled pill with a larger knob on the far side
+// when on, so the state shows in shape, fill and position, not in color alone (3:1 for the outline, WCAG
+// 1.4.11). The size is the private `--_h`; the Sass heights below are the checkbox's sizes, not the switch's.
+// Forced colors removes backgrounds, so there the switch takes system colors through its tokens.
 
 ////
 /// @group switch
 ////
 
-/// Background color of a switch.
-/// @type Color
-$switch-background: inherit !default;
-
-/// Background active color of a switch.
-/// @type Color
-$switch-background-active: var(--f-color-text-1) !default;
-
-/// Height of a switch, with no class applied.
+/// Height of a checkbox (and of a spinner), with no class applied.
 /// @type Number
 $switch-height: 1rem !default;
 
-/// Height of a switch with .tiny class.
+/// Height of a checkbox with .tiny class.
 /// @type Number
 $switch-height-tiny: 0.625rem !default;
 
-/// Height of a switch with .small class.
+/// Height of a checkbox with .small class.
 /// @type Number
 $switch-height-small: 0.75rem !default;
 
-/// Height of a switch with .large class.
+/// Height of a checkbox with .large class.
 /// @type Number
 $switch-height-large: 1.5rem !default;
 
-/// Border radius of the switch
-/// @type Number
-$switch-radius: global.$global-radius !default;
-
-/// border around a modal.
-/// @type Number
-$switch-margin: 0 !default;
-
-/// Background color for the switch container and paddle.
-/// @type Color
-$switch-paddle-background: var(--f-color-bg-1) !default;
-
-/// Spacing between a switch paddle and the edge of the body.
-/// @type Number
-$switch-paddle-offset: 0 !default;
-
-/// border radius of the switch paddle
-/// @type Number
-$switch-paddle-radius: global.$global-radius !default;
-
-/// switch transition.
-/// @type Number
-$switch-paddle-transition:
-  left global.$global-transition-short global.$global-transition-timing,
-  color global.$global-transition-short global.$global-transition-timing,
-  box-shadow global.$global-transition-medium global.$global-transition-timing !default;
+/// Heights of the switch, with no class (`default`) and with a size class.
+/// @type Map
+$switch-track-heights: (
+  default: 1.5rem,
+  tiny: 1rem,
+  small: 1.25rem,
+  large: 2rem,
+) !default;
 
 /// Opacity of a disabled switch.
 /// @type Number
@@ -70,260 +46,197 @@ $switch-opacity-disabled: var(--f-opacity-disabled) !default;
 /// @type Cursor
 $switch-cursor-disabled: not-allowed !default;
 
-// make them variables
-// ask about accessibility on label
-// change class name for text
-
-/// Adds styles for a switch container. Apply this to a container class.
-@mixin switch-container {
-  position: relative;
-  margin-bottom: $switch-margin;
-  outline: 0;
-  display: flex;
-  align-items: center;
-
-  // These properties cascade down to the switch text
-  // font-size: rem-calc(14);
-  // font-weight: bold;
-  color: $switch-background-active;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-/// Adds styles for a switch input. Apply this to an `<input>` within a switch.
-@mixin switch-input {
-  position: absolute;
-  margin-bottom: 0;
-  opacity: 0;
-}
-
-/// Adds styles for the background and paddle of a switch. Apply this to a `<label>` within a switch, or to a `<span>` when the switch sits in a label of its own.
-@mixin switch-paddle {
-  $switch-width: $switch-height * 2;
-  $paddle-height: $switch-height - ($switch-paddle-offset * 2);
-  $paddle-width: $switch-height - ($switch-paddle-offset * 2);
-  $paddle-active-offest: $switch-width - $paddle-width - $switch-paddle-offset;
-
-  position: relative;
-  display: block;
-  width: $switch-width;
-  height: $switch-height;
-  border-radius: $switch-radius;
-  background: $switch-background;
-  transition: $switch-paddle-transition;
-
-  // Resetting these <label> presets so type styles cascade down
-  font-weight: inherit;
-  color: inherit;
-  cursor: pointer;
-
-  // Needed to override specificity
-  input + & {
-    margin: 0;
-  }
-
-  // The paddle itself
-  &::after {
-    position: absolute;
-    top: $switch-paddle-offset;
-    #{global.$global-left}: $switch-paddle-offset;
-
-    display: block;
-    width: $paddle-width;
-    height: $paddle-height;
-    transform: translate3d(0, 0, 0);
-    border-radius: $switch-paddle-radius;
-    background: $switch-paddle-background;
-    transition: $switch-paddle-transition;
-    content: "";
-  }
-
-  // Change the visual style when the switch is active
-  input:checked ~ & {
-    background: $switch-background-active;
-
-    &::after {
-      #{global.$global-left}: $paddle-active-offest;
-    }
-  }
-
-  // indicate a disabled switch
-  input:disabled ~ & {
-    cursor: $switch-cursor-disabled;
-    opacity: $switch-opacity-disabled;
-  }
-}
-
-/// Adds base styles for active/inactive text inside a switch. Apply this to text elements inside the `.switch-paddle`.
-@mixin switch-text {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/// Adds styles for the active state text within a switch.
-@mixin switch-text-active {
-  #{global.$global-left}: 8%;
-
-  display: none;
-
-  input:checked + .switch-paddle > & {
-    display: block;
-  }
-}
-
-/// Adds styles for the inactive state text within a switch.
-@mixin switch-text-inactive {
-  #{global.$global-right}: 15%;
-
-  input:checked + .switch-paddle > & {
-    display: none;
-  }
-}
-
-/// Changes the size of a switch by modifying the size of the body and paddle. Apply this to a switch container.
-/// @param {Number} $font-size [1rem] - Font size of label text within the switch.
-/// @param {Number} $switch-height [2rem] - Height of the switch body.
-/// @param {Number} $paddle-offset [0.25rem] - Spacing between the switch paddle and the edge of the switch body.
-@mixin switch-size($font-size: 1rem, $switch-height: 2rem, $paddle-offset: 0.25rem) {
-  $switch-width: $switch-height * 2;
-  $paddle-width: $switch-height - ($paddle-offset * 2);
-  $paddle-height: $switch-height - ($paddle-offset * 2);
-  $paddle-active-offest: $switch-width - $paddle-width - $paddle-offset;
-
-  height: auto;
-
-  .switch-paddle {
-    width: $switch-width;
-    height: $switch-height;
-    font-size: $font-size;
-  }
-
-  .switch-paddle::after {
-    top: $paddle-offset;
-    #{global.$global-left}: $paddle-offset;
-
-    width: $paddle-width;
-    height: $paddle-height;
-  }
-
-  input:checked ~ .switch-paddle::after {
-    #{global.$global-left}: $paddle-active-offest;
-  }
-}
+/// Duration and timing of the switch's transitions.
+/// @type List
+$switch-transition: global.$global-transition-short global.$global-transition-timing !default;
 
 @mixin spaces-switch {
-  // Container class
   .switch {
-    @include switch-container;
+    --_h: #{map.get($switch-track-heights, default)};
+    --_w: calc(var(--_h) * 1.8);
+    --_b: 2px;
 
-    height: $switch-height;
+    position: relative;
+    display: flex;
+    flex: none;
+    align-items: center;
+    height: var(--_h);
+    margin-bottom: 0;
+    border-radius: var(--f-radius-full);
+    -webkit-user-select: none;
+    user-select: none;
 
-    // Spaces' look: a line with a round knob that fills with the palette color when checked.
     .icon-left & {
       margin-left: auto;
     }
 
-    .switch-paddle {
-      padding: 0;
-      display: flex;
-      align-items: center;
-      border-radius: 0;
-      height: 100%;
-      background: none;
+    @each $size, $height in $switch-track-heights {
+      @if $size != default {
+        &.#{$size} {
+          --_h: #{$height};
+        }
+      }
+    }
 
+    // <label>, or <span> inside a label
+    .switch-paddle {
+      position: relative;
+      display: block;
+      box-sizing: border-box;
+      width: var(--_w);
+      height: var(--_h);
+      border: var(--_b) solid var(--f-color-text-2);
+      border-radius: var(--f-radius-full);
+      color: var(--f-color-text-2);
+      font-weight: inherit;
+      cursor: pointer;
+      transition: background-color $switch-transition, border-color $switch-transition, color $switch-transition;
+
+      &:hover {
+        border-color: var(--f-color-text-0);
+        color: var(--f-color-text-0);
+      }
+
+      // A click area of at least 24px at every size (WCAG 2.5.8).
       &::before {
         content: "";
-        background: color-mix(in oklab, var(--f-color-text-0) 22%, var(--f-color-bg-1) 78%);
-        height: 2px;
-        width: 100%;
+        position: absolute;
+        inset: -0.25rem;
       }
 
+      // The knob, centered in a circle of the track's inner height at either end.
       &::after {
+        --_k: calc(var(--_h) * 0.45);
+        --_i: calc((var(--_h) - 2 * var(--_b) - var(--_k)) / 2);
+
         content: "";
-        top: initial;
-        left: 0;
-        border-radius: var(--f-radius-full);
-        box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--f-color-text-0) 22%, var(--f-color-bg-1) 78%);
+        position: absolute;
+        top: var(--_i);
+        #{global.$global-left}: var(--_i);
+
+        width: var(--_k);
+        height: var(--_k);
+        border-radius: 50%;
+        background: currentcolor;
+        transition: top $switch-transition, #{global.$global-left} $switch-transition, width $switch-transition, height $switch-transition;
       }
+    }
+
+    // Beats Foundation's `[type="checkbox"] + label` margin.
+    input + .switch-paddle {
+      margin: 0;
     }
 
     input:checked ~ .switch-paddle {
-      background: none;
+      border-color: transparent;
+      background: var(--f-color-text-1);
+      color: var(--f-color-bg-1);
+
+      &:hover {
+        background: var(--f-color-text-0);
+      }
 
       &::after {
-        box-shadow: inset 0 0 0 2em currentcolor;
+        --_k: calc(var(--_h) * 0.6);
+
+        #{global.$global-left}: calc(var(--_w) - var(--_h) + var(--_i));
       }
     }
 
-    @include custom-functions.foundation-palette($child: "input:checked ~ .switch-paddle");
+    @include custom-functions.foundation-palette($child: "input:checked ~ .switch-paddle", $property: "background");
+
+    input:disabled ~ .switch-paddle {
+      cursor: $switch-cursor-disabled;
+      opacity: $switch-opacity-disabled;
+    }
   }
 
   // <input> element
   .switch-input {
-    @include switch-input;
-
+    position: absolute;
+    margin: 0;
+    opacity: 0;
     pointer-events: none;
   }
 
-  // <label>, or <span> inside a label
-  .switch-paddle {
-    @include switch-paddle;
-  }
+  @media (forced-colors: active) {
+    .switch {
+      --f-color-text-0: ButtonText;
+      --f-color-text-1: Highlight;
+      --f-color-text-2: ButtonText;
+      --f-color-bg-1: HighlightText;
 
-  // Base label text styles
-  %switch-text {
-    @include switch-text;
-  }
+      @each $name, $_ in colors.$foundation-palette {
+        --f-color-#{$name}: Highlight;
+        --f-color-#{$name}-contrast: HighlightText;
+        --f-color-#{$name}-darker: Highlight;
+      }
 
-  // Active label text styles
-  .switch-active {
-    @extend %switch-text;
-    @include switch-text-active;
-  }
+      &:has(> input:disabled) {
+        --f-color-text-0: GrayText;
+        --f-color-text-1: GrayText;
+        --f-color-text-2: GrayText;
+        --f-color-bg-1: Canvas;
 
-  // Inactive label text styles
-  .switch-inactive {
-    @extend %switch-text;
-    @include switch-text-inactive;
-  }
+        @each $name, $_ in colors.$foundation-palette {
+          --f-color-#{$name}: GrayText;
+          --f-color-#{$name}-contrast: Canvas;
+          --f-color-#{$name}-darker: GrayText;
+        }
+      }
 
-  // Rounded variant
-  .rounded .switch-paddle {
-    border-radius: var(--f-radius-full) !important;
-
-    &::after {
-      border-radius: var(--f-radius-full);
+      .switch-paddle {
+        forced-color-adjust: none;
+      }
     }
   }
 
-  // Switch sizes
-  .switch.tiny {
-    @include switch-size(unit.rem-calc(10), $switch-height-tiny, $switch-paddle-offset);
-  }
-
-  .switch.small {
-    @include switch-size(unit.rem-calc(12), $switch-height-small, $switch-paddle-offset);
-  }
-
-  .switch.large {
-    @include switch-size(unit.rem-calc(16), $switch-height-large, $switch-paddle-offset);
-  }
-
+  // A two-sided switch with an icon on each end, drawn as a ring knob on a filled track (nav-menus screen).
   .switch-with-labels {
     margin-right: 0.25rem;
     height: auto;
     align-items: flex-start;
 
-    .switch-paddle {
+    .switch-paddle,
+    input:checked ~ .switch-paddle,
+    input:checked ~ .switch-paddle:hover {
+      display: flex;
+      align-items: center;
       width: 4rem;
+      height: auto;
       flex: 0 0 4rem;
       margin: 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      color: var(--f-color-text-1);
+    }
+
+    .switch-paddle::before {
+      position: static;
+      width: 100%;
+      height: custom-settings.$button-height;
+      border-radius: var(--f-radius-full);
+      background: color-mix(in oklab, var(--f-color-text-0) 22%, var(--f-color-bg-1) 78%);
+    }
+
+    // `input ~` matches the specificity of the knob rules in `.switch`.
+    input ~ .switch-paddle::after,
+    input:checked ~ .switch-paddle::after {
+      top: auto;
+      left: 0;
+      width: custom-settings.$button-height;
+      height: custom-settings.$button-height;
+      border-radius: var(--f-radius-full);
+      background: var(--f-color-bg-1);
+      box-shadow: inset 0 0 0 2px var(--f-color-text-2);
+      transition: left $switch-transition, box-shadow global.$global-transition-medium global.$global-transition-timing;
     }
 
     input:checked {
       ~ .switch-paddle::after {
         left: 2rem;
+        box-shadow: inset 0 0 0 2em currentcolor;
       }
 
       ~ .switch-paddle .switch-label-left {
@@ -342,18 +255,6 @@ $switch-cursor-disabled: not-allowed !default;
       ~ .switch-label-description-right {
         display: block;
       }
-    }
-
-    .switch-paddle::before {
-      height: custom-settings.$button-height;
-      border-radius: var(--f-radius-full);
-    }
-
-    // `input ~` matches the specificity of the checked fill in `.switch`, so the ring stays when checked.
-    input ~ .switch-paddle::after {
-      width: custom-settings.$button-height;
-      height: custom-settings.$button-height;
-      box-shadow: inset 0 0 0 2px var(--f-color-text-2);
     }
 
     // Above the knob, which is the paddle's `::after` and so paints after them. `scale`, not `zoom`: no reflow.
@@ -388,5 +289,4 @@ $switch-cursor-disabled: not-allowed !default;
       margin-left: 10px;
     }
   }
-
 }

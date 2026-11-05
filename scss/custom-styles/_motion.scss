@@ -2,7 +2,7 @@
 // Motion shared across components: .spinner, .pulse, .highlight-on-load, and the reduced-motion rule.
 // A component's own animation stays in its partial (.shake, .loading, .clipped, .fa.slash).
 
-// Spinner sizes match the switch heights.
+// Spinner sizes match the checkbox heights (`$switch-height*`).
 $spinner-sizes: (
   tiny: 0.625rem,
   small: 0.75rem,
