@@ -165,7 +165,7 @@ $header-text-rendering: optimizelegibility !default;
 
 /// Font size of `<small>` elements.
 /// @type Number
-$small-font-size: 0.8rem !default;
+$small-font-size: var(--f-font-size-sm) !default;
 
 /// Color of `<small>` elements when placed inside headers.
 /// @type Color

@@ -7,7 +7,7 @@
     content: "\f078";
     font-family: custom-settings.$icon-font-family;
     font-size: 0.625em;
-    font-weight: bold;
+    font-weight: 900; // the icon font's solid face: Free has no regular chevron
     align-self: center;
     border: none;
   }

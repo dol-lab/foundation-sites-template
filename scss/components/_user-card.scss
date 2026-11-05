@@ -65,7 +65,7 @@
   }
 
   .user-name {
-    font-size: 0.875rem;
+    font-size: var(--f-font-size-md);
     margin: 0;
     display: inline-block;
 
@@ -83,12 +83,12 @@
     }
 
     .large & {
-      font-size: 1rem;
+      font-size: var(--f-font-size-lg);
     }
 
     .xlarge &,
     .xxlarge & {
-      font-size: 1.5rem;
+      font-size: var(--f-font-size-2xl);
     }
   }
 }

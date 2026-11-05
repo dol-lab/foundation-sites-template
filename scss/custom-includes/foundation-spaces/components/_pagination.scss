@@ -12,7 +12,7 @@
 
 /// Font size of pagination items.
 /// @type Number
-$pagination-font-size: unit.rem-calc(14) !default;
+$pagination-font-size: var(--f-font-size-md) !default;
 
 /// Default bottom margin of the pagination object.
 /// @type Number

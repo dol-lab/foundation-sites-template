@@ -12,7 +12,7 @@
 
 /// Default font size for lead paragraphs.
 /// @type Number
-$lead-font-size: unit.rem-calc(global.$global-font-size * 1.25) !default;
+$lead-font-size: var(--f-font-size-xl) !default;
 
 /// Default line height for lead paragraphs.
 /// @type String
@@ -48,7 +48,7 @@ $cite-color: base.$blockquote-color !default;
 
 /// Font size for `.cite-block` component.
 /// @type Number
-$cite-font-size: unit.rem-calc(13) !default;
+$cite-font-size: var(--f-font-size-sm) !default;
 
 /// Pseudo content for `.cite-block` component.
 /// @type String

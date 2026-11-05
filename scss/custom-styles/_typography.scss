@@ -27,7 +27,7 @@
 
   // --f-paragraph-font-size: running text, larger in .prose-layout.
   p {
-    font-size: var(--f-paragraph-font-size, #{global.$paragraph-font-size});
+    font-size: var(--f-paragraph-font-size, var(--f-font-size-base));
     color: var(--f-color-text-1);
 
     &.small {
@@ -123,7 +123,7 @@
   }
 
   ul {
-    font-size: var(--f-paragraph-font-size, #{global.$paragraph-font-size});
+    font-size: var(--f-paragraph-font-size, var(--f-font-size-base));
   }
 
   small {
@@ -159,7 +159,7 @@
     border-radius: global.$global-radius-xsmall;
     background-color: var(--f-color-bg-2);
     color: var(--f-color-text-0);
-    font-size: 0.875rem;
+    font-size: var(--f-font-size-md);
     line-height: 1.5;
     white-space: pre;
 

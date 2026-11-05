@@ -63,7 +63,7 @@
     anchor-scope: --app-header-bar;
 
     & .menu {
-      font-size: 0.875rem;
+      font-size: var(--f-font-size-md);
     }
 
     & .menu.dropdown {

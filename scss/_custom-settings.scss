@@ -37,6 +37,18 @@ $spacing-scale: (
   // 48px - was padding-3
 );
 
+// Font sizes, emitted as `--f-font-size-<step>`; `base` is the paragraph size. Sizes relative to the
+// element's own text stay in em.
+$font-sizes: (
+  xs: 0.75rem,
+  sm: 0.8125rem,
+  md: 0.875rem,
+  base: 0.9375rem,
+  lg: 1rem,
+  xl: 1.25rem,
+  2xl: 1.5rem,
+);
+
 // Legacy special sizes (kept for backward compatibility during migration)
 // Migration guide:
 // - padding-button (0.5rem 0.75rem) → p-3 (0.5rem vertical, 0.75rem horizontal)

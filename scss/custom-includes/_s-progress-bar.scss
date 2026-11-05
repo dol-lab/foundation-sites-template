@@ -34,8 +34,8 @@
   @include mixins.absolute-center;
 
   margin: 0;
-  font-size: 0.75rem;
-  font-weight: bold;
+  font-size: var(--f-font-size-xs);
+  font-weight: var(--f-font-weight-bold);
   color: var(--f-color-text-1);
   white-space: nowrap;
 

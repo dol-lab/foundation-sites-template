@@ -26,7 +26,7 @@ $input-error-color: var(--f-color-alert-text) !default;
 
 /// Default font size for form error text.
 /// @type Number
-$input-error-font-size: unit.rem-calc(12) !default;
+$input-error-font-size: var(--f-font-size-xs) !default;
 
 /// Default font weight for form error text.
 /// @type Keyword

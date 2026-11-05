@@ -194,13 +194,13 @@ $card-margin-bottom: 0 !default;
   .card-title {
     display: flex;
     align-items: center;
-    font-size: 1rem;
+    font-size: var(--f-font-size-lg);
     line-height: base.$header-lineheight;
     font-weight: global.$global-weight-normal;
     margin: 0;
 
     &.small {
-      font-size: 0.875rem;
+      font-size: var(--f-font-size-md);
     }
 
     .fa {

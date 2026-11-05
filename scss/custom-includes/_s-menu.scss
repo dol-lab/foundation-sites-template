@@ -380,7 +380,7 @@ $menu-icons-back-compat: true !default;
 
 @mixin menu-text {
   padding: global.$global-menu-padding;
-  font-weight: bold;
+  font-weight: var(--f-font-weight-bold);
   line-height: 1;
   color: inherit;
 }

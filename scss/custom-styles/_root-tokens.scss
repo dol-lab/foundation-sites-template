@@ -1,4 +1,5 @@
 @use "../custom-includes/foundation-spaces/global";
+@use "../custom-includes/foundation-spaces/typography/base";
 @use "../custom-includes/foundation-spaces/util/breakpoint";
 @use "../custom-includes/foundation-spaces/util/unit";
 @use "../custom-includes/foundation-spaces/xy-grid/xy-grid";
@@ -52,6 +53,18 @@
     @each $size, $value in custom-settings.$spacing-scale {
       --f-spacing-#{$size}: #{$value};
     }
+
+    @each $step, $value in custom-settings.$font-sizes {
+      --f-font-size-#{$step}: #{$value};
+    }
+
+    @each $level in (h1, h2, h3, h4, h5, h6) {
+      --f-font-size-#{$level}: #{base.header-font-size($level)};
+    }
+
+    --f-font-weight-normal: #{global.$global-weight-normal};
+    --f-font-weight-medium: #{global.$global-weight-bold};
+    --f-font-weight-bold: #{global.$global-weight-bold};
 
     @each $size, $value in custom-settings.$avatar-sizes {
       --f-avatar-#{$size}: #{$value};

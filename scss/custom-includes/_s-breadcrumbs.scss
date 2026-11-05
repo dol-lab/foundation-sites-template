@@ -17,7 +17,7 @@ $breadcrumbs-margin: 0 !default;
 
 /// Font size of breadcrumb links.
 /// @type Number
-$breadcrumbs-item-font-size: 0.875rem !default;
+$breadcrumbs-item-font-size: var(--f-font-size-md) !default;
 
 /// Color of breadcrumb links.
 /// @type Color
@@ -99,7 +99,7 @@ $breadcrumbs-item-separator-opacity: 60% !default;
           content: $separator;
           font-family: custom-settings.$icon-font-family;
           font-size: 0.625em;
-          font-weight: bold;
+          font-weight: 900; // the icon font's solid face
           color: $breadcrumbs-item-separator-color;
           opacity: $breadcrumbs-item-separator-opacity;
         }

@@ -25,6 +25,22 @@ Roboto in four weights, body text in `--f-color-text-1`. Headings grow from phon
 </div>
 ```
 
+## Sizes and weights
+
+Set a size from the scale, not a literal; a size relative to the element's own text (an icon beside a label, a badge) stays in `em`. `--f-font-size-h1` to `-h6` are the fluid heading sizes (h3 and h4, h5 and h6 share one).
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `--f-font-size-xs` | 0.75rem (12px) | Badges, progress, form errors, small chips |
+| `--f-font-size-sm` | 0.8125rem (13px) | `small`, `.small`, tooltips, help text |
+| `--f-font-size-md` | 0.875rem (14px) | Menus, tabs, breadcrumbs, inputs, user names |
+| `--f-font-size-base` | 0.9375rem (15px) | Paragraphs (`--f-paragraph-font-size` defaults to it) |
+| `--f-font-size-lg` | 1rem (16px) | Card titles, large chips, prose paragraphs |
+| `--f-font-size-xl` | 1.25rem (20px) | `.lead`, clipped titles |
+| `--f-font-size-2xl` | 1.5rem (24px) | Large user names |
+
+Weights: `--f-font-weight-normal` (400), `--f-font-weight-medium` and `--f-font-weight-bold` (both 500, the design's bold). Icon-font glyphs set 900, the solid face, outside the tokens.
+
 ## Tables
 
 A table is unstyled unless it asks: `.table` splits the rows with hairlines (the block editor's tables in `.user-generated` keep their own look). Wrap a wide one in `.table-scroll`.

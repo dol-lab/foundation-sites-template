@@ -32,7 +32,7 @@ $button-font-family: inherit !default;
 
 /// Font weight for button elements.
 /// @type Font-Weight
-$button-font-weight: 400 !default;
+$button-font-weight: var(--f-font-weight-normal) !default;
 
 /// Padding of menu items and card links that look like buttons.
 /// @type List

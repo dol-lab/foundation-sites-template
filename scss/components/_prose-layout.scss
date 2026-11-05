@@ -23,7 +23,7 @@
   .prose-layout {
     display: grid;
 
-    --f-paragraph-font-size: 1rem;
+    --f-paragraph-font-size: var(--f-font-size-lg);
 
     // Knobs: --f-prose-offset-left (the left column's target width), --f-prose-ch-factor (a font
     // whose 0 is narrow or wide).

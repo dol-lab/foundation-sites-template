@@ -36,16 +36,16 @@ $info-chip-shadow-hover:
     align-items: center;
     flex-wrap: wrap;
     gap: 0.25em;
-    font-size: unit.rem-calc(global.$global-font-size * 0.875);
+    font-size: var(--f-font-size-md);
     max-width: 100%;
     padding: 1px;
 
     &.small {
-      font-size: unit.rem-calc(global.$global-font-size * 0.75);
+      font-size: var(--f-font-size-xs);
     }
 
     &.large {
-      font-size: unit.rem-calc(global.$global-font-size);
+      font-size: var(--f-font-size-lg);
     }
 
     // Opt-in: chips shrink + ellipsize (the label span already truncates) and expand on hover/focus.

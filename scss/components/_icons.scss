@@ -22,7 +22,7 @@
   i,
   svg {
     .icons & {
-      font-size: 0.75rem;
+      font-size: var(--f-font-size-xs);
       width: 1.5em;
       display: flex;
       justify-content: center;

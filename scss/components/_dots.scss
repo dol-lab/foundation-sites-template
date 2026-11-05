@@ -39,7 +39,7 @@
       width: custom-settings.$button-height;
       line-height: 0;
       font-weight: global.$global-weight-bold;
-      font-size: 1.25rem;
+      font-size: var(--f-font-size-xl);
       white-space: nowrap;
     }
 

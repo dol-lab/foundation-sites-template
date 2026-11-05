@@ -15,7 +15,7 @@ $helptext-color: currentcolor !default;
 
 /// Default font size for help text.
 /// @type Number
-$helptext-font-size: unit.rem-calc(13) !default;
+$helptext-font-size: var(--f-font-size-sm) !default;
 
 /// Default font style for help text.
 /// @type Keyword
