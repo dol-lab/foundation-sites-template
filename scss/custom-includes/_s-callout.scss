@@ -1,4 +1,4 @@
-@use "../colors";
+@use "../custom-functions";
 @use "s-button";
 @use "foundation-spaces/global";
 
@@ -6,7 +6,6 @@
 // https://get.foundation
 // Licensed under MIT Open Source
 
-@use "sass:list";
 @use "sass:map";
 
 ////
@@ -45,7 +44,7 @@ $callout-radius: global.$global-radius !default;
 /// Palette color of a callout without one.
 $callout-default-token: primary !default;
 
-// A palette class only sets `--_callout-color`; everything else reads it. Text, headings and
+// The callout's color is `--f-c` (a palette class, or `$callout-default-token`); everything else reads it. Text, headings and
 // links take one color (links are told apart by their underline), so all of it meets AA on the
 // tinted background in both color modes. A soft button's own tint would vanish on it, so it sits
 // on the page background with a visible border.
@@ -104,16 +103,17 @@ $callout-default-token: primary !default;
 }
 
 @mixin spaces-callout {
+  :where(.callout:not(#{custom-functions.palette-selector()})) {
+    --f-c: var(--f-color-#{$callout-default-token});
+    --f-c-contrast: var(--f-color-#{$callout-default-token}-contrast);
+    --f-c-darker: var(--f-color-#{$callout-default-token}-darker);
+    --f-c-text: var(--f-color-#{$callout-default-token}-text);
+  }
+
   .callout {
-    --_callout-color: var(--f-color-#{$callout-default-token});
+    --_callout-color: var(--f-c);
 
     @include callout-base;
-
-    @each $name, $_ in colors.$foundation-palette {
-      &.#{$name} {
-        --_callout-color: var(--f-color-#{$name});
-      }
-    }
 
     @each $size, $padding in map.remove($callout-sizes, default) {
       &.#{$size} {
@@ -124,20 +124,10 @@ $callout-default-token: primary !default;
 
   // A button without a color takes the callout's, solid unless it has a fill: the neutral card surface would
   // read as a hole in the tint. `:where()` keeps one class of weight, so a disabled button still wins.
-  $colors: ();
-
-  @each $name, $_ in colors.$foundation-palette {
-    $colors: list.append($colors, ".#{$name}", comma);
-  }
+  $colors: custom-functions.palette-selector();
 
   :where(.callout) > .button:where(:not(#{$colors})) {
-    @include s-button.button-color($callout-default-token);
-  }
-
-  @each $name, $_ in colors.$foundation-palette {
-    :where(.callout.#{$name}) > .button:where(:not(#{$colors})) {
-      @include s-button.button-color($name);
-    }
+    @include s-button.button-color;
   }
 
   :where(.callout) > .button:where(:not(#{$colors}, .solid, .soft, .hollow, .clear)) {

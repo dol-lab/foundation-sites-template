@@ -1,4 +1,4 @@
-@use "../colors";
+@use "../custom-functions";
 @use "foundation-spaces/forms/progress";
 @use "foundation-spaces/global";
 @use "foundation-spaces/util/mixins";
@@ -49,13 +49,8 @@
   .progress {
     @include progress-container;
 
-    @each $name, $color in colors.$foundation-palette {
-      &.#{"" + $name} {
-        .progress-meter {
-          // background-color: $color;
-          background-color: var(--f-color-#{$name});
-        }
-      }
+    &:is(#{custom-functions.palette-selector()}) .progress-meter {
+      background-color: var(--f-c);
     }
   }
 

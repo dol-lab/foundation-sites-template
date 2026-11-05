@@ -47,6 +47,15 @@ Each color has `-contrast` (text on it, AA 4.5:1 in both modes, except the light
 </div>
 ```
 
+A color class (`.brand` … `.alert`, and `.activity` for badges and labels) sets `--f-c`, `--f-c-contrast`, `--f-c-darker` and `--f-c-text` on its element, and every component reads those. So any color works inline: `style="--f-c: …"` on a button, badge, label, chip, link or progress bar. Its contrast is black or white by its lightness; set `--f-c-contrast` too where that is not enough. Check the result for AA yourself: unlike the palette, an inline color is not tested. A new palette color is one entry in `$foundation-palette` and `$foundation-palette-contrast`.
+
+```html demo
+<a class="button" style="--f-c: #7b3fbf">Button</a>
+<span class="badge" style="--f-c: #7b3fbf">3</span>
+<span class="label" style="--f-c: #e9b949">Label</span>
+<a href="#" style="--f-c: #7b3fbf">Link</a>
+```
+
 Brand-colored text on the page takes `--f-color-brand-text` (prose links in `.brand-links`): the brand in light mode, darkened to at most oklch lightness 0.5 so it keeps 5:1 on every light surface, and lifted to `hollow-label()`'s lightness in dark mode, where the brand itself is below AA.
 
 News takes `--f-color-activity` and `--f-color-activity-contrast`: counters, dots and "New" labels (`.badge.activity`, `.label.activity`). They default to the brand; to recolor all of it, change their two lines in `brand-colors()`, because `[themed]` redeclares them, so a value set on `:root` does not reach a themed page.

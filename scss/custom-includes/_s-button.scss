@@ -1,4 +1,5 @@
 @use "../colors";
+@use "../custom-functions";
 @use "../custom-settings";
 @use "foundation-spaces/forms/label";
 @use "foundation-spaces/global";
@@ -105,10 +106,6 @@ $button-radius: global.$global-radius !default;
 /// @type Number
 $button-hollow-border-width: 1px !default;
 
-/// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, and so on.
-/// @type Map
-$button-palette: colors.$foundation-palette !default;
-
 // Internal: flip from margin-right to margin-left for defaults
 @if global.$global-text-direction == "rtl" {
   $button-margin: 0 0 global.$global-margin global.$global-margin !default;
@@ -154,12 +151,11 @@ $button-responsive-expanded: false !default;
   }
 }
 
-/// The color a fill is made from.
-/// @param {String} $name - Palette key.
-@mixin button-color($name) {
-  --_c: var(--f-color-#{$name});
-  --_c-darker: var(--f-color-#{$name}-darker);
-  --_c-contrast: var(--f-color-#{$name}-contrast);
+/// The color a fill is made from: the palette color of the button or its group (`--f-c`, inherited).
+@mixin button-color {
+  --_c: var(--f-c);
+  --_c-darker: var(--f-c-darker);
+  --_c-contrast: var(--f-c-contrast);
 }
 
 /// One of the fills (see the top of this file): `neutral`, `solid`, `soft`, `hollow` or `clear`.
@@ -296,16 +292,26 @@ $button-responsive-expanded: false !default;
   }
 
   // Colors with their default weight, then fills: the group's first each time, so the button's own class wins.
-  @each $scope in (group, button) {
-    @each $name, $color in $button-palette {
-      #{if($scope == group, ":where(.button-group.#{$name}) > .button", ".button:where(.#{$name})")} {
-        @include button-color($name);
+  // An inline color (`style="--f-c: …"`) is solid.
+  $solid: ();
+  $soft: ();
 
-        @if list.index($button-solid-colors, $name) {
-          @include button-fill(solid);
-        } @else {
-          @include button-fill(soft);
-        }
+  @each $name, $_ in colors.$foundation-palette {
+    @if list.index($button-solid-colors, $name) {
+      $solid: list.append($solid, ".#{$name}", comma);
+    } @else {
+      $soft: list.append($soft, ".#{$name}", comma);
+    }
+  }
+
+  $solid: list.append($solid, '[style*="--f-c:"]', comma);
+
+  @each $fill, $colors in (solid: $solid, soft: $soft) {
+    @if list.length($colors) > 0 {
+      :where(.button-group:is(#{$colors})) > .button,
+      .button:where(#{$colors}) {
+        @include button-color;
+        @include button-fill($fill);
       }
     }
   }

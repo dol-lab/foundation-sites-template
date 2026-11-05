@@ -1,4 +1,5 @@
 @use "../colors";
+@use "../custom-functions";
 @use "foundation-spaces/global";
 
 // COPY & ADAPTATION OF _labels.scss by Foundation
@@ -22,24 +23,11 @@ $label-padding: 0.5rem 0.75rem !default;
 /// @type Number
 $label-radius: global.$global-radius !default;
 
-/// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, etc.
-/// @type Map
-$label-palette: colors.$status-palette !default;
-
 /// Base value for label background
 $label-background-default: var(--f-color-text-1) !default;
 
 /// Base value for label color
 $label-color-default: var(--f-color-bg-1) !default;
-
-///
-/// Label style token
-/// Uses CSS custom properties for background + contrast text color
-///
-@mixin label-style-token($name) {
-  background-color: var(--f-color-#{$name});
-  color: var(--f-color-#{$name}-contrast);
-}
 
 ///
 /// Generates base styles for a label.
@@ -63,11 +51,10 @@ $label-color-default: var(--f-color-bg-1) !default;
   .label {
     @include label-base;
 
-    // Palette classes
-    @each $name, $color in $label-palette {
-      &.#{$name} {
-        @include label-style-token($name);
-      }
+    // The palette plus `.activity`.
+    &:is(#{custom-functions.palette-selector(colors.$status-palette)}) {
+      background-color: var(--f-c);
+      color: var(--f-c-contrast);
     }
   }
 }

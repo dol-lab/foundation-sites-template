@@ -1,4 +1,5 @@
 @use "../colors";
+@use "../custom-functions";
 
 // Foundation for Sites
 // https://get.foundation
@@ -21,10 +22,6 @@ $badge-color: var(--f-color-bg-1) !default;
 // Alternate text color for badges.
 // @type Color
 // $badge-color-alt: var(--f-color-text-0) !default;
-
-/// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, and so on.
-/// @type Map
-$badge-palette: colors.$status-palette !default;
 
 /// Maximum height of a badge.
 /// @type Number
@@ -70,6 +67,10 @@ $badge-rounding: 2 !default;
 
 }
 
+// The palette plus `.activity`; a hollow or clear badge's color moves a fifth toward the text to read as text.
+$-colors: custom-functions.palette-selector(colors.$status-palette);
+$-readable: color-mix(in oklab, var(--f-c) 80%, var(--f-color-text-0) 20%);
+
 @mixin spaces-badge {
   .badge {
     @include badge-base;
@@ -86,11 +87,9 @@ $badge-rounding: 2 !default;
       background: $badge-background;
       color: $badge-color;
   
-      @each $name, $color in $badge-palette {
-        &.#{$name} {
-          background: var(--f-color-#{$name});
-          color: var(--f-color-#{$name}-contrast);
-        }
+      &:is(#{$-colors}) {
+        background: var(--f-c);
+        color: var(--f-c-contrast);
       }
     }
 
@@ -98,25 +97,17 @@ $badge-rounding: 2 !default;
       border: 1px solid $badge-background;
       color: $badge-background;
   
-      @each $name, $color in $badge-palette {
-        &.#{$name} {
-          --_f-color-readability: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
-
-          border: 1px solid var(--_f-color-readability, var(--f-color-#{$name}));
-          color: var(--_f-color-readability, var(--f-color-#{$name}));
-        }
+      &:is(#{$-colors}) {
+        border: 1px solid $-readable;
+        color: $-readable;
       }
     }
 
     &.clear {
       color: $badge-background;
   
-      @each $name, $color in $badge-palette {
-        &.#{$name} {
-          --_f-color-readability: color-mix(in oklab, var(--f-color-#{$name}) 80%, var(--f-color-text-0) 20%);
-
-          color: var(--_f-color-readability, var(--f-color-#{$name}));
-        }
+      &:is(#{$-colors}) {
+        color: $-readable;
       }
     }
 

@@ -1,5 +1,4 @@
 @use "sass:map";
-@use "../colors";
 @use "../custom-functions";
 @use "../custom-settings";
 @use "foundation-spaces/global";
@@ -165,24 +164,18 @@ $switch-transition: global.$global-transition-short global.$global-transition-ti
       --f-color-text-1: Highlight;
       --f-color-text-2: ButtonText;
       --f-color-bg-1: HighlightText;
-
-      @each $name, $_ in colors.$foundation-palette {
-        --f-color-#{$name}: Highlight;
-        --f-color-#{$name}-contrast: HighlightText;
-        --f-color-#{$name}-darker: Highlight;
-      }
+      --f-c: Highlight;
+      --f-c-contrast: HighlightText;
+      --f-c-darker: Highlight;
 
       &:has(> input:disabled) {
         --f-color-text-0: GrayText;
         --f-color-text-1: GrayText;
         --f-color-text-2: GrayText;
         --f-color-bg-1: Canvas;
-
-        @each $name, $_ in colors.$foundation-palette {
-          --f-color-#{$name}: GrayText;
-          --f-color-#{$name}-contrast: Canvas;
-          --f-color-#{$name}-darker: GrayText;
-        }
+        --f-c: GrayText;
+        --f-c-contrast: Canvas;
+        --f-c-darker: GrayText;
       }
 
       .switch-paddle {

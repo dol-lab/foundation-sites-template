@@ -12,6 +12,7 @@
 ///  Basically foundation's 'normalize' with a few extra knobs (configured by
 ///  app-backend.scss before this loads).
 @use "custom-normalize";
+@use "custom-functions";
 @use "custom-foundation-includes";
 @use "custom-includes/s-scroll-snap";
 @use "custom-styles";
@@ -20,6 +21,8 @@
 ///  Every component rule, in cascade order. `@content` is where app.scss puts
 ///  the light/dark palette; the backend sets its tokens outside `.f`.
 @mixin styles {
+  ///  The palette classes' color tokens, read by every component.
+  @include custom-functions.palette-classes;
   @include s-scroll-snap.styles;
 
   ///  Foundation's components, some forked to read CSS variables.
