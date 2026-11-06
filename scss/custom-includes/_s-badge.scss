@@ -63,6 +63,10 @@ $badge-rounding: 2 !default;
     $height-sm: math.div($badge-height * 0.85, $badge-rounding) * 100;
 
     border-radius: math.div(math.round($height-sm), 100);
+
+    @supports (text-box: trim-both cap alphabetic) {
+      padding-block: calc((#{$badge-height * 0.85} - 1cap) / 2);
+    }
   }
 
 }
@@ -74,6 +78,15 @@ $-readable: color-mix(in oklab, var(--f-c) 80%, var(--f-color-text-0) 20%);
 @mixin spaces-badge {
   .badge {
     @include badge-base;
+
+    // Flex centers the line box, not the digits, which then sit above the center. Trimmed to
+    // the cap height, the padding centers them; `text-box` does not apply to a flex container.
+    @supports (text-box: trim-both cap alphabetic) {
+      display: inline-block;
+      text-align: center;
+      text-box: trim-both cap alphabetic;
+      padding-block: calc((#{$badge-height} - 1cap) / 2);
+    }
 
     // An icon sits like a digit: Font Awesome's 1.25em width would stretch the badge into a pill,
     // and its glyph is taller than a digit's.
