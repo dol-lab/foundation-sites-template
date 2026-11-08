@@ -43,12 +43,12 @@ $button-padding: 0.5rem 0.75rem !default;
 /// @type Number
 $button-padding-inline: 0.85em !default;
 
-/// Font size of each button size.
+/// Font size of each button size; the default is the paragraph size.
 /// @type Map
 $button-sizes: (
   tiny: 0.75rem,
   small: 0.8rem,
-  default: 0.9rem,
+  default: var(--f-font-size-base),
   large: 1rem,
 ) !default;
 

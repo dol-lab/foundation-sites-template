@@ -101,9 +101,6 @@
   --f-color-brand-darker: color-mix(in oklab, var(--f-color-brand) 88%, black 12%);
   --f-color-brand-text: #{palette-text(var(--f-color-brand))};
 
-  // The keyboard focus ring: brand-text at the lightest alpha that keeps 3:1 on bg-0 to bg-2 in both modes (Spaces red).
-  --f-focus-color: rgb(from var(--f-color-brand-text) r g b / 70%);
-
   // What marks news: `.badge.activity`, `.label.activity`, dots. Point these two lines elsewhere to recolor all of it.
   --f-color-activity: var(--f-color-brand);
   --f-color-activity-contrast: var(--f-color-brand-contrast);
@@ -121,6 +118,9 @@
   // light, 3.9 dark), on hover close to text-0.
   --f-icon-color: color-mix(in oklab, var(--f-color-text-2) 75%, var(--f-color-bg-1));
   --f-icon-hover-color: color-mix(in oklab, var(--f-color-text-0) 60%, light-dark(black, white));
+
+  // The keyboard focus ring: neutral, at the lightest alpha with 3:1 on bg-0 to bg-2 in both modes, also themed.
+  --f-focus-color: rgb(from var(--f-color-text-0) r g b / 60%);
 }
 
 /// Prints `--f-drop-shadow(-small|-large)` from `--f-color-shadow`. `-small` raises a surface that

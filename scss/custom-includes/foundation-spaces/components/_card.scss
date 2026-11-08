@@ -162,7 +162,8 @@ $card-margin-bottom: 0 !default;
       }
     }
 
-    input,
+    // `.button` inputs keep the button's size; `:where()` keeps the rule as light as a plain `.card input`.
+    input:where(:not(.button)),
     textarea,
     select {
       font-size: text.$input-font-size;

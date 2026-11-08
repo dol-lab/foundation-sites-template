@@ -14,6 +14,27 @@
       ? document.addEventListener("DOMContentLoaded", fn, { once: true })
       : queueMicrotask(fn);
 
+  // Focus mode: `data-focus-mode` on <html> says whether the focused element shows its ring. "keyboard": focus
+  // came by keyboard (or by a script after a key). "pointer": by mouse or touch; a text field matches `:focus-visible`
+  // on a click too, so CSS hides its ring then. "typing": a key edited the focused text field, whose caret and focus
+  // border now mark it; moving focus by keyboard brings the ring back.
+  const textField =
+    'input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"], [type="button"], [type="submit"], [type="reset"]), textarea';
+  const html = document.documentElement;
+  let keyboard = true;
+  document.addEventListener(
+    "keydown",
+    (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      keyboard = true;
+      const edits = e.key.length === 1 || ["Backspace", "Delete", "Enter"].includes(e.key);
+      if (edits && (e.target.isContentEditable || e.target.matches?.(textField))) html.dataset.focusMode = "typing";
+    },
+    true,
+  );
+  document.addEventListener("pointerdown", () => (keyboard = false), true);
+  document.addEventListener("focusin", () => (html.dataset.focusMode = keyboard ? "keyboard" : "pointer"), true);
+
   /**
    * Tabs: `.tabs[data-tabs]` with an id, whose `.tabs-title` links name their `.tabs-panel` by `href="#id"` or
    * `data-tabs-target`. Delegated; init (on DOM ready, or the first click for a later one) adds the ARIA roles
