@@ -3,7 +3,6 @@
 @use "custom-includes/foundation-spaces/components/dropdown-menu";
 @use "custom-includes/foundation-spaces/components/flex";
 @use "custom-includes/foundation-spaces/components/pagination";
-@use "custom-includes/foundation-spaces/components/responsive-embed";
 @use "custom-includes/foundation-spaces/components/thumbnail";
 @use "custom-includes/foundation-spaces/components/visibility";
 @use "custom-includes/foundation-spaces/forms/forms";
@@ -35,6 +34,7 @@
     $frame-grid: false, // .grid-frame, .cell-block
     $block-grid: false, // .small-up-3
     $offset: false, // .small-offset-2
+    $padding-grid: false, // .grid-padding-x, .grid-padding-y
   );
 
   // Components
@@ -49,7 +49,6 @@
   @include s-callout.spaces-callout;
   @include card.foundation-card;
   @include pagination.foundation-pagination;
-  @include responsive-embed.foundation-responsive-embed;
   @include s-tabs.spaces-tabs;
   @include thumbnail.foundation-thumbnail;
   @include s-menu.spaces-menu;

@@ -25,9 +25,16 @@ $prototype-box-shadow: global.$global-drop-shadow !default;
   box-shadow: $shadow;
 }
 
+// Deprecated aliases: `.box-shadow` (`.shadow`), `.no-box-shadow` (`.shadow-none`).
 @mixin foundation-prototype-shadow {
-  .shadow {
+  .shadow,
+  .box-shadow {
     @include shadow;
+  }
+
+  .shadow-none,
+  .no-box-shadow {
+    box-shadow: none !important;
   }
 
   @if $prototype-shadow-breakpoints {

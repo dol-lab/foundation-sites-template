@@ -15,7 +15,6 @@
 @use "components/gb";
 @use "components/prose-layout";
 @use "components/clipped";
-@use "components/box-shadow";
 @use "components/card-item";
 @use "components/avatar-stack";
 @use "components/popover";
@@ -27,7 +26,6 @@
 @use "components/input";
 @use "components/input-group";
 @use "components/button-group";
-@use "components/grow-wrap";
 @use "components/dots";
 @use "components/edit-bar";
 @use "components/caret";
@@ -53,7 +51,6 @@
   @include gb.styles;
   @include prose-layout.styles;
   @include clipped.styles;
-  @include box-shadow.styles;
   @include card-item.styles;
   @include avatar-stack.styles;
   @include popover.styles;
@@ -65,7 +62,6 @@
   @include input.styles;
   @include input-group.styles;
   @include button-group.styles;
-  @include grow-wrap.styles;
   @include dots.styles;
   @include edit-bar.styles;
   @include caret.styles;

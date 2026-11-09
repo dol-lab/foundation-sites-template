@@ -16,6 +16,10 @@ $xy-grid: true !default;
 /// @type Number
 $grid-container: global.$global-width !default;
 
+/// Breakpoints that get column classes (`.large-6`); xlarge and xxlarge ones had no users.
+/// @type List
+$grid-breakpoints: (small medium large) !default;
+
 /// The number of columns used in the grid.
 /// @type Number
 $grid-columns: 12 !default;

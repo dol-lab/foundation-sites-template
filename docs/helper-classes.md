@@ -27,7 +27,7 @@ A side beats an axis, an axis beats all sides: `pl-1` overrides `p-2`. `.p-0` al
 | **8** | 2.5rem    | 40px   |
 | **9** | 3rem      | 48px   |
 
-Legacy: `.padding-button`, `.padding-xlarge`, `.padding-xxlarge`, Foundation's `.padding-{0-1}` / `.margin-{0-1}` (with sides, e.g. `.padding-top-1`) and `.gutter-*`. Use the scale for anything new.
+Legacy: Foundation's `.padding-{0-1}` / `.margin-{0-1}` (with sides, e.g. `.padding-top-1`) and `.gutter-*`. Use the scale for anything new.
 
 ## Layout and grid
 
@@ -35,15 +35,15 @@ Legacy: `.padding-button`, `.padding-xlarge`, `.padding-xxlarge`, Foundation's `
 | ------------- | ------------------------------------------------------------------------ | ------------------------------------------------------ |
 | **Display**   | `.display-inline-block`                                                  | Hide with `.hide`.                                     |
 | **Container** | `.grid-container`                                                        | Add `.fluid` (full width + pad) or `.full` (no pad).   |
-| **Grid Flex** | `.grid-x`                                                                | Add `.grid-padding-x` or `.grid-margin-x` for gutters. |
+| **Grid Flex** | `.grid-x`                                                                | Add `.grid-margin-x` (`.grid-margin-y`) for gutters. |
 | **Cells**     | `.cell`                                                                  | Add `.auto` (fill space) or `.shrink` (fit content).   |
-| **Widths**    | `.width-100`, `.width-article`, `.max-width-100`, `.max-height-100`      |                                                        |
+| **Widths**    | `.width-100`, `.max-width-100`, `.max-height-100`                        |                                                        |
 | **Position**  | `.position-relative`                                                     |                                                        |
 | **Overflow**  | `.overflow-hidden`, `.overflow-x-hidden`, `.overflow-y-hidden`           | `.card` also takes `.overflow-auto`, `.overflow-initial`. |
 
 ### Grid columns
 
-Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile), `medium-6` (half from medium), `large-4` (a third from large).
+Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile), `medium-6` (half from medium), `large-4` (a third from large). Small to large only: xlarge and xxlarge have no column classes.
 
 ## Flexbox
 
@@ -67,7 +67,7 @@ Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile)
 | **Size**       | `.small`, `.lead`, `.stat`, `.subheader`                                       |
 | **Font**       | `.font-normal`, `.font-bold`                                                   |
 | **Decoration** | `.hover-underline`                                                             |
-| **Wrapping**   | `.text-truncate`, `.text-wrap`                                                 |
+| **Wrapping**   | `.text-truncate`, `.text-wrap`, `.line-clamp` (two lines, then an ellipsis)    |
 | **Visibility** | `.hide`, `.invisible`, `.show-for-{size}`, `.hide-for-{size}`, `.show-for-{size}-only` (small to large), `.show-for-sr`, `.show-for-print`, `.hide-for-print` |
 
 ## Visual styles
@@ -75,8 +75,9 @@ Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile)
 - **Links:** `.brand-links` on a container gives the prose links inside it the brand colour.
 - **Borders:** `.border-none`
 - **Radius:** `.rounded` (`--f-radius`), `.rounded-small`, `.rounded-none`, `.rounded-full`
-- **Shadows:** `.shadow` (the theme's drop shadow), `.box-shadow-large`, `.no-box-shadow` (`.box-shadow` is a deprecated alias of `.shadow`)
+- **Shadows:** `.shadow` (the theme's drop shadow), `.shadow-none` (deprecated aliases: `.box-shadow`, `.no-box-shadow`)
 - **Separators:** `.dot-list` puts a `·` after each child but the last; `.dot-list.dot-before` puts it before each but the first, so a wrapped line starts with it
+- **Card rows:** `.card-item` on the rows of a `.card` sets every row but the first off by a hairline
 - **Placeholder pattern:** `.cube-grid` fills the element with a pattern of cubes in the surface colors (a missing image; a `.clipped.feature-image` has it already). `--f-cube-size` sets a cube's width (default 75px).
 
 ### Interactive
@@ -88,7 +89,7 @@ Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile)
 
 ## Breakpoints
 
-Used by the grid columns and the visibility classes.
+Hand-written media queries use these too. Grid columns and visibility classes stop at large.
 
 | Prefix     | Min width |
 | ---------- | --------- |

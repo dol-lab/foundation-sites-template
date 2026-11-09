@@ -8,10 +8,6 @@
 @use "sass:map";
 
 @mixin styles {
-  .width-article {
-    width: 640px;
-  }
-
   .disabled {
     opacity: var(--f-opacity-disabled);
     pointer-events: none;
@@ -90,13 +86,6 @@
 
   .ml-auto {
     margin-inline-start: auto;
-  }
-
-  // Legacy special padding sizes
-  @each $size-name, $size in custom-settings.$padding-special {
-    .padding-#{$size-name} {
-      padding: $size;
-    }
   }
 
   .gutter {

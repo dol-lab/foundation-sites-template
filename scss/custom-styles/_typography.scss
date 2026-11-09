@@ -211,35 +211,4 @@
   label[for] {
     cursor: pointer;
   }
-
-  // Sections
-  // -----------
-
-  .section-title {
-    @include custom-functions.header-style("h1");
-
-    font-weight: global.$global-weight-bold;
-    line-height: base.$header-lineheight;
-  }
-
-  .section-header {
-    @include custom-functions.header-style("h2");
-
-    font-weight: global.$global-weight-normal;
-    line-height: base.$header-lineheight;
-  }
-
-  .section-wrap {
-    margin: 2rem auto;
-    width: 100%;
-    max-width: var(--f-grid-container-max);
-
-    &.small {
-      max-width: calc(var(--f-grid-container-max) / 3 * 2);
-    }
-
-    @include breakpoint.breakpoint(medium) {
-      width: var(--f-grid-container-max);
-    }
-  }
 }
