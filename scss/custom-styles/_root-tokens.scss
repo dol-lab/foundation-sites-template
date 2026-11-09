@@ -5,6 +5,7 @@
 @use "../custom-includes/foundation-spaces/xy-grid/xy-grid";
 @use "../custom-functions";
 @use "../custom-settings";
+@use "sass:meta";
 
 // Design tokens
 // ---------
@@ -62,6 +63,14 @@
       --f-font-size-#{$level}: #{base.header-font-size($level)};
     }
 
+    @each $suffix, $stack in custom-settings.$font-families {
+      --f-font-family#{$suffix}: #{meta.inspect($stack)};
+    }
+
+    // Read-only mirrors: inputs compute their height from the Sass line heights.
+    --f-line-height: #{global.$global-lineheight};
+    --f-line-height-paragraph: #{base.$paragraph-lineheight};
+    --f-line-height-heading: #{base.$header-lineheight};
     --f-font-weight-normal: #{global.$global-weight-normal};
     --f-font-weight-medium: #{global.$global-weight-bold};
     --f-font-weight-bold: #{global.$global-weight-bold};

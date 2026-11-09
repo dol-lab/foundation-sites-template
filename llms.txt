@@ -8,7 +8,7 @@ Each link is one section of index.html as markdown: its prose, and every example
 
 - [Getting started](docs/start.md): The styles of [Spaces](https://spaces.kisd.de): a themeable fork of [Foundation for Sites 6](https://get.foundation/sites/docs/). Every component on this page shows its markup below it. The source is on [GitHub](https://github.com/dol-lab/foundation-sites-template).
 - [Colors](docs/colors.md): Custom properties are the source of truth. Use the roles, never a literal, so Space theming and dark mode reach every component. The settings below the index change the Space color and the brand, the button on the header image cycles images with their Space colors: the surfaces follow.
-- [Typography](docs/typography.md): Roboto as one variable font (any weight from 100 to 900; latin and latin-ext, the latter loaded only when a page needs it), body text in `--f-color-text-1`. Headings grow from phone width up to the large breakpoint. Text written by members sits in `.user-generated`, where h1 and h4 to h6 are normal weight and h4 to h6 take `--f-color-text-0`, h6 also italic (Spaces adds `.brand-links` for links in the brand color).
+- [Typography](docs/typography.md): Roboto as one variable font (any weight from 100 to 900; latin and latin-ext, the latter loaded only when a page needs it), body text in `--f-color-text-1`. Family, size, weight and line height are `--f-font-*` and `--f-line-height-*` tokens. Headings grow from phone width up to the large breakpoint. Text written by members sits in `.user-generated`, where h1 and h4 to h6 are normal weight and h4 to h6 take `--f-color-text-0`, h6 also italic (Spaces adds `.brand-links` for links in the brand color).
 
 ## Components
 
@@ -38,4 +38,4 @@ Each link is one section of index.html as markdown: its prose, and every example
 ## Reference
 
 - [Helper classes](docs/helper-classes.md): Utility classes from `scss/custom-styles/_utilities.scss` and Foundation's prototype and flex helpers. They are not responsive: only the visibility classes take a breakpoint.
-- [CSS variables](docs/variables.md): Public custom properties start with `--f-`, a component's knob is `--f-<component>-…`; private ones start with `--_` (`--_f-*` on `:root`, short names such as `--_offset` inside a component) and are not for use outside their scope. The color roles are in [Colors](docs/colors.md).
+- [CSS variables](docs/variables.md): Public custom properties start with `--f-`, a component's knob is `--f-<component>-…`; private ones start with `--_` (`--_f-*` on `:root`, short names such as `--_offset` inside a component) and are not for use outside their scope. The color roles are in [Colors](docs/colors.md), the font families, sizes, weights and line heights in [Typography](docs/typography.md).

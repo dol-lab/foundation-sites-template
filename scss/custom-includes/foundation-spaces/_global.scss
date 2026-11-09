@@ -37,9 +37,9 @@ $black: #0a0a0a !default;
 /// @type Color
 $white: #fefefe !default;
 
-/// Font stack of the body.
+/// Font stack of the body: the `--f-font-family` token (`_root-tokens.scss`), so a site can swap it at runtime.
 /// @type List
-$body-font-family: "Roboto", helvetica, arial, sans-serif !default;
+$body-font-family: var(--f-font-family) !default;
 
 /// Set to `true` to enable antialiased type, using the `-webkit-font-smoothing` and `-moz-osx-font-smoothing` CSS properties.
 /// @type Boolean

@@ -1,6 +1,6 @@
 # CSS variables
 
-Public custom properties start with `--f-`, a component's knob is `--f-<component>-…`; private ones start with `--_` (`--_f-*` on `:root`, short names such as `--_offset` inside a component) and are not for use outside their scope. The color roles are in [Colors](colors.md).
+Public custom properties start with `--f-`, a component's knob is `--f-<component>-…`; private ones start with `--_` (`--_f-*` on `:root`, short names such as `--_offset` inside a component) and are not for use outside their scope. The color roles are in [Colors](colors.md), the font families, sizes, weights and line heights in [Typography](typography.md).
 
 The Sass globals (`$global-radius`, `$global-radius-xsmall`, `$global-transition-*`) are `var(--f-…)`, so overriding a token reaches every component. Spacing the Sass does math on (`$global-margin`, `$global-padding`, `$global-menu-padding`, the grid gutters) has no runtime token.
 

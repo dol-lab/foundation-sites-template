@@ -8,8 +8,14 @@ $touch-target: 48px !default;
 // The separator between sibling items (.dot-list; breadcrumbs use a chevron).
 $separator: "·" !default;
 
-// The icon font every CSS-drawn glyph (`content: "\f…"`) is set in.
-$icon-font-family: "Font Awesome 7 Free" !default;
+// Font stacks, emitted as `--f-font-family`, `-mono` and `-icon`; the Sass reads the tokens.
+// `icon` is the font every CSS-drawn glyph (`content: "\f…"`) is set in.
+$font-families: (
+  "": ("Roboto", helvetica, arial, sans-serif),
+  "-mono": (monaco, "Consolas", "Liberation Mono", "Courier New", courier, monospace),
+  "-icon": "Font Awesome 7 Free",
+) !default;
+$icon-font-family: var(--f-font-family-icon) !default;
 
 // Unified spacing scale (Tailwind-like system)
 // Used for both padding and margin utilities

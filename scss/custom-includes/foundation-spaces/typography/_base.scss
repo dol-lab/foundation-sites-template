@@ -44,9 +44,9 @@ $header-font-weight: global.$global-weight-bold !default;
 /// @type String
 $header-font-style: normal !default;
 
-/// Font stack used for elements that use monospaced type, such as code samples
+/// Font stack used for elements that use monospaced type, such as code samples: the `--f-font-family-mono` token.
 /// @type String | List
-$font-family-monospace: monaco, "Consolas", "Liberation Mono", "Courier New", courier, monospace !default;
+$font-family-monospace: var(--f-font-family-mono) !default;
 
 /// Color of headers.
 /// @type Color

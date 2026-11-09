@@ -1,6 +1,6 @@
 # Typography
 
-Roboto as one variable font (any weight from 100 to 900; latin and latin-ext, the latter loaded only when a page needs it), body text in `--f-color-text-1`. Headings grow from phone width up to the large breakpoint. Text written by members sits in `.user-generated`, where h1 and h4 to h6 are normal weight and h4 to h6 take `--f-color-text-0`, h6 also italic (Spaces adds `.brand-links` for links in the brand color).
+Roboto as one variable font (any weight from 100 to 900; latin and latin-ext, the latter loaded only when a page needs it), body text in `--f-color-text-1`. Family, size, weight and line height are `--f-font-*` and `--f-line-height-*` tokens. Headings grow from phone width up to the large breakpoint. Text written by members sits in `.user-generated`, where h1 and h4 to h6 are normal weight and h4 to h6 take `--f-color-text-0`, h6 also italic (Spaces adds `.brand-links` for links in the brand color).
 
 ```html example
 <div class="user-generated brand-links">
@@ -25,7 +25,17 @@ Roboto as one variable font (any weight from 100 to 900; latin and latin-ext, th
 </div>
 ```
 
-## Sizes and weights
+## Families, sizes and weights
+
+Text that is not inside a styled element (an editor, a widget, a third-party mount point) takes its typography from `.user-generated` when it is member content, otherwise from the tokens; never a literal font stack.
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `--f-font-family` | Roboto, helvetica, arial, sans-serif | Body and headings |
+| `--f-font-family-mono` | monaco, Consolas, … monospace | `code`, `kbd`, `.code-block` |
+| `--f-font-family-icon` | "Font Awesome 7 Free" | CSS-drawn glyphs (`content: "\f…"`), weight 900 |
+
+The families are runtime knobs: overriding one on `:root` (or a wrapper) restyles every component. The line heights are read-only mirrors of the Sass, since inputs compute their height from them: `--f-line-height` (1.4, body), `--f-line-height-paragraph` (1.6, paragraphs and lists), `--f-line-height-heading` (1.1).
 
 Set a size from the scale, not a literal; a size relative to the element's own text (an icon beside a label, a badge) stays in `em`. `--f-font-size-h1` to `-h6` are the fluid heading sizes (h3 and h4, h5 and h6 share one).
 
