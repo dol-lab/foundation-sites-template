@@ -12,8 +12,8 @@
 
 // Palette colors: each has a base value (no suffix), a darker one for hover (-darker),
 // a text color that contrasts with it (-contrast) and one for text on the page (-text, palette-text()). Each pair passes AA (4.5:1), except primary
-// (3.8:1), alert (3.7:1) and success (3.1:1), traded for lighter colors; a solid button shades its label
-// (`--_halo` in _s-button). As small text on a dark page the colors stay below 4.5.
+// (3.8:1), alert (3.7:1) and success (3.1:1), traded for lighter colors; solid buttons, labels and colored chip
+// segments shade their label (`label-halo()`). As small text on a dark page the colors stay below 4.5.
 $foundation-palette: (
   brand: #3775ae,
   primary: hsl(200deg 20% 50%),

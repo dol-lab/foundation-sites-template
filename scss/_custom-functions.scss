@@ -73,6 +73,45 @@
   @return light-dark(oklch(from #{$color} min(l, 0.5) c h), oklch(from #{$color} 0.82 c h));
 }
 
+/// A label on a soft or clear surface (soft and hollow buttons, a colored chip's other segments): the color's hue at about text-0's lightness, so it is AA on bg-0, bg-1 and its
+/// own tint in both modes. Not mixed into text-0: a warm theme tint cancels a blue to grey. Darker in light mode than
+/// `palette-text()` (0.42, not up to 0.5): the soft hover surface is darker than the page.
+/// @param {Color} $color - The color to take hue and chroma from.
+/// @param {Number} $light [0.42] - Lightness in light mode.
+/// @param {Number} $dark [0.82] - Lightness in dark mode.
+/// @return {Color}
+@function hollow-label($color, $light: 0.42, $dark: 0.82) {
+  @return light-dark(oklch(from #{$color} $light c h), oklch(from #{$color} $dark c h));
+}
+
+/// A soft surface (soft buttons, a colored chip's other segments): the color's hue at a fixed lightness. Not mixed into bg-1: a warm theme tint greys
+/// it out. Chroma grows with the square of the color's, so a muted color (primary) gives a cool grey rather
+/// than a pastel, and a strong one (warning) a clear tint.
+/// @param {Color} $color - The color to take hue and chroma from.
+/// @param {Number} $shift [0] - Lightness toward the text, for hover and the border.
+/// @return {Color}
+@function soft-surface($color, $shift: 0) {
+  @return light-dark(
+    oklch(from #{$color} #{0.94 - $shift} min(c * c * 2, 0.06) h),
+    oklch(from #{$color} #{0.3 + $shift} min(c * c * 2.4, 0.07) h)
+  );
+}
+
+/// A button's or colored chip's border: its surface a step toward the text. Opaque: a translucent border blurs into what lies below.
+/// @param {Color} $surface - The surface it surrounds.
+/// @return {Color}
+@function ring($surface) {
+  @return color-mix(in oklab, #{$surface} 85%, var(--f-color-text-0));
+}
+
+/// A faint shade behind a label on a palette fill: it lifts a light label off a light color (primary, success, alert,
+/// which fall below 4.5:1) and is none for a dark one. Solid buttons, labels and colored chip segments use it.
+/// @param {Color} $contrast - The label color.
+/// @return {String} A `text-shadow`.
+@function label-halo($contrast) {
+  @return 0 0 0.3em oklch(from #{$contrast} 0 0 0 / calc(l * 0.5));
+}
+
 ////
 /// Applies the (fluid) font size of a heading level, see `header-font-size()`.
 ///

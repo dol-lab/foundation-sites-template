@@ -55,6 +55,7 @@ $label-color-default: var(--f-color-bg-1) !default;
     &:is(#{custom-functions.palette-selector(colors.$status-palette)}) {
       background-color: var(--f-c);
       color: var(--f-c-contrast);
+      text-shadow: custom-functions.label-halo(var(--f-c-contrast));
     }
   }
 }

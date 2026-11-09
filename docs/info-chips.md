@@ -39,6 +39,8 @@ A chip is at most as wide as its row: the value truncates, icon and key keep the
 
 ## Palette color
 
+A color class on the row fills each chip's last segment with the color (its label shaded, `label-halo()`) and the others with a soft tint of it, the surface and label of a soft button. A color class on the last segment alone colors only that segment.
+
 ```html example
 <div class="info-chips success">
     <span class="info-chip"><span class="key">Static</span><span class="value">success</span></span>

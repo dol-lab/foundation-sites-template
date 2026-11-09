@@ -80,16 +80,27 @@ $info-chip-shadow-hover:
       }
     }
 
-    // In a colored row the value takes the color (below); the other segments get a neutral fill.
+    // In a colored row the last segment takes the color; the others a soft tint of it, like a soft button.
     &:is(#{custom-functions.palette-selector()}) {
+      & .info-chip {
+        --_chip-ring: #{custom-functions.ring(custom-functions.soft-surface(var(--f-c)))};
+        --_chip-separator: transparent;
+      }
+
       & span {
-        background: var(--f-color-bg-2);
-        border-color: var(--f-color-bg-2);
+        background: custom-functions.soft-surface(var(--f-c));
+        color: custom-functions.hollow-label(var(--f-c));
+      }
+
+      // A small glyph reads lighter than text of the same color, so the icon goes a step further from its tint.
+      & .tag-icon {
+        color: custom-functions.hollow-label(var(--f-c), 0.34, 0.88);
       }
 
       & .info-chip span:last-child {
         background: var(--f-c);
         color: var(--f-c-contrast);
+        text-shadow: custom-functions.label-halo(var(--f-c-contrast));
       }
     }
   }
@@ -236,6 +247,7 @@ $info-chip-shadow-hover:
       &:last-child:is(#{custom-functions.palette-selector()}) {
         background: var(--f-c);
         color: var(--f-c-contrast);
+        text-shadow: custom-functions.label-halo(var(--f-c-contrast));
       }
     }
 
