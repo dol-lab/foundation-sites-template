@@ -32,12 +32,13 @@
       align-items: center;
       gap: 1em;
       width: calc(100% - 0.7em);
-
-      &::marker {
-        content: none;
-      }
-
       padding-block: var(--f-spacing-3);
+      list-style: none;
+
+      // Safari draws its own marker and ignores `::marker { content }` on a summary.
+      &::-webkit-details-marker {
+        display: none;
+      }
 
       &::after {
         @extend .caret;
