@@ -1,4 +1,5 @@
 @use "../custom-functions";
+@use "../custom-settings";
 @use "../custom-includes/foundation-spaces/global";
 @use "../custom-includes/foundation-spaces/typography/base";
 @use "../custom-includes/foundation-spaces/util/breakpoint";
@@ -58,7 +59,7 @@
     }
   }
 
-  .fa {
+  #{custom-settings.$icon} {
     @include custom-functions.foundation-palette($hover: false);
   }
 

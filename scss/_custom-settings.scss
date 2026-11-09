@@ -17,6 +17,9 @@ $font-families: (
 ) !default;
 $icon-font-family: var(--f-font-family-icon) !default;
 
+// A Font Awesome icon in any of its style classes, old (`fa`, `fas`) or new (`fa-solid`).
+$icon: ":is(.fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands)";
+
 // Unified spacing scale (Tailwind-like system)
 // Used for both padding and margin utilities
 // Properly ordered from smallest to largest
