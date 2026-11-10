@@ -38,6 +38,11 @@ $reveal-radius: global.$global-radius !default;
 /// @type Color
 $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, transparent) !default;
 
+/// Easing of a sheet sliding up on a phone: fast, then slow, and no overshoot, which would lift its
+/// bottom edge off the screen.
+/// @type String
+$reveal-sheet-timing: cubic-bezier(0.32, 0.72, 0, 1) !default;
+
 
 /// Adds base styles for a modal.
 @mixin reveal-modal-base {
@@ -91,17 +96,61 @@ $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, trans
 
   // A `<dialog>` opened with showModal(): the browser puts it in the top layer and brings the backdrop,
   // Escape and the focus handling; `js/app.js` adds `data-open`, `data-close` and the backdrop click.
+  // Opening fades and lifts it into place (a sheet slides up), the backdrop fades in. Closing runs the same
+  // in reverse only where a closing dialog can stay in the top layer (`overlay`); elsewhere it would drop
+  // into the page for the length of the transition, so it closes at once.
   .reveal {
     @include reveal-modal-base;
     @include reveal-modal-width($reveal-width);
 
+    --_hidden-translate: 0 1rem;
+    --_hidden-opacity: 0;
+
     max-height: calc(100% - 150px);
     margin: 100px auto auto;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    transition-property: opacity, translate;
+    transition-duration: global.$global-transition-medium;
+    transition-timing-function: global.$global-transition-timing-spring;
+
+    &[open] {
+      @starting-style {
+        opacity: var(--_hidden-opacity);
+        translate: var(--_hidden-translate);
+      }
+    }
 
     &::backdrop {
       background-color: $reveal-overlay-background;
       backdrop-filter: blur(5px);
+      transition-property: opacity;
+      transition-duration: global.$global-transition-medium;
+    }
+
+    &[open]::backdrop {
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    @supports (overlay: auto) {
+      transition-property: opacity, translate, overlay, display;
+      transition-behavior: allow-discrete;
+
+      &::backdrop {
+        transition-property: opacity, overlay, display;
+        transition-behavior: allow-discrete;
+      }
+
+      &:not([open]) {
+        opacity: var(--_hidden-opacity);
+        translate: var(--_hidden-translate);
+      }
+
+      &:not([open])::backdrop {
+        opacity: 0;
+      }
     }
 
     // The close button sits in the corner, level with a leading heading, which keeps clear of it.
@@ -129,13 +178,49 @@ $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, trans
     &.small { @include reveal-modal-width(50%); }
     &.large { @include reveal-modal-width(90%, var(--f-grid-container-max)); }
 
-    // Full-screen mode
-    &.full {
-      @include reveal-modal-fullscreen;
+    // On a phone a modal is a sheet: full width, on the bottom edge, as tall as its content, sliding up. The
+    // page stays visible above it, so it reads as a layer over the page rather than a new page. `--_sheet`
+    // tells `js/app.js` it can be swiped down to close; the handle on top says so, and while the finger
+    // drags it (`data-dragging`) the sheet follows without a transition.
+    @include breakpoint.breakpoint(breakpoint.$zf-zero-breakpoint only) {
+      --_sheet: 1;
+      --_hidden-translate: 0 100%;
+      --_hidden-opacity: 1;
+
+      width: 100%;
+      max-width: none;
+      max-height: calc(100% - 2.5rem);
+      margin: auto auto 0;
+      border-width: 1px 0 0;
+      border-radius: $reveal-radius $reveal-radius 0 0;
+      transition-timing-function: $reveal-sheet-timing;
+
+      &[data-dragging] {
+        transition: none;
+      }
+
+      &:not(.collapse)::before {
+        content: "";
+        position: absolute;
+        inset-block-start: 0.5rem;
+        inset-inline: 0;
+        width: 2.25rem;
+        height: 0.25rem;
+        margin-inline: auto;
+        border-radius: var(--f-radius-full);
+        background: var(--f-color-border-2);
+      }
     }
 
-    @include breakpoint.breakpoint(breakpoint.$zf-zero-breakpoint only) {
+    // Full-screen mode, after the sheet so it wins on a phone too.
+    &.full {
       @include reveal-modal-fullscreen;
+
+      --_sheet: 0;
+
+      &::before {
+        content: none;
+      }
     }
   }
 }

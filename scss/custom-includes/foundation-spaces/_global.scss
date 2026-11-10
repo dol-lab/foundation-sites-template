@@ -103,6 +103,10 @@ $global-transition-timing: var(--f-transition-timing) !default;
 /// @type String
 $global-transition-timing-cubic-bezier: var(--f-transition-timing-cubic-bezier) !default;
 
+/// Custom: Spring transition timing function, from the `--f-transition-timing-spring` token.
+/// @type String
+$global-transition-timing-spring: var(--f-transition-timing-spring) !default;
+
 /// Custom: Global drop shadow value (references CSS variable).
 /// @type String
 $global-drop-shadow: var(--f-drop-shadow);

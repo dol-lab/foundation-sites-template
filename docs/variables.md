@@ -15,6 +15,7 @@ The Sass globals (`$global-radius`, `$global-radius-xsmall`, `$global-transition
 | `--f-transition-short`, `-medium`, `-long` | `100ms`, `250ms`, `500ms` | Durations |
 | `--f-transition-timing` | `ease-in-out` | Easing |
 | `--f-transition-timing-cubic-bezier` | `cubic-bezier(0.8, 0, 0.2, 1.2)` | Easing that overshoots slightly |
+| `--f-transition-timing-spring` | `linear(…)` | A damped spring (4% overshoot) for small moves that settle: the switch knob, the checkbox tick, a modal opening. Give it at least `--f-transition-medium` |
 | `--f-drop-shadow-small`, `--f-drop-shadow`, `--f-drop-shadow-large` | | Elevation, drawn in `--f-color-shadow`: change the color, not the shadows. `-small` for surfaces in the flow (hovered `.card.clickable`, open `.details-menu`), the others for layers above the page |
 | `--f-avatar-xsmall` … `-xxlarge` | `24px` … `240px` | Avatar sizes, from `$avatar-sizes` |
 | `--f-focus-color` | `--f-color-text-0` at 60% | The focus ring's color, set with the text tints (`text-tints()`), so a `themed` element follows. Neutral, not the brand: a red ring reads as an error. 60% is the lightest alpha with 3:1 on bg-0 to bg-2 in both modes, on `themed` surfaces too |

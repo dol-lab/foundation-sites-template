@@ -49,6 +49,17 @@ $switch-cursor-disabled: not-allowed !default;
 /// @type List
 $switch-transition: global.$global-transition-short global.$global-transition-timing !default;
 
+/// Duration and timing of the knob's move: a spring, so it lands with a small overshoot.
+/// @type List
+$switch-knob-transition: global.$global-transition-medium global.$global-transition-timing-spring !default;
+
+// How far the knob travels when on: the track's length less its height, mirrored in a right-to-left build.
+$-knob-travel: calc(var(--_w) - var(--_h));
+
+@if global.$global-text-direction == rtl {
+  $-knob-travel: calc(var(--_h) - var(--_w));
+}
+
 @mixin spaces-switch {
   .switch {
     --_h: #{map.get($switch-track-heights, default)};
@@ -103,9 +114,10 @@ $switch-transition: global.$global-transition-short global.$global-transition-ti
         inset: -0.25rem;
       }
 
-      // The knob, centered in a circle of the track's inner height at either end.
+      // The knob, centered in a circle of the track's inner height at either end: drawn at its on size and
+      // scaled to three quarters when off. It moves with `translate` and `scale`, which skip layout.
       &::after {
-        --_k: calc(var(--_h) * 0.45);
+        --_k: calc(var(--_h) * 0.6);
         --_i: calc((var(--_h) - 2 * var(--_b) - var(--_k)) / 2);
 
         content: "";
@@ -117,7 +129,8 @@ $switch-transition: global.$global-transition-short global.$global-transition-ti
         height: var(--_k);
         border-radius: 50%;
         background: currentcolor;
-        transition: top $switch-transition, #{global.$global-left} $switch-transition, width $switch-transition, height $switch-transition;
+        scale: 0.75;
+        transition: translate $switch-knob-transition, scale $switch-knob-transition;
       }
     }
 
@@ -136,9 +149,8 @@ $switch-transition: global.$global-transition-short global.$global-transition-ti
       }
 
       &::after {
-        --_k: calc(var(--_h) * 0.6);
-
-        #{global.$global-left}: calc(var(--_w) - var(--_h) + var(--_i));
+        translate: $-knob-travel 0;
+        scale: 1;
       }
     }
 
@@ -218,6 +230,8 @@ $switch-transition: global.$global-transition-short global.$global-transition-ti
     input:checked ~ .switch-paddle::after {
       top: auto;
       left: 0;
+      translate: none;
+      scale: none;
       width: custom-settings.$button-height;
       height: custom-settings.$button-height;
       border-radius: var(--f-radius-full);

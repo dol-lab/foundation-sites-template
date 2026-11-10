@@ -336,6 +336,83 @@
   });
 
   /**
+   * A sheet (a modal on a phone; `_s-reveal.scss` marks it with `--_sheet: 1`) follows a finger that swipes
+   * down while it is scrolled to its top. Let go past a third of its height or with a flick, it closes,
+   * otherwise it springs back. Touch events, not pointer events: only a non-passive touchmove keeps the
+   * browser from scrolling instead. A touch on a field, or on content that takes vertical touch for itself
+   * (`touch-action` without pan-y, like an image cropper), is left alone.
+   */
+  const sheet = {
+    /** @type {?{dialog: HTMLDialogElement, x: number, y: number, dy: number, v: number, t: number, dragging: boolean}} */
+    drag: null,
+    /**
+     * @param {Element} el The touched element.
+     * @param {HTMLDialogElement} dialog The open modal around it.
+     * @return {boolean} Whether a swipe down from el moves the sheet.
+     */
+    canDrag(el, dialog) {
+      if (getComputedStyle(dialog).getPropertyValue("--_sheet").trim() !== "1") return false;
+      if (el.closest("input, textarea, select, [contenteditable]")) return false;
+      for (let n = el; n !== dialog.parentElement; n = n.parentElement) {
+        if (n.scrollTop > 0 || !/auto|manipulation|pan-y/.test(getComputedStyle(n).touchAction)) return false;
+      }
+      return true;
+    },
+    /** @param {boolean} close Whether the sheet closes, sliding on from where the finger left it. */
+    release(close) {
+      const { dialog, dragging } = sheet.drag;
+      sheet.drag = null;
+      if (!dragging) return;
+      delete dialog.dataset.dragging;
+      dialog.style.translate = "";
+      if (close) dialog.close();
+    },
+  };
+  document.addEventListener(
+    "touchstart",
+    (e) => {
+      const dialog = e.target.closest?.("dialog.reveal[open]");
+      if (sheet.drag) sheet.release(false);
+      if (!dialog || e.touches.length > 1 || !sheet.canDrag(e.target, dialog)) return;
+      const { clientX: x, clientY: y } = e.touches[0];
+      sheet.drag = { dialog, x, y, dy: 0, v: 0, t: e.timeStamp, dragging: false };
+    },
+    { passive: true },
+  );
+  document.addEventListener(
+    "touchmove",
+    (e) => {
+      const drag = sheet.drag;
+      if (!drag) return;
+      const { clientX, clientY } = e.touches[0];
+      const dy = clientY - drag.y;
+      // The first move decides: down and more vertical than sideways drags the sheet, anything else is the browser's.
+      if (!drag.dragging) {
+        if (e.touches.length > 1 || !e.cancelable || dy <= 0 || Math.abs(clientX - drag.x) > dy) {
+          sheet.drag = null;
+          return;
+        }
+        drag.dragging = true;
+        drag.dialog.dataset.dragging = "";
+      }
+      e.preventDefault();
+      drag.v = (Math.max(0, dy) - drag.dy) / Math.max(1, e.timeStamp - drag.t);
+      drag.dy = Math.max(0, dy);
+      drag.t = e.timeStamp;
+      drag.dialog.style.translate = `0 ${drag.dy}px`;
+    },
+    { passive: false },
+  );
+  // A flick is fast (px/ms) at the moment of letting go; a finger that stopped first does not flick.
+  document.addEventListener("touchend", (e) => {
+    const drag = sheet.drag;
+    if (!drag) return;
+    const flick = drag.v > 0.5 && drag.dy > 24 && e.timeStamp - drag.t < 100;
+    sheet.release(flick || drag.dy > drag.dialog.offsetHeight / 3);
+  });
+  document.addEventListener("touchcancel", () => sheet.drag && sheet.release(false));
+
+  /**
    * Tooltips: hovering, focusing or tapping a `[data-tooltip]` shows its `title` in one shared popover.
    * Delegated, so markup added later needs no init. On first contact the `title` moves to `data-tooltip`
    * (and `aria-description`), so the browser's own tooltip does not show as well. Without popover

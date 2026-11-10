@@ -99,8 +99,9 @@
         border-bottom: 2px solid transparent;
         border-right: 2px solid transparent;
         transform: rotate(45deg) translate(0.03125em, 0.03125em);
+        scale: 0.4;
         z-index: 2;
-        transition-property: transform, border-color;
+        transition-property: transform, scale, border-color;
         transition-duration: global.$global-transition-medium;
       }
     }
@@ -121,9 +122,12 @@
       }
 
       &::after {
+        // The tick grows into place on a spring once the box has filled.
         transform: rotate(45deg) translate(-0.03125em, -0.03125em);
-        transition-duration: global.$global-transition-short;
+        scale: 1;
+        transition-duration: global.$global-transition-short, global.$global-transition-medium, global.$global-transition-short;
         transition-delay: global.$global-transition-short;
+        transition-timing-function: ease, global.$global-transition-timing-spring, ease;
         border-color: var(--f-color-bg-1);
       }
     }

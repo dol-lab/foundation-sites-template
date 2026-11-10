@@ -37,6 +37,9 @@
     --f-transition-timing: ease-in-out;
     --f-transition-timing-cubic-bezier: cubic-bezier(0.8, 0, 0.2, 1.2);
 
+    // A damped spring (damping ratio 0.72, 4% overshoot): for small moves that settle, like a knob or a tick.
+    --f-transition-timing-spring: linear(0, 0.071, 0.229, 0.415, 0.593, 0.742, 0.858, 0.939, 0.992, 1.022, 1.035, 1.038, 1.035, 1.029, 1.021, 1.015, 1.009, 1.005, 1);
+
     @include custom-functions.drop-shadows;
 
     // Grid container size. The SCSS variables stay the source of truth; these
