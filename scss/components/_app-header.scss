@@ -241,15 +241,11 @@
       gap: 0.5rem;
     }
 
+    // An open fold's rows give its inset back (see _details-menu.scss).
     & .app-header-burger > li > .menu-anchor,
     & .app-header-burger .details-menu > summary,
     & .app-header-burger .details-menu > .menu > li > a {
-      padding-inline: var(--_inset);
-    }
-
-    // An open fold is inset by half its offset.
-    & .app-header-burger .details-menu[open] {
-      --_inset: calc(var(--f-grid-container-padding) + 0.75rem - var(--_offset) / 2);
+      padding-inline: calc(var(--_inset) - var(--_details-menu-inset, 0px));
     }
   }
 

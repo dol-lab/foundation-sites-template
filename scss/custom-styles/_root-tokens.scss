@@ -16,6 +16,15 @@
 // costs nothing until something uses them, so :root is safe in both builds.
 
 @mixin styles {
+  // A registered property is global: like the tokens, it stays out of the `.f` scope.
+  // How far an open .details-menu is inset, registered so it transitions. Inherited: a label inside that
+  // gives the inset back (its padding minus this) moves with the fold's edge instead of jumping ahead of it.
+  @property --_details-menu-inset {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0;
+  }
+
   :root {
     // Radius scale: --f-radius is the one knob, the steps follow it.
     --f-radius: 0.5rem;
