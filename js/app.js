@@ -338,16 +338,17 @@
   /**
    * A sheet (a modal on a phone; `_s-reveal.scss` marks it with `--_sheet: 1`) follows a finger that swipes
    * down while it is scrolled to its top. Let go past a third of its height or with a flick, it closes,
-   * otherwise it springs back. Touch events, not pointer events: only a non-passive touchmove keeps the
-   * browser from scrolling instead. A touch on a field, or on content that takes vertical touch for itself
-   * (`touch-action` without pan-y, like an image cropper), is left alone.
+   * otherwise it springs back. A modal that is no `<dialog>` (in a `.reveal-overlay`) is closed with Escape,
+   * which its own script (React Aria) handles, guards included. Touch events, not pointer events: only a
+   * non-passive touchmove keeps the browser from scrolling instead. A touch on a field, or on content that
+   * takes vertical touch for itself (`touch-action` without pan-y, like an image cropper), is left alone.
    */
   const sheet = {
-    /** @type {?{dialog: HTMLDialogElement, x: number, y: number, dy: number, v: number, t: number, dragging: boolean}} */
+    /** @type {?{dialog: HTMLElement, x: number, y: number, dy: number, v: number, t: number, dragging: boolean}} */
     drag: null,
     /**
      * @param {Element} el The touched element.
-     * @param {HTMLDialogElement} dialog The open modal around it.
+     * @param {HTMLElement} dialog The open modal around it.
      * @return {boolean} Whether a swipe down from el moves the sheet.
      */
     canDrag(el, dialog) {
@@ -365,13 +366,15 @@
       if (!dragging) return;
       delete dialog.dataset.dragging;
       dialog.style.translate = "";
-      if (close) dialog.close();
+      if (!close) return;
+      if (dialog.matches("dialog")) dialog.close();
+      else dialog.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
     },
   };
   document.addEventListener(
     "touchstart",
     (e) => {
-      const dialog = e.target.closest?.("dialog.reveal[open]");
+      const dialog = e.target.closest?.("dialog.reveal[open], .reveal-overlay .reveal");
       if (sheet.drag) sheet.release(false);
       if (!dialog || e.touches.length > 1 || !sheet.canDrag(e.target, dialog)) return;
       const { clientX: x, clientY: y } = e.touches[0];
