@@ -17,10 +17,9 @@ $reveal-background: var(--f-color-bg-1) !default;
 /// @type String
 $reveal-width: calc(100% - 2 * #{global.$global-gutter-large}) !default;
 
-/// Default maximum width of a modal: a large-8 cell of the grid container (Spaces' feed column), so
-/// `.prose-layout` gets the columns it has in a post card.
+/// Default maximum width of a modal. A wider one opts in with `.large` (up to the grid container).
 /// @type Number
-$reveal-max-width: calc((var(--f-grid-container-max) - #{global.$global-gutter-large}) * 2 / 3 - #{global.$global-gutter-large}) !default;
+$reveal-max-width: 500px !default;
 
 /// Default padding inside a modal.
 /// @type Number
