@@ -16,8 +16,9 @@
 
 // The bar below the breakpoint.
 @mixin collapsed {
+  // Between, not around: the first entry keeps a fixed inset, which the burger's rows line up with.
   & .menu.dropdown {
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
   }
 
@@ -105,7 +106,8 @@
       fill: currentcolor;
     }
 
-    & .menu > li > .menu-anchor .fa {
+    // The bar's icons fill a square of its height; in the burger an icon sits beside its label.
+    & .menu.dropdown > li > .menu-anchor .fa {
       font-size: 1.25em;
       display: flex;
       align-items: center;
@@ -223,13 +225,31 @@
       }
     }
 
+    // Spans the screen, out of the container's padding: the bar is narrower than the container's max there.
+    // Its rows give that padding back, so their labels line up with the bar's first entry.
     & .app-header-burger {
+      --_inset: calc(var(--f-grid-container-padding) + 0.75rem);
+
       display: none;
+      margin-inline: calc(-1 * var(--f-grid-container-padding));
+      border-top: 1px solid var(--f-color-border-0);
     }
 
     & .app-header-burger > li > .menu-anchor {
       display: flex;
       align-items: center;
+      gap: 0.5rem;
+    }
+
+    & .app-header-burger > li > .menu-anchor,
+    & .app-header-burger .details-menu > summary,
+    & .app-header-burger .details-menu > .menu > li > a {
+      padding-inline: var(--_inset);
+    }
+
+    // An open fold is inset by half its offset.
+    & .app-header-burger .details-menu[open] {
+      --_inset: calc(var(--f-grid-container-padding) + 0.75rem - var(--_offset) / 2);
     }
   }
 
