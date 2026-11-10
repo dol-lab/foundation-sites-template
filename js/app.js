@@ -336,12 +336,38 @@
   });
 
   /**
+   * While a modal is open, `--f-viewport-top` and `--f-viewport-height` on <html> are the visible part of the
+   * layout viewport, which `_s-reveal.scss` places the modal in: the on-screen keyboard shrinks only the visual
+   * viewport, so a sheet on the bottom edge would end up behind it. Not while zoomed in, when the modal stays
+   * where the page is; zoomed out (Chrome on Android fits a page wider than the screen) it still fits. Opening
+   * a modal moves the focus into it, so `focusin` covers a keyboard already up.
+   */
+  const viewport = window.visualViewport;
+  if (viewport) {
+    const fitModals = () => {
+      const fit = viewport.scale < 1.01 && document.querySelector("dialog.reveal:modal, .reveal-overlay");
+      if (!fit) {
+        html.style.removeProperty("--f-viewport-top");
+        html.style.removeProperty("--f-viewport-height");
+        return;
+      }
+      html.style.setProperty("--f-viewport-top", `${viewport.offsetTop}px`);
+      html.style.setProperty("--f-viewport-height", `${viewport.height}px`);
+    };
+    viewport.addEventListener("resize", fitModals);
+    viewport.addEventListener("scroll", fitModals);
+    document.addEventListener("focusin", fitModals);
+  }
+
+  /**
    * A sheet (a modal on a phone; `_s-reveal.scss` marks it with `--_sheet: 1`) follows a finger that swipes
    * down while it is scrolled to its top. Let go past a third of its height or with a flick, it closes,
    * otherwise it springs back. A modal that is no `<dialog>` (in a `.reveal-overlay`) is closed with Escape,
    * which its own script (React Aria) handles, guards included. Touch events, not pointer events: only a
-   * non-passive touchmove keeps the browser from scrolling instead. A touch on a field, or on content that
-   * takes vertical touch for itself (`touch-action` without pan-y, like an image cropper), is left alone.
+   * non-passive touchmove keeps the browser from scrolling instead. A touch on a field, on a list that scrolls
+   * inside the sheet (under a header that stays: the sheet is dragged by its parts that stay put), or on
+   * content that takes vertical touch for itself (`touch-action` without pan-y, like an image cropper), is
+   * left alone.
    */
   const sheet = {
     /** @type {?{dialog: HTMLElement, x: number, y: number, dy: number, v: number, t: number, dragging: boolean}} */
@@ -355,7 +381,10 @@
       if (getComputedStyle(dialog).getPropertyValue("--_sheet").trim() !== "1") return false;
       if (el.closest("input, textarea, select, [contenteditable]")) return false;
       for (let n = el; n !== dialog.parentElement; n = n.parentElement) {
-        if (n.scrollTop > 0 || !/auto|manipulation|pan-y/.test(getComputedStyle(n).touchAction)) return false;
+        const { touchAction, overflowY } = getComputedStyle(n);
+        if (!/auto|manipulation|pan-y/.test(touchAction)) return false;
+        if (n === dialog ? n.scrollTop > 0 : n.scrollHeight > n.clientHeight && /auto|scroll/.test(overflowY))
+          return false;
       }
       return true;
     },

@@ -33,9 +33,10 @@ $reveal-border: 1px solid var(--f-color-border-0) !default;
 /// @type Number
 $reveal-radius: global.$global-radius !default;
 
-/// Background color of the backdrop.
+/// Background color of the backdrop: a black scrim, so it darkens the page in dark mode too. No blur: it
+/// repaints on every frame of a scroll or an animation below it.
 /// @type Color
-$reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, transparent) !default;
+$reveal-overlay-background: color-mix(in oklab, black 25%, transparent) !default;
 
 /// Easing of a sheet sliding up on a phone: fast, then slow, and no overshoot, which would lift its
 /// bottom edge off the screen.
@@ -49,6 +50,11 @@ $reveal-close-size: 2.5rem !default;
 /// Distance of the close button from the modal's top and end edges.
 /// @type Number
 $reveal-close-inset: 0.625rem !default;
+
+/// Height of the strip on top of a sheet that holds its handle. A sheet's padding holds the handle; one with less
+/// padding (`.collapse`) gets the difference as a strip above its content.
+/// @type Number
+$reveal-handle-space: 1.25rem !default;
 
 
 /// Adds base styles for a modal.
@@ -115,18 +121,18 @@ $reveal-close-inset: 0.625rem !default;
   // backdrop and layer, the `.reveal` inside it the same box as a `dialog.reveal`. A wrapper between the two
   // (React Aria's `Modal`) takes no box. Opening and closing run on `data-entering` / `data-exiting`, which
   // React Aria sets and waits for; it waits on the overlay's own transitions only, so the backdrop fades its
-  // color and blur rather than its opacity, which would fade the modal with it.
+  // color rather than its opacity, which would fade the modal with it. It covers the visible part of
+  // the screen (`--f-viewport-*`, see `.reveal`), so a sheet sits above the on-screen keyboard.
   .reveal-overlay {
     position: fixed;
-    inset: 0;
+    inset: var(--f-viewport-top, 0) 0 auto;
+    height: var(--f-viewport-height, 100%);
     z-index: var(--f-z-overlay);
     display: flex;
     flex-direction: column;
     background-color: $reveal-overlay-background;
-    backdrop-filter: blur(5px);
-    transition-property: background-color, backdrop-filter;
+    transition-property: background-color;
     transition-duration: global.$global-transition-medium;
-    will-change: backdrop-filter; /* Tells Gecko to optimize layer management */
 
     > :not(.reveal) {
       display: contents;
@@ -138,7 +144,6 @@ $reveal-close-inset: 0.625rem !default;
 
     &:is([data-entering], [data-exiting]) {
       background-color: transparent;
-      backdrop-filter: blur(0);
 
       .reveal {
         opacity: var(--_hidden-opacity);
@@ -152,20 +157,31 @@ $reveal-close-inset: 0.625rem !default;
   // Opening fades and lifts it into place (a sheet slides up), the backdrop fades in. Closing runs the same
   // in reverse only where a closing dialog can stay in the top layer (`overlay`); elsewhere it would drop
   // into the page for the length of the transition, so it closes at once.
+
+  // The on-screen keyboard shrinks only the visual viewport (Chrome on Android, Safari on iOS), so a modal placed
+  // in the layout viewport would end up behind it. While a modal is open, `js/app.js` sets `--f-viewport-top` and
+  // `--f-viewport-height` on <html> to the visible part of the layout viewport, and the modal is placed in it.
+  // A max-height in % resolves against the layout viewport, not against the insets, so it reads the height too.
   .reveal {
     @include reveal-modal-base;
     @include reveal-modal-width($reveal-width);
 
     --_hidden-translate: 0 1rem;
     --_hidden-opacity: 0;
+    --_handle-space: 0px;
 
-    max-height: calc(100% - 150px);
+    max-height: calc(var(--f-viewport-height, 100%) - 150px);
     margin: 100px auto auto;
     overflow-y: auto;
     overscroll-behavior: contain;
     transition-property: opacity, translate;
     transition-duration: global.$global-transition-medium;
     transition-timing-function: global.$global-transition-timing-spring;
+
+    &:where(dialog) {
+      inset-block: var(--f-viewport-top, 0)
+        calc(100% - var(--f-viewport-top, 0px) - var(--f-viewport-height, 100%));
+    }
 
     // React Aria focuses its dialog box on opening; the box itself is no control to ring.
     &:focus {
@@ -181,7 +197,6 @@ $reveal-close-inset: 0.625rem !default;
 
     &::backdrop {
       background-color: $reveal-overlay-background;
-      backdrop-filter: blur(5px);
       transition-property: opacity;
       transition-duration: global.$global-transition-medium;
     }
@@ -215,7 +230,7 @@ $reveal-close-inset: 0.625rem !default;
     // from taking the focus on opening). A float of its size holds that corner, so whatever comes first (a
     // heading, a paragraph, a tab bar) wraps or narrows around it instead of running under it.
     > .close-button {
-      top: $reveal-close-inset;
+      top: calc(var(--_handle-space) + #{$reveal-close-inset});
       right: $reveal-close-inset;
       display: grid;
       place-items: center;
@@ -229,6 +244,48 @@ $reveal-close-inset: 0.625rem !default;
       float: inline-end;
       inline-size: calc(#{$reveal-close-inset + $reveal-close-size + 0.25rem} - var(--_padding));
       block-size: calc(#{$reveal-close-inset + $reveal-close-size} - var(--_padding));
+    }
+
+    // A modal whose content brings its own header row above a list that scrolls (a tab bar, a search field)
+    // marks that row `.reveal-header`. Laid out by its content, the row would narrow beside the float, so the
+    // float is off; the row keeps clear of the close button, and the button centers on the row, wherever the
+    // row is (an anchor, scoped to the modal; without anchor positioning it stays in the corner). A header
+    // that is a child of the modal stays put and what follows it scrolls; a header deeper down (inside a
+    // script's wrappers) leaves that layout to the page. Only an open `<dialog>` is a flex box: `display`
+    // would show a closed one.
+    &:has(> .reveal-header):is([open], :not(dialog)) {
+      display: flex;
+      flex-direction: column;
+
+      > .reveal-header {
+        flex-shrink: 0;
+      }
+
+      > .reveal-header ~ :not(.close-button) {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+    }
+
+    &:has(.reveal-header) {
+      anchor-scope: --reveal-header;
+
+      &::before {
+        content: none;
+      }
+
+      > .close-button {
+        top: anchor(--reveal-header top);
+        bottom: anchor(--reveal-header bottom);
+        margin-block: auto;
+      }
+    }
+
+    .reveal-header {
+      anchor-name: --reveal-header;
+      padding-inline-end: $reveal-close-inset + $reveal-close-size + 0.25rem;
     }
 
     // `.prose-layout` brings its own side columns, so it spans the padding, as in a post card.
@@ -249,17 +306,19 @@ $reveal-close-inset: 0.625rem !default;
     // On a phone a modal is a sheet: full width, on the bottom edge, as tall as its content, sliding up. The
     // page stays visible above it, so it reads as a layer over the page rather than a new page. `--_sheet`
     // tells `js/app.js` it can be swiped down to close; the handle on top (`::after`: `::before` holds the
-    // close button's corner) says so, and while the finger
-    // drags it (`data-dragging`) the sheet follows without a transition.
+    // close button's corner) says so, on every sheet: one with too little padding for it gets a strip
+    // (`--_handle-space`). While the finger drags it (`data-dragging`) the sheet follows without a transition.
     @include breakpoint.breakpoint(breakpoint.$zf-zero-breakpoint only) {
       --_sheet: 1;
       --_hidden-translate: 0 100%;
       --_hidden-opacity: 1;
+      --_handle-space: max(0px, #{$reveal-handle-space} - var(--_padding));
 
       width: 100%;
       max-width: none;
-      max-height: calc(100% - 2.5rem);
+      max-height: calc(var(--f-viewport-height, 100%) - 2.5rem);
       margin: auto auto 0;
+      padding-block-start: calc(var(--_padding) + var(--_handle-space));
       border-width: 1px 0 0;
       border-radius: $reveal-radius $reveal-radius 0 0;
       transition-timing-function: $reveal-sheet-timing;
@@ -268,7 +327,7 @@ $reveal-close-inset: 0.625rem !default;
         transition: none;
       }
 
-      &:not(.collapse)::after {
+      &::after {
         content: "";
         position: absolute;
         inset-block-start: 0.5rem;
@@ -286,6 +345,7 @@ $reveal-close-inset: 0.625rem !default;
       @include reveal-modal-fullscreen;
 
       --_sheet: 0;
+      --_handle-space: 0px;
 
       &::after {
         content: none;

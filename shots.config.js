@@ -127,4 +127,7 @@ module.exports = {
   "modal-open": {
     click: ['[data-open="demo-modal"]'],
   },
+  "modal-header-open": {
+    click: ['[data-open="demo-modal-header"]'],
+  },
 };

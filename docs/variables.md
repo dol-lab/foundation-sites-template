@@ -34,6 +34,7 @@ These are read with a fallback and not declared, so set them where they apply:
 | `--f-auto-grid-min-width` | `250px` | `.auto-grid`'s minimum column width |
 | `--f-prose-offset-left` | `clamp(0.75rem, 2vw, 2rem)` | `.prose-layout`'s left column target width |
 | `--f-prose-ch-factor` | `1` | Scales `.prose-layout`'s 70ch column for a font with a narrow or wide `0` |
+| `--f-viewport-top`, `--f-viewport-height` | unset: `0px`, `100%` | The visible part of the layout viewport (the visual viewport, above the on-screen keyboard). `js/app.js` sets them on `<html>` while a modal is open and the page is not zoomed in; modals are placed in it |
 
 A narrower or wider `.grid-container` needs no rebuild. The tokens are seeded from `$grid-container` and `$grid-container-padding` (`scss/custom-includes/foundation-spaces/xy-grid/_xy-grid.scss`); `.grid-container.full` keeps `padding: 0`, and Sass math on the cell gutters (`_s-scroll-snap.scss`, `custom-styles/_utilities.scss`) does not follow a runtime override.
 
