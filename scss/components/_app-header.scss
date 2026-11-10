@@ -147,7 +147,7 @@
       margin-left: var(--f-gutter-small);
     }
 
-    & .avatar:has(> [popover]) > a {
+    & .avatar > a:has(~ [popover]) {
       padding: 0 !important;
     }
 
@@ -156,8 +156,7 @@
       position-area: bottom span-left;
     }
 
-    & .avatar:has(> [popover]) > a:hover,
-    & .avatar:has(> [popover]) > a.is-active {
+    & .avatar > a:has(~ [popover]):is(:hover, .is-active) {
       transform: scale(0.97);
     }
 

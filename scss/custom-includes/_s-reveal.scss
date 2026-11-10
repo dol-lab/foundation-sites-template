@@ -104,6 +104,14 @@ $reveal-close-inset: 0.625rem !default;
     overflow: hidden;
   }
 
+  // Nor is it wider than the screen: Chrome on Android widens the layout viewport to the widest element on
+  // the page (a long word, a header that large system text pushes out), and every fixed overlay with it, so
+  // the modal would run past the screen's right and bottom edges. Clipping `html` does not prevent that.
+  // Only while a modal is open, so the page itself can still be scrolled sideways to what sticks out.
+  body:has(> .reveal-overlay, dialog.reveal:modal) {
+    overflow-x: clip;
+  }
+
   // A modal that is no `<dialog>` (a React Aria `ModalOverlay` around a `Dialog`): `.reveal-overlay` is its
   // backdrop and layer, the `.reveal` inside it the same box as a `dialog.reveal`. A wrapper between the two
   // (React Aria's `Modal`) takes no box. Opening and closing run on `data-entering` / `data-exiting`, which

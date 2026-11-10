@@ -160,7 +160,7 @@ $ring: 1.5rem;
       }
     }
 
-    &:has(> .details-menu[open]) > a {
+    & > a:has(~ .details-menu[open]) {
       inset-block-start: $offset * 0.5;
       inset-inline: $offset * 0.5 calc(var(--_strip) + #{$offset * 0.5});
     }
@@ -173,7 +173,7 @@ $ring: 1.5rem;
   }
 
   // Nested, an open summary gives half the offset back at its start (above): so does the link.
-  .details-menu .details-link:has(> .details-menu[open]) > a {
+  .details-menu .details-link > a:has(~ .details-menu[open]) {
     padding-inline-start: $padding-x - $offset * 0.5;
   }
 }

@@ -96,24 +96,24 @@ $dropdown-menu-item-background-active: var(--f-color-bg-2) !default;
     }
 
     // Top-level item active state
-    > li:has(> :popover-open) > a {
+    > li > a:has(~ :popover-open) {
       background: $dropdown-menu-item-background-active;
       color: $dropdown-menu-item-color-active;
     }
 
     @if $dropdownmenu-arrows {
-      > li:has(> [popover]) > a {
+      > li > a:has(~ [popover]) {
         position: relative;
         padding-#{global.$global-right}: $dropdownmenu-arrow-padding;
       }
 
-      > li:has(> [popover]):not(.no-arrow) > a {
+      > li:not(.no-arrow) > a:has(~ [popover]) {
         @include breakpoint.breakpoint(medium down) {
           padding-#{global.$global-right}: 1.25rem;
         }
       }
 
-      > li:has(> [popover]) > a::after {
+      > li > a:has(~ [popover])::after {
         @include mixins.css-triangle($dropdownmenu-arrow-size, $dropdownmenu-arrow-color, down);
         @extend .caret;
 

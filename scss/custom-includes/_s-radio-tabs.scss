@@ -75,23 +75,26 @@
 
     // Active option highlight (fallback when anchor-position unsupported)
     &:has(:checked) {
+      --_label-color: currentcolor;
+
       color: var(--f-color-text-0);
       background-color: var(--f-color-bg-2);
     }
   }
 
-  // Initial state: no selection -> labels use secondary tone
+  // Labels use the secondary tone while nothing is selected, the tertiary one beside a selection.
+  // The state sits on the element whose `:has()` decides it and reaches the labels by inheritance:
+  // a `:has()` followed by a combinator would restyle every span of the page on each DOM change.
   &:not(:has(:checked)) {
-    span {
-      color: var(--f-color-text-1);
-    }
+    --_label-color: var(--f-color-text-1);
   }
 
-  // Selected state: de-emphasize non-active labels
   &:has(:checked) {
-    .radio-tabs-option:not(:has(:checked)) span {
-      color: var(--f-color-text-2);
-    }
+    --_label-color: var(--f-color-text-2);
+  }
+
+  span {
+    color: var(--_label-color);
   }
 
   // Radios fill the button for a large hit target; text color reacts on hover/focus

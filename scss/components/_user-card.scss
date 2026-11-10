@@ -43,8 +43,12 @@
         position: absolute;
         inset: 0;
 
+        // Until the container sets them (below), the properties are unset.
         & ~ .clipped {
-          transition: global.$global-transition-medium;
+          pointer-events: var(--_picture-events);
+          scale: var(--_picture-scale);
+          opacity: var(--_picture-opacity);
+          transition: var(--_picture-transition, #{global.$global-transition-medium});
         }
       }
 
@@ -54,13 +58,14 @@
       }
     }
 
-    &:hover .avatar-container .checkbox ~ .clipped,
-    & .avatar-container:has(.checkbox input:focus-visible) .clipped,
-    & .checkbox:has(input:checked) ~ .clipped {
-      pointer-events: none;
-      transform: scale(0.5);
-      opacity: 0;
-      transition: global.$global-transition-short;
+    // Set on the container, whose own `:has()` is cheap, and inherited by the picture: a `:has()`
+    // followed by a combinator would restyle every picture of the page on each DOM change.
+    &:hover .avatar-container,
+    & .avatar-container:has(.checkbox input:is(:focus-visible, :checked)) {
+      --_picture-events: none;
+      --_picture-scale: 0.5;
+      --_picture-opacity: 0;
+      --_picture-transition: #{global.$global-transition-short};
     }
   }
 

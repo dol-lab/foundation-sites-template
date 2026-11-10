@@ -47,13 +47,14 @@
       &:hover {
         background-color: var(--f-color-bg-2);
       }
+    }
 
-      & > :is(a, button)::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-      }
+    // The same row, without `:has()`: one followed by a combinator restyles every link of the page on each DOM change.
+    .card-divider > :is(a, button):only-child::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
     }
   }
 }
