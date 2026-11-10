@@ -127,6 +127,7 @@ $reveal-close-inset: 0.625rem !default;
     backdrop-filter: blur(5px);
     transition-property: background-color, backdrop-filter;
     transition-duration: global.$global-transition-medium;
+    will-change: backdrop-filter; /* Tells Gecko to optimize layer management */
 
     > :not(.reveal) {
       display: contents;
