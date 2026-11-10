@@ -54,9 +54,12 @@
     }
   }
 
-  // Inner meter
+  // Inner meter. A value set by a script fills to its width rather than jumping; no spring, which would
+  // overshoot the value (and the track at 100%).
   .progress-meter {
     @include progress-meter;
+
+    transition: width var(--f-transition-medium) var(--f-transition-timing);
   }
 
   // Inner meter text

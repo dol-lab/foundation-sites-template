@@ -15,7 +15,7 @@
 
 ## Dropdown menu
 
-A top-level item's `popover="manual"` child is its panel, opened below it by `js/app.js` (delegated, so menus added later work). One panel is open at a time.
+A top-level item's `popover="manual"` child is its panel, opened below it by `js/app.js` (delegated, so menus added later work). One panel is open at a time. Panels and popover panes fade in and drop from their button; closing runs in reverse in Chromium and is instant in browsers without the CSS `overlay` property.
 
 - Pointer: hovering the item opens it, leaving closes it unless it was opened by a click or clicked inside; a click on the item's link toggles it (its `href` is not followed).
 - Keyboard: Enter or Space on the item's link opens it, Tab walks into it in document order, Escape closes it and returns focus to the link, tabbing out closes it.

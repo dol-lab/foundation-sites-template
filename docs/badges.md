@@ -27,3 +27,13 @@ A `.badge` is a round counter, a `.label` a short tag (Spaces: a member's status
 <span class="label activity">New</span>
 <span class="label warning"><i class="fas fa-sticky-note"></i> 2</span>
 ```
+
+A `.hollow` label is an outline with its text in the color (Spaces: a "New" label once it was seen).
+
+```html example row
+<span class="label hollow">Default</span>
+<span class="label hollow primary">Primary</span>
+<span class="label hollow success">Success</span>
+<span class="label hollow alert">Alert</span>
+<span class="label hollow activity">New</span>
+```

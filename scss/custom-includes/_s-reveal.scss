@@ -43,10 +43,20 @@ $reveal-overlay-background: color-mix(in oklab, var(--f-color-text-0) 14%, trans
 /// @type String
 $reveal-sheet-timing: cubic-bezier(0.32, 0.72, 0, 1) !default;
 
+/// Size of the close button's square box (a 40px hit target).
+/// @type Number
+$reveal-close-size: 2.5rem !default;
+
+/// Distance of the close button from the modal's top and end edges.
+/// @type Number
+$reveal-close-inset: 0.625rem !default;
+
 
 /// Adds base styles for a modal.
 @mixin reveal-modal-base {
-  padding: $reveal-padding;
+  --_padding: #{$reveal-padding};
+
+  padding: var(--_padding);
   border: $reveal-border;
   border-radius: $reveal-radius;
   background-color: $reveal-background;
@@ -94,6 +104,41 @@ $reveal-sheet-timing: cubic-bezier(0.32, 0.72, 0, 1) !default;
     overflow: hidden;
   }
 
+  // A modal that is no `<dialog>` (a React Aria `ModalOverlay` around a `Dialog`): `.reveal-overlay` is its
+  // backdrop and layer, the `.reveal` inside it the same box as a `dialog.reveal`. A wrapper between the two
+  // (React Aria's `Modal`) takes no box. Opening and closing run on `data-entering` / `data-exiting`, which
+  // React Aria sets and waits for; it waits on the overlay's own transitions only, so the backdrop fades its
+  // color and blur rather than its opacity, which would fade the modal with it.
+  .reveal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--f-z-overlay);
+    display: flex;
+    flex-direction: column;
+    background-color: $reveal-overlay-background;
+    backdrop-filter: blur(5px);
+    transition-property: background-color, backdrop-filter;
+    transition-duration: global.$global-transition-medium;
+
+    > :not(.reveal) {
+      display: contents;
+    }
+
+    .reveal {
+      position: relative;
+    }
+
+    &:is([data-entering], [data-exiting]) {
+      background-color: transparent;
+      backdrop-filter: blur(0);
+
+      .reveal {
+        opacity: var(--_hidden-opacity);
+        translate: var(--_hidden-translate);
+      }
+    }
+  }
+
   // A `<dialog>` opened with showModal(): the browser puts it in the top layer and brings the backdrop,
   // Escape and the focus handling; `js/app.js` adds `data-open`, `data-close` and the backdrop click.
   // Opening fades and lifts it into place (a sheet slides up), the backdrop fades in. Closing runs the same
@@ -113,6 +158,11 @@ $reveal-sheet-timing: cubic-bezier(0.32, 0.72, 0, 1) !default;
     transition-property: opacity, translate;
     transition-duration: global.$global-transition-medium;
     transition-timing-function: global.$global-transition-timing-spring;
+
+    // React Aria focuses its dialog box on opening; the box itself is no control to ring.
+    &:focus {
+      outline: none;
+    }
 
     &[open] {
       @starting-style {
@@ -143,7 +193,7 @@ $reveal-sheet-timing: cubic-bezier(0.32, 0.72, 0, 1) !default;
         transition-behavior: allow-discrete;
       }
 
-      &:not([open]) {
+      &:where(dialog):not([open]) {
         opacity: var(--_hidden-opacity);
         translate: var(--_hidden-translate);
       }
@@ -153,24 +203,34 @@ $reveal-sheet-timing: cubic-bezier(0.32, 0.72, 0, 1) !default;
       }
     }
 
-    // The close button sits in the corner, level with a leading heading, which keeps clear of it.
+    // The close button sits in the top corner, out of the flow, wherever it is in the markup (last keeps it
+    // from taking the focus on opening). A float of its size holds that corner, so whatever comes first (a
+    // heading, a paragraph, a tab bar) wraps or narrows around it instead of running under it.
     > .close-button {
-      top: $reveal-padding * 0.75 - 0.25rem;
-      right: $reveal-padding * 0.75 - 0.75rem;
+      top: $reveal-close-inset;
+      right: $reveal-close-inset;
+      display: grid;
+      place-items: center;
+      inline-size: $reveal-close-size;
+      block-size: $reveal-close-size;
+      padding: 0;
     }
 
-    &:has(> .close-button) > :is(h1, h2, h3, h4, h5, h6):first-child {
-      padding-inline-end: 2rem;
+    &:has(> .close-button)::before {
+      content: "";
+      float: inline-end;
+      inline-size: calc(#{$reveal-close-inset + $reveal-close-size + 0.25rem} - var(--_padding));
+      block-size: calc(#{$reveal-close-inset + $reveal-close-size} - var(--_padding));
     }
 
     // `.prose-layout` brings its own side columns, so it spans the padding, as in a post card.
-    &:not(.collapse) > .prose-layout {
-      margin-inline: -$reveal-padding;
+    > .prose-layout {
+      margin-inline: calc(-1 * var(--_padding));
     }
 
     // Remove padding
     &.collapse {
-      padding: 0;
+      --_padding: 0px;
     }
 
     // Sizing classes
@@ -180,7 +240,8 @@ $reveal-sheet-timing: cubic-bezier(0.32, 0.72, 0, 1) !default;
 
     // On a phone a modal is a sheet: full width, on the bottom edge, as tall as its content, sliding up. The
     // page stays visible above it, so it reads as a layer over the page rather than a new page. `--_sheet`
-    // tells `js/app.js` it can be swiped down to close; the handle on top says so, and while the finger
+    // tells `js/app.js` it can be swiped down to close; the handle on top (`::after`: `::before` holds the
+    // close button's corner) says so, and while the finger
     // drags it (`data-dragging`) the sheet follows without a transition.
     @include breakpoint.breakpoint(breakpoint.$zf-zero-breakpoint only) {
       --_sheet: 1;
@@ -199,7 +260,7 @@ $reveal-sheet-timing: cubic-bezier(0.32, 0.72, 0, 1) !default;
         transition: none;
       }
 
-      &:not(.collapse)::before {
+      &:not(.collapse)::after {
         content: "";
         position: absolute;
         inset-block-start: 0.5rem;
@@ -218,7 +279,7 @@ $reveal-sheet-timing: cubic-bezier(0.32, 0.72, 0, 1) !default;
 
       --_sheet: 0;
 
-      &::before {
+      &::after {
         content: none;
       }
     }

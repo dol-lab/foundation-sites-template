@@ -57,5 +57,15 @@ $label-color-default: var(--f-color-bg-1) !default;
       color: var(--f-c-contrast);
       text-shadow: custom-functions.label-halo(var(--f-c-contrast));
     }
+
+    // An outline with the text in the color, at a lightness that reads as text (like a hollow button).
+    &.hollow {
+      --_c: #{custom-functions.hollow-label(var(--f-c, var(--f-color-text-1)))};
+
+      background-color: transparent;
+      box-shadow: inset 0 0 0 1px var(--_c);
+      color: var(--_c);
+      text-shadow: none;
+    }
   }
 }

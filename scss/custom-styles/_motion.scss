@@ -1,5 +1,6 @@
 
-// Motion shared across components: .spinner, .pulse, .highlight-on-load, and the reduced-motion rule.
+// Motion shared across components: .spinner, .pulse, .highlight-on-load, popover panes and dropdown panels
+// opening, and the reduced-motion rule.
 // A component's own animation stays in its partial (.shake, .loading, .clipped, .fa.slash).
 
 // Spinner sizes match the checkbox heights (`$switch-height*`).
@@ -63,6 +64,36 @@ $spinner-sizes: (
   @keyframes spin {
     to {
       rotate: 1turn;
+    }
+  }
+
+  // Popover panes and dropdown panels fade in and drop from their button. A closed dropdown panel marked
+  // `hidden="until-found"` stays rendered, so it opens from its closed style, not from `@starting-style`.
+  // Closing runs in reverse only where a closing popover can stay in the top layer (`overlay`); there the
+  // until-found clip waits for the fade (`step-end`), and `display` and `content-visibility` hold till the end.
+  :where(.popover, .dropdown.menu > li > *)[popover] {
+    transition-property: opacity, translate;
+    transition-duration: var(--f-transition-medium);
+    transition-timing-function: var(--f-transition-timing-spring);
+
+    &:not(:popover-open) {
+      opacity: 0;
+      translate: 0 -0.25rem;
+    }
+
+    &:popover-open {
+      @starting-style {
+        opacity: 0;
+        translate: 0 -0.25rem;
+      }
+    }
+
+    @supports (overlay: auto) {
+      &:not(:popover-open) {
+        transition-property: opacity, translate, overlay, display, content-visibility, clip-path;
+        transition-behavior: allow-discrete;
+        transition-timing-function: var(--f-transition-timing-spring), var(--f-transition-timing-spring), linear, linear, linear, step-end;
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 # Progress
 
-`.progress` with a `.progress-meter` whose width is the value. Takes a palette color. Give it `role="progressbar"`, the `aria-value*` attributes and a label.
+`.progress` with a `.progress-meter` whose width is the value; a new width animates. Takes a palette color. Give it `role="progressbar"`, the `aria-value*` attributes and a label.
 
 ```html example
 <div class="progress" role="progressbar" aria-label="Upload" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"><div class="progress-meter" style="width: 15%"></div></div>

@@ -101,7 +101,9 @@ $-active: ':is(.is-active, [aria-selected="true"], :has(> [aria-selected="true"]
     line-height: 1;
     color: $color;
     text-decoration: none !important;
-    transition: all var(--f-transition-medium) var(--f-transition-timing-cubic-bezier);
+    transition-property: background-color, color;
+    transition-duration: var(--f-transition-medium);
+    transition-timing-function: var(--f-transition-timing-cubic-bezier);
 
     &:hover {
       background: $background-hover;
@@ -124,7 +126,6 @@ $-active: ':is(.is-active, [aria-selected="true"], :has(> [aria-selected="true"]
   border: none;
   background: $background;
   color: $color;
-  transition: all 0.5s ease;
 }
 
 /// Augments a tab content container to have a vertical style, by shifting the border around. Use this in conjunction with `tabs-content()`.
@@ -215,7 +216,8 @@ $-active: ':is(.is-active, [aria-selected="true"], :has(> [aria-selected="true"]
 
         &:not(#{$-active}) {
           span {
-            transition: all global.$global-transition-medium;
+            transition-property: max-width, margin;
+            transition-duration: global.$global-transition-medium;
             margin-left: 0;
             max-width: 0;
           }

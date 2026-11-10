@@ -9,7 +9,7 @@
   .user-generated details {
     border-left: 1px solid transparent;
     padding-inline: var(--f-spacing-2);
-    transition: all var(--f-transition-medium);
+    transition: border-color var(--f-transition-medium);
     border-bottom-left-radius: 0;
     margin-bottom: base.$paragraph-margin-bottom;
 
@@ -48,7 +48,7 @@
         top: 1.7em;
         margin-left: auto;
         display: inline-block;
-        transition: all var(--f-transition-medium) ease-out;
+        transition: transform var(--f-transition-medium) ease-out;
       }
 
       &.small {

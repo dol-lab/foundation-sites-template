@@ -318,7 +318,7 @@ $button-responsive-expanded: false !default;
   }
 
   .button.load {
-    transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+    transition: background-color 0.4s cubic-bezier(0.215, 0.61, 0.355, 1), color 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
     color: var(--f-color-success-contrast) !important;
     background-color: var(--f-color-success);
     animation: background-pulse 2s global.$global-transition-timing-cubic-bezier infinite;

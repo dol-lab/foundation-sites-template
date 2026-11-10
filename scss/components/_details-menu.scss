@@ -22,7 +22,8 @@ $ring: 1.5rem;
 
     width: 100%;
     overflow: hidden;
-    transition: all var(--f-transition-medium);
+    transition-property: width, margin, border-radius, background-color, box-shadow;
+    transition-duration: var(--f-transition-medium);
 
     &[open] {
       width: calc(100% - var(--_offset));
