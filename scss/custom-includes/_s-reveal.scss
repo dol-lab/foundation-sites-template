@@ -169,11 +169,13 @@ $reveal-handle-space: 1.25rem !default;
     --_hidden-translate: 0 1rem;
     --_hidden-opacity: 0;
     --_handle-space: 0px;
+    --_rest-translate: none;
 
     max-height: calc(var(--f-viewport-height, 100%) - 150px);
     margin: 100px auto auto;
     overflow-y: auto;
     overscroll-behavior: contain;
+    translate: var(--_rest-translate);
     transition-property: opacity, translate;
     transition-duration: global.$global-transition-medium;
     transition-timing-function: global.$global-transition-timing-spring;
@@ -330,6 +332,23 @@ $reveal-handle-space: 1.25rem !default;
         transition: none;
       }
 
+      // An `.expandable` sheet opens showing `--f-sheet-peek` of itself (default: half the visible screen) and
+      // expands to full height: swiped up, or when a text field in it takes the focus (the on-screen keyboard is
+      // coming). Swiped down it goes back; only a longer swipe closes it. It is full height at both stops and moves
+      // by `translate` alone, so neither stop lays out its content again. What lies below the screen at the peek is
+      // reached by expanding: there a swipe on a list moves the sheet, not the list. `data-expanded` is the state,
+      // set by `js/app.js` and by any script that moves the sheet. The rest position is a property of its own, so
+      // the hidden state of opening and closing still wins over it.
+      &.expandable {
+        --_sheet-peek: var(--f-sheet-peek, calc(var(--f-viewport-height, 100dvh) / 2));
+
+        height: 100%;
+
+        &:not([data-expanded]) {
+          --_rest-translate: 0 max(0px, 100% - var(--_sheet-peek));
+        }
+      }
+
       &::after {
         content: "";
         position: absolute;
@@ -349,6 +368,8 @@ $reveal-handle-space: 1.25rem !default;
 
       --_sheet: 0;
       --_handle-space: 0px;
+      --_sheet-peek: 0px;
+      --_rest-translate: none;
 
       &::after {
         content: none;

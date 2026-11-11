@@ -25,6 +25,14 @@
     initial-value: 0;
   }
 
+  // How much of an `.expandable` sheet shows before it expands (`_s-reveal.scss`), registered so `js/app.js`
+  // reads it in px. Every other modal has 0, which is how the script tells the two apart.
+  @property --_sheet-peek {
+    syntax: "<length>";
+    inherits: false;
+    initial-value: 0;
+  }
+
   :root {
     // Radius scale: --f-radius is the one knob, the steps follow it.
     --f-radius: 0.5rem;

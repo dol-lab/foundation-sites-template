@@ -367,54 +367,127 @@
   }
 
   /**
-   * A sheet (a modal on a phone; `_s-reveal.scss` marks it with `--_sheet: 1`) follows a finger that swipes
-   * down while it is scrolled to its top. Let go past a third of its height or with a flick, it closes,
-   * otherwise it springs back. A modal that is no `<dialog>` (in a `.reveal-overlay`) is closed with Escape,
-   * which its own script (React Aria) handles, guards included. Touch events, not pointer events: only a
-   * non-passive touchmove keeps the browser from scrolling instead. A touch on a field, on a list that scrolls
-   * inside the sheet (under a header that stays: the sheet is dragged by its parts that stay put), or on
-   * content that takes vertical touch for itself (`touch-action` without pan-y, like an image cropper), is
-   * left alone.
+   * A sheet (a modal on a phone; `_s-reveal.scss` marks it with `--_sheet: 1`) follows a finger that swipes it.
+   * Its stops are its full height and, for an `.expandable` sheet, the peek it opens at (`--_sheet-peek`;
+   * `data-expanded` while it is up). Let go, it moves one stop in the direction of the swipe after a short swipe
+   * or a flick, and it closes only from its lowest stop: past half of what shows there, or on a hard flick after a
+   * quarter. Moving between stops is a small gesture, closing a deliberate one. A text field taking the focus
+   * expands the sheet (the on-screen keyboard is coming), and so does the focus landing below the screen;
+   * returning to the peek takes the focus off a text field, so the keyboard goes with it. `<dialog>`s lose
+   * `data-expanded` on closing. A modal that is no `<dialog>` (in a `.reveal-overlay`) is closed with Escape, which
+   * its own script (React Aria) handles, guards included.
+   * Touch events, not pointer events: only a non-passive touchmove keeps the browser from scrolling instead. A
+   * touch is left alone on a textarea, a select or editable content, on content that takes vertical touch for
+   * itself (`touch-action` without pan-y, like an image cropper), and at the top stop on a list that scrolls inside
+   * the sheet (under a header that stays: the sheet is dragged by its parts that stay put). At the peek the whole
+   * sheet drags, since what lies below the screen is reached by expanding. A move shorter than SLOP is still a tap.
    */
+  const SLOP = 8;
+  const STEP = 32;
   const sheet = {
-    /** @type {?{dialog: HTMLElement, x: number, y: number, dy: number, v: number, t: number, dragging: boolean}} */
+    /** @type {?{dialog: HTMLElement, x: number, y: number, from: number, low: number, top: boolean, at: number, v: number, t: number, dragging: boolean}} */
     drag: null,
     /**
-     * @param {Element} el The touched element.
-     * @param {HTMLElement} dialog The open modal around it.
-     * @return {boolean} Whether a swipe down from el moves the sheet.
+     * @param {HTMLElement}         dialog An open modal.
+     * @param {CSSStyleDeclaration} style  Its computed style.
+     * @return {number} How far below its top stop an expandable sheet sits at its peek; 0 for any other modal.
      */
-    canDrag(el, dialog) {
-      if (getComputedStyle(dialog).getPropertyValue("--_sheet").trim() !== "1") return false;
-      if (el.closest("input, textarea, select, [contenteditable]")) return false;
+    low(dialog, style = getComputedStyle(dialog)) {
+      const peek = parseFloat(style.getPropertyValue("--_sheet-peek")) || 0;
+      return peek && Math.max(0, dialog.offsetHeight - peek);
+    },
+    /**
+     * @param {HTMLElement} dialog An open sheet.
+     * @return {number} How far it is moved down now (mid-transition too): its bottom edge rests on its container's.
+     */
+    offset(dialog) {
+      const { style } = dialog;
+      const bottom = dialog.matches("dialog")
+        ? (parseFloat(style.getPropertyValue("--f-viewport-top")) || 0) +
+          (parseFloat(style.getPropertyValue("--f-viewport-height")) || html.clientHeight)
+        : dialog.closest(".reveal-overlay").getBoundingClientRect().bottom;
+      return dialog.getBoundingClientRect().bottom - bottom;
+    },
+    /**
+     * Moves an expandable sheet to a stop. Down at the peek a text field gives up the focus, to the sheet where it
+     * takes one: React Aria's focus trap would put a lost focus straight back into the field, keyboard and all.
+     *
+     * @param {HTMLElement} dialog The sheet.
+     * @param {boolean}     up     Whether to its top stop.
+     */
+    expand(dialog, up) {
+      if (up) {
+        dialog.dataset.expanded = "";
+        return;
+      }
+      delete dialog.dataset.expanded;
+      const field = document.activeElement;
+      if (!dialog.contains(field) || !(field.matches(textField) || field.isContentEditable)) return;
+      if (dialog.hasAttribute("tabindex")) dialog.focus({ preventScroll: true });
+      else field.blur();
+    },
+    /**
+     * @param {Element}     el     The touched element.
+     * @param {HTMLElement} dialog The open sheet around it.
+     * @param {boolean}     top    Whether the sheet is at its top stop.
+     * @return {boolean} Whether a swipe from el moves the sheet.
+     */
+    canDrag(el, dialog, top) {
+      if (el.closest("textarea, select, [contenteditable]")) return false;
       for (let n = el; n !== dialog.parentElement; n = n.parentElement) {
         const { touchAction, overflowY } = getComputedStyle(n);
         if (!/auto|manipulation|pan-y/.test(touchAction)) return false;
+        if (!top) continue;
         if (n === dialog ? n.scrollTop > 0 : n.scrollHeight > n.clientHeight && /auto|scroll/.test(overflowY))
           return false;
       }
       return true;
     },
-    /** @param {boolean} close Whether the sheet closes, sliding on from where the finger left it. */
-    release(close) {
+    /** Lets go without a gesture: the sheet returns to the stop it is at. */
+    cancel() {
       const { dialog, dragging } = sheet.drag;
       sheet.drag = null;
       if (!dragging) return;
       delete dialog.dataset.dragging;
       dialog.style.translate = "";
-      if (!close) return;
-      if (dialog.matches("dialog")) dialog.close();
-      else dialog.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+    },
+    /**
+     * Lets go: the sheet slides on from where the finger left it, to the stop the gesture asks for.
+     *
+     * @param {number} time When the finger lifted (event time stamp).
+     */
+    release(time) {
+      const { dialog, dragging, from, low, top, at, v, t } = sheet.drag;
+      sheet.cancel();
+      if (!dragging) return;
+      // A flick is fast (px/ms, + is down) at the moment of letting go; a finger that stopped first does not flick.
+      const flick = time - t < 100 ? v : 0;
+      const shown = dialog.offsetHeight - low;
+      const lowest = !low || !top;
+      if (at - low > shown / 2 || (lowest && flick > 0.8 && at - low > shown / 4)) {
+        if (dialog.matches("dialog")) dialog.close();
+        else dialog.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+      } else if (low) {
+        const moved = at - from;
+        sheet.expand(dialog, moved < -STEP || flick < -0.3 ? true : moved > STEP || flick > 0.3 ? false : top);
+      }
     },
   };
   document.addEventListener(
     "touchstart",
     (e) => {
+      if (sheet.drag) sheet.cancel();
       const dialog = e.target.closest?.("dialog.reveal[open], .reveal-overlay .reveal");
-      if (sheet.drag) sheet.release(false);
-      if (!dialog || e.touches.length > 1 || !sheet.canDrag(e.target, dialog)) return;
+      if (!dialog || e.touches.length > 1) return;
+      const style = getComputedStyle(dialog);
+      if (style.getPropertyValue("--_sheet").trim() !== "1") return;
+      const low = sheet.low(dialog, style);
+      const top = !low || "expanded" in dialog.dataset;
       const { clientX: x, clientY: y } = e.touches[0];
-      sheet.drag = { dialog, x, y, dy: 0, v: 0, t: e.timeStamp, dragging: false };
+      // A `<dialog>` is also the target of a touch on its backdrop.
+      if (y < dialog.getBoundingClientRect().top || !sheet.canDrag(e.target, dialog, top)) return;
+      const from = Math.max(0, sheet.offset(dialog));
+      sheet.drag = { dialog, x, y, from, low, top, at: from, v: 0, t: e.timeStamp, dragging: false };
     },
     { passive: true },
   );
@@ -425,9 +498,12 @@
       if (!drag) return;
       const { clientX, clientY } = e.touches[0];
       const dy = clientY - drag.y;
-      // The first move decides: down and more vertical than sideways drags the sheet, anything else is the browser's.
+      // The first move past SLOP decides: down, or up at the peek, and more vertical than sideways drags the sheet;
+      // anything else is the browser's.
       if (!drag.dragging) {
-        if (e.touches.length > 1 || !e.cancelable || dy <= 0 || Math.abs(clientX - drag.x) > dy) {
+        const dx = Math.abs(clientX - drag.x);
+        if (Math.max(dx, Math.abs(dy)) < SLOP) return;
+        if (e.touches.length > 1 || !e.cancelable || !(dy > 0 || !drag.top) || dx > Math.abs(dy)) {
           sheet.drag = null;
           return;
         }
@@ -435,21 +511,34 @@
         drag.dialog.dataset.dragging = "";
       }
       e.preventDefault();
-      drag.v = (Math.max(0, dy) - drag.dy) / Math.max(1, e.timeStamp - drag.t);
-      drag.dy = Math.max(0, dy);
+      const at = Math.max(0, drag.from + dy);
+      drag.v = (at - drag.at) / Math.max(1, e.timeStamp - drag.t);
+      drag.at = at;
       drag.t = e.timeStamp;
-      drag.dialog.style.translate = `0 ${drag.dy}px`;
+      drag.dialog.style.translate = `0 ${at}px`;
     },
     { passive: false },
   );
-  // A flick is fast (px/ms) at the moment of letting go; a finger that stopped first does not flick.
-  document.addEventListener("touchend", (e) => {
-    const drag = sheet.drag;
-    if (!drag) return;
-    const flick = drag.v > 0.5 && drag.dy > 24 && e.timeStamp - drag.t < 100;
-    sheet.release(flick || drag.dy > drag.dialog.offsetHeight / 3);
+  document.addEventListener("touchend", (e) => sheet.drag && sheet.release(e.timeStamp));
+  document.addEventListener("touchcancel", () => sheet.drag && sheet.cancel());
+  document.addEventListener("focusin", (e) => {
+    const dialog = e.target.closest?.("dialog.reveal[open], .reveal-overlay .reveal");
+    if (!dialog || e.target === dialog || "expanded" in dialog.dataset) return;
+    const low = sheet.low(dialog);
+    if (!low) return;
+    // Below the screen at the peek: its first 40px do not show there (a list that scrolls starts on screen). Measured
+    // within the sheet, as the focus that opening brings arrives while the sheet is still below the screen.
+    const { top, height } = e.target.getBoundingClientRect();
+    const below = top - dialog.getBoundingClientRect().top + Math.min(height, 40) > dialog.offsetHeight - low;
+    if (below || e.target.matches(textField) || e.target.isContentEditable) sheet.expand(dialog, true);
   });
-  document.addEventListener("touchcancel", () => sheet.drag && sheet.release(false));
+  document.addEventListener(
+    "close",
+    (e) => {
+      if (e.target.matches?.("dialog.reveal")) delete e.target.dataset.expanded;
+    },
+    true,
+  );
 
   /**
    * Tooltips: hovering, focusing or tapping a `[data-tooltip]` shows its `title` in one shared popover.

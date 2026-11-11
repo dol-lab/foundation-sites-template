@@ -130,4 +130,8 @@ module.exports = {
   "modal-header-open": {
     click: ['[data-open="demo-modal-header"]'],
   },
+  "modal-expandable-open": {
+    click: ['[data-open="demo-modal-expandable"]'],
+    widths: [375],
+  },
 };
