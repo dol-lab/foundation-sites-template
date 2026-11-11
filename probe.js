@@ -4,6 +4,9 @@
 // `bun run probe --overflow ['<scope>'] [--width=…]` lists instead, per width, whether the page scrolls sideways and the visible
 // elements in scope (default: the whole page) wider than their box: "<element> <scrollWidth> > <clientWidth> <overflow-x> (in <parent>)".
 // `--hover` and `--click` (repeatable) run after the state, in the order given; "x,y" clicks viewport coordinates (light dismiss).
+// `bun run probe --trace '<selector|x,y>' [--drag=0,300] [--steps=10] [--state=…] [--width=375]` replays a touch drag from the
+// selector's visible center (or a viewport point) and lists per touchmove the restyles, layouts and paints with their
+// reasons (lib/trace.js); equal steps are merged. Chromium only, one width, motion not reduced (the release animates).
 // Firefox has no DevTools protocol: it prints the box and computed values without rules.
 // With properties, only rules declaring them are listed, for inheriting ones also on ancestors.
 // Several widths resize the same page in turn (state applied once) and list one entry per width under `widths`.
@@ -11,6 +14,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { fileURLToPath } = require("node:url");
 const { ROOT, STATES, HEIGHT, launch, openDemo, applyState } = require("./lib/browser");
+const { traceDrag } = require("./lib/trace");
 
 const DEFAULT_PROPS = [
   "display",
@@ -103,11 +107,13 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
   const steps = flags.filter(([name]) => name === "hover" || name === "click");
   const positional = process.argv.slice(2).filter((a) => !a.startsWith("--"));
   const overflow = "overflow" in opts;
+  const trace = "trace" in opts;
   const [selector = overflow ? "html" : undefined, ...props] = positional;
   if (!selector) {
     console.error(
       "usage: bun run probe '<selector>' [property…] [--width=375[,800…]] [--state=<name>] [--hover=<selector>…] [--click=<selector|x,y>…] [--scheme=dark] [--browser=firefox]\n" +
-        "       bun run probe --overflow ['<scope>'] [--width=…] [--state=…] […]",
+        "       bun run probe --overflow ['<scope>'] [--width=…] [--state=…] […]\n" +
+        "       bun run probe --trace '<selector|x,y>' [--drag=0,300] [--steps=10] [--width=375] [--state=…] […]",
     );
     process.exit(2);
   }
@@ -116,11 +122,20 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
     process.exit(2);
   }
 
-  const widths = (opts.width || "1280").split(",").map(Number);
+  const widths = (opts.width || (trace ? "375" : "1280")).split(",").map(Number);
   const firefox = opts.browser === "firefox";
+  if (trace && firefox) {
+    console.error("--trace needs Chromium's tracing");
+    process.exit(2);
+  }
   const browser = await launch(opts.browser);
   try {
-    const page = await openDemo(browser, widths[0], opts.scheme);
+    const page = await openDemo(
+      browser,
+      widths[0],
+      opts.scheme,
+      trace ? { hasTouch: true, reducedMotion: "no-preference" } : {},
+    );
     const resize = async (width) => {
       await page.setViewportSize({ width, height: HEIGHT });
       // The demo throttles its resize handlers.
@@ -128,6 +143,20 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
     };
     if (opts.state) await applyState(page, STATES[opts.state]);
     for (const [name, value] of steps) await applyState(page, { [name]: [value] });
+
+    if (trace) {
+      const point = selector.match(/^(\d+),(\d+)$/);
+      const start = point ? { x: +point[1], y: +point[2] } : await visibleCenter(page.locator(selector));
+      if (!start) {
+        console.error(`${selector}: no visible match`);
+        process.exit(1);
+      }
+      const drag = (opts.drag || "0,300").split(",").map(Number);
+      const result = await traceDrag(browser, page, start, drag, Number(opts.steps) || 10);
+      console.log(JSON.stringify({ from: selector, start, drag, ...result }, null, 2));
+      return;
+    }
+
     const el = page.locator(selector);
     const count = await el.count();
     if (!count) {
@@ -167,6 +196,23 @@ const declares = (name, props) => props.some((p) => name === p || name.startsWit
     console.log(JSON.stringify({ selector, count, ...out }, null, 2));
   } finally {
     await browser.close();
+  }
+
+  /**
+   * @param {object} el Locator of the element where the finger lands.
+   * @return {Promise<?{x: number, y: number}>} The center of its first visible match, cut to the viewport.
+   */
+  async function visibleCenter(el) {
+    return el
+      .first()
+      .evaluate((node) => {
+        const r = node.getBoundingClientRect();
+        const top = Math.max(0, r.top);
+        const bottom = Math.min(innerHeight, r.bottom);
+        if (!r.width || bottom <= top) return null;
+        return { x: Math.round(r.left + r.width / 2), y: Math.round((top + bottom) / 2) };
+      })
+      .catch(() => null);
   }
 
   /**
