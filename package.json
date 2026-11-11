@@ -39,7 +39,7 @@
 		"css-diff": "bun css-diff.js",
 		"probe": "bun build-html.js > /dev/null && bun probe.js",
 		"outline": "bun outline.js",
-		"lint": "stylelint '**/*.scss' && prettier --check '*.js' 'js/*.js' 'lib/*.js'",
+		"lint": "stylelint '**/*.scss' && prettier --check '*.js' 'js/*.js' 'lib/*.js' && bun has-check.js",
 		"lint:fix": "stylelint '**/*.scss' --fix && prettier --write '*.js' 'js/*.js' 'lib/*.js'",
 		"format": "prettier --write '*.js' 'js/*.js' 'lib/*.js'"
 	}

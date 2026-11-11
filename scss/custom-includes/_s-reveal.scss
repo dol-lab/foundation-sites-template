@@ -159,8 +159,8 @@ $reveal-handle-space: 1.25rem !default;
   // into the page for the length of the transition, so it closes at once.
 
   // The on-screen keyboard shrinks only the visual viewport (Chrome on Android, Safari on iOS), so a modal placed
-  // in the layout viewport would end up behind it. While a modal is open, `js/app.js` sets `--f-viewport-top` and
-  // `--f-viewport-height` on <html> to the visible part of the layout viewport, and the modal is placed in it.
+  // in the layout viewport would end up behind it. On an open modal, `js/app.js` sets `--f-viewport-top` and
+  // `--f-viewport-height` to the visible part of the layout viewport, and the modal is placed in it.
   // A max-height in % resolves against the layout viewport, not against the insets, so it reads the height too.
   .reveal {
     @include reveal-modal-base;
@@ -252,10 +252,13 @@ $reveal-handle-space: 1.25rem !default;
     // row is (an anchor, scoped to the modal; without anchor positioning it stays in the corner). A header
     // that is a child of the modal stays put and what follows it scrolls; a header deeper down (inside a
     // script's wrappers) leaves that layout to the page. Only an open `<dialog>` is a flex box: `display`
-    // would show a closed one.
-    &:has(> .reveal-header):is([open], :not(dialog)) {
-      display: flex;
-      flex-direction: column;
+    // would show a closed one. The children need no `:has()`: a sibling of the header implies it, and a
+    // `:has()` before `> .reveal-header ~ :not(…)` would restyle the whole page on every DOM change.
+    &:is([open], :not(dialog)) {
+      &:has(> .reveal-header) {
+        display: flex;
+        flex-direction: column;
+      }
 
       > .reveal-header {
         flex-shrink: 0;

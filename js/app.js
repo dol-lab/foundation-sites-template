@@ -336,23 +336,30 @@
   });
 
   /**
-   * While a modal is open, `--f-viewport-top` and `--f-viewport-height` on <html> are the visible part of the
-   * layout viewport, which `_s-reveal.scss` places the modal in: the on-screen keyboard shrinks only the visual
-   * viewport, so a sheet on the bottom edge would end up behind it. Not while zoomed in, when the modal stays
-   * where the page is; zoomed out (Chrome on Android fits a page wider than the screen) it still fits. Opening
-   * a modal moves the focus into it, so `focusin` covers a keyboard already up.
+   * On an open modal (`dialog.reveal` or `.reveal-overlay`), `--f-viewport-top` and `--f-viewport-height` are
+   * the visible part of the layout viewport, which `_s-reveal.scss` places it in: the on-screen keyboard shrinks
+   * only the visual viewport, so a sheet on the bottom edge would end up behind it. Not while zoomed in, when
+   * the modal stays where the page is; zoomed out (Chrome on Android fits a page wider than the screen) it
+   * still fits. Opening a modal moves the focus into it, so `focusin` covers a keyboard already up. Set on the
+   * modal, not on <html>: a custom property changed on <html> restyles the whole page. Both values are read
+   * before the first write, which would otherwise force a second style recalculation.
    */
   const viewport = window.visualViewport;
   if (viewport) {
     const fitModals = () => {
-      const fit = viewport.scale < 1.01 && document.querySelector("dialog.reveal:modal, .reveal-overlay");
-      if (!fit) {
-        html.style.removeProperty("--f-viewport-top");
-        html.style.removeProperty("--f-viewport-height");
-        return;
+      const modals = document.querySelectorAll("dialog.reveal:modal, .reveal-overlay");
+      if (!modals.length) return;
+      const fit = viewport.scale < 1.01;
+      const { offsetTop, height } = viewport;
+      for (const { style } of modals) {
+        if (fit) {
+          style.setProperty("--f-viewport-top", `${offsetTop}px`);
+          style.setProperty("--f-viewport-height", `${height}px`);
+        } else {
+          style.removeProperty("--f-viewport-top");
+          style.removeProperty("--f-viewport-height");
+        }
       }
-      html.style.setProperty("--f-viewport-top", `${viewport.offsetTop}px`);
-      html.style.setProperty("--f-viewport-height", `${viewport.height}px`);
     };
     viewport.addEventListener("resize", fitModals);
     viewport.addEventListener("scroll", fitModals);

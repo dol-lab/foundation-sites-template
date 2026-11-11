@@ -22,8 +22,9 @@
   }
 
   // A text field focused by mouse or touch, or being typed into, has its focus border and caret: no ring.
-  // `data-focus-mode` (js/app.js) on <html>; a compound, so the backend's `.f` scope still matches.
-  :is(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"], [type="button"], [type="submit"], [type="reset"]), textarea, [contenteditable]):is([data-focus-mode="pointer"] *, [data-focus-mode="typing"] *):focus-visible,
+  // `data-focus-mode` (js/app.js) on <html>; a compound, so the backend's `.f` scope still matches. The fields
+  // stand right of the attribute, not `*`: with `[data-focus-mode] *`, each change of the mode restyles the page.
+  :is(:is([data-focus-mode="pointer"], [data-focus-mode="typing"]) :is(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"], [type="button"], [type="submit"], [type="reset"]), textarea, [contenteditable])):focus-visible,
   .card > .card-anchor:focus-visible,
   .details-link > .details-menu > summary:focus-visible {
     outline: none;
