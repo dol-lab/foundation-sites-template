@@ -258,31 +258,36 @@ $-active: ':is(.is-active, [aria-selected="true"], :has(> [aria-selected="true"]
       // One underline anchored to the active tab (the `li`, so React Aria's link-less titles get it too), so it
       // slides to the next one. Each tab bar scopes its own anchor; a browser that cannot keeps the underline on
       // the tab above. `anchors-valid` hides it while no tab is active (an unresolved anchor() leaves a full-width line).
+      // In a sheet a finger drags (`[data-dragging]`, `_reveal.scss`) it is that fallback too: an anchored element
+      // that moves costs Chromium a layout of the whole document on every frame.
       @supports (anchor-scope: all) {
         position: relative;
-        anchor-scope: --f-active-tab;
 
-        .tabs-title {
-          &#{$-active} {
-            anchor-name: --f-active-tab;
+        &:where(:not([data-dragging] *)) {
+          anchor-scope: --f-active-tab;
+
+          .tabs-title {
+            &#{$-active} {
+              anchor-name: --f-active-tab;
+            }
+
+            @include active-link {
+              box-shadow: none;
+            }
           }
 
-          @include active-link {
-            box-shadow: none;
+          &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            position-anchor: --f-active-tab;
+            position-visibility: anchors-valid;
+            inset: auto anchor(right) anchor(bottom) anchor(left);
+            width: auto;
+            height: 2px;
+            background: var(--f-color-text-1);
+            transition: inset global.$global-transition-medium global.$global-transition-timing-cubic-bezier;
           }
-        }
-
-        &::after {
-          content: "";
-          display: block;
-          position: absolute;
-          position-anchor: --f-active-tab;
-          position-visibility: anchors-valid;
-          inset: auto anchor(right) anchor(bottom) anchor(left);
-          width: auto;
-          height: 2px;
-          background: var(--f-color-text-1);
-          transition: inset global.$global-transition-medium global.$global-transition-timing-cubic-bezier;
         }
       }
     }

@@ -81,7 +81,7 @@ $info-chip-shadow-hover:
     }
 
     // In a colored row the last segment takes the color; the others a soft tint of it, like a soft button.
-    &:is(#{custom-functions.palette-selector()}) {
+    &:is(#{custom-functions.palette-selector($inline: false)}) {
       & .info-chip {
         --_chip-ring: #{custom-functions.ring(custom-functions.soft-surface(var(--f-c)))};
         --_chip-separator: transparent;

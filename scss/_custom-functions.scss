@@ -4,16 +4,24 @@
 @use "sass:list";
 
 /// The palette classes (`.brand`, `.primary`, …) and an inline color (`style="--f-c: …"`) as a selector list.
+/// A rule that styles a descendant named by its tag alone (`li:is(…) > a`) leaves the inline color out: there
+/// `[style]` makes Chromium restyle every such tag inside any element whose inline style changes (a dragged
+/// sheet, React's inline styles, React Aria's on `<html>`), on every change (`has-check.js` fails on it).
 /// @param {Map} $palette [$foundation-palette] - `colors.$status-palette` adds `.activity`.
+/// @param {Boolean} $inline [true] - Whether an inline `--f-c` matches too.
 /// @return {String}
-@function palette-selector($palette: colors.$foundation-palette) {
+@function palette-selector($palette: colors.$foundation-palette, $inline: true) {
   $list: ();
 
   @each $name, $_ in $palette {
     $list: list.append($list, ".#{$name}", comma);
   }
 
-  @return list.append($list, '[style*="--f-c:"]', comma);
+  @if $inline {
+    $list: list.append($list, '[style*="--f-c:"]', comma);
+  }
+
+  @return $list;
 }
 
 /// One palette mechanism: a color class (or an inline `--f-c`) sets `--f-c`, `--f-c-contrast`, `--f-c-darker`
@@ -40,8 +48,9 @@
 /// @param {String} $child [""] - Optional child selector.
 /// @param {String} $property ["color"] - "color" takes `--f-c-text`; any other property takes `--f-c` (and the contrast as text).
 /// @param {Boolean} $hover [true] - Whether to print a `:hover` state.
-@mixin foundation-palette($selector: "&", $child: "", $property: "color", $hover: true) {
-  #{$selector}:is(#{palette-selector()}) #{$child} {
+/// @param {Boolean} $inline [true] - Whether an inline `--f-c` matches too (see `palette-selector()`).
+@mixin foundation-palette($selector: "&", $child: "", $property: "color", $hover: true, $inline: true) {
+  #{$selector}:is(#{palette-selector($inline: $inline)}) #{$child} {
     @if $property == "color" {
       color: var(--f-c-text);
     } @else {

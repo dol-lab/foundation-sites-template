@@ -33,6 +33,14 @@
     initial-value: 0;
   }
 
+  // How dark a dragged sheet leaves its backdrop (`_reveal.scss`), from 1 at rest to 0 off the screen; set by
+  // `js/app.js` each frame. Not inherited, so a change restyles the modal box alone, not what it holds.
+  @property --_sheet-shade {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 1;
+  }
+
   :root {
     // Radius scale: --f-radius is the one knob, the steps follow it.
     --f-radius: 0.5rem;

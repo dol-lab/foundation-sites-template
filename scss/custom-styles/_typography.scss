@@ -67,7 +67,7 @@
   // on a link label this rule would paint the text in the label's background color.
   a:not(.button, .label) {
     @include custom-functions.foundation-palette;
-    @include custom-functions.foundation-palette($selector: "li", $child: ">&");
+    @include custom-functions.foundation-palette($selector: "li", $child: ">&", $inline: false);
     @include button.button-sizes;
   }
 

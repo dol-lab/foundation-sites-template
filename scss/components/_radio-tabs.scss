@@ -127,8 +127,10 @@
     transition: color 0.35s ease-out;
   }
 
-  // Shared animated pill for the active option (progressive enhancement)
-  &::before {
+  // Shared animated pill for the active option (progressive enhancement). In a sheet a finger drags
+  // (`[data-dragging]`, `_reveal.scss`) the option's own background stands in: an anchored element that moves
+  // costs Chromium a layout of the whole document on every frame.
+  &:where(:not([data-dragging] *))::before {
     content: "";
     position: absolute;
     position-anchor: --active-tab;
@@ -138,16 +140,12 @@
     transition:
       left 0.25s cubic-bezier(0.9, 0, 0.1, 1),
       right 0.25s cubic-bezier(0.9, 0, 0.1, 1);
-
-    @supports (anchor-position: --active-tab) {
-      position-anchor: --active-tab;
-    }
   }
 
   // When anchor positioning is available, the active option defines the anchor
   // and its own background is cleared to reveal the shared pill.
   @supports (anchor-name: --active-tab) {
-    .radio-tabs-option {
+    &:where(:not([data-dragging] *)) .radio-tabs-option {
       &:has(:checked) {
         anchor-name: --active-tab;
         background-color: transparent;
@@ -177,7 +175,7 @@
       background-color: var(--f-color-bg-1);
     }
 
-    .radio-tabs-option {
+    &:where(:not([data-dragging] *)) .radio-tabs-option {
       &:has(:checked) {
         background-color: transparent;
       }

@@ -1,7 +1,8 @@
 // `bun has-check.js [file.css…]` (part of `bun run lint`; default css/app.css, css/app-backend.css): fails on a
-// `:has()` followed by a combinator into a compound that names no class, id or attribute (`span`, `img`, `*`,
-// `:not(.x)`). Chromium then restyles every element that compound matches, page-wide, on each DOM insertion
-// (README, Notes). Put the `:has()` on the styled element, or give the target a class.
+// `:has()` or a `[style…]` followed by a combinator into a compound that names no class, id or attribute (`span`,
+// `img`, `*`, `:not(.x)`; `body` is one element). Chromium then restyles every element that compound matches: for
+// `:has()` page-wide on each DOM insertion, for `[style]` inside any element whose inline style changes, on each
+// change (README, Notes). Put the `:has()` or `[style]` on the styled element, or give the target a class.
 const fs = require("node:fs");
 const path = require("node:path");
 
@@ -55,7 +56,7 @@ function narrow(compound) {
     }
     rest = rest.slice(0, at) + rest.slice(end + 1);
   }
-  return /[.#[]/.test(rest);
+  return /[.#[]/.test(rest) || /^body\b/.test(rest);
 }
 
 const files = process.argv.slice(2);
@@ -66,7 +67,7 @@ for (const file of targets) {
   for (const [, prelude] of css.matchAll(/(?:^|[{};])\s*([^{}@;\s][^{};]*)\{/g)) {
     for (const selector of selectors(prelude)) {
       const parts = compounds(selector);
-      if (parts.slice(0, -1).some((p) => p.includes(":has(")) && !narrow(parts.at(-1))) {
+      if (parts.slice(0, -1).some((p) => /:has\(|\[style/.test(p)) && !narrow(parts.at(-1))) {
         console.log(`${path.basename(file)}: ${selector}`);
         found++;
       }
@@ -74,6 +75,8 @@ for (const file of targets) {
   }
 }
 if (found) {
-  console.log(`✗ ${found} selector(s) with :has() before a target without a class, id or attribute (see has-check.js)`);
+  console.log(
+    `✗ ${found} selector(s) with :has() or [style] before a target without a class, id or attribute (see has-check.js)`,
+  );
   process.exit(1);
 }

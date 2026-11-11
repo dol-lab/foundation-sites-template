@@ -121,8 +121,9 @@ $reveal-handle-space: 1.25rem !default;
   // backdrop and layer, the `.reveal` inside it the same box as a `dialog.reveal`. A wrapper between the two
   // (React Aria's `Modal`) takes no box. Opening and closing run on `data-entering` / `data-exiting`, which
   // React Aria sets and waits for; it waits on the overlay's own transitions only, so the backdrop fades its
-  // color rather than its opacity, which would fade the modal with it. It covers the visible part of
-  // the screen (`--f-viewport-*`, see `.reveal`), so a sheet sits above the on-screen keyboard.
+  // color rather than its opacity, which would fade the modal with it, on the curve its box moves on. It covers
+  // the visible part of the screen (`--f-viewport-*`, see `.reveal`), so a sheet sits above the on-screen keyboard.
+  // A dragged sheet shades it by `--_sheet-shade` (see the sheet below), set by `js/app.js` on the overlay.
   .reveal-overlay {
     position: fixed;
     inset: var(--f-viewport-top, 0) 0 auto;
@@ -130,9 +131,18 @@ $reveal-handle-space: 1.25rem !default;
     z-index: var(--f-z-overlay);
     display: flex;
     flex-direction: column;
-    background-color: $reveal-overlay-background;
+    background-color: color-mix(in oklab, #{$reveal-overlay-background} calc(100% * var(--_sheet-shade)), transparent);
     transition-property: background-color;
     transition-duration: global.$global-transition-medium;
+    transition-timing-function: global.$global-transition-timing-spring;
+
+    @include breakpoint.breakpoint(breakpoint.$zf-zero-breakpoint only) {
+      transition-timing-function: $reveal-sheet-timing;
+    }
+
+    &[data-dragging] {
+      transition: none;
+    }
 
     > :not(.reveal) {
       display: contents;
@@ -197,10 +207,16 @@ $reveal-handle-space: 1.25rem !default;
       }
     }
 
+    // The backdrop fades on its box's duration and curve (a pseudo-element inherits from its element), so it
+    // darkens as the sheet rises and stands still while a finger drags it, which shades it by `--_sheet-shade`.
     &::backdrop {
+      --_sheet-shade: inherit;
+
       background-color: $reveal-overlay-background;
+      opacity: var(--_sheet-shade);
       transition-property: opacity;
-      transition-duration: global.$global-transition-medium;
+      transition-duration: inherit;
+      transition-timing-function: inherit;
     }
 
     &[open]::backdrop {
@@ -312,7 +328,11 @@ $reveal-handle-space: 1.25rem !default;
     // page stays visible above it, so it reads as a layer over the page rather than a new page. `--_sheet`
     // tells `js/app.js` it can be swiped down to close; the handle on top (`::after`: `::before` holds the
     // close button's corner) says so, on every sheet: one with too little padding for it gets a strip
-    // (`--_handle-space`). While the finger drags it (`data-dragging`) the sheet follows without a transition.
+    // (`--_handle-space`). At least a third of the screen tall, so a short one still reads as a sheet and is
+    // easy to grab. Its own compositor layer for good: moving then repaints nothing, and no layer comes and goes
+    // as a slide starts or ends. While the finger drags it (`data-dragging`) the sheet follows without a
+    // transition, and the close button holds the place `js/app.js` measured (inline `top`): anchored to a header
+    // row, it would cost Chromium a layout of the whole document on every frame.
     @include breakpoint.breakpoint(breakpoint.$zf-zero-breakpoint only) {
       --_sheet: 1;
       --_hidden-translate: 0 100%;
@@ -321,15 +341,26 @@ $reveal-handle-space: 1.25rem !default;
 
       width: 100%;
       max-width: none;
+      min-height: calc(var(--f-viewport-height, 100%) / 3);
       max-height: calc(var(--f-viewport-height, 100%) - 2.5rem);
       margin: auto auto 0;
       padding-block-start: calc(var(--_padding) + var(--_handle-space));
       border-width: 1px 0 0;
       border-radius: $reveal-radius $reveal-radius 0 0;
       transition-timing-function: $reveal-sheet-timing;
+      will-change: translate;
 
       &[data-dragging] {
         transition: none;
+
+        & .reveal-header {
+          anchor-name: none;
+        }
+
+        & > .close-button {
+          bottom: auto;
+          margin-block: 0;
+        }
       }
 
       // An `.expandable` sheet opens showing `--f-sheet-peek` of itself (default: half the visible screen) and
