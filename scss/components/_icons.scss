@@ -1,4 +1,4 @@
-@use "../custom-includes/s-menu";
+@use "menu";
 
 // .icons (icon spacing in menus), i.fa, .fa.slash.
 
@@ -30,11 +30,11 @@
     }
 
     .icons.icon-left > & {
-      margin-right: s-menu.$menu-icon-spacing;
+      margin-right: menu.$menu-icon-spacing;
     }
 
     .icons.icon-right > & {
-      margin-left: s-menu.$menu-icon-spacing;
+      margin-left: menu.$menu-icon-spacing;
     }
   }
 

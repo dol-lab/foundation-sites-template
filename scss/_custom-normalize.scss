@@ -1,7 +1,7 @@
 /// Custom CSS Reset
 
-@use "custom-includes/foundation-spaces/normalize/normalize";
-@use "custom-includes/foundation-spaces/global";
+@use "foundation-spaces/normalize/normalize";
+@use "foundation-spaces/global";
 @include normalize.foundation-normalize;
 
 // Who owns the box model, and who inherits it. app-backend.scss narrows both

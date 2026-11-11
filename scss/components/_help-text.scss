@@ -1,0 +1,23 @@
+// .help-text below a field, forked from Foundation for Sites (https://get.foundation, MIT).
+
+/// Default color for help text.
+/// @type Color
+$helptext-color: var(--f-color-text-1) !default;
+
+/// Default font size for help text.
+/// @type Number
+$helptext-font-size: var(--f-font-size-xs) !default;
+
+/// Default font style for help text.
+/// @type Keyword
+$helptext-font-style: normal !default;
+
+@mixin styles {
+  .help-text {
+    margin-top: var(--f-spacing-1);
+    font-size: $helptext-font-size;
+    font-style: $helptext-font-style;
+    color: $helptext-color;
+    line-height: 1.3;
+  }
+}

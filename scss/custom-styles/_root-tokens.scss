@@ -1,8 +1,8 @@
-@use "../custom-includes/foundation-spaces/global";
-@use "../custom-includes/foundation-spaces/typography/base";
-@use "../custom-includes/foundation-spaces/util/breakpoint";
-@use "../custom-includes/foundation-spaces/util/unit";
-@use "../custom-includes/foundation-spaces/xy-grid/xy-grid";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/typography/base";
+@use "../foundation-spaces/util/breakpoint";
+@use "../foundation-spaces/util/unit";
+@use "../foundation-spaces/xy-grid/xy-grid";
 @use "../custom-functions";
 @use "../custom-settings";
 @use "sass:meta";
@@ -25,7 +25,7 @@
     initial-value: 0;
   }
 
-  // How much of an `.expandable` sheet shows before it expands (`_s-reveal.scss`), registered so `js/app.js`
+  // How much of an `.expandable` sheet shows before it expands (`_reveal.scss`), registered so `js/app.js`
   // reads it in px. Every other modal has 0, which is how the script tells the two apart.
   @property --_sheet-peek {
     syntax: "<length>";

@@ -1,5 +1,5 @@
-@use "../custom-includes/foundation-spaces/global";
-@use "../custom-includes/foundation-spaces/util/breakpoint";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/util/breakpoint";
 
 // .clipped: a media frame that crops its image (.square, .letterbox, .tint, .height-*). .square and .letterbox
 // are `aspect-ratio` boxes (taller content grows them), .height-N and .full fixed heights.

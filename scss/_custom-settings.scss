@@ -83,6 +83,9 @@ $z-index: (
 // ---------
 $input-height: $button-height;
 
+// Line height of form labels, text fields, selects and button labels.
+$form-label-line-height: 1.3 !default;
+
 // Menu
 // ---------
 $border: 1px solid var(--f-color-bg-2);

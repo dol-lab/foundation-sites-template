@@ -1,6 +1,5 @@
-@use "../global";
-@use "../util/unit";
-@use "text";
+@use "../foundation-spaces/global";
+@use "input";
 
 // Foundation for Sites
 // https://get.foundation
@@ -50,14 +49,15 @@ $input-error-font-weight: global.$global-weight-bold !default;
 /// Adds error styles to a form element, using the values in the settings file.
 @mixin form-error {
   display: none;
-  margin-top: text.$form-spacing * -0.5;
-  margin-bottom: text.$form-spacing;
+  margin-top: var(--f-spacing-1);
+  margin-bottom: input.$form-spacing;
   font-size: $input-error-font-size;
   font-weight: $input-error-font-weight;
   color: $input-error-color;
+  line-height: 1.3;
 }
 
-@mixin foundation-form-error {
+@mixin styles {
   @if $abide-inputs {
     .is-invalid-input {
       @include form-input-error;

@@ -1,7 +1,8 @@
-@use "../global";
-@use "../util/unit";
-@use "../util/value";
-@use "text";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/util/value";
+@use "../custom-settings";
+@use "input";
+@use "label";
 
 // Foundation for Sites
 // https://get.foundation
@@ -20,26 +21,22 @@ $select-background: inherit !default;
 $select-radius: global.$global-radius !default;
 
 @mixin form-select {
-  $padding: value.get-side(text.$input-padding, "top") + value.get-side(text.$input-padding, "bottom");
-  $height: (text.$input-font-size * unit.unitless-calc(text.$input-line-height)) + $padding - unit.rem-calc(1);
-
-
   --_f-chevron-for-dark: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMBJREFUeNrEllsOhCAMRVszC9IlzU7KCmVHTJsoMWYMUtpyv9BgbuXQB5ZSdgBYYY4ycgBivk8KYFsQMfMiTTBP4o3nUzCKzOabLJbLy2/g31evGkAginR4/ZegKH5qX3bJCscA3t0x3kgO5tQFyhhFf50xRqFLbyMUNJQzgyjGS/wgCpvKqkRBpuWrE4V9d+1E4dPUXqIg107SQOE/2DRQxMwTDygIInVDET9T3lCoj/6j/VCmGjZOl2lKpZ8AAwDQP7zIimDGFQAAAABJRU5ErkJggg==');
   --_f-chevron-for-light: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNrEkckNgDAMBBfRkEt0ObRBBdsGXUDgmQfK4XhH2m8czQAAy27R3tsw4Qfe2x8uOO6oYLb6GlOor3GF+swURAOmUJ+RwtEJs9WvTGEYxBXqI1MQAZhCfUQKRzDMVj+TwrAIV6jvSUEkYAr1LSkcyTBb/V+KYfX7xAeusq3sLDtGH3kEGACPWIflNZfhRQAAAABJRU5ErkJggg==');
 
 
-  height: $height;
-  margin: 0 0 text.$form-spacing;
-  padding: text.$input-padding;
+  height: custom-settings.$input-height;
+  margin: 0 0 input.$form-spacing;
+  padding: label.$label-padding;
   appearance: none;
-  border: text.$input-border;
+  border: input.$input-border;
   border-radius: $select-radius;
   background-color: $select-background;
-  font-family: text.$input-font-family;
-  font-size: text.$input-font-size;
-  font-weight: text.$input-font-weight;
-  line-height: text.$input-line-height;
-  color: text.$input-color;
+  font-family: input.$input-font-family;
+  font-size: input.$input-font-size;
+  font-weight: input.$input-font-weight;
+  line-height: custom-settings.$form-label-line-height;
+  color: input.$input-color;
 
   // @if $select-triangle-color != transparent {
   //   // @include background-triangle($select-triangle-color);
@@ -65,30 +62,30 @@ $select-radius: global.$global-radius !default;
   }
 
   background-origin: content-box;
-  background-position: global.$global-right (-(text.$form-spacing)) center;
+  background-position: global.$global-right (-(input.$form-spacing)) center;
   background-repeat: no-repeat;
   background-size: 9px 6px;
-  padding-#{global.$global-right}: (text.$form-spacing * 1.5);
+  padding-#{global.$global-right}: (input.$form-spacing * 1.5);
 
-  @if value.has-value(text.$input-transition) {
-    transition: text.$input-transition;
+  @if value.has-value(input.$input-transition) {
+    transition: input.$input-transition;
   }
 
   // Focus state
   &:focus {
-    border: text.$input-border-focus;
-    background-color: text.$input-background-focus;
-    box-shadow: text.$input-shadow-focus;
+    border: input.$input-border-focus;
+    background-color: input.$input-background-focus;
+    box-shadow: input.$input-shadow-focus;
 
-    @if value.has-value(text.$input-transition) {
-      transition: text.$input-transition;
+    @if value.has-value(input.$input-transition) {
+      transition: input.$input-transition;
     }
   }
 
   // Disabled state
   &:disabled {
-    background-color: text.$input-background-disabled;
-    cursor: text.$input-cursor-disabled;
+    background-color: input.$input-background-disabled;
+    cursor: input.$input-cursor-disabled;
   }
 
   // Hide the dropdown arrow shown in newer IE versions
@@ -107,8 +104,21 @@ $select-radius: global.$global-radius !default;
   }
 }
 
-@mixin foundation-form-select {
+@mixin styles {
   select {
     @include form-select;
+
+    & + button,
+    & + .button {
+      height: custom-settings.$input-height;
+    }
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }

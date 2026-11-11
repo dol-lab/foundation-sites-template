@@ -338,7 +338,7 @@
 
   /**
    * On an open modal (`dialog.reveal` or `.reveal-overlay`), `--f-viewport-top` and `--f-viewport-height` are
-   * the visible part of the layout viewport, which `_s-reveal.scss` places it in: the on-screen keyboard shrinks
+   * the visible part of the layout viewport, which `_reveal.scss` places it in: the on-screen keyboard shrinks
    * only the visual viewport, so a sheet on the bottom edge would end up behind it. Not while zoomed in, when
    * the modal stays where the page is; zoomed out (Chrome on Android fits a page wider than the screen) it
    * still fits. Opening a modal moves the focus into it, so `focusin` covers a keyboard already up. Set on the
@@ -368,7 +368,7 @@
   }
 
   /**
-   * A sheet (a modal on a phone; `_s-reveal.scss` marks it with `--_sheet: 1`) follows a finger that swipes it.
+   * A sheet (a modal on a phone; `_reveal.scss` marks it with `--_sheet: 1`) follows a finger that swipes it.
    * Its stops are its full height and, for an `.expandable` sheet, the peek it opens at (`--_sheet-peek`;
    * `data-expanded` while it is up). Let go, it moves one stop in the direction of the swipe after a short swipe
    * or a flick, and it closes only from its lowest stop: past half of what shows there, or on a hard flick after a

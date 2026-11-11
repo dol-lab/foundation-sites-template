@@ -1,9 +1,9 @@
-@use "../custom-includes/foundation-spaces/global";
-@use "../custom-includes/foundation-spaces/util/breakpoint";
-@use "../custom-includes/s-button";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/util/breakpoint";
+@use "button";
 
 // .button-group: layout, seams and corners. A fill, color or size class on the group reaches its buttons
-// through custom-includes/_s-button.scss.
+// through _button.scss.
 
 /// Margin below a button group.
 /// @type Number
@@ -43,7 +43,7 @@ $buttongroup-margin: var(--f-spacing-4) !default;
   }
 
   > * + * {
-    margin-#{$overlap}-start: -(s-button.$button-hollow-border-width);
+    margin-#{$overlap}-start: -(button.$button-hollow-border-width);
   }
 
   > .button + .button {

@@ -5,7 +5,7 @@
 ///  order. Knobs are `!default` variables at the top of the partial that owns
 ///  them. A project configures one before anything loads that partial (so
 ///  lower-level partials first), then loads this file:
-///  `@use "…/scss/custom-includes/s-button" with ($button-padding: 1rem); @use "…/scss/app";`
+///  `@use "…/scss/components/button" with ($button-padding: 1rem); @use "…/scss/app";`
 @use "bundle";
 @use "custom-styles/root-variables";
 

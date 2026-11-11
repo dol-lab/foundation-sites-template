@@ -1,6 +1,6 @@
 @use "../custom-functions";
-@use "s-button";
-@use "foundation-spaces/global";
+@use "button";
+@use "../foundation-spaces/global";
 
 // Foundation for Sites
 // https://get.foundation
@@ -102,7 +102,7 @@ $callout-default-token: primary !default;
   padding: $padding;
 }
 
-@mixin spaces-callout {
+@mixin styles {
   :where(.callout:not(#{custom-functions.palette-selector()})) {
     --f-c: var(--f-color-#{$callout-default-token});
     --f-c-contrast: var(--f-color-#{$callout-default-token}-contrast);
@@ -127,10 +127,10 @@ $callout-default-token: primary !default;
   $colors: custom-functions.palette-selector();
 
   :where(.callout) > .button:where(:not(#{$colors})) {
-    @include s-button.button-color;
+    @include button.button-color;
   }
 
   :where(.callout) > .button:where(:not(#{$colors}, .solid, .soft, .hollow, .clear)) {
-    @include s-button.button-fill(solid);
+    @include button.button-fill(solid);
   }
 }

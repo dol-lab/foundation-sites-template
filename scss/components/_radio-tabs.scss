@@ -222,7 +222,7 @@
 }
 
 // Emits the .radio-tabs rules and variant hooks
-@mixin spaces-radio-tabs {
+@mixin styles {
   .radio-tabs {
     @include radio-tabs-global;
 

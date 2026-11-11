@@ -1,7 +1,7 @@
-@use "foundation-spaces/global";
-@use "foundation-spaces/util/breakpoint";
-@use "foundation-spaces/util/mixins";
-@use "s-button";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/util/breakpoint";
+@use "../foundation-spaces/util/mixins";
+@use "button";
 
 // Foundation for Sites
 // https://get.foundation
@@ -98,7 +98,7 @@ $menu-icons-back-compat: true !default;
   }
 
   .button {
-    padding: s-button.$button-padding;
+    padding: button.$button-padding;
   }
 
   li {
@@ -390,7 +390,7 @@ $menu-icons-back-compat: true !default;
   color: $menu-item-color-active;
 }
 
-@mixin spaces-menu {
+@mixin styles {
   .menu {
     @include menu-base;
 

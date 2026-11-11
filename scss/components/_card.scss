@@ -1,10 +1,10 @@
-@use "../../../custom-functions";
-@use "../../../custom-settings";
-@use "../../s-button";
-@use "../forms/text";
-@use "../global";
-@use "../typography/base";
-@use "../util/selector";
+@use "../custom-functions";
+@use "../custom-settings";
+@use "button";
+@use "input";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/typography/base";
+@use "../foundation-spaces/util/selector";
 @use "sass:map";
 
 // Foundation for Sites
@@ -107,7 +107,7 @@ $card-margin-bottom: 0 !default;
   }
 }
 
-@mixin foundation-card {
+@mixin styles {
   .card {
     @include card-container;
 
@@ -166,7 +166,7 @@ $card-margin-bottom: 0 !default;
     input:where(:not(.button)),
     textarea,
     select {
-      font-size: text.$input-font-size;
+      font-size: input.$input-font-size;
     }
   }
 
@@ -178,7 +178,7 @@ $card-margin-bottom: 0 !default;
     flex-direction: column;
     align-items: flex-start;
     flex: 1;
-    padding: s-button.$button-padding;
+    padding: button.$button-padding;
     line-height: base.$paragraph-lineheight;
 
     h1 {

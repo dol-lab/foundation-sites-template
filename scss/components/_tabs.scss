@@ -1,6 +1,6 @@
-@use "foundation-spaces/global";
-@use "foundation-spaces/typography/base";
-@use "foundation-spaces/util/unit";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/typography/base";
+@use "../foundation-spaces/util/unit";
 @use "sass:list";
 @use "../custom-settings";
 
@@ -156,7 +156,7 @@ $-active: ':is(.is-active, [aria-selected="true"], :has(> [aria-selected="true"]
   }
 }
 
-@mixin spaces-tabs {
+@mixin styles {
   .tabs {
     @include tabs-container;
 

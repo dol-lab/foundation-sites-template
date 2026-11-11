@@ -1,7 +1,7 @@
-@use "foundation-spaces/util/breakpoint";
-@use "foundation-spaces/xy-grid/cell";
-@use "foundation-spaces/xy-grid/grid";
-@use "foundation-spaces/xy-grid/xy-grid";
+@use "../foundation-spaces/util/breakpoint";
+@use "../foundation-spaces/xy-grid/cell";
+@use "../foundation-spaces/xy-grid/grid";
+@use "../foundation-spaces/xy-grid/xy-grid";
 @use "sass:map";
 
 ///  A row that scrolls sideways and snaps each `.scroll-snap-element` into place (docs/scroll-snap.md).

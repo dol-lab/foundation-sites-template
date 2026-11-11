@@ -1,5 +1,5 @@
-@use "foundation-spaces/global";
-@use "foundation-spaces/util/breakpoint";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/util/breakpoint";
 
 // Foundation for Sites
 // https://get.foundation
@@ -103,7 +103,7 @@ $reveal-handle-space: 1.25rem !default;
   border-radius: 0;
 }
 
-@mixin spaces-reveal {
+@mixin styles {
   // The page behind an open modal does not scroll.
   html:has(dialog.reveal:modal) {
     overflow: hidden;

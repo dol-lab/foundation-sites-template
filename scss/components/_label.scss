@@ -1,6 +1,6 @@
 @use "../colors";
 @use "../custom-functions";
-@use "foundation-spaces/global";
+@use "../foundation-spaces/global";
 
 // COPY & ADAPTATION OF _labels.scss by Foundation
 // Foundation for Sites
@@ -47,7 +47,7 @@ $label-color-default: var(--f-color-bg-1) !default;
 ///
 /// Generates all styles for labels (similar to `spaces-button`)
 ///
-@mixin spaces-label {
+@mixin styles {
   .label {
     @include label-base;
 

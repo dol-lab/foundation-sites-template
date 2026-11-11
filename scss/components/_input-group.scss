@@ -1,15 +1,53 @@
-@use "../custom-includes/foundation-spaces/global";
-@use "../custom-includes/foundation-spaces/typography/base";
-@use "../custom-includes/s-label";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/typography/base";
+@use "../foundation-spaces/util/unit";
+@use "../foundation-spaces/util/value";
+@use "input";
+@use "label";
 
-// .input-group.
+// .input-group: a field with labels or buttons attached, forked from Foundation for Sites (https://get.foundation, MIT).
+
+/// Color of labels prefixed to an input.
+/// @type Color
+$input-prefix-color: currentcolor !default;
+
+/// Background color of labels prefixed to an input.
+/// @type Color
+$input-prefix-background: inherit !default;
+
+/// Border around labels prefixed to an input.
+/// @type Border
+$input-prefix-border: 1px solid var(--f-color-border-0) !default;
+
+/// Left/right padding of an pre/postfixed input label
+$input-prefix-padding: 1rem !default;
 
 @mixin styles {
+  $height: (input.$input-font-size * input.$input-line-height) + (value.get-side(input.$input-padding, 'top') + value.get-side(input.$input-padding, 'bottom')) - unit.rem-calc(1);
+
   .input-group {
-    margin: 0;
+    display: if(global.$global-flexbox, flex, table);
+    width: 100%;
+    margin: 0 0 base.$paragraph-margin-bottom;
+
+    @if global.$global-flexbox {
+      align-items: stretch;
+    }
+
+    > :first-child {
+      &, &.input-group-button > * {
+        border-radius: if(global.$global-text-direction == rtl, 0 input.$input-radius input.$input-radius 0, input.$input-radius 0 0 input.$input-radius);
+      }
+    }
+
+    > :last-child {
+      &, &.input-group-button > * {
+        border-radius: if(global.$global-text-direction == rtl, input.$input-radius 0 0 input.$input-radius, 0 input.$input-radius input.$input-radius 0);
+      }
+    }
 
     .input-group-label {
-      padding: s-label.$label-padding;
+      padding: label.$label-padding;
     }
 
     .input-group-field {
@@ -60,7 +98,99 @@
     input.clear:not(:focus) {
       border-color: transparent;
     }
+  }
 
-    margin-bottom: base.$paragraph-margin-bottom;
+  %input-group-child {
+    margin: 0;
+    white-space: nowrap;
+
+    @if not global.$global-flexbox {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+
+  .input-group-label {
+    @extend %input-group-child;
+
+    padding: 0 $input-prefix-padding;
+    border: $input-prefix-border;
+    background: $input-prefix-background;
+    color: $input-prefix-color;
+    text-align: center;
+    white-space: nowrap;
+
+    @if global.$global-flexbox {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+    } @else {
+      width: 1%;
+      height: 100%;
+    }
+
+    @if value.has-value($input-prefix-border) {
+      &:first-child {
+        border-#{global.$global-right}: 0;
+      }
+
+      &:last-child {
+        border-#{global.$global-left}: 0;
+      }
+    }
+  }
+
+  .input-group-field {
+    @extend %input-group-child;
+
+    border-radius: 0;
+
+    @if global.$global-flexbox {
+      flex: 1 1 0px; // sass-lint:disable-line zero-unit
+      min-width: 0;
+    }
+  }
+
+  .input-group-button {
+    @extend %input-group-child;
+
+    padding-top: 0;
+    padding-bottom: 0;
+    text-align: center;
+
+    @if global.$global-flexbox {
+      display: flex;
+      flex: 0 0 auto;
+    } @else {
+      width: 1%;
+      height: 100%;
+    }
+
+    a,
+    input,
+    button,
+    label {
+      @extend %input-group-child;
+
+      @if global.$global-flexbox {
+        align-self: stretch;
+        height: auto;
+      } @else {
+        height: $height;
+      }
+
+      padding-top: 0;
+      padding-bottom: 0;
+      font-size: input.$input-font-size;
+    }
+  }
+
+  // Specificity bump needed to prevent override by buttons
+  @if not global.$global-flexbox {
+    .input-group {
+      .input-group-button {
+        display: table-cell;
+      }
+    }
   }
 }

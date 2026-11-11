@@ -13,23 +13,155 @@
 ///  app-backend.scss before this loads).
 @use "custom-normalize";
 @use "custom-functions";
-@use "custom-foundation-includes";
-@use "custom-includes/s-scroll-snap";
-@use "custom-styles";
+@use "foundation-spaces/prototype/flex";
+@use "foundation-spaces/prototype/prototype";
+@use "foundation-spaces/prototype/visibility";
+@use "foundation-spaces/typography/typography" as foundation-typography;
+@use "foundation-spaces/xy-grid/classes";
+@use "components/app-header";
+@use "components/avatar";
+@use "components/avatar-stack";
+@use "components/badge";
+@use "components/breadcrumbs";
+@use "components/button";
+@use "components/button-group";
+@use "components/callout";
+@use "components/card";
+@use "components/card-item";
+@use "components/caret";
+@use "components/checkbox";
+@use "components/clipped";
+@use "components/close-button";
+@use "components/details";
+@use "components/details-menu";
+@use "components/dot-list";
+@use "components/dots";
+@use "components/dropdown-menu";
+@use "components/edit-bar";
+@use "components/fieldset";
+@use "components/form-error";
+@use "components/form-label";
+@use "components/gb";
+@use "components/help-text";
+@use "components/icons";
+@use "components/info-chip";
+@use "components/input";
+@use "components/input-group";
+@use "components/label";
+@use "components/label-wrapper";
+@use "components/menu";
+@use "components/page-title";
+@use "components/pagination";
+@use "components/popover";
+@use "components/progress-bar";
+@use "components/prose-layout";
+@use "components/radio-accordion";
+@use "components/radio-tabs";
+@use "components/reveal";
+@use "components/sandwich-icon";
+@use "components/scroll-snap";
+@use "components/select";
+@use "components/shake";
+@use "components/switch";
+@use "components/table";
+@use "components/tabs";
+@use "components/thumbnail";
+@use "components/tooltip";
+@use "components/user-card";
+@use "custom-styles/focus";
+@use "custom-styles/general-base";
+@use "custom-styles/loading";
+@use "custom-styles/motion";
+@use "custom-styles/typography";
+@use "custom-styles/utilities";
 
 ///
-///  Every component rule, in cascade order. `@content` is where app.scss puts
-///  the light/dark palette; the backend sets its tokens outside `.f`.
+///  Every rule, in cascade order: a later include wins at equal specificity, so
+///  reorder only rules that cannot match the same element. `@content` is where
+///  app.scss puts the light/dark palette; the backend sets its tokens outside `.f`.
 @mixin styles {
   ///  The palette classes' color tokens, read by every component.
   @include custom-functions.palette-classes;
-  @include s-scroll-snap.styles;
+  @include scroll-snap.styles;
 
-  ///  Foundation's components, some forked to read CSS variables.
-  @include custom-foundation-includes.styles;
+  ///  Form elements (forked from Foundation), Foundation's typography and grid.
+  @include input.styles;
+  @include checkbox.styles;
+  @include form-label.styles;
+  @include help-text.styles;
+  @include input-group.styles;
+  @include fieldset.styles;
+  @include select.styles;
+  @include form-error.styles;
+  @include foundation-typography.foundation-typography;
+
+  // Grid class groups nothing uses, neither the platform nor index.html.
+  @include classes.foundation-xy-grid-classes(
+    $collapse: false, // .small-margin-collapse, .small-padding-collapse
+    $frame-grid: false, // .grid-frame, .cell-block
+    $block-grid: false, // .small-up-3
+    $offset: false, // .small-offset-2
+    $padding-grid: false, // .grid-padding-x, .grid-padding-y
+  );
+
+  ///  Components forked from Foundation. Its table is left out: it fights
+  ///  Gutenberg's table styles.
+  @include button.styles;
+  @include close-button.styles;
+  @include label.styles;
+  @include progress-bar.styles;
+  @include switch.styles;
+  @include radio-tabs.styles;
+  @include badge.styles;
+  @include breadcrumbs.styles;
+  @include callout.styles;
+  @include card.styles;
+  @include pagination.styles;
+  @include tabs.styles;
+  @include thumbnail.styles;
+  @include menu.styles;
+  @include dropdown-menu.styles;
+  @include reveal.styles;
+
+  ///  Foundation's helper classes (deprecated, see docs/helper-classes.md).
+  @include visibility.foundation-visibility-classes;
+  @include prototype.foundation-prototype-classes;
+  @include flex.foundation-flex-classes;
 
   @content;
 
-  ///  Our styling, comes late to overwrite foundation styles.
-  @include custom-styles.styles;
+  ///  Base elements and type, then our components (one partial per component,
+  ///  named after its class: `_info-chip.scss` is `.info-chip`), then the
+  ///  helpers that override components.
+  @include general-base.styles;
+  @include typography.styles;
+  @include page-title.styles;
+  @include avatar.styles;
+  @include dot-list.styles;
+  @include gb.styles;
+  @include prose-layout.styles;
+  @include clipped.styles;
+  @include card-item.styles;
+  @include avatar-stack.styles;
+  @include popover.styles;
+  @include info-chip.styles;
+  @include label-wrapper.styles;
+  @include user-card.styles;
+  @include radio-accordion.styles;
+  @include button-group.styles;
+  @include dots.styles;
+  @include edit-bar.styles;
+  @include caret.styles;
+  @include icons.styles;
+  @include sandwich-icon.styles;
+  @include tooltip.styles;
+  @include shake.styles;
+  @include table.styles;
+  @include details.styles;
+  @include details-menu.styles;
+  @include app-header.styles;
+  @include utilities.styles;
+  @include loading.styles;
+  @include motion.styles;
+  @include focus.styles;
 }

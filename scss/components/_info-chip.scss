@@ -1,6 +1,6 @@
 @use "../custom-functions";
-@use "../custom-includes/foundation-spaces/global";
-@use "../custom-includes/foundation-spaces/util/unit";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/util/unit";
 
 // .info-chips (the row) and .info-chip (static or clickable chip). Chips have no margin: the row's gap spaces them.
 

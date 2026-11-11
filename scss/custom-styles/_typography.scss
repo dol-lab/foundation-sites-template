@@ -1,9 +1,9 @@
 @use "../custom-functions";
 @use "../custom-settings";
-@use "../custom-includes/foundation-spaces/global";
-@use "../custom-includes/foundation-spaces/typography/base";
-@use "../custom-includes/foundation-spaces/util/breakpoint";
-@use "../custom-includes/s-button";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/typography/base";
+@use "../foundation-spaces/util/breakpoint";
+@use "../components/button";
 
 // Typography
 // ---------
@@ -63,12 +63,12 @@
     @include custom-functions.foundation-palette($hover: false);
   }
 
-  // A button's and a label's color classes are their own (_s-button.scss, _s-label.scss):
+  // A button's and a label's color classes are their own (_button.scss, _label.scss):
   // on a link label this rule would paint the text in the label's background color.
   a:not(.button, .label) {
     @include custom-functions.foundation-palette;
     @include custom-functions.foundation-palette($selector: "li", $child: ">&");
-    @include s-button.button-sizes;
+    @include button.button-sizes;
   }
 
   /*

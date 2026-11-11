@@ -1,4 +1,4 @@
-@use "foundation-spaces/global";
+@use "../foundation-spaces/global";
 
 // Foundation for Sites
 // https://get.foundation
@@ -121,7 +121,7 @@ $breadcrumbs-item-separator-opacity: 60% !default;
   }
 }
 
-@mixin spaces-breadcrumbs {
+@mixin styles {
   .breadcrumbs {
     @include breadcrumbs-container;
 

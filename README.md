@@ -33,30 +33,28 @@ A link to another section is written `[details](details.md)`, which works on Git
 
 ## Files
 
-- `scss/app.scss`, `scss/app-backend.scss`: the two entry points (see below). Both load `scss/_bundle.scss`, the shared include list in cascade order.
-- `scss/components/`: one partial per component, named after its class (`_info-chip.scss` is `.info-chip`).
+- `scss/app.scss`, `scss/app-backend.scss`: the two entry points (see below). Both load `scss/_bundle.scss`, the one include list, in cascade order.
+- `scss/components/`: one partial per component, named after its class (`_info-chip.scss` is `.info-chip`, `_form-label.scss` is a form `label`), including the ones forked from Foundation.
 - `scss/custom-styles/`: tokens and palette (`_root-tokens`, `_root-variables`), base elements, type, utilities, motion (shared animations, reduced motion), focus.
-- `scss/custom-includes/`: Foundation's own components with our settings (`_s-*.scss`); `foundation-spaces/` is the Foundation source fork.
-- `scss/_custom-styles.scss`: the include list for `components/` and `custom-styles/`, in cascade order.
-- `scss/_custom-foundation-includes.scss`: which Foundation components are emitted, with opt-in flags.
+- `scss/foundation-spaces/`: what is left of the Foundation source: `util/`, the XY grid, normalize, typography and the helper classes (`prototype/`, deprecated).
 - `scss/_colors.scss`: the palettes. `_custom-settings.scss`: our Sass settings. `_custom-functions.scss`: mixins, including `foundation-apply-theme()`.
 - `js/app.js`: the only script, for the demo page and Spaces (tabs, dropdown menus, modals, closables, tooltips, find-in-page, `data-collapse`). It needs no jQuery and no init call: handlers are delegated, so markup added later works as is. Foundation's own JS is not shipped; a `data-<plugin>` attribute of a Foundation plugin does nothing.
 - `docs/`: the demo page's sections; among them `colors.md` (color roles, light and dark, tinting, dark-mode troubleshooting), `variables.md` (every other `--f-*` custom property) and `helper-classes.md` (utility classes).
 
 ## Adding a component
 
-Create `scss/components/_name.scss`, wrap its rules in `@mixin styles { … }`, `@use` it in `scss/_custom-styles.scss` and add `@include name.styles;` at the matching place in the cascade. A partial that is not included prints nothing. Settings go at the top of the partial as `!default` variables or custom properties; `_custom-settings.scss` keeps only what several partials share. Private custom properties start with `--_`, a public knob is `--f-<component>-…`.
+Create `scss/components/_name.scss`, wrap its rules in `@mixin styles { … }`, `@use` it in `scss/_bundle.scss` and add `@include name.styles;` at the matching place in the cascade. A partial that is not included prints nothing. Settings go at the top of the partial as `!default` variables or custom properties; `_custom-settings.scss` keeps only what several partials share. Private custom properties start with `--_`, a public knob is `--f-<component>-…`.
 
 ## Configuring
 
 Pass settings with `@use … with (…)` to the partial that owns them, before the entry loads it:
 
 ```scss
-@use "custom-includes/s-button" with ($button-padding: 1rem);
+@use "components/button" with ($button-padding: 1rem);
 @use "app";
 ```
 
-The fork keeps only the Foundation components it builds (`_custom-foundation-includes.scss`): off-canvas, top-bar, title-bar, drilldown, media-object, sticky, table, the float grid, the float classes and Motion UI are gone. Take one from Foundation 6.9 if a project needs it.
+The fork keeps only the Foundation components it builds (`_bundle.scss`): off-canvas, top-bar, title-bar, drilldown, media-object, sticky, table, the float grid, the float classes and Motion UI are gone. Take one from Foundation 6.9 if a project needs it.
 
 ## Colors and theming
 

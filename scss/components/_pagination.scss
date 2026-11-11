@@ -1,6 +1,6 @@
-@use "../global";
-@use "../util/breakpoint";
-@use "../util/unit";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/util/breakpoint";
+@use "../foundation-spaces/util/unit";
 
 // Foundation for Sites
 // https://get.foundation
@@ -172,7 +172,7 @@ $pagination-arrow-next: '\00BB' !default;
   color: $color;
 }
 
-@mixin foundation-pagination {
+@mixin styles {
   .pagination {
     @include pagination-container;
 

@@ -1,6 +1,6 @@
-@use "../global";
-@use "../util/unit";
-@use "text";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/util/unit";
+@use "input";
 
 // Foundation for Sites
 // https://get.foundation
@@ -40,7 +40,7 @@ $legend-padding: unit.rem-calc(0 3) !default;
   }
 }
 
-@mixin foundation-form-fieldset {
+@mixin styles {
   fieldset {
     margin: 0;
     padding: 0;
@@ -49,7 +49,7 @@ $legend-padding: unit.rem-calc(0 3) !default;
 
   legend {
     max-width: 100%;
-    margin-bottom: text.$form-spacing * 0.5;
+    margin-bottom: input.$form-spacing * 0.5;
   }
 
   .fieldset {

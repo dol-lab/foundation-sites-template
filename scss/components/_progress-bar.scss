@@ -1,19 +1,38 @@
 @use "../custom-functions";
-@use "foundation-spaces/forms/progress";
-@use "foundation-spaces/global";
-@use "foundation-spaces/util/mixins";
-@use "foundation-spaces/util/value";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/util/mixins";
+@use "../foundation-spaces/util/value";
 
 // Foundation for Sites
 // https://get.foundation
 // Licensed under MIT Open Source
 
+/// Height of a progress bar.
+/// @type Number
+$progress-height: 1rem !default;
+
+/// Background color of a progress bar.
+/// @type Color
+$progress-background: color-mix(in oklab, var(--f-color-text-1) 7%, var(--f-color-bg-1)) !default;
+
+/// Bottom margin of a progress bar.
+/// @type Number
+$progress-margin-bottom: global.$global-margin !default;
+
+/// Default color of a progress bar's meter.
+/// @type Color
+$progress-meter-background: var(--f-color-brand) !default;
+
+/// Default radius of a progress bar.
+/// @type Number
+$progress-radius: global.$global-radius !default;
+
 /// Adds styles for a progress bar container.
 @mixin progress-container {
-  height: progress.$progress-height;
-  margin-bottom: progress.$progress-margin-bottom;
-  border-radius: progress.$progress-radius;
-  background-color: progress.$progress-background;
+  height: $progress-height;
+  margin-bottom: $progress-margin-bottom;
+  border-radius: $progress-radius;
+  background-color: $progress-background;
 }
 
 /// Adds styles for the inner meter of a progress bar.
@@ -22,9 +41,9 @@
   display: block;
   width: 0%;
   height: 100%;
-  background-color: progress.$progress-meter-background;
+  background-color: $progress-meter-background;
 
-  @if value.has-value(progress.$progress-radius) {
+  @if value.has-value($progress-radius) {
     border-radius: global.$global-radius;
   }
 }
@@ -39,12 +58,12 @@
   color: var(--f-color-text-1);
   white-space: nowrap;
 
-  @if value.has-value(progress.$progress-radius) {
-    border-radius: progress.$progress-radius;
+  @if value.has-value($progress-radius) {
+    border-radius: $progress-radius;
   }
 }
 
-@mixin spaces-progress-bar {
+@mixin styles {
   // Progress bar
   .progress {
     @include progress-container;

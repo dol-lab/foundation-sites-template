@@ -1,12 +1,46 @@
 @use "../custom-functions";
-@use "../custom-includes/foundation-spaces/global";
-@use "../custom-includes/s-switch";
+@use "../foundation-spaces/global";
+@use "input";
+@use "switch";
 
 // .checkbox and .radio with their .checkbox-label / .radio-label: a <label> for the input,
 // or an aria-hidden <span> when a .label-wrapper is the label (labels must not nest). Rules key on these
 // classes and the input's state (`input:checked ~ …`), never on `label`, so both forms render alike.
 
 @mixin styles {
+  // Foundation's spacing for bare inputs and their sibling labels (https://get.foundation, MIT).
+  [type='file'],
+  [type='checkbox'],
+  [type='radio'] {
+    margin: 0 0 input.$form-spacing;
+  }
+
+  // Styles for input/label siblings
+  [type='checkbox'] + label,
+  [type='radio'] + label {
+    display: flex;
+    vertical-align: baseline;
+    margin-#{global.$global-left}: input.$form-spacing * 0.5;
+    margin-#{global.$global-right}: input.$form-spacing;
+
+    margin-bottom: 0;
+
+    &[for] {
+      cursor: pointer;
+    }
+  }
+
+  // Styles for inputs inside labels
+  label > [type='checkbox'],
+  label > [type='radio'] {
+    margin-#{global.$global-right}: input.$form-spacing * 0.5;
+  }
+
+  // Normalize file input width
+  [type='file'] {
+    width: 100%;
+  }
+
   .checkbox,
   .radio {
     display: flex;
@@ -19,14 +53,14 @@
 
     @include custom-functions.foundation-palette;
 
-    font-size: s-switch.$switch-height;
+    font-size: switch.$switch-height;
 
     &.small {
-      font-size: s-switch.$switch-height-small;
+      font-size: switch.$switch-height-small;
     }
 
     &.large {
-      font-size: s-switch.$switch-height-large;
+      font-size: switch.$switch-height-large;
     }
 
     .label-wrapper > .checkbox-label,
@@ -36,7 +70,7 @@
   }
 
   // A disabled input fades its drawn control, and in a wrapping label the row's text too
-  // (the switch paddle: _s-switch.scss).
+  // (the switch paddle: _switch.scss).
   label > :disabled ~ *,
   :disabled ~ :is(.checkbox-label, .radio-label) {
     opacity: var(--f-opacity-disabled);
@@ -49,17 +83,17 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    font-size: s-switch.$switch-height;
+    font-size: switch.$switch-height;
     line-height: 1;
     margin: 0;
     width: initial;
 
     .small > & {
-      font-size: s-switch.$switch-height-small;
+      font-size: switch.$switch-height-small;
     }
 
     .large > & {
-      font-size: s-switch.$switch-height-large;
+      font-size: switch.$switch-height-large;
     }
 
     [type="checkbox"] + &,

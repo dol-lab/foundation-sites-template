@@ -1,7 +1,7 @@
 @use "sass:map";
 @use "../custom-functions";
 @use "../custom-settings";
-@use "foundation-spaces/global";
+@use "../foundation-spaces/global";
 
 // .switch: an outlined pill with a solid knob when off, a filled pill with a larger knob on the far side
 // when on, so the state shows in shape, fill and position, not in color alone (3:1 for the outline, WCAG
@@ -63,7 +63,7 @@ $-cell-travel: 100%;
   $-cell-travel: -100%;
 }
 
-@mixin spaces-switch {
+@mixin styles {
   .switch {
     --_h: #{map.get($switch-track-heights, default)};
     --_w: calc(var(--_h) * 1.8);

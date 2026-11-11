@@ -1,9 +1,9 @@
-@use "../../../components/caret";
-@use "../../../custom-settings";
-@use "../global";
-@use "../typography/base";
-@use "../util/breakpoint";
-@use "../util/mixins";
+@use "caret";
+@use "../custom-settings";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/typography/base";
+@use "../foundation-spaces/util/breakpoint";
+@use "../foundation-spaces/util/mixins";
 
 // Foundation for Sites
 // https://get.foundation
@@ -65,7 +65,7 @@ $dropdown-menu-item-background-active: var(--f-color-bg-2) !default;
 // A panel is the `[popover]` child of a top-level item, opened by js/app.js. It sits below its item,
 // start edges aligned, flips to end edges where it would leave the window and scrolls where it is
 // taller than the room below.
-@mixin foundation-dropdown-menu {
+@mixin styles {
   .dropdown.menu {
     // Scoped: otherwise a panel, in the top layer, anchors to the page's last item of that name.
     > li {

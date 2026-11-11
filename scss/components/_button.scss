@@ -1,10 +1,9 @@
 @use "../colors";
 @use "../custom-functions";
 @use "../custom-settings";
-@use "foundation-spaces/forms/label";
-@use "foundation-spaces/global";
-@use "foundation-spaces/util/breakpoint";
-@use "foundation-spaces/util/mixins";
+@use "../foundation-spaces/global";
+@use "../foundation-spaces/util/breakpoint";
+@use "../foundation-spaces/util/mixins";
 
 // Foundation for Sites
 // https://get.foundation
@@ -174,7 +173,7 @@ $button-responsive-expanded: false !default;
 }
 
 // .button, and what .button, .input and .button-group share (focus, corners inside card sections).
-@mixin spaces-button {
+@mixin styles {
   .button {
     --_c: var(--f-color-text-0);
     --_c-darker: color-mix(in oklab, var(--f-color-text-0) 85%, var(--f-color-bg-1));
@@ -327,7 +326,7 @@ $button-responsive-expanded: false !default;
   .button,
   .input,
   .button-group {
-    line-height: label.$form-label-line-height;
+    line-height: custom-settings.$form-label-line-height;
 
     // A last button after another one keeps its margin, or it sits lower than its row.
     &:last-child:not(.button + *) {

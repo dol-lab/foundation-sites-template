@@ -76,7 +76,7 @@ $badge-rounding: 2 !default;
 $-colors: custom-functions.palette-selector(colors.$status-palette);
 $-readable: color-mix(in oklab, var(--f-c) 80%, var(--f-color-text-0) 20%);
 
-@mixin spaces-badge {
+@mixin styles {
   .badge {
     @include badge-base;
 
