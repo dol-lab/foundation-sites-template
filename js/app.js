@@ -322,18 +322,49 @@
   );
 
   /**
-   * Modals are `<dialog class="reveal">`: `[data-open="<id>"]` opens one; a click on its backdrop (the dialog
-   * itself is the target, outside its box) closes it. Scripts call `showModal()`/`close()` and listen for the
-   * native `close` event. A `[data-close]` button closes its modal or removes its `[data-closable]` box.
+   * Modals are `<dialog class="reveal">`: `[data-open="<id>"]` opens one. A `[data-close]` button, Escape, a click
+   * on the backdrop and a swipe down all ask it to close (`requestClose()`), so its `cancel` event is the one guard:
+   * a script that calls `preventDefault()` there keeps it open (a form with unsaved changes). Scripts call
+   * `showModal()`/`close()` and listen for the native `close` event. `[data-close]` outside a modal removes its
+   * `[data-closable]` box.
    */
+  /** @param {HTMLDialogElement} dialog An open modal: closes it unless its `cancel` event is canceled. */
+  const requestClose = (dialog) => {
+    if (dialog.requestClose) dialog.requestClose();
+    else if (dialog.dispatchEvent(new Event("cancel", { cancelable: true }))) dialog.close();
+  };
+  // Escape asks as well, instead of the browser closing on its own: Chromium lets a page cancel only one Escape per
+  // user activation, so a second one would close the form after all. Left to the browser where a script took the key
+  // (a React Aria popover or list closing first) or a popover would close first.
+  const autoPopover = CSS.supports("selector(:popover-open)") && ":popover-open:not([popover=manual])";
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape" || e.defaultPrevented || e.isComposing) return;
+    const dialog = e.target.closest?.("dialog.reveal:modal");
+    if (!dialog || (autoPopover && document.querySelector(autoPopover))) return;
+    e.preventDefault();
+    requestClose(dialog);
+  });
+  // A backdrop click (the dialog itself is the target, outside its box) counts only when the press began there too:
+  // not when a text selection ends outside, nor for the click a tap sends after it opened the modal under the finger.
+  let pressedBackdrop = null;
+  /**
+   * @param {MouseEvent} e A pointer event.
+   * @return {?HTMLDialogElement} The open modal whose backdrop it is on.
+   */
+  const backdropOf = (e) => {
+    if (!e.target.matches?.("dialog.reveal[open]")) return null;
+    const r = e.target.getBoundingClientRect();
+    const out = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+    return out ? e.target : null;
+  };
+  document.addEventListener("pointerdown", (e) => (pressedBackdrop = backdropOf(e)), true);
   document.addEventListener("click", (e) => {
     const target = document.getElementById(e.target.closest("[data-open]")?.dataset.open);
     if (target?.matches("dialog.reveal:not([open])")) return target.showModal();
     const box = e.target.closest("[data-close]")?.closest("[data-closable], dialog.reveal");
-    if (box) return box.matches("dialog") ? box.close() : box.remove();
-    if (!e.target.matches("dialog.reveal[open]")) return;
-    const r = e.target.getBoundingClientRect();
-    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) e.target.close();
+    if (box) return box.matches("dialog") ? requestClose(box) : box.remove();
+    const backdrop = backdropOf(e);
+    if (backdrop && backdrop === pressedBackdrop) requestClose(backdrop);
   });
 
   /**
@@ -376,8 +407,9 @@
    * content (the handle) moves an expandable sheet to the other stop, the one-finger alternative to the swipe. A
    * text field taking the focus expands the sheet (the on-screen keyboard is coming), and so does the focus
    * landing below the screen; returning to the peek takes the focus off a text field, so the keyboard goes with
-   * it. `<dialog>`s lose `data-expanded` on closing. A modal that is no `<dialog>` (in a `.reveal-overlay`) is
-   * closed with Escape, which its own script (React Aria) handles, guards included.
+   * it. `<dialog>`s lose `data-expanded` on closing. Swiped away, a `<dialog>` is asked to close (`requestClose`), so
+   * a guard can keep it; a modal that is no `<dialog>` (in a `.reveal-overlay`) gets an Escape, which its own script
+   * (React Aria) handles.
    * While dragged below its lowest stop the sheet lightens its backdrop (`--_sheet-shade`, on the `<dialog>` or
    * the `.reveal-overlay`). Each frame writes inline `translate` and the shade alone, which restyle the modal box
    * and nothing in it.
@@ -445,6 +477,8 @@
     canDrag(el, dialog, top) {
       if (el.closest("textarea, select, [contenteditable]")) return false;
       for (let n = el; n !== dialog.parentElement; n = n.parentElement) {
+        // A popover or a `.reveal-layer` overlay opened from the sheet is no part of it.
+        if (n.matches("[popover], .reveal-layer")) return false;
         const { touchAction, overflowY } = getComputedStyle(n);
         if (!/auto|manipulation|pan-y/.test(touchAction)) return false;
         if (!top) continue;
@@ -492,7 +526,7 @@
       const flick = time - t < 100 ? v : 0;
       const lowest = !low || !top;
       if (at - low > shown / 2 || (lowest && flick > 0.8 && at - low > shown / 4)) {
-        if (dialog.matches("dialog")) dialog.close();
+        if (dialog.matches("dialog")) requestClose(dialog);
         else dialog.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
       } else if (low) {
         const moved = at - from;

@@ -282,7 +282,7 @@ $reveal-handle-space: 1.25rem !default;
         flex-shrink: 0;
       }
 
-      > .reveal-header ~ :not(.close-button) {
+      > .reveal-header ~ :not(.close-button, .reveal-layer, dialog) {
         flex: 1 1 auto;
         min-height: 0;
         overflow-y: auto;
@@ -307,6 +307,20 @@ $reveal-handle-space: 1.25rem !default;
     .reveal-header {
       anchor-name: --reveal-header;
       padding-inline-end: $reveal-close-inset + $reveal-close-size + 0.25rem;
+    }
+
+    // Overlays a script opens from a modal (React Aria's popovers and tooltips) render into a `.reveal-layer`
+    // child: outside the modal the page is inert, and placed in its box they would be clipped by its scroll. The
+    // layer covers the screen and takes no pointer events itself. A sheet on a phone is the containing block of
+    // fixed descendants (`will-change: translate`), so there the layer is the sheet's box.
+    > .reveal-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+
+      & > * {
+        pointer-events: auto;
+      }
     }
 
     // `.prose-layout` brings its own side columns, so it spans the padding, as in a post card.
