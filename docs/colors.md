@@ -49,7 +49,7 @@ Each color has `-contrast` (text on it, AA 4.5:1 in both modes, except the light
 
 A color class (`.brand` … `.alert`, and `.activity` for badges and labels) sets `--f-c`, `--f-c-contrast`, `--f-c-darker` and `--f-c-text` on its element, and every component reads those. So any color works inline: `style="--f-c: …"` on a button, badge, label, chip, link or progress bar. Its contrast is black or white by its lightness; set `--f-c-contrast` too where that is not enough. Check the result for AA yourself: unlike the palette, an inline color is not tested. A new palette color is one entry in `$foundation-palette` and `$foundation-palette-contrast`.
 
-```html demo
+```html example row
 <a class="button" style="--f-c: #7b3fbf">Button</a>
 <span class="badge" style="--f-c: #7b3fbf">3</span>
 <span class="label" style="--f-c: #e9b949">Label</span>
