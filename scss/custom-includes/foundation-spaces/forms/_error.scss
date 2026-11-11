@@ -21,7 +21,7 @@ $abide-labels: true !default;
 /// Color vars to use for invalid text inputs.
 /// @type String
 $input-background-invalid: var(--f-color-alert) !default;
-$form-label-color-invalid: var(--f-color-alert) !default;
+$form-label-color-invalid: var(--f-color-alert-text) !default;
 $input-error-color: var(--f-color-alert-text) !default;
 
 /// Default font size for form error text.
@@ -34,21 +34,15 @@ $input-error-font-weight: global.$global-weight-bold !default;
 
 /// Styles the background and border of an input field to have an error state.
 ///
-/// @param {Color} $background [$alert-color] - Color to use for the background and border.
-/// @param {Number} $background-lighten [10%] - Lightness level of the background color.
-@mixin form-input-error($background: $input-background-invalid, $background-lighten: 80%) {
-  $other-pct: 100% - $background-lighten;
-
+/// @param {Color} $background [$input-background-invalid] - Color of the border and the background tint.
+/// @param {Number} $tint [20%] - Share of that color in the background.
+@mixin form-input-error($background: $input-background-invalid, $tint: 20%) {
   &:not(:focus) {
     border-color: $background;
-    background-color: color-mix(
-      in oklab,
-      #{$background} #{$background-lighten},
-      var(--f-color-bg-1) #{$other-pct}
-    );
+    background-color: color-mix(in oklab, #{$background} #{$tint}, var(--f-color-bg-1));
 
     &::placeholder {
-      color: $background;
+      color: var(--f-color-alert-text);
     }
   }
 }
@@ -73,7 +67,7 @@ $input-error-font-weight: global.$global-weight-bold !default;
   @if $abide-labels {
     .is-invalid-label {
       color: $form-label-color-invalid;
-    } // -> var(--f-color-alert)
+    }
   }
 
   .form-error {

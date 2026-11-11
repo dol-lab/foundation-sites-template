@@ -29,21 +29,16 @@ A side beats an axis, an axis beats all sides: `pl-1` overrides `p-2`. `.p-0` al
 
 Legacy: Foundation's `.padding-{0-1}` / `.margin-{0-1}` (with sides, e.g. `.padding-top-1`) and `.gutter-*`. Use the scale for anything new.
 
-## Layout and grid
+## Layout
+
+The grid, containers, breakpoints, `.prose-layout` and `.auto-grid`: [layout](layout.md).
 
 | Category      | Classes                                                                  | Notes                                                  |
 | ------------- | ------------------------------------------------------------------------ | ------------------------------------------------------ |
 | **Display**   | `.display-inline-block`                                                  | Hide with `.hide`.                                     |
-| **Container** | `.grid-container`                                                        | Add `.fluid` (full width + pad) or `.full` (no pad).   |
-| **Grid Flex** | `.grid-x`                                                                | Add `.grid-margin-x` (`.grid-margin-y`) for gutters. |
-| **Cells**     | `.cell`                                                                  | Add `.auto` (fill space) or `.shrink` (fit content).   |
 | **Widths**    | `.width-100`, `.max-width-100`, `.max-height-100`                        |                                                        |
 | **Position**  | `.position-relative`                                                     |                                                        |
 | **Overflow**  | `.overflow-hidden`, `.overflow-x-hidden`, `.overflow-y-hidden`           | `.card` also takes `.overflow-auto`, `.overflow-initial`. |
-
-### Grid columns
-
-Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile), `medium-6` (half from medium), `large-4` (a third from large). Small to large only: xlarge and xxlarge have no column classes.
 
 ## Flexbox
 
@@ -86,15 +81,3 @@ Format: `{breakpoint}-{columns}` (12 columns): `small-12` (full width on mobile)
 - **Clickable:** `.clickable` on `.card` / `.info-chip`: opt in where the whole element is interactive but nothing in the markup says so (a JS handler instead of an `[href]`).
 - **Click through:** `.click-through` lets the mouse pass the element but not its children.
 - **Reveal on focus:** `.show-on-focus-within` keeps the element visually hidden until something inside it has focus (a row of skip links).
-
-## Breakpoints
-
-Hand-written media queries use these too. Grid columns and visibility classes stop at large.
-
-| Prefix     | Min width |
-| ---------- | --------- |
-| `small-`   | 0         |
-| `medium-`  | 480px     |
-| `large-`   | 720px     |
-| `xlarge-`  | 960px     |
-| `xxlarge-` | 1200px    |

@@ -31,6 +31,21 @@ Wrap a field in its `<label>`. Fields stretch to the width of their cell.
 </form>
 ```
 
+## Help and error text
+
+`.help-text` below a field explains it; `.form-error` is hidden until it gets `.is-visible`. On an invalid field, `.is-invalid-input` colors the field and `.is-invalid-label` its label. Tie both texts to the field: its `aria-describedby` names their ids, and an invalid field has `aria-invalid="true"`, so a screen reader reads the text when the field takes focus (color alone does not tell). An error that appears after a submit goes into a `role="alert"` box, or focus moves to the first invalid field.
+
+```html example
+<form onsubmit="return false">
+    <label for="demo-email">Email</label>
+    <input id="demo-email" type="email" aria-describedby="demo-email-help">
+    <p class="help-text" id="demo-email-help">We send the invitation to this address.</p>
+    <label for="demo-handle" class="is-invalid-label">Name in the URL</label>
+    <input id="demo-handle" type="text" value="my space" class="is-invalid-input" aria-invalid="true" aria-describedby="demo-handle-error">
+    <p class="form-error is-visible" id="demo-handle-error">Use letters, digits and dashes only.</p>
+</form>
+```
+
 ## Checkboxes and radios
 
 The native input is hidden; `.checkbox-label` draws it. A `.label-wrapper` makes the visible text part of the click target; inside it the drawn control is an `aria-hidden` `<span>`, as labels must not nest.
