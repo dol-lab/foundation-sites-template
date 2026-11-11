@@ -53,11 +53,14 @@ $switch-transition: global.$global-transition-short global.$global-transition-ti
 /// @type List
 $switch-knob-transition: global.$global-transition-medium global.$global-transition-timing-spring !default;
 
-// How far the knob travels when on: the track's length less its height, mirrored in a right-to-left build.
+// How far the knob travels when on, mirrored in a right-to-left build: on a plain switch the track's length
+// less its height, on `.switch-with-labels` one cell, which is the knob's own width.
 $-knob-travel: calc(var(--_w) - var(--_h));
+$-cell-travel: 100%;
 
 @if global.$global-text-direction == rtl {
   $-knob-travel: calc(var(--_h) - var(--_w));
+  $-cell-travel: -100%;
 }
 
 @mixin spaces-switch {
@@ -88,6 +91,20 @@ $-knob-travel: calc(var(--_w) - var(--_h));
       }
     }
 
+    // Beats Foundation's `[type="checkbox"] + label` margin.
+    input + .switch-paddle {
+      margin: 0;
+    }
+
+    input:disabled ~ .switch-paddle {
+      cursor: $switch-cursor-disabled;
+      opacity: $switch-opacity-disabled;
+    }
+  }
+
+  // The plain switch's paddle and knob. `:where()` keeps their weight and leaves `.switch-with-labels`, which
+  // draws its own, out of them, so it need not undo the states and palette colors below.
+  .switch:where(:not(.switch-with-labels)) {
     // <label>, or <span> inside a label
     .switch-paddle {
       position: relative;
@@ -134,11 +151,6 @@ $-knob-travel: calc(var(--_w) - var(--_h));
       }
     }
 
-    // Beats Foundation's `[type="checkbox"] + label` margin.
-    input + .switch-paddle {
-      margin: 0;
-    }
-
     input:checked ~ .switch-paddle {
       border-color: transparent;
       background: var(--f-color-text-1);
@@ -155,11 +167,6 @@ $-knob-travel: calc(var(--_w) - var(--_h));
     }
 
     @include custom-functions.foundation-palette($child: "input:checked ~ .switch-paddle", $property: "background");
-
-    input:disabled ~ .switch-paddle {
-      cursor: $switch-cursor-disabled;
-      opacity: $switch-opacity-disabled;
-    }
   }
 
   // <input> element
@@ -168,6 +175,104 @@ $-knob-travel: calc(var(--_w) - var(--_h));
     margin: 0;
     opacity: 0;
     pointer-events: none;
+  }
+
+  // A choice between two sides (nav-menus screen): an icon at each end of the track and a description of the
+  // side chosen. The track is two knob-sized cells, so each icon centers in its cell and the knob moves by its
+  // own width, at any knob size. The knob is outlined on the start side and filled on the end side, as on a
+  // plain switch. The icon on the knob takes its contrast color, the other one the muted text color. The
+  // input's name is the end side's description (`aria-labelledby`), the same in both states (docs/forms.md).
+  .switch-with-labels {
+    --_k: #{custom-settings.$button-height};
+    --_on: var(--f-color-text-1);
+    --_on-hover: var(--f-color-text-0);
+    --_on-text: var(--f-color-bg-1);
+
+    column-gap: var(--f-spacing-3);
+    align-items: flex-start;
+    height: auto;
+
+    &:is(#{custom-functions.palette-selector()}) {
+      --_on: var(--f-c);
+      --_on-hover: var(--f-c-darker);
+      --_on-text: var(--f-c-contrast);
+    }
+
+    // The knob's fill and ring, read by its `::after`.
+    .switch-paddle {
+      --_fill: var(--f-color-bg-1);
+      --_ring: var(--f-color-text-2);
+
+      position: relative;
+      display: grid;
+      flex: none;
+      grid-template-columns: var(--_k) var(--_k);
+      place-items: center;
+      height: var(--_k);
+      border-radius: var(--f-radius-full);
+      background: color-mix(in oklab, var(--f-color-text-0) 12%, transparent);
+      color: var(--f-color-text-2);
+      font-size: calc(var(--_k) * 0.4);
+      cursor: pointer;
+
+      &:hover {
+        --_ring: var(--f-color-text-0);
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset-block: 0;
+        inset-inline-start: 0;
+        width: var(--_k);
+        border-radius: 50%;
+        background: var(--_fill);
+        box-shadow: inset 0 0 0 2px var(--_ring);
+        transition: translate $switch-knob-transition, background-color $switch-transition, box-shadow $switch-transition;
+      }
+    }
+
+    // Above the knob, which is the paddle's `::after` and so paints after them.
+    .switch-label-left,
+    .switch-label-right {
+      position: relative;
+      z-index: 1;
+      transition: color $switch-transition;
+    }
+
+    input:not(:checked) ~ .switch-paddle .switch-label-left {
+      color: var(--f-color-text-0);
+    }
+
+    input:checked ~ .switch-paddle {
+      --_fill: var(--_on);
+      --_ring: var(--_on);
+
+      &:hover {
+        --_fill: var(--_on-hover);
+        --_ring: var(--_on-hover);
+      }
+
+      &::after {
+        translate: $-cell-travel 0;
+      }
+
+      .switch-label-right {
+        color: var(--_on-text);
+      }
+    }
+
+    // Its first line centers on the knob.
+    .switch-label-description-left,
+    .switch-label-description-right {
+      margin-top: max(0px, (var(--_k) - 1lh) / 2);
+      color: var(--f-color-text-0);
+    }
+
+    input:checked ~ .switch-label-description-left,
+    input:not(:checked) ~ .switch-label-description-right {
+      display: none;
+    }
   }
 
   @media (forced-colors: active) {
@@ -193,107 +298,6 @@ $-knob-travel: calc(var(--_w) - var(--_h));
       .switch-paddle {
         forced-color-adjust: none;
       }
-    }
-  }
-
-  // A two-sided switch with an icon on each end, drawn as a ring knob on a filled track (nav-menus screen).
-  .switch-with-labels {
-    margin-right: var(--f-spacing-1);
-    height: auto;
-    align-items: flex-start;
-
-    .switch-paddle,
-    input:checked ~ .switch-paddle,
-    input:checked ~ .switch-paddle:hover {
-      display: flex;
-      align-items: center;
-      width: 4rem;
-      height: auto;
-      flex: 0 0 4rem;
-      margin: 0;
-      border: 0;
-      border-radius: 0;
-      background: none;
-      color: var(--f-color-text-1);
-    }
-
-    .switch-paddle::before {
-      position: static;
-      width: 100%;
-      height: custom-settings.$button-height;
-      border-radius: var(--f-radius-full);
-      background: color-mix(in oklab, var(--f-color-text-0) 22%, var(--f-color-bg-1) 78%);
-    }
-
-    // `input ~` matches the specificity of the knob rules in `.switch`.
-    input ~ .switch-paddle::after,
-    input:checked ~ .switch-paddle::after {
-      top: auto;
-      left: 0;
-      translate: none;
-      scale: none;
-      width: custom-settings.$button-height;
-      height: custom-settings.$button-height;
-      border-radius: var(--f-radius-full);
-      background: var(--f-color-bg-1);
-      box-shadow: inset 0 0 0 2px var(--f-color-text-2);
-      transition: left $switch-transition, box-shadow global.$global-transition-medium global.$global-transition-timing;
-    }
-
-    input:checked {
-      ~ .switch-paddle::after {
-        left: 2rem;
-        box-shadow: inset 0 0 0 2em currentcolor;
-      }
-
-      ~ .switch-paddle .switch-label-left {
-        color: var(--f-color-bg-1);
-      }
-
-      ~ .switch-paddle .switch-label-right {
-        color: var(--f-color-text-0);
-        scale: 1;
-      }
-
-      ~ .switch-label-description-left {
-        display: none;
-      }
-
-      ~ .switch-label-description-right {
-        display: block;
-      }
-    }
-
-    // Above the knob, which is the paddle's `::after` and so paints after them. `scale`, not `zoom`: no reflow.
-    .switch-label-left,
-    .switch-label-right {
-      position: absolute;
-      z-index: 1;
-      color: var(--f-color-bg-1);
-      scale: 0.9;
-      transition: scale 0.5s;
-    }
-
-    .switch-label-left {
-      left: 0.5rem;
-      transform-origin: left;
-      color: var(--f-color-text-0);
-      scale: 1;
-    }
-
-    .switch-label-right {
-      right: 0.5rem;
-      transform-origin: right;
-    }
-
-    .switch-label-description-right {
-      display: none;
-    }
-
-    .switch-label-description-left,
-    .switch-label-description-right {
-      color: var(--f-color-text-0);
-      margin-left: 10px;
     }
   }
 }

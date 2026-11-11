@@ -162,17 +162,17 @@ With a visible label, a `.label-wrapper` is the label, as for checkboxes, and th
 </label>
 ```
 
-`.switch-with-labels` is a wide two-sided switch with an icon on each end and a description for each side; the input's state shows one of them. Spaces uses it on the nav-menus screen.
+`.switch-with-labels` chooses between two sides: an icon at each end of the track, centered in its cell, and a description of the side chosen. It takes a palette color for the knob on the end side. The input is named by the end side's description through `aria-labelledby`, so its name stays the same and "off" means the start side; without it, the name would follow the visible description and "Dynamic content, off" would read as the opposite. Spaces uses it on the nav-menus screen.
 
 ```html example
 <div class="switch switch-with-labels">
-    <input class="switch-input" role="switch" id="demo-switch-labels" type="checkbox">
+    <input class="switch-input" role="switch" id="demo-switch-labels" type="checkbox" aria-labelledby="demo-switch-labels-on">
     <label class="switch-paddle" for="demo-switch-labels">
         <i class="fa fa-newspaper switch-label-left" aria-hidden="true"></i>
         <i class="fa fa-book switch-label-right" aria-hidden="true"></i>
     </label>
     <label for="demo-switch-labels" class="switch-label-description-left">Dynamic content: posts and categories</label>
-    <label for="demo-switch-labels" class="switch-label-description-right">Static content: pages</label>
+    <label for="demo-switch-labels" class="switch-label-description-right" id="demo-switch-labels-on">Static content: pages</label>
 </div>
 ```
 

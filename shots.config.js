@@ -44,6 +44,20 @@ module.exports = {
     target: "#forms .demo-preview:has(#demo-switch-1)",
     widths: [1280],
   },
+  "switch-labels": {
+    click: [],
+    target: "#forms .demo-preview:has(#demo-switch-labels)",
+  },
+  "switch-labels-on": {
+    click: ["#forms .switch-with-labels .switch-paddle"],
+    target: "#forms .demo-preview:has(#demo-switch-labels)",
+  },
+  "switch-labels-focus": {
+    click: [],
+    focus: "#demo-switch-labels",
+    target: "#forms .demo-preview:has(#demo-switch-labels)",
+    widths: [1280],
+  },
   range: {
     click: [],
     target: '#forms .demo-preview:has([type="range"])',
