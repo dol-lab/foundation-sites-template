@@ -157,7 +157,8 @@
      * @return {void}
      */
     fromHash: () => {
-      const panel = document.getElementById(location.hash.slice(1)); // null without a hash
+      const id = location.hash.slice(1);
+      const panel = id ? document.getElementById(id) : null; // Firefox warns on an empty id
       if (!panel?.matches(".tabs-panel")) return;
       const title = [...document.querySelectorAll(".tabs[data-tabs] .tabs-title")].find((t) => tabs.panel(t) === panel);
       if (title) tabs.select(title, true);
