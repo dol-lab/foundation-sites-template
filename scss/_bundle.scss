@@ -32,6 +32,7 @@
 @use "components/checkbox";
 @use "components/clipped";
 @use "components/close-button";
+@use "components/copyable";
 @use "components/details";
 @use "components/details-menu";
 @use "components/dot-list";
@@ -155,6 +156,7 @@
   @include icons.styles;
   @include sandwich-icon.styles;
   @include tooltip.styles;
+  @include copyable.styles;
   @include shake.styles;
   @include table.styles;
   @include details.styles;

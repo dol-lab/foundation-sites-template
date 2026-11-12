@@ -1,0 +1,24 @@
+// .copyable: a value followed by a `[data-copy]` button (js/app.js copies it) that shows on hover and keyboard focus.
+// Only where the main pointer hovers: on a phone a long press selects the text, and the button would never show.
+
+@mixin styles {
+  .copyable {
+    & > [data-copy] {
+      margin: 0 0 0 0.25em;
+      vertical-align: baseline;
+      opacity: 0;
+      transition: opacity var(--f-transition-short);
+    }
+
+    &:hover > [data-copy],
+    & > [data-copy]:is(:focus-visible, [data-copy-state]) {
+      opacity: 1;
+    }
+
+    @media (hover: none) {
+      & > [data-copy] {
+        display: none;
+      }
+    }
+  }
+}

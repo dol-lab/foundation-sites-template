@@ -130,6 +130,12 @@ module.exports = {
     target: "#buttons .demo-preview:has(.icon-button)",
     widths: [1280],
   },
+  "copyable-focus": {
+    click: [],
+    focus: "#copyable [data-copy]",
+    target: "#copyable .demo-preview",
+    widths: [1280],
+  },
   "tooltip-rich": {
     click: [],
     focus: '[data-tooltip-content="tip-roles"]',

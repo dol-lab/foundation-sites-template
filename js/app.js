@@ -628,6 +628,60 @@
   );
 
   /**
+   * Copy buttons: a click on `[data-copy]` puts its value on the clipboard and shows `data-copied` as the label
+   * for two seconds; `data-copy-state` is `done` meanwhile. The clipboard API needs a secure context (a local
+   * install over http is none), so the fallback is the browser's copy command on an off-screen field, and the
+   * last resort a prompt holding the value.
+   */
+  const copy = {
+    /**
+     * @param {string} text What to copy.
+     * @return {Promise<boolean>} Whether it was copied.
+     */
+    async write(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch {
+        const field = Object.assign(document.createElement("textarea"), { value: text, readOnly: true });
+        // Off-screen rather than hidden: what is hidden cannot be selected.
+        field.style.cssText = "position:fixed;top:-9999px;left:-9999px";
+        document.body.append(field);
+        field.select();
+        try {
+          return document.execCommand("copy");
+        } catch {
+          return false;
+        } finally {
+          field.remove();
+        }
+      }
+    },
+    /** @type {WeakMap<HTMLElement, number>} The timer that restores a button's label. */
+    timers: new WeakMap(),
+    /** @type {WeakMap<HTMLElement, Node[]>} A button's label while it says `data-copied`. */
+    labels: new WeakMap(),
+  };
+  document.addEventListener("click", async (e) => {
+    const button = e.target.closest?.("[data-copy]");
+    if (!button) return;
+    const text = button.dataset.copy;
+    if (!(await copy.write(text))) return window.prompt(button.textContent.trim(), text);
+    if (!copy.labels.has(button)) copy.labels.set(button, [...button.childNodes]);
+    if (button.dataset.copied) button.textContent = button.dataset.copied;
+    button.dataset.copyState = "done";
+    clearTimeout(copy.timers.get(button));
+    copy.timers.set(
+      button,
+      setTimeout(() => {
+        button.replaceChildren(...copy.labels.get(button));
+        copy.labels.delete(button);
+        delete button.dataset.copyState;
+      }, 2000),
+    );
+  });
+
+  /**
    * Tooltips: hovering, focusing or tapping a `[data-tooltip]` shows its `title` in one shared popover.
    * Delegated, so markup added later needs no init. On first contact the `title` moves to `data-tooltip`
    * (and `aria-description`), so the browser's own tooltip does not show as well. Without popover

@@ -38,7 +38,7 @@ A link to another section is written `[details](details.md)`, which works on Git
 - `scss/custom-styles/`: tokens and palette (`_root-tokens`, `_root-variables`), base elements, type, utilities, motion (shared animations, reduced motion), focus.
 - `scss/foundation-spaces/`: what is left of the Foundation source: `util/`, the XY grid, normalize, typography and the helper classes (`prototype/`, deprecated).
 - `scss/_colors.scss`: the palettes. `_custom-settings.scss`: our Sass settings. `_custom-functions.scss`: mixins, including `foundation-apply-theme()`.
-- `js/app.js`: the only script, for the demo page and Spaces (tabs, dropdown menus, modals, closables, tooltips, find-in-page, `data-collapse`). It needs no jQuery and no init call: handlers are delegated, so markup added later works as is. Foundation's own JS is not shipped; a `data-<plugin>` attribute of a Foundation plugin does nothing.
+- `js/app.js`: the only script, for the demo page and Spaces (tabs, dropdown menus, modals, closables, tooltips, copy buttons, find-in-page, `data-collapse`). It needs no jQuery and no init call: handlers are delegated, so markup added later works as is. Foundation's own JS is not shipped; a `data-<plugin>` attribute of a Foundation plugin does nothing.
 - `docs/`: the demo page's sections; among them `colors.md` (color roles, light and dark, tinting, dark-mode troubleshooting), `variables.md` (every other `--f-*` custom property) and `helper-classes.md` (utility classes).
 
 ## Adding a component
