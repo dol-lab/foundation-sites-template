@@ -14,8 +14,12 @@
 // the consumer opens (the open state lives outside the header, so outside the back-end build's `.f`
 // scope).
 
-// The bar below the breakpoint.
+// The bar below the breakpoint. It has to fit a phone with large system text (rem grows, the screen
+// does not): the icons sit in squares of at most a touch target with no padding, the gaps between
+// them are what is left, and the first entry moves its label under its logo before the bar overflows.
 @mixin collapsed {
+  --_height: min(var(--f-avatar-small), #{custom-settings.$touch-target});
+
   // Between, not around: the first entry keeps a fixed inset, which the burger's rows line up with.
   & .menu.dropdown {
     justify-content: space-between;
@@ -32,8 +36,29 @@
     flex-basis: 0;
   }
 
-  & .menu.dropdown > li.navbar-icon > a {
+  & .menu.dropdown > li.navbar-icon > :is(a, button) {
+    padding-inline: 0;
+  }
+
+  & .menu.dropdown > li.navbar-icon:first-child {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  & .menu.dropdown > li.navbar-icon:first-child > a {
     padding-inline: 0.75rem;
+    flex-wrap: wrap;
+    place-content: center;
+    line-height: 1;
+  }
+
+  & .menu.dropdown > .avatar {
+    margin-left: 0;
+  }
+
+  & .avatar .avatar-container {
+    width: var(--_height);
+    min-width: var(--_height);
   }
 
   & .menu.dropdown > .navbar-icon > a > span {
