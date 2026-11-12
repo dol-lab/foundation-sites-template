@@ -661,14 +661,26 @@
     timers: new WeakMap(),
     /** @type {WeakMap<HTMLElement, Node[]>} A button's label while it says `data-copied`. */
     labels: new WeakMap(),
+    /** @type {WeakMap<HTMLElement, string|null>} The `aria-label` of an icon-only button while it says `data-copied`. */
+    ariaLabels: new WeakMap(),
   };
   document.addEventListener("click", async (e) => {
     const button = e.target.closest?.("[data-copy]");
     if (!button) return;
     const text = button.dataset.copy;
-    if (!(await copy.write(text))) return window.prompt(button.textContent.trim(), text);
+    if (!(await copy.write(text))) return window.prompt(button.textContent.trim() || button.ariaLabel || "", text);
     if (!copy.labels.has(button)) copy.labels.set(button, [...button.childNodes]);
-    if (button.dataset.copied) button.textContent = button.dataset.copied;
+    if (button.dataset.copied) {
+      if (button.textContent.trim()) button.textContent = button.dataset.copied;
+      else {
+        // Icon-only: the check replaces the icon and the label (`aria-label`) carries the message.
+        const check = Object.assign(document.createElement("i"), { className: "fa-solid fa-check" });
+        check.ariaHidden = "true";
+        copy.ariaLabels.set(button, button.ariaLabel);
+        button.ariaLabel = button.dataset.copied;
+        button.replaceChildren(check);
+      }
+    }
     button.dataset.copyState = "done";
     clearTimeout(copy.timers.get(button));
     copy.timers.set(
@@ -676,6 +688,8 @@
       setTimeout(() => {
         button.replaceChildren(...copy.labels.get(button));
         copy.labels.delete(button);
+        if (copy.ariaLabels.has(button)) button.ariaLabel = copy.ariaLabels.get(button);
+        copy.ariaLabels.delete(button);
         delete button.dataset.copyState;
       }, 2000),
     );
@@ -686,6 +700,7 @@
    * Delegated, so markup added later needs no init. On first contact the `title` moves to `data-tooltip`
    * (and `aria-description`), so the browser's own tooltip does not show as well. Without popover
    * support nothing moves and the browser's tooltip stays.
+   * A `[data-copy]` button needs no attribute: its `aria-label` (else "Copy") is its tooltip.
    * Rich content: `data-tooltip-content="<id>"` names a `hidden` element whose children the tooltip
    * shows instead; it becomes the trigger's `aria-describedby` unless that is set.
    */
@@ -708,7 +723,9 @@
      * @return {?Element} The tooltip trigger around target, if it has a text.
      */
     const triggerAt = (target) => {
-      const el = target.closest?.("[data-tooltip]");
+      const el = target.closest?.("[data-tooltip], [data-copy]");
+      // A copy button is its own tooltip: its label (`aria-label`, so one string to translate), else "Copy".
+      if (el?.matches("[data-copy]") && !el.dataset.tooltip && !el.title) el.dataset.tooltip = el.ariaLabel || "Copy";
       if (el?.title) {
         el.dataset.tooltip = el.title;
         el.removeAttribute("title");
