@@ -161,8 +161,9 @@
     padding: var(--f-spacing-1) var(--f-spacing-2);
     border-radius: 0 var(--f-radius-small) var(--f-radius-small) 0;
     color: var(--f-color-text-0);
-    background: color-mix(in oklab, var(--f-color-bg-0) 55%, transparent);
-    backdrop-filter: blur(20px) saturate(200%);
+    background: var(--f-glass-background);
+    backdrop-filter: var(--f-glass-backdrop);
+    text-shadow: var(--f-glass-halo);
     font-size: var(--f-font-size-lg);
     line-height: 1.3;
 

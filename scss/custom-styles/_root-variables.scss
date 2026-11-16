@@ -76,6 +76,7 @@
     --f-color-shadow: light-dark(color-mix(in oklab, oklch(from var(--f-color-theme) 0.3 min(c, 0.12) h), transparent 80%), color-mix(in oklab, oklch(from var(--f-color-theme) 0.06 c h), transparent 45%));
 
     @include custom-functions.drop-shadows;
+    @include custom-functions.glass;
     @include custom-functions.text-tints;
   }
 }

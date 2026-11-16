@@ -66,6 +66,7 @@
     --f-transition-timing-spring: linear(0, 0.071, 0.229, 0.415, 0.593, 0.742, 0.858, 0.939, 0.992, 1.022, 1.035, 1.038, 1.035, 1.029, 1.021, 1.015, 1.009, 1.005, 1);
 
     @include custom-functions.drop-shadows;
+    @include custom-functions.glass;
 
     // Grid container size. The SCSS variables stay the source of truth; these
     // mirror them so a site (or a single wrapper) can resize the container
