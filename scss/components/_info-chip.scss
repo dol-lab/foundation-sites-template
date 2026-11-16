@@ -255,6 +255,15 @@ $info-chip-shadow-hover:
       flex-shrink: 0;
     }
 
+    // A short text after the icon (Spaces: a semester) sits centered between the icon and the seam.
+    & > .tag-icon:has(> .tag-icon-text) {
+      padding-right: 0.45em;
+    }
+
+    & .tag-icon-text {
+      margin-left: 0.45em;
+    }
+
     & > .icon {
       line-height: 1.1rem;
     }

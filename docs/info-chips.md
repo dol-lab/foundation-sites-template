@@ -2,7 +2,7 @@
 
 A static chip is flat: a hairline ring, no fill. A clickable one gets a surface and a shadow, and its markup has to say so: `[href]`, `<button>`, or `.clickable` when the handler is in JS. A chip inside a link stays flat, because the row is the click target. Spaces prints every chip as an `<a>`, with an `href` only when it links, in an `.info-chips.small`.
 
-A chip is at most as wide as its row: the value truncates, icon and key keep their width. Any segment may be left out; a key-only chip is icon and key. Spaces prints a taxonomy chip's count and hides it (`.info-chip-taxonomy .value`, spaces-markup `cards.css`) except on the term's archive.
+A chip is at most as wide as its row: the value truncates, icon and key keep their width. Any segment may be left out; a key-only chip is icon and key. A short text after the icon goes into a `.tag-icon-text` inside `.tag-icon`, centered between icon and seam (Spaces: a student's semester). Spaces prints a taxonomy chip's count and hides it (`.info-chip-taxonomy .value`, spaces-markup `cards.css`) except on the term's archive.
 
 ```html example
 <div class="info-chips small">
@@ -21,6 +21,10 @@ A chip is at most as wide as its row: the value truncates, icon and key keep the
         <span class="key">Clickable (JS)</span>
         <span class="value">12</span>
     </span>
+    <a class="info-chip">
+        <span class="tag-icon"><i class="fas fa-graduation-cap"></i><span class="tag-icon-text">3</span></span>
+        <span class="value">Icon text</span>
+    </a>
 </div>
 ```
 
