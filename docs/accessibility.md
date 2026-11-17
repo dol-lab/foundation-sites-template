@@ -35,7 +35,7 @@ One rule (`_motion.scss`) ends every transition and animation after 0.01ms when 
 
 ## Layers
 
-Modals (`<dialog class="reveal">` with `showModal()`), popover panes, dropdown menu panels and the tooltip open in the browser's top layer, above every `z-index`. A modal makes the rest of the page inert, so an overlay opened from inside one (a React Aria modal, a picker) must be rendered into the dialog, or it cannot be reached. Page layers stack with `--f-z-header`, `--f-z-overlay`, `--f-z-dropdown`; use these rather than large numbers.
+Modals (`<dialog class="reveal">` with `showModal()`), popover panes, dropdown menu panels and the tooltip open in the browser's top layer, above every `z-index`. A modal makes the rest of the page inert, so an overlay opened from inside one (a React Aria modal, a picker) must be rendered into the dialog, or it cannot be reached. Page layers stack with `--f-z-header`, `--f-z-overlay`, `--f-z-dropdown`; use these rather than large numbers. A component that sets a `z-index` inside itself (an overlay on its content, a raised edit bar) gets `isolation: isolate`, so the number stays inside it and does not cover what floats over the page; leave it out only where a part must overlap content outside the component.
 
 ## Contrast
 
