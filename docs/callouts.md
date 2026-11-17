@@ -61,11 +61,18 @@ A form's status message is a `.callout.small` (`role="status"`); `.large` adds r
 
 ## Dismissible
 
-`data-closable` on the callout and a `.close-button` with `data-close` inside it: a click removes the callout (`js/app.js`).
+`data-closable` on the callout and a `.close-button` with `data-close` inside it: a click removes the callout (`js/app.js`). With a key, `data-closable="<key>"`, it stays closed in this browser (localStorage), on every page and in markup added later: for a hint, with a button that says so.
 
 ```html example
 <div class="callout warning" data-closable>
     <p>Dismiss me.</p>
     <button class="close-button" type="button" aria-label="Dismiss" data-close><span aria-hidden="true">&times;</span></button>
+</div>
+```
+
+```html example
+<div class="callout primary" data-closable="demo-hint">
+    <p>A hint that is shown until it is dismissed.</p>
+    <button class="button small clear primary" type="button" data-close>Don't show again</button>
 </div>
 ```

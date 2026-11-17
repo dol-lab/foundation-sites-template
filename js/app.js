@@ -326,8 +326,37 @@
    * on the backdrop and a swipe down all ask it to close (`requestClose()`), so its `cancel` event is the one guard:
    * a script that calls `preventDefault()` there keeps it open (a form with unsaved changes). Scripts call
    * `showModal()`/`close()` and listen for the native `close` event. `[data-close]` outside a modal removes its
-   * `[data-closable]` box.
+   * `[data-closable]` box (for good, when the box names a key).
    */
+  // A `[data-closable="<key>"]` box stays closed once dismissed: the key goes to localStorage, and one style rule
+  // hides every box with a stored key, so one inserted later (ajax) never shows either.
+  const closedItem = "f-closed";
+  /** @return {string[]} The keys of the boxes closed for good. */
+  const closedKeys = () => {
+    try {
+      return JSON.parse(localStorage.getItem(closedItem)) || [];
+    } catch {
+      return [];
+    }
+  };
+  const closedStyle = document.createElement("style");
+  /** @param {string[]} keys The keys whose boxes to hide. */
+  const hideClosed = (keys) =>
+    (closedStyle.textContent = keys.length
+      ? `${keys.map((key) => `[data-closable="${CSS.escape(key)}"]`).join()}{display:none!important}`
+      : "");
+  hideClosed(closedKeys());
+  document.head.append(closedStyle);
+  /** @param {string} key A closed box's key; empty when it closes for this page only. */
+  const rememberClosed = (key) => {
+    if (!key) return;
+    const keys = [...new Set([...closedKeys(), key])];
+    try {
+      localStorage.setItem(closedItem, JSON.stringify(keys));
+    } catch {}
+    hideClosed(keys);
+  };
+
   /** @param {HTMLDialogElement} dialog An open modal: closes it unless its `cancel` event is canceled. */
   const requestClose = (dialog) => {
     if (dialog.requestClose) dialog.requestClose();
@@ -362,7 +391,11 @@
     const target = document.getElementById(e.target.closest("[data-open]")?.dataset.open);
     if (target?.matches("dialog.reveal:not([open])")) return target.showModal();
     const box = e.target.closest("[data-close]")?.closest("[data-closable], dialog.reveal");
-    if (box) return box.matches("dialog") ? requestClose(box) : box.remove();
+    if (box?.matches("dialog")) return requestClose(box);
+    if (box) {
+      rememberClosed(box.dataset.closable);
+      return box.remove();
+    }
     const backdrop = backdropOf(e);
     if (backdrop && backdrop === pressedBackdrop) requestClose(backdrop);
   });
