@@ -67,7 +67,7 @@ The grid, containers, breakpoints, `.prose-layout` and `.auto-grid`: [layout](la
 
 ## Visual styles
 
-- **Links:** `.brand-links` on a container gives the prose links inside it the brand colour.
+- **Links:** `.brand-links` on a container gives the prose links inside it the brand colour. `.link-subtle` on a link gives it a faint underline that turns solid on hover, for a link outside running text whose color does not set it apart (an email address).
 - **Borders:** `.border-none`
 - **Radius:** `.rounded` (`--f-radius`), `.rounded-small`, `.rounded-none`, `.rounded-full`
 - **Shadows:** `.shadow` (the theme's drop shadow), `.shadow-none` (deprecated aliases: `.box-shadow`, `.no-box-shadow`)

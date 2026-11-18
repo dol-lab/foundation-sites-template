@@ -109,6 +109,25 @@
     }
   }
 
+  // Links in what members write are underlined, since their color alone does not set them apart
+  // (WCAG 1.4.1), in a faint tone that turns solid on hover. `.link-subtle` gives a link outside
+  // running text (an email address beside its copy button) the same underline, fainter.
+  :where(.user-generated :is(p, li, blockquote, td, figcaption)) a:not(:where(.button)),
+  .link-subtle {
+    text-decoration: underline;
+    text-decoration-thickness: from-font;
+    text-underline-offset: 0.15em;
+    text-decoration-color: color-mix(in srgb, currentcolor var(--_underline-strength, 40%), transparent);
+
+    &:hover {
+      text-decoration-color: currentcolor;
+    }
+  }
+
+  .link-subtle {
+    --_underline-strength: 20%;
+  }
+
   .line-clamp {
     -webkit-line-clamp: 2;
     line-clamp: 2;
