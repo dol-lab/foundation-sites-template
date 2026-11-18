@@ -384,6 +384,12 @@ $reveal-handle-space: 1.25rem !default;
       // reached by expanding: there a swipe on a list moves the sheet, not the list. `data-expanded` is the state,
       // set by `js/app.js` and by any script that moves the sheet. The rest position is a property of its own, so
       // the hidden state of opening and closing still wins over it.
+      // A `.tall` sheet opens at its full height, for content that loads after opening: growing with it, the
+      // sheet would jump up as it arrives.
+      &.tall {
+        height: 100%;
+      }
+
       &.expandable {
         --_sheet-peek: var(--f-sheet-peek, calc(var(--f-viewport-height, 100dvh) / 2));
 
