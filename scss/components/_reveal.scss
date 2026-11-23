@@ -312,10 +312,12 @@ $reveal-handle-space: 1.25rem !default;
     // Overlays a script opens from a modal (React Aria's popovers and tooltips) render into a `.reveal-layer`
     // child: outside the modal the page is inert, and placed in its box they would be clipped by its scroll. The
     // layer covers the screen and takes no pointer events itself. A sheet on a phone is the containing block of
-    // fixed descendants (`will-change: translate`), so there the layer is the sheet's box.
+    // fixed descendants (`will-change: translate`), so there the layer is the sheet's box. Its z-index lifts it
+    // above whatever the modal's content stacks with its own (a field, an avatar stack).
     > .reveal-layer {
       position: fixed;
       inset: 0;
+      z-index: var(--f-z-dropdown);
       pointer-events: none;
 
       & > * {
