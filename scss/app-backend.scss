@@ -27,17 +27,3 @@
 .f {
   @include bundle.styles;
 }
-
-///
-///  The back end is always light, but a handful of rules key off :root, which
-///  here is the host page's <html> and outside our control. Turn their dark
-///  variants back.
-@media screen and (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .f select {
-    background-image: var(--_f-chevron-for-light);
-  }
-}
-
-:root[data-theme="dark"] .f select {
-  background-image: var(--_f-chevron-for-light);
-}

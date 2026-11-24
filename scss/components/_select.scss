@@ -17,19 +17,33 @@
 $select-background: inherit !default;
 
 /// Default radius for select menus.
-/// @type Color
+/// @type Number
 $select-radius: global.$global-radius !default;
 
+/// Border color of a select: firmer than a text field's and the firmest border role, since it is a control
+/// like a switch.
+/// @type Color
+$select-border-color: color-mix(in oklab, var(--f-color-text-0) 22%, transparent) !default;
+
+/// Border color of a select on hover.
+/// @type Color
+$select-border-color-hover: var(--f-color-text-2) !default;
+
+/// Color of the chevron.
+/// @type Color
+$select-chevron-color: var(--f-color-text-2) !default;
+
+// The box of each stroke, and the stroke: a 1px core with soft edges, so the diagonal does not alias.
+$-chevron-half: 5px;
+$-chevron-stroke: transparent calc(50% - 1.25px), $select-chevron-color calc(50% - 0.5px) calc(50% + 0.5px),
+  transparent calc(50% + 1.25px);
+
 @mixin form-select {
-  --_f-chevron-for-dark: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMBJREFUeNrEllsOhCAMRVszC9IlzU7KCmVHTJsoMWYMUtpyv9BgbuXQB5ZSdgBYYY4ycgBivk8KYFsQMfMiTTBP4o3nUzCKzOabLJbLy2/g31evGkAginR4/ZegKH5qX3bJCscA3t0x3kgO5tQFyhhFf50xRqFLbyMUNJQzgyjGS/wgCpvKqkRBpuWrE4V9d+1E4dPUXqIg107SQOE/2DRQxMwTDygIInVDET9T3lCoj/6j/VCmGjZOl2lKpZ8AAwDQP7zIimDGFQAAAABJRU5ErkJggg==');
-  --_f-chevron-for-light: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNrEkckNgDAMBBfRkEt0ObRBBdsGXUDgmQfK4XhH2m8czQAAy27R3tsw4Qfe2x8uOO6oYLb6GlOor3GF+swURAOmUJ+RwtEJs9WvTGEYxBXqI1MQAZhCfUQKRzDMVj+TwrAIV6jvSUEkYAr1LSkcyTBb/V+KYfX7xAeusq3sLDtGH3kEGACPWIflNZfhRQAAAABJRU5ErkJggg==');
-
-
   height: custom-settings.$input-height;
   margin: 0 0 input.$form-spacing;
   padding: label.$label-padding;
   appearance: none;
-  border: input.$input-border;
+  border: 1px solid $select-border-color;
   border-radius: $select-radius;
   background-color: $select-background;
   font-family: input.$input-font-family;
@@ -38,34 +52,20 @@ $select-radius: global.$global-radius !default;
   line-height: custom-settings.$form-label-line-height;
   color: input.$input-color;
 
-  // @if $select-triangle-color != transparent {
-  //   // @include background-triangle($select-triangle-color);
-  //   // @include background-triangle-image();
-
-  // }
-  
-  // default chevron (light theme)
-  background-image: var(--_f-chevron-for-light);
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) & {
-      background-image: var(--_f-chevron-for-dark);
-    }
-  }
-
-  :root[data-theme="dark"] & {
-    background-image: var(--_f-chevron-for-dark);
-  }
-
-  :root[data-theme="light"] & {
-    background-image: var(--_f-chevron-for-light);
-  }
-
+  // The chevron: two strokes, each the diagonal of one half of its box, in a token color, so it follows the theme.
+  background-image:
+    linear-gradient(to bottom left, $-chevron-stroke), linear-gradient(to bottom right, $-chevron-stroke);
+  background-position:
+    global.$global-right calc(#{-(input.$form-spacing)} + #{$-chevron-half}) center,
+    global.$global-right (-(input.$form-spacing)) center;
   background-origin: content-box;
-  background-position: global.$global-right (-(input.$form-spacing)) center;
   background-repeat: no-repeat;
-  background-size: 9px 6px;
+  background-size: $-chevron-half $-chevron-half;
   padding-#{global.$global-right}: (input.$form-spacing * 1.5);
+
+  &:hover:not(:disabled) {
+    border-color: $select-border-color-hover;
+  }
 
   @if value.has-value(input.$input-transition) {
     transition: input.$input-transition;
