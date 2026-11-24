@@ -3,7 +3,7 @@
 
 // .clipped: a media frame that crops its image (.square, .letterbox, .tint, .height-*). .square and .letterbox
 // are `aspect-ratio` boxes (taller content grows them), .height-N and .full fixed heights.
-// .feature-image: a Space header, 80px on a card, .large up to 200px on the Space itself.
+// .feature-image: a Space header, 80px on a card, .large 200px on the Space itself.
 // .clipped-title: a frosted label over that image, the Space's name.
 
 @mixin styles {
@@ -118,18 +118,10 @@
       align-items: center;
       height: 80px;
 
-      // The name is the Space's heading here: it is never cut, the frame grows with it (a long
-      // name, zoomed text). Title and image share one grid cell, so an image in the flow (shown
-      // whole) grows the frame as well.
       &.large {
-        display: grid;
-        grid-template-areas: "stack";
-        height: auto;
-        min-height: clamp(64px, 25vw, 200px);
-
-        & > * {
-          grid-area: stack;
-        }
+        height: 200px;
+        max-height: 25vw;
+        min-height: 64px;
       }
     }
 
@@ -156,8 +148,8 @@
     }
   }
 
-  // Frosted so it stays legible on any image. One line on a card; on a .large header it wraps
-  // and grows with the screen. An icon before the name (privacy) stays small.
+  // Frosted so it stays legible on any image. One line on a card; two on a .large header, where
+  // it grows with the screen. An icon before the name (privacy) stays small.
   .clipped > .clipped-title {
     position: absolute;
     z-index: 1;
@@ -190,17 +182,21 @@
   }
 
   .clipped.large > .clipped-title {
-    position: relative;
-    place-self: center start;
-    margin-bottom: var(--f-spacing-2);
+    font-size: var(--f-font-size-lg);
 
     @include breakpoint.breakpoint(medium) {
       font-size: var(--f-font-size-xl);
     }
 
+    @include breakpoint.breakpoint(large) {
+      font-size: var(--f-font-size-xl);
+    }
+
     & > :last-child {
-      overflow: visible;
-      overflow-wrap: anywhere;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
       hyphens: auto;
       white-space: normal;
     }
