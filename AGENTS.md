@@ -12,7 +12,7 @@ Rules for coding agents in this repo. How the build, the demo page and the files
 
 ### After an edit
 
-- `bun run check <section-id|state…>` builds, lints and shoots, and prints only failures and changed shots with their changed region. `--scheme=light` or `--scheme=dark` shoots one scheme only, `--css-diff` adds `bun run css-diff`.
+- `bun run check <section-id|state…>` builds, lints, checks the contrast on glass (`glass-check.js`, `--all` lists every mode and theme) and shoots, and prints only failures and changed shots with their changed region. `--scheme=light` or `--scheme=dark` shoots one scheme only, `--css-diff` adds `bun run css-diff`.
 - Lint passes on the whole tree; keep it that way. `bun run lint` is stylelint on all SCSS and Prettier on JS (`bun run lint:fix`, `bun run format`). A lint exception in `stylelint.config.js` says why; anything else is fixed or disabled inline with a `-- reason`.
 - `bun run shots [id…]` writes `shots/<id>@<width>.png` (375 and 1280px), `<id>@<width>-dark.png` and a `.json` of its elements; a changed shot keeps `.prev.png` and a `.diff.png`. Open a `.diff.png` crop only if the text does not answer the question, a full shot only if the crop does not. How shots keep from flapping: `shots.js` and `lib/browser.js`.
 - A component without a section of its own gets a small `docs/<id>.md`, so `check <id>` shoots only it.

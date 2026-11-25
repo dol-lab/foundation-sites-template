@@ -1,4 +1,4 @@
-// One call after an edit: `bun run check [id|state…]` builds the CSS and the page, lints, and
+// One call after an edit: `bun run check [id|state…]` builds the CSS and the page, lints, checks the glass contrast, and
 // shoots the given sections (all without arguments). Prints only failures and the shots that
 // are new or changed; exits non-zero if a step failed. `--css-diff` also prints `bun run css-diff`.
 const { spawnSync } = require("node:child_process");
@@ -7,6 +7,7 @@ const STEPS = [
   ["build", ["run", "build"]],
   ["build:html", ["build-html.js"]],
   ["lint", ["run", "lint"]],
+  ["glass", ["glass-check.js"]],
 ];
 
 const args = process.argv.slice(2);
@@ -36,7 +37,7 @@ if (!failed) {
   const count = (prefix) => lines.filter((l) => l.startsWith(prefix)).length;
   lines.filter((l) => !quiet(l)).forEach((l) => console.log(l));
   const noise = count("noise") ? `, ${count("noise")} noise: pixels only, see \`bun run shots\`` : "";
-  console.log(`${shots.status ? "✗" : "✓"} build, lint, shots (${count("unchanged")} unchanged${noise})`);
+  console.log(`${shots.status ? "✗" : "✓"} build, lint, glass, shots (${count("unchanged")} unchanged${noise})`);
   failed = shots.status !== 0;
 }
 process.exit(failed ? 1 : 0);

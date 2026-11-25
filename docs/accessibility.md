@@ -39,4 +39,4 @@ Modals (`<dialog class="reveal">` with `showModal()`), popover panes, dropdown m
 
 ## Contrast
 
-Text takes `--f-color-text-0` to `-2`; text in a palette color takes its `-text` token (`--f-color-alert-text`), which keeps 4.5:1 on every surface in both modes ([colors](colors.md)). Icon buttons use `--f-icon-color` (3:1 at rest). Color alone never carries a meaning: links in running text are underlined, an invalid field also has an error text.
+Text takes `--f-color-text-0` to `-2`; text in a palette color takes its `-text` token (`--f-color-alert-text`), which keeps 4.5:1 on every surface in both modes ([colors](colors.md)). Text on glass takes `--f-glass-color` ([variables](variables.md)). Icon buttons use `--f-icon-color` (3:1 at rest). Color alone never carries a meaning: links in running text are underlined, an invalid field also has an error text.

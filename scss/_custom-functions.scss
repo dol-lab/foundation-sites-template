@@ -181,13 +181,16 @@
   --f-drop-shadow-large: 0 14px 28px var(--f-color-shadow), 0 10px 10px color-mix(in srgb, var(--f-color-shadow) 22%, transparent);
 }
 
-/// Prints `--f-glass-*`, the surface of a label or control over an image: a thin fill and a blur let the
-/// image show, the halo (a `text-shadow` in the surface color) keeps the text legible on a busy one.
+/// Prints `--f-glass-*`, the surface of a label or control over an image: a fill and a blur let the image
+/// show, the halo (a faint `text-shadow` in the surface color) softens a busy one behind the glyphs. Text on glass takes
+/// `--f-glass-color`, further from the fill than text-0: with the fill's opacity it keeps 4.5:1 over any image,
+/// a black one in light mode, a white one in dark mode, without the halo (`bun glass-check.js` checks it).
 /// Built from `--f-color-bg-0`, so redeclared with the surfaces (`[themed]`), like the drop shadows.
 @mixin glass {
-  --f-glass-background: color-mix(in oklab, var(--f-color-bg-0) 45%, transparent);
+  --f-glass-background: color-mix(in oklab, var(--f-color-bg-0) 65%, transparent);
+  --f-glass-color: light-dark(oklch(from var(--f-color-text-0) 0.3 c h), oklch(from var(--f-color-text-0) 0.95 c h));
   --f-glass-backdrop: blur(20px) saturate(200%);
-  --f-glass-halo: 0 0 0.4em color-mix(in oklab, var(--f-color-bg-0) 55%, transparent);
+  --f-glass-halo: 0 0 0.25em color-mix(in oklab, var(--f-color-bg-0) 35%, transparent);
 }
 
 /// Prints the palette as CSS custom properties.
