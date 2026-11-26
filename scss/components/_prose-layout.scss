@@ -1,9 +1,9 @@
 // .prose-layout: a readable center column (max 70ch) with .alignwide and .alignfull.
-// Images in what members write (.user-generated) get rounded corners, except .alignfull ones.
+// Images, embeds and videos in what members write (.user-generated) get rounded corners, except .alignfull ones.
 
 // NOTE: This can not contain naked text (text in no container).
 @mixin styles {
-  .user-generated figure img {
+  .user-generated :is(figure img, iframe, video) {
     border-radius: var(--f-radius);
   }
 
@@ -49,7 +49,9 @@
       border-radius: 0;
 
       figure,
-      img {
+      img,
+      iframe,
+      video {
         border-radius: 0;
       }
     }
